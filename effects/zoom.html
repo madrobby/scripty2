@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>Effect showcase</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="lib/prototype.js" type="text/javascript"></script>
+    <script src="src/base.js" type="text/javascript"></script>
+    <script src="src/queue.js" type="text/javascript"></script>
+    <script src="src/heartbeat.js" type="text/javascript"></script>
+    <script src="src/extensions/misc.js" type="text/javascript"></script>
+    <script src="src/extensions/css.js" type="text/javascript"></script>
+    <script src="src/extensions/helpers.js" type="text/javascript"></script>
+    <script src="src/extensions/element.js" type="text/javascript"></script>
+    <script src="src/operators/base.js" type="text/javascript"></script>
+    <script src="src/operators/style.js" type="text/javascript"></script>
+    <script src="src/effects/base.js" type="text/javascript"></script>
+    <script src="src/effects/attribute.js" type="text/javascript"></script>
+    <script src="src/effects/style.js" type="text/javascript"></script>
+    <script src="src/effects/morph.js" type="text/javascript"></script>
+    <script src="src/transitions/transitions.js" type="text/javascript"></script>
+    <script src="src/transitions/penner.js" type="text/javascript"></script>
+    
+    <script src="src/addons/zoom.js" type="text/javascript"></script>
+    <script src="src/addons/slowmotion.js" type="text/javascript"></script>
+    
+    <script src="src/debugger.js" type="text/javascript"></script>
+    
+    <style type="text/css">
+      
+    </style>
+  </head>
+  <body>
+    <img src="test/assets/thomas_fuchs.jpg" width="150" height="172" alt="Thomas Fuchs"/>
+    <img src="test/assets/tobie.jpg" width="150" height="168" alt="Tobie"/>
+    <img src="test/assets/Seth.jpg" width="150" height="150" alt="Seth"/>
+    <img src="test/assets/justin.jpg" width="150" height="168" alt="Justin"/>
+    <img src="test/assets/me-150_1.jpg" width="150" height="150" alt="Me 150 1"/>
+    <img src="test/assets/TDD04.jpg" width="150" height="168" alt="TDD04"/>
+    <img src="test/assets/sco.jpg" width="150" height="172" alt="Sco"/>
+    <img src="test/assets/headshot_prototype.jpg" width="150" height="168" alt="Headshot Prototype"/>
+    <img src="test/assets/mislav.jpg" width="150" height="168" alt="Mislav"/>
+    <img src="test/assets/pcore.jpg" width="150" height="168" alt="Pcore"/>
+    
+    <div id="test"></div>
+    
+    <script type="text/javascript">
+     // new Effect.Debugger();
+      Effect.initialize(new Effect.Heartbeat.SlowMotion());
+      
+      $$('img').invoke('observe','click', function(img){
+        new Effect.Zoom(this,{
+          transition: 'bouncePast',
+          borderWidth:100,
+          duration:1,
+          propertyTransitions: {
+            left: 'easeTo'
+          },
+          position: 'end'
+        }).play();
+      });
+    </script>
+  </body>
+</html>

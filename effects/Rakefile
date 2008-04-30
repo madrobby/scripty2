@@ -1,0 +1,50 @@
+require 'rake'
+require 'rake/packagetask'
+
+task :default => :test_units
+
+require '../unittest/src/jstest'
+desc "Runs all the JavaScript unit tests and collects the results"
+JavaScriptTestTask.new(:test_units) do |t|
+  tests_to_run     = ENV['TESTS']    && ENV['TESTS'].split(',')
+  browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
+
+  t.mount("/lib")
+  t.mount("/src")
+  t.mount("/test")
+  
+  Dir["test/unit/*.html"].sort.each do |test_file|
+    test_file = "/#{test_file}"
+    test_name = test_file[/.*\/(.+?)\.html/, 1]
+    t.run(test_file) unless tests_to_run && !tests_to_run.include?(test_name)
+  end
+  
+  %w( safari firefox ie konqueror opera ).each do |browser|
+    t.browser(browser.to_sym) unless browsers_to_test && !browsers_to_test.include?(browser)
+  end
+end
+
+desc "Make a effects.js package (temporary task until sprockets arrive)"
+task :package do |t|
+  files = %w(
+  src/base.js
+  src/queue.js
+  src/heartbeat.js
+  src/extensions/misc.js
+  src/extensions/css.js
+  src/extensions/helpers.js
+  src/extensions/element.js
+  src/operators/base.js
+  src/operators/style.js
+  src/operators/scroll.js
+  src/effects/base.js
+  src/effects/attribute.js
+  src/effects/style.js
+  src/effects/morph.js
+  src/effects/scroll.js
+  src/transitions/transitions.js
+  src/transitions/penner.js)
+  File.open('dist/effects.js', 'w+') do |dist|
+    files.each { |f| dist << File.read(f) + "\n\n" }
+  end
+end
