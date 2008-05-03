@@ -2,32 +2,33 @@ require 'rake'
 require 'rake/packagetask'
 require 'fileutils'
 
-task :default => :test_units
-
-require '../unittest/src/jstest'
-desc "Runs all the JavaScript unit tests and collects the results"
-JavaScriptTestTask.new(:test_units) do |t|
-  tests_to_run     = ENV['TESTS']    && ENV['TESTS'].split(',')
-  browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
-
-  t.mount("/lib")
-  t.mount("/src")
-  t.mount("/test")
-  
-  Dir["test/unit/*.html"].sort.each do |test_file|
-    test_file = "/#{test_file}"
-    test_name = test_file[/.*\/(.+?)\.html/, 1]
-    t.run(test_file) unless tests_to_run && !tests_to_run.include?(test_name)
-  end
-  
-  %w( safari firefox ie konqueror opera ).each do |browser|
-    t.browser(browser.to_sym) unless browsers_to_test && !browsers_to_test.include?(browser)
-  end
-end
+# task :default => :test_units
+# 
+# require '../unittest/src/jstest'
+# desc "Runs all the JavaScript unit tests and collects the results"
+# JavaScriptTestTask.new(:test_units) do |t|
+#   tests_to_run     = ENV['TESTS']    && ENV['TESTS'].split(',')
+#   browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
+# 
+#   t.mount("/lib")
+#   t.mount("/src")
+#   t.mount("/test")
+#   
+#   Dir["test/unit/*.html"].sort.each do |test_file|
+#     test_file = "/#{test_file}"
+#     test_name = test_file[/.*\/(.+?)\.html/, 1]
+#     t.run(test_file) unless tests_to_run && !tests_to_run.include?(test_name)
+#   end
+#   
+#   %w( safari firefox ie konqueror opera ).each do |browser|
+#     t.browser(browser.to_sym) unless browsers_to_test && !browsers_to_test.include?(browser)
+#   end
+# end
 
 desc "Make a effects.js package (temporary task until sprockets arrive)"
 task :package do |t|
   files = %w(
+  src/license.js
   src/base.js
   src/queue.js
   src/heartbeat.js
@@ -46,7 +47,7 @@ task :package do |t|
   src/transitions/transitions.js
   src/transitions/penner.js)
   FileUtils.mkdir('dist') unless File.exists?('dist')
-  File.open('dist/effects.js', 'w+') do |dist|
-    files.each { |f| dist << File.read(f) + "\n\n" }
-  end
+  
+  concatenated = files.map{|f| File.read(f) }.join("\n\n")
+  File.open('dist/effects.js', 'w+') { |dist| dist << concatenated }
 end
