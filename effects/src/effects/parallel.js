@@ -3,12 +3,12 @@ Effect.Parallel = Class.create(Effect.Base, {
     this.effects = effects || [];
     return $super(options);
   },
-  
+
   setup: function() {
     this.effects.invoke('setup');
   },
-  
-  update: function(position) {    
+
+  update: function(position) {
     this.effects.invoke('update', position);
   }
 });
