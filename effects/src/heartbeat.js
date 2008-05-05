@@ -1,7 +1,7 @@
 Effect.Heartbeat = Class.create({
   initialize: function(options) {
     this.options = Object.extend({
-      framerate: 60
+      framerate: Prototype.Browser.MobileSafari ? 20 : 60
     }, options);
   },
   
