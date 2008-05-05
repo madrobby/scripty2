@@ -44,6 +44,7 @@ task :package do |t|
   src/effects/style.js
   src/effects/morph.js
   src/effects/scroll.js
+  src/effects/parallel.js
   src/transitions/transitions.js
   src/transitions/penner.js)
   FileUtils.mkdir('dist') unless File.exists?('dist')

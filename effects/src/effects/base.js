@@ -3,7 +3,7 @@ Effect.Base = Class.create({
     Effect.initialize();
     this.updateWithoutWrappers = this.update;
 
-    if (options.queue && !Effect.queues.include(options.queue))
+    if(options && options.queue && !Effect.queues.include(options.queue))
       Effect.queues.push(options.queue);
 
     this.setOptions(options);
