@@ -7,11 +7,11 @@ Effect.Operators.Base = Class.create({
       transition: Prototype.K
     }, options);
   },
-  
+
   inspect: function() {
     return "#<Effect.Operators.Base:" + this.lastValue + ">";
   },
-  
+
   render: function(position) {
     var value = this.valueAt(this.options.transition(position));
     this.applyValue(value);

@@ -2,39 +2,39 @@ Effect.Operators.Style = Class.create(Effect.Operators.Base, {
   initialize: function($super, object, options) {
     $super(object, options);
     this.element = $(this.object);
-    
+
     if (!this.options.propertyTransitions)
-      this.options.propertyTransitions = { }
+      this.options.propertyTransitions = { };
     else
       for (property in this.options.propertyTransitions)
         this.options.propertyTransitions[property] =
           Object.propertize(this.options.propertyTransitions[property], Effect.Transitions);
-    
+
     if (!Object.isString(this.options.style)) {
       this.style = $H(this.options.style);
 
     } else {
       if (this.options.style.include(':')) {
         this.style = $H(CSS.parseStyle(this.options.style));
-        
+
       } else {
         this.element.addClassName(options.style);
         this.style = $H(this.element.getStyles());
         this.element.removeClassName(options.style);
-        
+
         var css = this.element.getStyles();
         this.style = this.style.reject(function(style) { return style.value == css[style.key] });
       }
     }
-        
+
     this.tweens = this.style.map(function(pair) {
-      var property = pair[0].camelize(), target = pair[1], unit = '', tween, 
+      var property = pair[0].camelize(), target = pair[1], unit = '', tween,
         source = this.element.getStyle(property);
         
       if (CSS.COLOR_PROPERTIES.include(property)) {
         if (source == target) return;
         source = CSS.Color.normalize(source);
-        target = CSS.Color.normalize(target); unit = 'color';    
+        target = CSS.Color.normalize(target); unit = 'color';
         tween = function(currentStyle, style, position) {
           position = (this.options.propertyTransitions[property] || Effect.Transitions.linear)(position);
           var value = '#' + [0,1,2].map(function(index){ 
@@ -48,7 +48,7 @@ Effect.Operators.Style = Class.create(Effect.Operators.Base, {
           target = components[1];
           unit = String.interpret((components.length == 3) ? components[2] : null);
         }
-        source = parseFloat(source); target = parseFloat(target); 
+        source = parseFloat(source); target = parseFloat(target);
         if (isNaN(source) || isNaN(target) || source == target) return;
         tween = function(currentStyle, style, position) {
           position = (this.options.propertyTransitions[property] || Effect.Transitions.linear)(position);
@@ -57,17 +57,17 @@ Effect.Operators.Style = Class.create(Effect.Operators.Base, {
         }.bind(this);
       }
       return tween;
-    }.bind(this)).compact();
+    }, this).compact();
   },
-  
+
   valueAt: function(position) {
     var style = { }, currentStyle = this.currentStyle || { };
     this.tweens.each( function(tween){ 
-      tween(currentStyle, style, position) 
+      tween(currentStyle, style, position);
     });
     return style;
   },
-  
+
   applyValue: function(value) {
     this.element.setStyle(value);
     this.currentStyle = value;

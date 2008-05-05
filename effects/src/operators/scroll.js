@@ -4,9 +4,11 @@ Effect.Operators.Scroll = Class.create(Effect.Operators.Base, {
     this.start = object.scrollTop;
     this.end = this.options.scrollTo;
   },
+
   valueAt: function(position) {
     return this.start + ((this.end - this.start)*position);
   },
+
   applyValue: function(value){
     this.object.scrollTop = value.round();
   }

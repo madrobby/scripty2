@@ -4,7 +4,7 @@ Effect.Helpers = {
     [(rw - (w*(rh/h)))/2, 0, w*(rh/h), rh] : 
     [0, (rh - (h*(rw/w)))/2, rw, h*(rw/w)];
   },
-  
+
   viewportOverlay: function(){
     var viewport = document.viewport.getDimensions();
     var offsets = document.viewport.getScrollOffsets();
@@ -15,4 +15,3 @@ Effect.Helpers = {
     });
   }
 };
-

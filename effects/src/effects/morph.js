@@ -8,12 +8,12 @@ Effect.Morph = Class.create(Effect.Element, {
         propertyTransitions: this.options.propertyTransitions || { }
       });
   },
-  
+
   teardown: function() {
     if (this.options.change) 
       this.teardownWrappers();
   },
-  
+
   setupWrappers: function() {
     var elementFloat = this.element.getStyle("float");
     this.transitionElement = new Element('div').setStyle({ position: "relative", overflow: "hidden", 'float': elementFloat });
@@ -24,9 +24,9 @@ Effect.Morph = Class.create(Effect.Element, {
 
     this.transitionElement.insert(this.sourceElementWrapper).insert(this.destinationElementWrapper);
 
-    var sourceHeight = this.sourceElementWrapper.getHeight(), 
+    var sourceHeight = this.sourceElementWrapper.getHeight(),
       sourceWidth = this.sourceElementWrapper.getWidth();
-      
+
     this.options.change();
 
     var destinationHeight = this.destinationElementWrapper.getHeight(),
@@ -35,7 +35,7 @@ Effect.Morph = Class.create(Effect.Element, {
     this.outerWrapper = new Element("div");
     this.transitionElement.insert({ before: this.outerWrapper });
     this.outerWrapper.setStyle({ 
-      overflow: "hidden", height: sourceHeight + "px", width: sourceWidth + "px" 
+      overflow: "hidden", height: sourceHeight + "px", width: sourceWidth + "px"
     }).appendChild(this.transitionElement);
 
     var maxHeight = Math.max(destinationHeight, sourceHeight), maxWidth = Math.max(destinationWidth, sourceWidth);
@@ -45,17 +45,17 @@ Effect.Morph = Class.create(Effect.Element, {
     this.destinationElementWrapper.setStyle({ position: "absolute", height: maxHeight + "px", width: maxWidth + "px", top: 0, left: 0, opacity: 0, zIndex: 2000 });
 
     this.outerWrapper.insert({ before: this.transitionElement }).remove();
-    
+
     this.animate('style', this.transitionElement, { style: 'height:' + destinationHeight + 'px; width:' + destinationWidth + 'px' });
     this.animate('style', this.destinationElementWrapper, { style: 'opacity: 1.0' });
   },
-  
+
   teardownWrappers: function() {
     var destinationElement = this.destinationElementWrapper.down();
-    
+
     if (destinationElement)
       this.transitionElement.insert({ before: destinationElement });
-    
+
     this.transitionElement.remove();
   }
 });

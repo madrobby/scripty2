@@ -2,21 +2,21 @@ Effect.Base = Class.create({
   initialize: function(options) {
     Effect.initialize();
     this.updateWithoutWrappers = this.update;
-    
-    if(options.queue && !Effect.queues.include(options.queue))
-      Effect.queues.push(options.queue);    
-    
+
+    if (options.queue && !Effect.queues.include(options.queue))
+      Effect.queues.push(options.queue);
+
     this.setOptions(options);
     this.state = 'idle';
-    
+
     $w('after before').each(function(method) {
       this[method] = function(method) {
         method(this);
         return this; 
       }
-    }.bind(this));
+    }, this);
   },
-  
+
   setOptions: function(options) {
     if (!this.options) this.options = Object.extend({
       transition: options && options.tween ? options.tween : 'sinusoidal',
@@ -24,7 +24,7 @@ Effect.Base = Class.create({
       position:   'parallel',
       fps:        600
     }, options);
-    
+
     if (this.options.beforeUpdate || this.options.afterUpdate) {
       this.update = this.updateWithoutWrappers.wrap( function(proceed,position){
         if (this.options.beforeUpdate) this.options.beforeUpdate(this);
@@ -34,7 +34,7 @@ Effect.Base = Class.create({
     }
     this.options.transition = Object.propertize(this.options.transition, Effect.Transitions);
   },
-    
+
   play: function(options) {
     this.setOptions(options);
     this.frameCount = 0;
@@ -43,7 +43,7 @@ Effect.Base = Class.create({
     this.maxFrames = this.options.fps * this.duration / 1000;
     return this;
   },
-  
+
   render: function(timestamp) {
     if (timestamp >= this.startsAt) {
       if (this.state == 'idle') {
@@ -67,7 +67,7 @@ Effect.Base = Class.create({
     }
     return this;
   },
-  
+
   inspect: function() {
     return '#<Effect:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
   }
@@ -79,17 +79,17 @@ Effect.Element = Class.create(Effect.Base, {
     this.operators = [];
     return $super(options);
   },
-  
+
   animate: function() {
     var args = $A(arguments), operator = args.shift().capitalize();
     this.operators.push(new Effect.Operators[operator](args[0], args[1] || {}));
   },
-  
+
   play: function($super, element, options) {
     if (element) this.element = $(element);
     return $super(options);
   },
-  
+
   update: function(position) {
     this.operators.invoke('render', position);
   }
