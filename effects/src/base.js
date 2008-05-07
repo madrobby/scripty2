@@ -5,24 +5,18 @@ var Effect = {
     this.queues = [];
     this.globalQueue = new Effect.Queue();
     this.queues.push(this.globalQueue);
+
+    this.heartbeat = heartbeat || new Effect.Heartbeat();
     this.activeEffectCount = 0;
 
-    this.setHeartbeat(heartbeat || new Effect.Heartbeat());
-    document.observe('effect:heartbeat', this.renderQueues.bind(this));
-
-    document.observe('effect:queued', function(){
-      Effect.activeEffectCount++;
-      if (Effect.activeEffectCount == 1) Effect.heartbeat.start();
-    });
-
-    document.observe('effect:dequeued', function(){
-      Effect.activeEffectCount--;
-      if (Effect.activeEffectCount == 0) Effect.heartbeat.stop();
-    });
+    document
+      .observe('effect:heartbeat', this.renderQueues.bind(this))
+      .observe('effect:queued',    this.beatOnDemand.bind(this, 1))
+      .observe('effect:dequeued',  this.beatOnDemand.bind(this, -1));
   },
 
-  setHeartbeat: function(heartbeat) {
-    this.heartbeat = heartbeat;
+  beatOnDemand: function(dir) {
+    this.heartbeat[(this.activeEffectCount += dir) > 0 ? 'start' : 'stop']();
   },
 
   renderQueues: function() {
