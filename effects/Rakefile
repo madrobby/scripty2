@@ -34,7 +34,6 @@ task :package do |t|
   src/heartbeat.js
   src/extensions/misc.js
   src/extensions/css.js
-  src/extensions/helpers.js
   src/extensions/element.js
   src/operators/base.js
   src/operators/style.js

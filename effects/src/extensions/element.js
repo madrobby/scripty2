@@ -14,7 +14,7 @@ Effect.ElementMethods = {
 
   appear: function(element, options){
     return element.effect('morph', Object.extend({
-      before: function(){ element.show().setStyle({opacity:0}) },
+      before: function(){ element.show().setStyle({opacity: 0}); },
       style:  'opacity:1'
     }, options));
   },

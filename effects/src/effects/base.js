@@ -39,7 +39,7 @@ Effect.Base = Class.create({
     this.setOptions(options);
     this.frameCount = 0;
     this.options.queue.add(this);
-    this.duration = this.endsAt-this.startsAt;
+    this.duration = this.endsAt - this.startsAt;
     this.maxFrames = this.options.fps * this.duration / 1000;
     return this;
   },
@@ -57,7 +57,7 @@ Effect.Base = Class.create({
         if (this.options.after) this.options.after(this);
         this.state = 'finished';
       } else {
-        var position = 1 - (this.endsAt-timestamp) / this.duration;
+        var position = 1 - (this.endsAt - timestamp) / this.duration;
         var frame = (this.maxFrames * position).floor();
         if (frame > this.frameCount) {
           this.update(this.options.transition(position));
@@ -82,7 +82,7 @@ Effect.Element = Class.create(Effect.Base, {
 
   animate: function() {
     var args = $A(arguments), operator = args.shift().capitalize();
-    this.operators.push(new Effect.Operators[operator](args[0], args[1] || {}));
+    this.operators.push(new Effect.Operators[operator](args[0], args[1] || {}));
   },
 
   play: function($super, element, options) {
