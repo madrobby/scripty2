@@ -18,6 +18,8 @@ Effect.Base = Class.create({
   },
 
   setOptions: function(options) {
+    if (Object.isNumber(options)) options = { duration: options };
+
     if (!this.options) this.options = Object.extend({
       transition: options && options.tween ? options.tween : 'sinusoidal',
       queue:      Effect.globalQueue,

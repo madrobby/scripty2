@@ -9,6 +9,7 @@ Effect.ElementMethods = {
   },
 
   morph: function(element, style, options){
+    if (Object.isNumber(options)) options = { duration: options };
     return element.effect('morph', Object.extend(options, {style: style}));
   }.optionize(),
 
