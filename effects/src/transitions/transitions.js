@@ -18,12 +18,7 @@ Effect.Transitions = {
   },
   
   pulse: function(pos, pulses) { 
-    pulses = pulses || 5; 
-    return (
-      ((pos % (1/pulses)) * pulses).round() == 0 ? 
-            ((pos * pulses * 2) - (pos * pulses * 2).floor()) : 
-        1 - ((pos * pulses * 2) - (pos * pulses * 2).floor())
-      );
+    return (-Math.cos((pos*((pulses||5)-.5)*2)*Math.PI)/2) + .5;
   },
   
   spring: function(pos) { 
