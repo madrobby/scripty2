@@ -1,0 +1,3 @@
+[submodule "./vendor/sprockets"]
+	path = ./vendor/sprockets
+	url = git://github.com/sstephenson/sprockets.git
