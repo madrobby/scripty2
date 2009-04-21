@@ -1,0 +1,10 @@
+//= require <effects/base>
+//= require <effects/heartbeat>
+//= require <effects/queue>
+//= require <effects/style>
+//= require <effects/morph>
+//= require <effects/parallel>
+//= require <effects/scroll>
+//= require <effects/legacy>
+//= require <effects/transitions/transitions>
+//= require <effects/transitions/penner>

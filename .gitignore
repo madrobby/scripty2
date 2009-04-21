@@ -1,2 +1,5 @@
 .DS_Store
-effects/dist
+pkg
+test/unit/tmp/*
+doc
+tmp
