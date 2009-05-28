@@ -1,3 +1,12 @@
+/**
+ * == CSS ==
+ * Utility functions for CSS parsing, color normalization and tweening.
+**/
+
+/** section: CSS
+ * s2.css
+ * Utility functions for CSS parsing, color normalization and tweening.
+**/
 s2.css = {
   PROPERTY_MAP: {
     backgroundColor: 'color',
@@ -42,11 +51,48 @@ s2.css = {
     zIndex: 'integer',
     zoom: 'number'
   },
-    
   LENGTH: /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/,
   NUMBER: /([\+-]*\d+\.?\d*)/,
 
   __parseStyleElement: document.createElement('div'),
+  
+  /**
+   * s2.css.parseStyle(string) -> Object
+   * Takes a string of CSS rules and parses them into key/value pairs. Colors and
+   * opacity settings on IE are normalized.
+   *  <h4>Methods you may find useful</h4>
+   *  
+   *  Instances of the `Request` object provide several methods that can come in
+   *  handy in your callback functions, especially once the request is complete.
+   *  
+   *  <h5>Is the response a successful one?</h5>
+   *  
+   *  The [[Ajax.Request#success]] method examines the XHR object's `status`
+   *  property and follows general HTTP guidelines: unknown status is deemed
+   *  successful, as is the whole `2xy` status code family. It's a generally
+   *  better way of testing your response than the usual
+   *  `200 == transport.status`.
+   *  
+   *  <h5>Getting HTTP response headers</h5>
+   *
+   *  While you can obtain response headers from the XHR object using its
+   *  `getResponseHeader` method, this makes for verbose code, and several
+   *  implementations raise an exception when the header is not found. To make
+   *  this easier, you can use the [[Ajax.Response#getHeader]] method, which
+   *  delegates to the longer version and returns `null` if an exception occurs:
+   *  
+   *      new Ajax.Request('/your/url', {
+   *        onSuccess: function(response) {
+   *          // Note how we brace against null values
+   *          if ((response.getHeader('Server') || '').match(/Apache/))
+   *            ++gApacheCount;
+   *          // Remainder of the code
+   *        }
+   *      });
+   *  
+   *  <h5>Evaluating JSON headers</h5>
+   *
+   **/
   parseStyle: function(styleString) {
     s2.css.__parseStyleElement.innerHTML = '<div style="' + styleString + '"></div>';
     var style = s2.css.__parseStyleElement.childNodes[0].style, styleRules = {};
@@ -64,7 +110,10 @@ s2.css = {
 
     return styleRules;
   },
-
+  
+  /**
+   * s2.css.normalizeColor(color) -> String
+   **/
   normalizeColor: function(color) {
     if (!color || ['rgba(0, 0, 0, 0)','transparent'].include(color)) color = '#ffffff';
     color = s2.css.colorFromString(color);

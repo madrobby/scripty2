@@ -44,8 +44,7 @@ namespace :doc do
   desc "Builds the documentation."
   task :build => [:require] do
     
-    TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "vendor", "pdoc",
-      "new_templates")
+    TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "templates")
     
     TEMPLATES_DIRECTORY = File.join(TEMPLATES_ROOT, "html")
     
@@ -69,10 +68,10 @@ namespace :doc do
         
       secretary.concatenation.save_to(temp.path)
       rm_rf SCRIPTY2_DOC_DIR
-      PDoc::Runner.new(temp.path, {
+      PDoc::Runner.new(temp.path,
         :output    => SCRIPTY2_DOC_DIR,
-        :templates => File.join(TEMPLATES_DIRECTORY, "html")
-      }).run
+        :templates => TEMPLATES_DIRECTORY
+      ).run
     end
   end  
   
