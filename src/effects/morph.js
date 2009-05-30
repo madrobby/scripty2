@@ -7,7 +7,9 @@
  *
  * It's recommended to use the shorthand syntax, for example:
  *
- *   $('element_id').morph('width:300px;color:#fff', { duration: .7 });
+ * <code class="javascript">  
+ * $('element_id').morph('width:300px;color:#fff', { duration: .7 });
+ * </code>
  *
  **/
 s2.fx.Morph = Class.create(s2.fx.Element, {

@@ -1,0 +1,3 @@
+* Effect options now recognize the following shortcuts: Strings "slow" and "fast" are mapped to { duration:1 } and { duration:.1 }, functions are mapped to { after: function }, and numbers are mapped to { duration:number }.  [#1 state:resolved] (Thomas Fuchs, Radoslav Stankov)
+
+* Default effect length is now 0.2 seconds.  (Thomas Fuchs)

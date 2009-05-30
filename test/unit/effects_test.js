@@ -190,13 +190,63 @@ new Test.Unit.Runner({
   
   testDefaultOptions: function() { with(this) {
     var oldDefaultOptions = Object.extend({}, s2.fx.DefaultOptions);
-    assertEqual(1.0, s2.fx.DefaultOptions.duration);
+    assertEqual(0.2, s2.fx.DefaultOptions.duration);
     s2.fx.DefaultOptions.duration = 0.1;
     var e1 = (new s2.fx.Morph('sandbox',{ style:'font-size:100px'})).play();
     assertEqual(0.1, e1.options.duration);
     wait(500, function() {
       assertEqual('finished', e1.state);
       s2.fx.DefaultOptions = oldDefaultOptions;
+    });
+  }},
+  
+  testParseOptions: function() { with(this) {
+    var opt;
+    
+    opt = s2.fx.parseOptions();
+    assertUndefined(opt);
+
+    opt = s2.fx.parseOptions({duration:1,blech:'2'});
+    assert('duration' in opt);
+    assert('blech' in opt);
+    
+    opt = s2.fx.parseOptions('slow');
+    assertEqual(1, opt.duration);
+    
+    opt = s2.fx.parseOptions('fast');
+    assertEqual(.1, opt.duration);
+    
+    opt = s2.fx.parseOptions('blech');
+    assertEqual(s2.fx.DefaultOptions.duration, opt.duration);
+    
+    opt = s2.fx.parseOptions(4);
+    assertEqual(4, opt.duration);
+    
+    var f = function(){};
+    opt = s2.fx.parseOptions(f);
+    assertIdentical(opt.after, f);
+  }},
+  
+  testShortcutOptions: function() { with(this) {
+    var testVar="?";    
+    $('sandbox').morph('font-size:10px',0.05);
+    wait(100, function() {
+      assertEqual('10px', $('sandbox').getStyle('font-size'));
+      $('sandbox').morph('font-size:20px',function(){ testVar='!'; });
+      wait(500, function() {
+        assertEqual('!', testVar);
+        $('sandbox').morph('font-size:30px','slow');
+        wait(600, function(){
+          assertNotEqual('30px', $('sandbox').getStyle('font-size'), 'slow half-way');
+          wait(600, function(){
+            assertEqual('30px', $('sandbox').getStyle('font-size'), 'slow at end');
+            $('sandbox').morph('font-size:7px','fast');
+            wait(150, function(){
+              assertEqual('7px', $('sandbox').getStyle('font-size'), 'fast at end');
+            });
+          });
+        })
+      });
     });
   }},
   

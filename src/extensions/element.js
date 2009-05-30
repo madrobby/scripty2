@@ -9,7 +9,7 @@ s2.fx.ElementMethods = {
   },
 
   morph: function(element, style, options){
-    if (Object.isNumber(options)) options = { duration: options };
+    options = s2.fx.parseOptions(options);
     return element.effect('morph', Object.extend(options, {style: style}));
   }.optionize(),
 

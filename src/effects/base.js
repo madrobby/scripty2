@@ -49,12 +49,23 @@ Object.extend(s2.fx, {
     transition: 'sinusoidal',
     position:   'parallel',
     fps:        60,
-    duration:   1
+    duration:   .2
   },
   
   elementDoesNotExistError: {
     name: 'ElementDoesNotExistError',
     message: 'The specified DOM element does not exist, but is required for this effect to operate'
+  },
+  
+  parseOptions: function(options) {
+    if (Object.isNumber(options)) 
+      options = { duration: options };
+    else if (Object.isFunction(options))
+      options = { after: options };
+    else if (Object.isString(options))
+      options = { duration: options == 'slow' ? 1 : options == 'fast' ? .1 : .2 };
+      
+    return options;
   }
 });
 
@@ -93,7 +104,7 @@ s2.fx.Base = Class.create({
   },
 
   setOptions: function(options) {
-    if (Object.isNumber(options)) options = { duration: options };
+    options = s2.fx.parseOptions(options);
 
     if (!this.options) {
       this.options = Object.extend(Object.extend({},s2.fx.DefaultOptions), options);
