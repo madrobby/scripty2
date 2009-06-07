@@ -21,6 +21,23 @@ new Test.Unit.Runner({
     //Effect.Queue.each(function(e) { e.cancel() });
   }},
   
+  testQueuing: function() { with(this) {
+    $('sandbox').morph('font-size:10px');
+    var q = s2.fx.DefaultOptions.queue;
+    assertEqual(1, q.getEffects().length);
+    wait(500, function(){
+      assertEqual(0, q.getEffects().length);
+      
+      $('sandbox').morph('font-size:20px');
+      $('sandbox').morph('color:#fff');
+      assertEqual(2, q.getEffects().length);
+      
+      wait(500, function(){
+        assertEqual(0, q.getEffects().length);
+      });
+    });
+  }},
+  
   testExceptionOnNonExistingElement: function() { with(this) {
     assertRaise('ElementDoesNotExistError',
       function(){new s2.fx.Morph('nothing-to-see-here',{style:'font-size:50px'})});

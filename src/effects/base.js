@@ -2,46 +2,39 @@
  * s2.fx
  * This is the main effects namespace.
  **/
-s2.fx = new (function(){
-  var queues = [], globalQueue, heartbeat, activeEffects = 0;
+s2.fx = (function(){
+  var queues = [], globalQueue, 
+    heartbeat, activeEffects = 0;
   
-  this.beatOnDemand = function(dir){
+  function beatOnDemand(dir){
     heartbeat[(activeEffects += dir) > 0 ? 'start' : 'stop']();
-  };
+  }
   
-  this.renderQueues = function(){
+  function renderQueues(){
     queues.invoke('render', heartbeat.getTimestamp());
-  };
+  }
   
-  this.getQueues = function(){
-    return queues;
-  };
-  
-  /**
-   * s2.fx#setHeartbeat(heartbeat) -> undefined
-   * Sets...
-   **/
-  this.setHeartbeat = function(newHeartbeat){
-    heartbeat = newHeartbeat;
-  };
-  
-  this.getHeartbeat = function(){
-    return heartbeat;
-  };
-  
-  this.addQueue = queues.push;
-  
-  this.initialize = function(initialHeartbeat){
+  function initialize(initialHeartbeat){
     if(globalQueue) return;
     queues.push(globalQueue = new s2.fx.Queue());
     s2.fx.DefaultOptions.queue = globalQueue;
     heartbeat = initialHeartbeat || new s2.fx.Heartbeat();
-  };
+    
+    document
+      .observe('effect:heartbeat', renderQueues)
+      .observe('effect:queued',    beatOnDemand.curry(1))
+      .observe('effect:dequeued',  beatOnDemand.curry(-1));
+  }
   
-  document
-    .observe('effect:heartbeat', this.renderQueues)
-    .observe('effect:queued',    this.beatOnDemand.curry(1))
-    .observe('effect:dequeued',  this.beatOnDemand.curry(-1));
+  return {
+    initialize: initialize,
+    getQueues: function(){ return queues; },
+    addQueue: queues.push,
+    getHeartbeat: function(){ return heartbeat; },
+    setHeartbeat: function(newHeartbeat){ 
+      heartbeat = newHeartbeat; 
+    }    
+  }
 })();
 
 Object.extend(s2.fx, {
