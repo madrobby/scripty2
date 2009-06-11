@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>scripty2 API documentation | <%= @title %></title>
-    <%= stylesheet_link_tag "core", "api", "highlighter" %>
+    <%= stylesheet_link_tag "core", "api" %>
   </head>
   <body>
     <div id="page">
@@ -56,8 +56,5 @@
     <%= javascript_include_tag "application", "code_highlighter" %>
     <%= javascript_include_tag "item_index" %>
     <script type="text/javascript">PDoc.pathPrefix = '<%= path_prefix %>';</script>
-    <script type="text/javascript" charset="utf-8">
-      CodeHighlighter.init();
-    </script>
   </body>
 </html>
