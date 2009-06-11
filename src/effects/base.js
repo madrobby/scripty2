@@ -78,14 +78,36 @@ Object.extend(s2.fx, {
 s2.fx.Base = Class.create({
   /**
    *  new s2.fx.Base([options])
-   *  - options (Object): options for the effect expressed in property/value pairs
+   *  - options (Number | Function | Object): options for the effect.
    *
-   *  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
-   *  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-   *  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-   *  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-   *  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
-   *  deserunt mollit anim id est laborum.
+   *  Base calls for all effects. Subclasses need to define the `update` instance
+   *  method for it to be useful. scripty2 currently provides one subclass implementation
+   *  for effects based on DOM elements, [[s2.fx.Element]].
+   *
+   *  <h4>Effect options</h4>
+   *  
+   *  There are serveral ways the options argument can be used:
+   *      
+   *      new s2.fx.Base({ duration: 3, transition: 'spring' });
+   *      new s2.fx.Base(function(){})   // shortcut for { after: function(){} }
+   *      new s2.fx.Base(3);             // shortcut for { duration: 3 }
+   *
+   *  The following options are recognized:
+   *
+   *  * `duration`: duration in seconds
+   *  * `transition`: Function reference or String with a property name from [[s2.fx.Transitions]].
+   *    Sets the transition method for easing and other special effects.
+   *  * `before`: Function to be executed before the first frame of the effect is rendered.
+   *  * `after`: Function to be executed after the effect has finished.
+   *  * `beforeUpdate`: Function to be executed before each frame is rendered.
+   *  * `afterUpdate`: Function to be executed after each frame is renedred.
+   *  * `fps`: The maximum number of frames per second. Ensures that no more than `options.fps`
+   *    frames per second are rendered, even if there's enough computation resources available.
+   *    This can be used to make CPU-intensive effects use fewer resources.
+   *  * `queue`: Specify a [[s2.fx.Queue]] to be used for the effect.
+   *
+   *  The effect won't start immediately, it will merely be initialized.
+   *  To start the effect, call [[s2.fx.Base#play]].
   **/
   initialize: function(options) {
     s2.fx.initialize();
@@ -126,6 +148,13 @@ s2.fx.Base = Class.create({
     this.options.transition = Object.propertize(this.options.transition, s2.fx.Transitions);
   },
 
+  /**
+   *  s2.fx.Base#play([options]) -> s2.fx.Base
+   *  - options: Effect options, see above.
+   *
+   *  Starts playing the effect.
+   *  Returns the effect.
+  **/
   play: function(options) {
     this.setOptions(options);
     this.frameCount = 0;
@@ -134,6 +163,15 @@ s2.fx.Base = Class.create({
     return this;
   },
 
+  /**
+   *  s2.fx.Base#render(timestamp) -> undefined
+   *  - timestamp (Date): point in time, normally the current time
+   *
+   *  Renders the effect, and calls the before/after functions when necessary.
+   *  This method also switches the state of the effect from `idle` to `running` when
+   *  the first frame is rendered, and from `running` to `finished` after the last frame
+   *  is rendered. 
+  **/
   render: function(timestamp) {
     if (timestamp >= this.startsAt) {
       if (this.state == 'idle') {
@@ -174,6 +212,11 @@ s2.fx.Base = Class.create({
     this.state = 'finished';
   },
 
+  /**
+   *  s2.fx.Base#inspect() -> String
+   *
+   *  Returns the debug-oriented string representation of an effect.
+  **/
   inspect: function() {
     return '#<s2.fx:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
   }
@@ -186,6 +229,13 @@ s2.fx.Base = Class.create({
  * as a base class for non-CSS based effects too.
 **/
 s2.fx.Element = Class.create(s2.fx.Base, {
+  /**
+   *  new s2.fx.Element(element[, options])
+   *  - element (Object | String): DOM element or element ID
+   *  - options (Number | Function | Object): options for the effect.
+   *
+   *  See [[s2.fx.Base]] for a description of the `options` argument.
+  **/
   initialize: function($super, element, options) {
     if(!(this.element = $(element)))
       throw(s2.fx.elementDoesNotExistError);
@@ -193,12 +243,37 @@ s2.fx.Element = Class.create(s2.fx.Base, {
     return $super(options);
   },
 
+  /**
+   *  s2.fx.Element#animate(operator[, args...]) -> undefined
+   *  - operator (String): lowercase name of an [[s2.fx.Operator]]
+   *
+   *  Starts an animation by using a [[s2.fx.Operator]] on the element
+   *  that is associated with the effect.
+   *  
+   *  The rest of the arguments are passed to Operators' constructor.
+   *  This method is intended to be called in the `setup` instance method
+   *  of subclasses, for example:
+   *
+   *      // setup method from s2.fx.Style
+   *      setup: function() {
+   *        this.animate('style', this.element, { style: this.options.style }); 
+   *      }
+  **/
   animate: function() {
     var args = $A(arguments), operator =  args.shift();
     operator = operator.charAt(0).toUpperCase() + operator.substring(1);
     this.operators.push(new s2.fx.Operators[operator](this, args[0], args[1] || {}));
   },
 
+  /**
+   *  s2.fx.Element#play([element[, options]]) -> s2.fx.Base
+   *  - element (Object | String): DOM element or element ID
+   *  - options (Number | Function | Object): options for the effect.
+   *
+   *  Starts playing the element effect. The optional `element` argument can
+   *  be used to reuse this instance on a different element than for
+   *  which it was used originally.
+  **/
   play: function($super, element, options) {
     if (element) this.element = $(element);
     return $super(options);
