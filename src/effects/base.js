@@ -159,6 +159,20 @@ s2.fx.Base = Class.create({
     }
     return this;
   },
+  
+  /**
+   *  s2.fx.Base#cancel([after]) -> undefined
+   *  - after (Boolean): if true, run the after method (if defined), defaults to false
+   *
+   *  Calling `cancel()` immediately halts execution of the effect, and calls the `teardown`
+   *  method if defined. 
+  **/
+  cancel: function(after) {
+    if(!this.state == 'running') return;
+    if (this.teardown) this.teardown();
+    if (after && this.options.after) this.options.after(this);
+    this.state = 'finished';
+  },
 
   inspect: function() {
     return '#<s2.fx:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
