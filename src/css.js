@@ -1,9 +1,9 @@
 /**
- * == CSS ==
- * Utility functions for CSS parsing, color normalization and tweening.
+ *  == DOM ==
+ *  DOM utility functions for CSS parsing, color normalization and CSS value interpolation.
 **/
 
-/** section: CSS
+/** section: DOM
  * s2.css
  * Utility functions for CSS parsing, color normalization and tweening.
 **/
@@ -51,48 +51,42 @@ s2.css = {
     zIndex: 'integer',
     zoom: 'number'
   },
+  
+  /**
+   *  s2.css.LENGTH = /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/
+   *  Regular expression for a CSS length, for example 12px, 8.4in, 13% or 0.
+  **/
   LENGTH: /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/,
+  
+  /**
+   *  s2.css.NUMBER = /([\+-]*\d+\.?\d*)/
+   *  Regular expression for a CSS numeric value, for example '+12.90', '-2' or '21.5'.
+  **/
   NUMBER: /([\+-]*\d+\.?\d*)/,
 
   __parseStyleElement: document.createElement('div'),
   
   /**
-   * s2.css.parseStyle(string) -> Object
-   * Takes a string of CSS rules and parses them into key/value pairs. Colors and
-   * opacity settings on IE are normalized.
-   *  <h4>Methods you may find useful</h4>
+   *  s2.css.parseStyle(string) -> Object
+   *  Takes a string of CSS rules and parses them into key/value pairs. 
+   *  Shortcut properties, colors and opacity settings on IE are normalized.
    *  
-   *  Instances of the `Request` object provide several methods that can come in
-   *  handy in your callback functions, especially once the request is complete.
+   *  Example:
    *  
-   *  <h5>Is the response a successful one?</h5>
-   *  
-   *  The [[Ajax.Request#success]] method examines the XHR object's `status`
-   *  property and follows general HTTP guidelines: unknown status is deemed
-   *  successful, as is the whole `2xy` status code family. It's a generally
-   *  better way of testing your response than the usual
-   *  `200 == transport.status`.
-   *  
-   *  <h5>Getting HTTP response headers</h5>
-   *
-   *  While you can obtain response headers from the XHR object using its
-   *  `getResponseHeader` method, this makes for verbose code, and several
-   *  implementations raise an exception when the header is not found. To make
-   *  this easier, you can use the [[Ajax.Response#getHeader]] method, which
-   *  delegates to the longer version and returns `null` if an exception occurs:
-   *  
-   *      new Ajax.Request('/your/url', {
-   *        onSuccess: function(response) {
-   *          // Note how we brace against null values
-   *          if ((response.getHeader('Server') || '').match(/Apache/))
-   *            ++gApacheCount;
-   *          // Remainder of the code
-   *        }
-   *      });
-   *  
-   *  <h5>Evaluating JSON headers</h5>
-   *
-   **/
+   *      s2.css.parseStyle('font-size:11px; border:12px solid #abc; border-left-width: 5px') ->
+   *      
+   *      {
+   *        borderBottomColor: '#aabbcc',
+   *        borderBottomWidth: '12px',
+   *        borderLeftColor:   '#aabbcc',
+   *        borderLeftWidth:   '#5px',
+   *        borderRightColor:  '#aabbcc',
+   *        borderRightWidth:  '12px',
+   *        borderTopColor:    '#aabbcc',
+   *        borderTopWidth:    '12px',
+   *        fontSize:          '11px'
+   *      }
+  **/
   parseStyle: function(styleString) {
     s2.css.__parseStyleElement.innerHTML = '<div style="' + styleString + '"></div>';
     var style = s2.css.__parseStyleElement.childNodes[0].style, styleRules = {};
@@ -112,14 +106,37 @@ s2.css = {
   },
   
   /**
-   * s2.css.normalizeColor(color) -> String
-   **/
+   *  s2.css.normalizeColor(color) -> Array
+   *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
+   *  
+   *  Returns the value of a CSS color as a RGB triplet:
+   *  
+   *  * #abc       -> [170, 187, 204]
+   *  * #aabbcc    -> not changed
+   *  * rgb(1,2,3) -> [1, 2, 3]
+   *  * #xyz       -> [NaN, NaN, NaN]
+   *  
+   *  This method does not support HTML color constants.
+  **/
   normalizeColor: function(color) {
     if (!color || ['rgba(0, 0, 0, 0)','transparent'].include(color)) color = '#ffffff';
     color = s2.css.colorFromString(color);
     return [0,1,2].map(function(i){ return parseInt(color.slice(i*2+1,i*2+3), 16) });
   },
   
+  /**
+   *  s2.css.colorFromString(color) -> String
+   *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
+   *  
+   *  Returns a normalized color in the #aabbcc format.
+   *  
+   *  * #abc -> Expanded to #aabbcc
+   *  * #aabbcc -> not changed
+   *  * rgb(1,2,3) -> Expanded to #010203
+   *  * other input -> not changed
+   *  
+   *  This method does not support HTML color constants.
+  **/
   colorFromString: function(color) {
     var value = '#', cols, i;
     if (color.slice(0,4) == 'rgb(') {
@@ -134,6 +151,19 @@ s2.css = {
     return (value.length==7 ? value : (arguments[1] || value));
   },
   
+  /**
+   *  s2.css.interpolateColor(from, to, position) -> String
+   *  - from (String): Original color in #abc, #aabbcc or rgba(1,2,3) format
+   *  - to (String): Target color in #abc, #aabbcc or rgba(1,2,3) format
+   *  - position (Number): interpolation position between 0 (original) and 1 (target)
+   *  
+   *  Returns a color in #aabbcc format for an arbitrary position between two colors. 
+   *  Positions less then 0 and greater than 1 are possible.
+   *  
+   *      s2.css.interpolateColor('#ffffff', '#000000', 0.5) -> '#808080'
+   *  
+   *  This method does not support HTML color constants as input values.
+  **/
   interpolateColor: function(from, to, position){
     from = s2.css.normalizeColor(from);
     to = s2.css.normalizeColor(to);
@@ -143,10 +173,36 @@ s2.css = {
     }).join('');
   },
   
+  /**
+   *  s2.css.interpolateNumber(from, to, position) -> Number
+   *  - from (Number): Original number
+   *  - to (Number): Target number
+   *  - position (Number): interpolation position between 0 (original) and 1 (destination)
+   *  
+   *  Returns a number for an arbitrary position between two numbers. 
+   *  Positions less then 0 and greater than 1 are possible.
+   *  
+   *      s2.css.interpolateNumber(1, 2, 0.5)  -> 1.5
+   *      s2.css.interpolateNumber(1.5, 4.5, 0.1) -> 1.8
+   *      s2.css.interpolateNumber(1, 10, 2)   -> 3
+   *      s2.css.interpolateNumber(1, 2, -0.5) -> 0.5
+  **/
   interpolateNumber: function(from, to, position){
     return (from||0).tween(to, position);
   },
 
+  /**
+   *  s2.css.interpolateLength(from, to, position) -> String
+   *  - from (Number): Original CSS length
+   *  - to (Number): Target CSS length (unit must be the same as in the `from` argument)
+   *  - position (Number): interpolation position between 0 (original) and 1 (destination)
+   *  
+   *  Returns a CSS length for an arbitrary position between two CSS lengths. 
+   *  Positions less then 0 and greater than 1 are possible.
+   *  
+   *      s2.css.interpolateLength('12px','18px',0.5)-> '15px'
+   *      s2.css.interpolateLength('10%','30%',0.7) -> '24%'
+  **/
   interpolateLength: function(from, to, position){
     if(!from) from = '0'+to.gsub(s2.css.NUMBER,'');
     to.scan(s2.css.NUMBER, function(match){ to = parseFloat(match[1]); });
@@ -155,19 +211,54 @@ s2.css = {
     });
   },
   
-  interpolatePercentage: function(from, to, position){
-    return s2.css.interpolateLength(from, to, position);
-  },
-  
+  /**
+   *  s2.css.interpolateInteger(from, to, position) -> Number
+   *  - from (Number): Original number
+   *  - to (Number): Target number
+   *  - position (Number): interpolation position between 0 (original) and 1 (destination)
+   *  
+   *  Returns a number rounded to the next integer for an arbitrary position between two numbers. 
+   *  Positions less then 0 and greater than 1 are possible.
+   *  
+   *      s2.css.interpolateInteger(1, 5, 0.5);  -> 3
+   *      s2.css.interpolateInteger(2, 4, 0.1);  -> 2
+   *      s2.css.interpolateInteger(1, 10, 2);   -> 19
+   *      s2.css.interpolateInteger(1, 2, -0.5); -> 1
+  **/
   interpolateInteger: function(from, to, position){
     return from.tween(to, position).round();
   },
   
+  /**
+   *  s2.css.interpolate(property, from, to, position) -> Number | String
+   *  - property (String): CSS property name to interpolate (e.g. 'font-size')
+   *  - from (String | Number): Original value
+   *  - to (String | Number): Target value
+   *  - position (Number): interpolation position between 0 (original) and 1 (destination)
+   *  
+   *  Returns the value for an arbitrary position between two CSS property values. 
+   *  The type of interpolation will be automatically choosen based on the the CSS property.
+   *  Positions less then 0 and greater than 1 are possible.
+   *  
+   *      s2.css.interpolate('font-size', '14px', '18px', 0.5) -> '16px'
+   *      s2.css.interpolate('background-color', '#abc', '#def', 0.5) -> '#c4d5e6'
+   *      s2.css.interpolate('opacity', 1, 0, 0.75) -> 0.25
+   *      s2.css.interpolate('zIndex', 1, 10, 0.75) -> 8
+  **/
   interpolate: function(property, from, to, position){
     return s2.css['interpolate'+s2.css.PROPERTY_MAP[property.camelize()].capitalize()](from, to, position);
   },
 
   ElementMethods: {
+    /**
+     *  s2.css.ElementMethods.getStyles(@element) -> Object
+     *  - element (String | Object): DOM object or element ID
+     *  
+     *  Returns an object with all currently applied style attributes for
+     *  a given DOM object. This includes all styles from stylesheets,
+     *  properties set with style attributes and CSS properties set with
+     *  the DOM API.
+    **/
     getStyles: function(element) {
       var css = document.defaultView.getComputedStyle($(element), null);
       return s2.css.PROPERTIES.inject({ }, function(styles, property) {

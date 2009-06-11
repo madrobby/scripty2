@@ -1,17 +1,16 @@
 //= require <effects/operators/style>
 
-/**
- * class s2.fx.Morph < s2.fx.Element
- * This is the most important of the built-in element effects,
- * "morphing" DOM elements to a new set of CSS style rules.
+/** section: Effects
+ *  class s2.fx.Morph < s2.fx.Element
+ *  
+ *  This is the most important of the built-in element effects,
+ *  "morphing" DOM elements to a new set of CSS style rules.
+ *  
+ *  It is recommended to use the shorthand syntax, for example:
  *
- * It's recommended to use the shorthand syntax, for example:
+ *      $('element_id').morph('width:300px;color:#fff', { duration: .7 });
  *
- * <code class="javascript">  
- * $('element_id').morph('width:300px;color:#fff', { duration: .7 });
- * </code>
- *
- **/
+**/
 s2.fx.Morph = Class.create(s2.fx.Element, {
   setup: function() {
     if (this.options.change) 

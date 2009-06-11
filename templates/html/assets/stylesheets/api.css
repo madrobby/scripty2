@@ -13,26 +13,6 @@ code {
   font-size: 12px;
 }
 
-/* masthead */
-div#masthead {
-  background: url(../images/header-stripe-small.png) repeat-x top left;
-  height: 76px;
-}
-
-  div#masthead div#masthead_content {
-    margin: 0 auto;
-    width: 835px;
-    position: relative;
-  }
-
-  div#masthead h1#logo {
-    background: url(../images/header-logo-small.png) no-repeat 0 1px;
-    width: 118px;
-    height: 76px;
-    position: relative;
-    left: 60px;
-  }
-  
 /* footer */
 div#footer {
   width: 960px;

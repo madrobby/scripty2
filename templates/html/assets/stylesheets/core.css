@@ -29,21 +29,16 @@ span.hidden { display: none; }
 
 
 body {
-  font-family: Verdana, sans-serif;
   font-size: 82.5%;
   line-height: 1.5em;
   margin: 0;
   padding: 0;
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-  body * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+body * {
+  margin: 0;
+  padding: 0;
 }
 
 h4 {
@@ -126,16 +121,6 @@ ul#external_links li {
   margin-left: 25px;
   padding-left: 21px;
 }
-
-li#scripty_link {
-  background: url(http://prototype.conio.net/new/images/link-logo-scripty.png) no-repeat center left;
-}
-
-li#rails_link {
-  background: url(http://prototype.conio.net/new/images/link-logo-rails.png) no-repeat center left;
-}
-
-
 
 p a, p a:link,
 h1 a, h1 a:link,
@@ -397,7 +382,6 @@ pre code {
 
 div#masthead {
   margin-top: 50px;
-  background: url(../images/header-stripe-small.png) repeat-x top left;
   height: 76px;
 }
 
@@ -408,9 +392,9 @@ div#masthead div#masthead_content {
 }
 
 div#masthead h1#logo {
-  background: url(../images/header-logo-small.png) no-repeat 0 1px;
-  width: 118px;
-  height: 76px;
+  background: url(../images/header-logo.png) no-repeat 0 1px;
+  width: 300px;
+  height: 93px;
   position: relative;
   left: 60px;
 }

@@ -1,2 +1,2 @@
-//=require <behaviours/behaviour>
-//=require <behaviours/states>
+//= require <behaviours/behaviour>
+//= require <behaviours/states>

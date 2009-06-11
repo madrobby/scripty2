@@ -1,7 +1,17 @@
+/**
+ * == Effects ==
+ * The scripty2 effects framework provides for time-based transformations of DOM elements 
+ * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement 
+ * of the visual effects framework of script.aculo.us 1.X.
+ *
+ * In practice `s2.fx.Morph` is most often used, which allows transitions from one
+ * set of CSS style rules to another.
+**/
+
 /** section: Effects
  * s2.fx
  * This is the main effects namespace.
- **/
+**/
 s2.fx = (function(){
   var queues = [], globalQueue, 
     heartbeat, activeEffects = 0;
@@ -62,21 +72,21 @@ Object.extend(s2.fx, {
   }
 });
 
-/** section: Effects
+/**
  *  class s2.fx.Base
- **/
+**/
 s2.fx.Base = Class.create({
   /**
    *  new s2.fx.Base([options])
    *  - options (Object): options for the effect expressed in property/value pairs
    *
-   * Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
-   * incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-   * exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-   * irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-   * pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
-   * deserunt mollit anim id est laborum.
-   **/
+   *  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+   *  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+   *  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+   *  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+   *  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+   *  deserunt mollit anim id est laborum.
+  **/
   initialize: function(options) {
     s2.fx.initialize();
     this.updateWithoutWrappers = this.update;
@@ -160,7 +170,7 @@ s2.fx.Base = Class.create({
  * Base class for effects that change DOM elements. This is the base class for
  * the most important effects implementation [[s2.fx.Morph]], but can be used
  * as a base class for non-CSS based effects too.
- **/
+**/
 s2.fx.Element = Class.create(s2.fx.Base, {
   initialize: function($super, element, options) {
     if(!(this.element = $(element)))

@@ -1,15 +1,44 @@
+/** section: Effects
+ *  class s2.fx.Queue
+ *
+ *  Effect queues manage the execution of effects in parallel or 
+ *  end-to-end over time.
+**/
 s2.fx.Queue = (function(){ 
   return function(){
     var effects = [];
     
+    /**
+     *  s2.fx.Queue#getEffects() -> Array
+     *
+     *  Returns an array of any effects currently running or queued up.
+    **/
     function getEffects(){
       return effects;
     }
     
+    /**
+     *  s2.fx.Queue#active() -> Boolean
+     *
+     *  Returns whether there are any effects currently running or queued up.
+    **/
     function active(){
       return effects.length > 0;
     }
     
+    /**
+     *  s2.fx.Queue#add(effect) -> s2.fx.Queue
+     *  - effect (s2.fx.Base): Effect to be queued
+     *
+     *  Add an effect to the queue. The effects' options can optionally
+     *  contain a `position` option that can be either `parallel` 
+     *  (the effect will start immediately) or 
+     *  `end` (the effect will start when the last of the 
+     *  currently queued effects end).
+     *  Returns the Queue.
+     *
+     *  fires: effect:queued
+    **/
     function add(effect){
       calculateTiming(effect);
       effects.push(effect);
@@ -17,6 +46,15 @@ s2.fx.Queue = (function(){
       return this;
     }
 
+    /**
+     *  s2.fx.Queue#remove(effect) -> s2.fx.Queue
+     *  - effect (s2.fx.Base): Effect to be removed from the Queue.
+     *
+     *  Removes an effect from the Queue and destroys the effect.
+     *  Returns the Queue.
+     *
+     *  fires: effect:dequeued
+    **/
     function remove(effect){
       effects = effects.without(effect);
       delete effect;
@@ -24,6 +62,13 @@ s2.fx.Queue = (function(){
       return this;
     }
 
+    /**
+     *  s2.fx.Queue#render(timestamp) -> s2.fx.Queue
+     *  - timestamp (Date): Timestamp given to the individual effects' render methods.
+     *
+     *  Renders all effects that are currently in the Queue.
+     *  Returns the Queue.
+    **/
     function render(timestamp){
       effects.invoke('render', timestamp);
       effects.select(function(effect) {
