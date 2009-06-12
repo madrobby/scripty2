@@ -244,6 +244,12 @@ s2.css = {
    *      s2.css.interpolate('background-color', '#abc', '#def', 0.5) -> '#c4d5e6'
    *      s2.css.interpolate('opacity', 1, 0, 0.75) -> 0.25
    *      s2.css.interpolate('zIndex', 1, 10, 0.75) -> 8
+   *
+   *  To generate a list of supported CSS properties and types, use:
+   *
+   *      $H(s2.css.PROPERTY_MAP).map(function(v){
+   *        return v[0].underscore().dasherize(r)+' ('+v[1]+')';
+   *      }).join(', ');
   **/
   interpolate: function(property, from, to, position){
     return s2.css['interpolate'+s2.css.PROPERTY_MAP[property.camelize()].capitalize()](from, to, position);
