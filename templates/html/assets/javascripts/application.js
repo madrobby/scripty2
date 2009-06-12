@@ -68,9 +68,14 @@ var s2doc = {
       transition = s2.fx.Transitions[type];
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
-      min = values.min(), max = values.max(), factor = 200/(max-min),
-      grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
-        '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
+      min = Math.min(0, values.min()), max = Math.max(200, values.max());
+
+    if (min==max) {
+      min = 0; max = 200;
+    }
+    
+    var factor = 200/(max-min), grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
+      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
       
     element.innerHTML = grid + $R(0,200).map(function(v){
       return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
