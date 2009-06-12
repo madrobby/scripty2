@@ -29,7 +29,7 @@ new Test.Unit.Runner({
     assertEqual('  -1  pc  ', s2.css.interpolateLength('  1  pc  ', ' \n3 \t pc  ', -1));
     
     // precentages
-    assertEqual('50%', s2.css.interpolatePercentage('0%', '100%', 0.5));
+    assertEqual('50%', s2.css.interpolateLength('0%', '100%', 0.5));
     
     // colors
     assertEqual('#ffffff', s2.css.interpolateColor('#ffffff', '#000000', 0));

@@ -119,9 +119,11 @@ s2.css = {
    *  This method does not support HTML color constants.
   **/
   normalizeColor: function(color) {
-    if (!color || ['rgba(0, 0, 0, 0)','transparent'].include(color)) color = '#ffffff';
+    if (!color || color == 'rgba(0, 0, 0, 0)' || color == 'transparent') color = '#ffffff';
     color = s2.css.colorFromString(color);
-    return [0,1,2].map(function(i){ return parseInt(color.slice(i*2+1,i*2+3), 16) });
+    return [
+      parseInt(color.slice(1,3),16), parseInt(color.slice(3,5),16), parseInt(color.slice(5,7),16)
+    ];
   },
   
   /**
@@ -141,7 +143,7 @@ s2.css = {
     var value = '#', cols, i;
     if (color.slice(0,4) == 'rgb(') {
       cols = color.slice(4,color.length-1).split(',');
-      i=0; do { value += parseInt(cols[i]).toColorPart() } while (++i<3);
+      i=3; while(i--) value += parseInt(cols[2-i]).toColorPart();
     } else {
       if (color.slice(0,1) == '#') {
         if (color.length==4) for(i=1;i<4;i++) value += (color.charAt(i) + color.charAt(i)).toLowerCase();

@@ -1,7 +1,6 @@
 new Test.Unit.Runner({ 
   testStyle: function(){ with(this) {
     var operator = new s2.fx.Operators.Style(null, 'style_test', { style: 'font-size:20px' });
-    console.log(operator);
     assertMatch(/10px/, operator.valueAt(0));
     assertMatch(/15px/, operator.valueAt(.5));
     assertMatch(/20px/, operator.valueAt(1));

@@ -74,7 +74,8 @@ s2.fx.Transitions = {
    *  <div class="transition"></div>
   **/
   flicker: function(pos) {
-    return Math.max((-Math.cos(pos*Math.PI)/4) + 0.75 + Math.random()/4, 1);
+    var pos = pos + (Math.random()-0.5)/5;
+    return s2.fx.Transitions.sinusoidal(pos < 0 ? 0 : pos > 1 ? 1 : pos);
   },
   
   /**

@@ -60,27 +60,6 @@ new Test.Unit.Runner({
     });
   }},
   
-  testHeartbeat: function() { with(this) {
-    var tmp = 0, tmp2 = 0;
-    document.observe('effect:heartbeat', function(){
-      tmp++;
-    });
-    assertEqual(0, tmp);
-    wait(250, function(){
-      assertEqual(0, tmp);
-      new s2.fx.Morph('sandbox',{style:'',delay:1,duration:0.5}).play();
-      wait(750, function(){
-        assert(tmp > 0);
-        tmp2 = tmp;
-        wait(250, function(){
-          info(tmp);
-          info(tmp2);
-          assert(tmp2 == tmp); // heartbeats shouldn't continue when no fx running
-        });
-      });
-    });
-  }},
-  
   testAfterEvent: function() { with(this) {
     tmp = 0;
     var i = 6;
@@ -164,8 +143,8 @@ new Test.Unit.Runner({
         ];
         
         transitions.each(function(t){
-          assertEqual(t.expected0, s2.fx.Transitions[t.transition](0));
-          assertEqual(t.expected1, s2.fx.Transitions[t.transition](1));
+          assertEqual(t.expected0, s2.fx.Transitions[t.transition](0), t.transition + '@0');
+          assertEqual(t.expected1, s2.fx.Transitions[t.transition](1), t.transition + '@1');
         });
         
         $('sandbox').setStyle('font-size:10px');
