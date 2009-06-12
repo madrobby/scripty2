@@ -28,7 +28,6 @@ var s2 = {
 
 //= require "css"
 //= require "effects"
-//= require "behaviours"
   
 //= require "extensions/misc"
 //= require "extensions/element"
