@@ -29,6 +29,29 @@ span.hidden {
 display: none;
 }
 
+div.transition {
+  margin-top: 30px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+div.transition div {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  background: #000;
+}
+
+div.transition span {
+  display: block;
+  position: absolute;
+  border-bottom: 1px solid #dadada;
+  font-size: 10x;
+  color: #888;
+  width: 200px;
+  left: 0px;
+}
 
 body {
 font-size: 82.5%;

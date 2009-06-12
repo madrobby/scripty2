@@ -56,7 +56,26 @@ PDoc.highlight = function(element) {
       window.scrollBy(0, frameOffset.top - 10);
     }    
   }).defer();
+};
+
+var s2doc = {
+  init: function(){
+    $$('.transition').each(s2doc.TransitionExample);
+  },
   
+  TransitionExample: function(element){
+    var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
+      transition = s2.fx.Transitions[type];
+      
+    var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
+      min = values.min(), max = values.max(), factor = 200/(max-min),
+      grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
+        '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
+      
+    element.innerHTML = grid + $R(0,200).map(function(v){
+      return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
+    }).join('');
+  }
 };
 
 // Live API search.
@@ -380,4 +399,5 @@ Form.GhostedField = Class.create({
 
 document.observe("dom:loaded", function() {
   new Form.GhostedField($('search'), "Search");
+  s2doc.init();
 });

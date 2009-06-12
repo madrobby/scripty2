@@ -257,7 +257,7 @@ s2.css = {
 
   ElementMethods: {
     /**
-     *  s2.css.ElementMethods.getStyles(@element) -> Object
+     *  Element.getStyles(@element) -> Object
      *  - element (String | Object): DOM object or element ID
      *  
      *  Returns an object with all currently applied style attributes for
