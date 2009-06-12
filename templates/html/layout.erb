@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>scripty2 API documentation | <%= @title %></title>
-    <%= stylesheet_link_tag "core", "api" %>
+    <%= stylesheet_link_tag "apidocs" %>
   </head>
   <body>
     <div id="page">
@@ -17,20 +17,19 @@
       </div>
 
       <div id="menu" class="clearfix">
-        <div class="api-box">
-          <h2><a href="#" id="api_menu_button">Menu &darr;</a></h2>
-          <ul id="api_menu" class="menu-items" style="display: none">
-            <% @root.sections.each do |section| %>
-              <%= menu(section) %>
-            <% end %>
-          </ul>
-        </div>
-
         <div class="search-box">
           <form>
             <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
           </form>
           <ul id="search_results" class="search-results menu-items" style="display:none"></ul>
+        </div>
+        <div class="api-box">
+          <h2><a href="#" id="api_menu_button">Quick Links &darr;</a></h2>
+          <ul id="api_menu" class="menu-items" style="display: none">
+            <% @root.sections.each do |section| %>
+              <%= menu(section) %>
+            <% end %>
+          </ul>
         </div>
       </div>
 
@@ -52,8 +51,8 @@
       </div>
     </div>
 
-    <%= javascript_include_tag "prototype", "effects", "controls" %>
-    <%= javascript_include_tag "application", "code_highlighter" %>
+    <%= javascript_include_tag "prototype", "s2" %>
+    <%= javascript_include_tag "application" %>
     <%= javascript_include_tag "item_index" %>
     <script type="text/javascript">PDoc.pathPrefix = '<%= path_prefix %>';</script>
   </body>

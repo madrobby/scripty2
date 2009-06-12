@@ -43,8 +43,8 @@ PDoc.highlight = function(element) {
       
   frame.setStyle({
     position: 'absolute',
-    top: (offset.top - 5) + 'px',
-    left: (offset.left - 5) + 'px',
+    top: (offset.top - 25) + 'px',
+    left: (offset.left - 25) + 'px',
     width:  (w + 5) + 'px',
     height: (h + 10) + 'px'
   });
