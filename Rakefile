@@ -44,7 +44,7 @@ end
 desc "Generates a minified version of the distribution."
 task :min do
   puts "Minifying..."
-  `java -jar vendor/yuicompressor/build/yuicompressor-2.4.2.jar dist/s2.js -o dist/s2.min.js`
+  `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar dist/s2.js -o dist/s2.min.js`
   cp File.join(SCRIPTY2_DIST_DIR,'s2.min.js'), File.join(SCRIPTY2_DIST_DIR,'temp.js')
   `gzip -9 dist/temp.js`
   
