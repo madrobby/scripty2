@@ -31,4 +31,5 @@ var s2 = {
   
 //= require "extensions/misc"
 //= require "extensions/element"
+
 //= require "addons/helpers"

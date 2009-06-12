@@ -91,10 +91,13 @@ s2.fx.Base = Class.create({
    *      new s2.fx.Base({ duration: 3, transition: 'spring' });
    *      new s2.fx.Base(function(){})   // shortcut for { after: function(){} }
    *      new s2.fx.Base(3);             // shortcut for { duration: 3 }
+   *      new s2.fx.Base('slow');        // shortcut for { duration: 1 }
+   *      new s2.fx.Base('fast');        // shortcut for { duration: .1 }
    *
    *  The following options are recognized:
    *
-   *  * `duration`: duration in seconds
+   *  * `duration`: duration in seconds, defaults to 0.2 (a fifth of a second). This
+   *     speed is based on the value Mac OS X uses for interface effects.
    *  * `transition`: Function reference or String with a property name from [[s2.fx.Transitions]].
    *    Sets the transition method for easing and other special effects.
    *  * `before`: Function to be executed before the first frame of the effect is rendered.

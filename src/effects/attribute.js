@@ -1,5 +1,5 @@
 /** section: Effects
- *  class s2.fx.Parallel < s2.fx.Base
+ *  class s2.fx.Attribute < s2.fx.Base
  *
  *  This effect can change an object property or call
  *  a method with a numerical interpolation.
