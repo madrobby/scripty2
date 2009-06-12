@@ -4,6 +4,12 @@
 // Brian Crescimanno <brian.crescimanno@gmail.com>
 // Ken Snyder <kendsnyder@gmail.com)
 
+/*!
+ *  TERMS OF USE - EASING EQUATIONS
+ *  Open source under the BSD License.
+ *  Easing Equations (c) 2003 Robert Penner, all rights reserved.
+ */
+
 Object.extend(s2.fx.Transitions, {
   easeInQuad: function(pos){
      return Math.pow(pos, 2);

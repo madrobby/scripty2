@@ -24,6 +24,7 @@ def sprocketize(path, source, destination = source)
     puts "\nand you should be all set.\n\n"
   end
   
+  puts "Sprocketizing..."
   secretary = Sprockets::Secretary.new(
     :root         => File.join(SCRIPTY2_ROOT, path),
     :load_path    => [SCRIPTY2_SRC_DIR],
@@ -33,12 +34,19 @@ def sprocketize(path, source, destination = source)
   secretary.concatenation.save_to(File.join(SCRIPTY2_DIST_DIR, destination))
 end
 
-task :default => [:dist, :package, :clean_package_source]
+task :default => [:dist, :min, :doc, :package, :clean_package_source]
 
 desc "Builds the distribution."
 task :dist do
   sprocketize("src", "s2.js")
 end
+
+desc "Generates a minified version of the distribution."
+task :min do
+  puts "Minifying..."
+  `java -jar vendor/yuicompressor/build/yuicompressor-2.4.2.jar dist/s2.js -o dist/s2.min.js`
+end
+
 
 namespace :doc do
   desc "Builds the documentation."
@@ -103,6 +111,8 @@ Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
     'README.rdoc',
     'MIT-LICENSE',
     'dist/s2.js',
+    'dist/s2.min.js',
+    'doc/**',
     'src/**'
   )
 end
