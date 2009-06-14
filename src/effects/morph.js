@@ -1,5 +1,43 @@
 //= require <effects/operators/style>
 
+/** section: Effects
+ *  class s2.fx.Morph < s2.fx.Element
+ *  
+ *  "Morph" DOM elements to a new set of CSS style rules, while optionally
+ *  providing a new set of contents.
+ *
+ *  <h4>Preferred syntax</h4>
+ *  
+ *  It is recommended to use the shorthand syntax, for example:
+ *
+ *      $('element_id').morph('width:300px;color:#fff', { duration: .7 });
+ *
+ *  <h4>Supported CSS properties</h4>
+ *
+ *  The following CSS properties are supported by this effect:
+ *  `background-color (color)`, `border-bottom-color (color)`, 
+ *  `border-bottom-width (length)`, `border-left-color (color)`, 
+ *  `border-left-width (length)`, `border-right-color (color)`, 
+ *  `border-right-width (length)`,  `border-spacing (length)`, 
+ *  `border-top-color (color)`, `border-top-width (length)`, 
+ *  `bottom (length)`, `color (color)`, `font-size (length)`, 
+ *  `font-weight (integer)`, `height (length)`, `left (length)`, 
+ *  `letter-spacing (length)`, `line-height (length)`, 
+ *  `margin-bottom (length)`, `margin-left (length)`, `margin-right (length)`, 
+ *  `margin-top (length)`, `max-height (length)`, `max-width (length)`, 
+ *  `min-height (length)`, `min-width (length)`, `opacity (number)`, 
+ *  `outline-color (color)`, `outline-offset (length)`, 
+ *  `outline-width (length)`, `padding-bottom (length)`, 
+ *  `padding-left (length)`, `padding-right (length)`, `padding-top (length)`, 
+ *  `right (length)`, `text-indent (length)`, `top (length)`, `width (length)`, 
+ *  `word-spacing (length)`, `z-index (integer)` and `zoom (number)`.
+ *
+ *  In addition, shorthand CSS properties for these also work:
+ *  
+ *      $('element_id').setStyle('border:2px solid #cba;border-bottom-width:100px');
+ *      $('element_id').morph('border:12px solid #abc', { duration: .7 });
+ *
+**/
 s2.fx.Morph = Class.create(s2.fx.Element, {
   setup: function() {
     if (this.options.change) 

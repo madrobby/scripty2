@@ -1,3 +1,6 @@
+/** section: Effects
+ *  class s2.fx.Heartbeat
+**/
 s2.fx.Heartbeat = Class.create({
   initialize: function(options) {
     this.options = Object.extend({

@@ -24,6 +24,7 @@ def sprocketize(path, source, destination = source)
     puts "\nand you should be all set.\n\n"
   end
   
+  puts "Sprocketizing..."
   secretary = Sprockets::Secretary.new(
     :root         => File.join(SCRIPTY2_ROOT, path),
     :load_path    => [SCRIPTY2_SRC_DIR],
@@ -33,19 +34,34 @@ def sprocketize(path, source, destination = source)
   secretary.concatenation.save_to(File.join(SCRIPTY2_DIST_DIR, destination))
 end
 
-task :default => [:dist, :package, :clean_package_source]
+task :default => [:dist, :min, :doc, :package, :clean_package_source]
 
 desc "Builds the distribution."
 task :dist do
   sprocketize("src", "s2.js")
 end
 
+desc "Generates a minified version of the distribution."
+task :min do
+  puts "Minifying..."
+  `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar dist/s2.js -o dist/s2.min.js`
+  cp File.join(SCRIPTY2_DIST_DIR,'s2.min.js'), File.join(SCRIPTY2_DIST_DIR,'temp.js')
+  `gzip -9 dist/temp.js`
+  
+  osize = File.size(File.join(SCRIPTY2_DIST_DIR,'s2.js'))
+  dsize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js.gz'))
+  rm_rf File.join(SCRIPTY2_DIST_DIR,'temp.js.gz')
+  
+  puts "Original version: %.1fk" % (osize/1024.0)
+  puts "Minified and gzipped: %.1fk, compression factor %.1f" % [dsize/1024.0, osize/dsize.to_f]
+end
+
+
 namespace :doc do
   desc "Builds the documentation."
   task :build => [:require] do
     
-    TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "vendor", "pdoc",
-      "new_templates")
+    TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "templates")
     
     TEMPLATES_DIRECTORY = File.join(TEMPLATES_ROOT, "html")
     
@@ -69,11 +85,18 @@ namespace :doc do
         
       secretary.concatenation.save_to(temp.path)
       rm_rf SCRIPTY2_DOC_DIR
-      PDoc::Runner.new(temp.path, {
-        :output    => SCRIPTY2_DOC_DIR,
-        :templates => File.join(TEMPLATES_DIRECTORY, "html")
-      }).run
+      
+      begin
+        PDoc::Runner.new(temp.path,
+          :output    => SCRIPTY2_DOC_DIR,
+          :templates => TEMPLATES_DIRECTORY
+        ).run
+      rescue 
+        puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
+      end
     end
+    
+    cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
   end  
   
   task :require do
@@ -97,6 +120,8 @@ Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
     'README.rdoc',
     'MIT-LICENSE',
     'dist/s2.js',
+    'dist/s2.min.js',
+    'doc/**',
     'src/**'
   )
 end

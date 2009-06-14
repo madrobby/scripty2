@@ -1,3 +1,9 @@
+/** section: Effects
+ *  class s2.fx.Attribute < s2.fx.Base
+ *
+ *  This effect can change an object property or call
+ *  a method with a numerical interpolation.
+**/
 s2.fx.Attribute = Class.create(s2.fx.Base, {
   initialize: function($super, object, from, to, options, method) {
     object = Object.isString(object) ? $(object) : object;

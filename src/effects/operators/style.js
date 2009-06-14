@@ -1,5 +1,10 @@
 //= require <effects/operators/base>
 
+/**
+ *  class s2.fx.Operators.Style < s2.fx.Operators.Base
+ *  
+ *  Operator for interpolation the CSS styles of an Element.
+**/
 s2.fx.Operators.Style = Class.create(s2.fx.Operators.Base, {
   initialize: function($super, effect, object, options) {
     $super(effect, object, options);
