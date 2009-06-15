@@ -37,6 +37,7 @@
  *      $('element_id').setStyle('border:2px solid #cba;border-bottom-width:100px');
  *      $('element_id').morph('border:12px solid #abc', { duration: .7 });
  *
+ *  <div id="morph_example"></div>
 **/
 s2.fx.Morph = Class.create(s2.fx.Element, {
   setup: function() {
