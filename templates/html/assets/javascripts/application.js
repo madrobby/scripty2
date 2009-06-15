@@ -65,7 +65,7 @@ var s2doc = {
   
   TransitionExample: function(element){
     var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
-      transition = s2.fx.Transitions[type];
+      transition = s2.fx.Transitions[type], active = false;
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
       min = Math.min(0, values.min()), max = Math.max(200, values.max());
@@ -75,11 +75,48 @@ var s2doc = {
     }
     
     var factor = 200/(max-min), grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
-      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
+      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>', 
+      graph = $R(0,200).map(function(v){
+        return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
+      }).join('') + '<div class="indicator" style="display:none"></div>';
       
-    element.innerHTML = grid + $R(0,200).map(function(v){
-      return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
-    }).join('');
+      
+    var interactive = '<div class="interactive">'+
+      '<div class="movement">left:300px</div>' +
+      '</div>';
+      
+    element.innerHTML = grid + graph + interactive;
+    
+    var effect, 
+      interactive = element.down('div.interactive'),
+      movement = interactive.down('div.movement'),
+      indicator = element.down('div.indicator');
+      
+    var demoTransition = function(pos){
+      indicator.style.cssText += ';left:'+(pos*200).round()+'px';
+      return transition(pos);
+    }
+    
+    interactive.observe('mouseenter', function(){
+      interactive.addClassName('active');
+      indicator.show();
+      function animate(){
+        effect = new s2.fx.Morph(movement, { 
+          style: 'left:320px', transition: demoTransition, duration: 1, delay: .5,
+          before: function(){ movement.setStyle('left:50px') },
+          after: function(){ if(active) animate(); }
+        });
+        effect.play();
+      }
+      active = true;
+      animate();
+    }).observe('mouseleave', function(){
+      indicator.hide();
+      interactive.removeClassName('active');
+      if(effect) effect.cancel();
+      element.down('div.movement').setStyle('left:50px');
+      active = false;
+    });
   }
 };
 

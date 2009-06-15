@@ -53,6 +53,45 @@ div.transition span {
   left: 0px;
 }
 
+div.transition div.indicator {
+  background-color: #ABD474;
+  height: 200px;
+  top: 0px;
+  left: 0px;
+}
+
+div.transition div.interactive {
+  width: 500px;
+  height: 200px;
+  left: 240px;
+  border: 1px solid #dadada;
+  background: #fff;
+}
+
+div.transition div.interactive div {
+  color: #888;
+}
+
+div.transition div.interactive.active div {
+  color: #000;
+}
+
+div.transition div.interactive div.movement {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #dadada;
+  background: #fafafa;
+  text-align:center;
+  padding: 20px;
+  top: 30px;
+  left: 50px;
+}
+
+div.transition div.interactive.active div.movement {
+  background: #F9FFED;
+  border: 1px solid #ABD474;
+}
+
 body {
 font-size: 82.5%;
 line-height: 1.5em;
