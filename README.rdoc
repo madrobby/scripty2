@@ -12,6 +12,9 @@ scripty2 is a complete rewrite and reimplementation of script.aculo.us, with
 are modular structure intended to ease the development of highly customized
 user interface effects and behaviours.
 
+Please use http://groups.google.com/group/scripty2 for any development questions
+for scripty2. Patches, tests, demos, updates and documentation are always welcome.
+
 = Build
 
 For building, development and testing, you need to have a working Ruby setup. 
