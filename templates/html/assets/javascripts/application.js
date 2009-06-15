@@ -150,6 +150,46 @@ var s2doc = {
       size.setStyle('top:60px;left:450px;width:30px;height:30px;font-size:100%');
       active = false;
     });
+  },
+  
+  MorphExample: function(element) {
+    function generateDemoParagraph() {
+      return new Element('p').update('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.');
+    };
+
+    var element = $(element),
+        options = new Element('div', { className: 'options' }),
+        input   = new Element('textarea');
+        button  = new Element('a', { href: '#', className: 'button' }).update('Morph'),
+        reset   = new Element('a', { href: '#', className: 'reset' }).update('Reset'),
+        hint    = new Element('div', { className: 'hint' });
+        p       = generateDemoParagraph();
+
+    function resetParagraph() {
+      p.remove();
+      p = generateDemoParagraph();
+      element.insert({ bottom: p });
+    };
+
+    hint.update('Example: <em>background:#666; color:#fff; border:5px solid #0f0; padding:15px; left:10px;</em>');
+
+    element.insert(options).insert(p);
+    options.insert(input).insert(button).insert(reset).insert(hint);
+
+    button.observe('click', function(event) {
+      event.stop();
+      p.morph(input.value);
+    });
+
+    reset.observe('click', function(event) {
+      event.stop();
+      resetParagraph();
+    });
+    
+    hint.observe('click', function(event) {
+      resetParagraph();
+      p.morph(hint.down('em').innerHTML);
+    });
   }
 };
 
