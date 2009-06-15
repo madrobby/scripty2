@@ -102,6 +102,18 @@ s2.fx.Transitions = {
   },
   
   /**
+   *  s2.fx.Transitions.blink(pos[, blinks]) -> Number
+   *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
+   *  - pulses (Number): Number of blinks, defaults to 5
+   *
+   *  Effect blinks on and off.
+   *  <div class="transition"></div>
+  **/
+  blink: function(pos, blinks) { 
+    return Math.round(pos*(blinks||5)) % 2;
+  },
+  
+  /**
    *  s2.fx.Transitions.spring(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
