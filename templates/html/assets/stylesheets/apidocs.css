@@ -60,6 +60,29 @@ div.transition div.indicator {
   left: 0px;
 }
 
+div.transition div.marker {
+  background-color: #ABD474;
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  left: 0px;
+  margin-bottom: -3px;
+  margin-left: -3px;
+}
+div.transition div.label {
+  background: transparent;
+  color: #ABD474;
+  font-size: 20px;
+  height: 20px;
+  width: 200px;
+  text-align: center;
+  top: 80px;
+  left: 0px;
+  z-index: -1;
+}
+
 div.transition div.interactive {
   width: 590px;
   height: 200px;

@@ -15,7 +15,7 @@
  * <h4>Default transition</h4
  *
  * If no transition option is given to an effect, [[s2.fx.Transitions.sinusoidal]] is used.
- * This setting can be changed by redifining [[s2.fx.DefaultOptions.transition]].
+ * This setting can be changed by redefining [[s2.fx.DefaultOptions.transition]].
  *
  * <h4>Implementing your own transitions</h4>
  *
