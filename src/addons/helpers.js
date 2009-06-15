@@ -18,4 +18,4 @@ s2.viewportOverlay = function(){
     left: offsets.left + 'px', top: offsets.top + 'px',
     width: viewport.width + 'px', height: viewport.height + 'px'
   });
-});
+};
