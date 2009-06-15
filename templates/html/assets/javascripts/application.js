@@ -82,14 +82,18 @@ var s2doc = {
       
       
     var interactive = '<div class="interactive">'+
-      '<div class="movement">left:300px</div>' +
+      '<div class="movement">movement</div>' +
+      '<div class="color">color</div>' +
+      '<div class="size">size</div>' +
       '</div>';
       
     element.innerHTML = grid + graph + interactive;
     
-    var effect, 
+    var effectM, effectC, effectS,
       interactive = element.down('div.interactive'),
       movement = interactive.down('div.movement'),
+      color = interactive.down('div.color'),
+      size = interactive.down('div.size'),
       indicator = element.down('div.indicator');
       
     var demoTransition = function(pos){
@@ -101,20 +105,34 @@ var s2doc = {
       interactive.addClassName('active');
       indicator.show();
       function animate(){
-        effect = new s2.fx.Morph(movement, { 
-          style: 'left:320px', transition: demoTransition, duration: 1, delay: .5,
-          before: function(){ movement.setStyle('left:50px') },
+        effectM = new s2.fx.Morph(movement, { 
+          style: 'left:268px', transition: demoTransition, duration: 1, delay: .5,
+          before: function(){ movement.setStyle('left:20px') },
           after: function(){ if(active) animate(); }
         });
-        effect.play();
+        effectM.play();
+        effectC = new s2.fx.Morph(color, { 
+          style: 'background-color:#9D74D4', duration: 1, delay: .5, transition: transition,
+          before: function(){ color.setStyle('background-color:#ABD474') }
+        });
+        effectC.play();
+        effectS = new s2.fx.Morph(size, { 
+          style: 'margin-left:-45px;margin-top:-30px;width:135px;font-size:200%;height:120px', duration: 1, delay: .5, transition: transition,
+          before: function(){ size.setStyle('margin:0;width:30px;height:30px;font-size:100%') }
+        });
+        effectS.play();
       }
       active = true;
       animate();
     }).observe('mouseleave', function(){
       indicator.hide();
       interactive.removeClassName('active');
-      if(effect) effect.cancel();
-      element.down('div.movement').setStyle('left:50px');
+      if(effectM) effectM.cancel();
+      if(effectC) effectC.cancel();
+      if(effectS) effectS.cancel();
+      movement.setStyle('left:20px');
+      color.setStyle('background-color:#fff');
+      size.setStyle('margin:0;width:30px;height:30px;font-size:100%');
       active = false;
     });
   }

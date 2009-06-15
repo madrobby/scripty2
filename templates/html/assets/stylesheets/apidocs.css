@@ -61,7 +61,7 @@ div.transition div.indicator {
 }
 
 div.transition div.interactive {
-  width: 500px;
+  width: 590px;
   height: 200px;
   left: 240px;
   border: 1px solid #dadada;
@@ -83,13 +83,46 @@ div.transition div.interactive div.movement {
   background: #fafafa;
   text-align:center;
   padding: 20px;
-  top: 30px;
-  left: 50px;
+  top: 20px;
+  left: 20px;
 }
 
 div.transition div.interactive.active div.movement {
   background: #F9FFED;
   border: 1px solid #ABD474;
+}
+
+div.transition div.interactive div.color {
+  width: 328px;
+  height: 20px;
+  border: 1px solid #dadada;
+  background: #fff;
+  text-align:center;
+  padding: 10px;
+  top: 140px;
+  left: 20px;
+}
+
+div.transition div.interactive.active div.color {
+  background: #ABD474;
+}
+
+div.transition div.interactive div.size {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #dadada;
+  background: #fafafa;
+  text-align:center;
+  padding: 20px;
+  top: 60px;
+  left: 450px;
+  margin: 0;
+  font-size: 100%;
+}
+
+div.transition div.interactive.active div.size {
+background: #F9FFED;
+border: 1px solid #ABD474;
 }
 
 body {
