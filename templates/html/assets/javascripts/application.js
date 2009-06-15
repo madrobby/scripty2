@@ -61,12 +61,11 @@ PDoc.highlight = function(element) {
 var s2doc = {
   init: function(){
     $$('.transition').each(s2doc.TransitionExample);
-    if ($('morph_example')) s2doc.MorphExample($('morph_example'));
   },
   
   TransitionExample: function(element){
     var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
-      transition = s2.fx.Transitions[type];
+      transition = s2.fx.Transitions[type], active = false;
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
       min = Math.min(0, values.min()), max = Math.max(200, values.max());
@@ -76,11 +75,81 @@ var s2doc = {
     }
     
     var factor = 200/(max-min), grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
-      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
+      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>', 
+      graph = $R(0,200).map(function(v){
+        return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
+      }).join('') + '<div class="indicator" style="display:none"></div><div class="marker" style="display:none"></div><div class="label"></div>';
       
-    element.innerHTML = grid + $R(0,200).map(function(v){
-      return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
-    }).join('');
+      
+    var interactive = '<div class="interactive">'+
+      '<div class="movement">movement</div>' +
+      '<div class="color">color</div>' +
+      '<div class="size">size</div>' +
+      '</div>';
+      
+    element.innerHTML = grid + graph + interactive;
+    
+    var effectM, effectC, effectS,
+      interactive = element.down('div.interactive'),
+      movement = interactive.down('div.movement'),
+      color = interactive.down('div.color'),
+      size = interactive.down('div.size'),
+      indicator = element.down('div.indicator'),
+      marker = element.down('div.marker'),
+      label = element.down('div.label');
+      
+    var demoTransition = function(pos){
+      var value = transition(pos);
+      indicator.style.cssText += ';left:'+(pos*200).round()+'px';
+      marker.style.cssText += ';left:'+(pos*200).round()+'px;bottom:'+(((value*200)-min)*factor).round()+'px';
+      return value;
+    }
+    
+    interactive.observe('mouseenter', function(){
+      interactive.addClassName('active');
+      indicator.show();
+      marker.show();
+      var durations = [.2, .5, 1, 3, 5], i = -1, duration, delay = 0;
+      function animate(){
+        duration = durations[++i%durations.length];
+        effectM = new s2.fx.Morph(movement, { 
+          style: 'left:268px', transition: demoTransition, duration: duration, delay: delay,
+          before: function(){ 
+            label.innerHTML = duration + 's';
+            movement.setStyle('left:20px') 
+          },
+          after: function(){ if(active) animate(); }
+        });
+        effectM.play();
+        effectC = new s2.fx.Morph(color, { 
+          style: 'background-color:#9D74D4', duration: duration, delay: delay, transition: transition,
+          before: function(){ color.setStyle('background-color:#ABD474') }
+        });
+        
+        effectC.play();
+        effectS = new s2.fx.Morph(size, { 
+          style: 'top:20px;left:390px;width:135px;font-size:200%;height:120px', duration:duration, delay: delay, transition: transition,
+          before: function(){ size.setStyle('top:60px;left:450px;margin:0;width:30px;height:30px;font-size:100%') }
+        });
+        effectS.play();
+        delay = 1;
+      }
+      active = true;
+      animate();
+    }).observe('mouseleave', function(){
+      i = -1;
+      label.innerHTML = '';
+      indicator.hide();
+      marker.hide();
+      interactive.removeClassName('active');
+      if(effectM) effectM.cancel();
+      if(effectC) effectC.cancel();
+      if(effectS) effectS.cancel();
+      movement.setStyle('left:20px');
+      color.setStyle('background-color:#fff');
+      size.setStyle('top:60px;left:450px;width:30px;height:30px;font-size:100%');
+      active = false;
+    });
   },
   
   MorphExample: function(element) {

@@ -185,12 +185,12 @@ s2.fx.Base = Class.create({
         this.frameCount++;
         return this;
       }
-      if (timestamp >= this.endsAt) {
+      if (timestamp >= this.endsAt && !(this.state == 'finished')) {
         this.update(this.options.transition(1));
         if (this.teardown) this.teardown();
         if (this.options.after) this.options.after(this);
         this.state = 'finished';
-      } else {
+      } else if (this.state == 'running') {
         var position = 1 - (this.endsAt - timestamp) / this.duration;
         if ((this.maxFrames * position).floor() > this.frameCount) {
           this.update(this.options.transition(position));

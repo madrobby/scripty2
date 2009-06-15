@@ -15,7 +15,7 @@
  * <h4>Default transition</h4
  *
  * If no transition option is given to an effect, [[s2.fx.Transitions.sinusoidal]] is used.
- * This setting can be changed by redifining [[s2.fx.DefaultOptions.transition]].
+ * This setting can be changed by redefining [[s2.fx.DefaultOptions.transition]].
  *
  * <h4>Implementing your own transitions</h4>
  *
@@ -99,6 +99,18 @@ s2.fx.Transitions = {
   **/
   pulse: function(pos, pulses) { 
     return (-Math.cos((pos*((pulses||5)-.5)*2)*Math.PI)/2) + .5;
+  },
+  
+  /**
+   *  s2.fx.Transitions.blink(pos[, blinks]) -> Number
+   *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
+   *  - pulses (Number): Number of blinks, defaults to 5
+   *
+   *  Effect blinks on and off.
+   *  <div class="transition"></div>
+  **/
+  blink: function(pos, blinks) { 
+    return Math.round(pos*(blinks||5)) % 2;
   },
   
   /**
