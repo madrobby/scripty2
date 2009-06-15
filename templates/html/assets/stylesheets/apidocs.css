@@ -869,3 +869,72 @@ background-color: #f4f0f4;
 background-image: url(../images/related_to.png);
 border-color: #c9c;
 }
+
+#morph_example {
+  border:1px dashed #618AB8;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+
+#morph_example .options {
+  background:#CEDCEC;
+  padding:10px;
+}
+
+#morph_example .options textarea {
+  height:50px;
+  font-size:15px;
+  width:500px;
+  padding:2px;
+  float:left;
+}
+
+#morph_example .options a.button,
+#morph_example .options a.reset {
+  background:#618AB8;
+  text-decoration:none;
+  border:none;
+  color:#fff;
+  position:relative;
+  margin-left:5px;
+  display:block;
+  height:38px;
+  width:58px;
+  float:left;
+  text-align:center;
+  padding:18px 0 0 0;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+
+#morph_example .options a.button:hover {
+  background:#365b85;
+}
+
+#morph_example .options a.reset {
+  background:#aaa;
+  margin-left:5px;
+}
+
+#morph_example .options a.reset:hover {
+  background:#888;
+}
+
+#morph_example p {
+  margin:50px auto;
+  width:400px;
+  position:relative;
+  border:0px solid #000;
+}
+
+#morph_example .hint {
+  clear:both;
+  font-size:12px;
+}
+
+#morph_example .hint em {
+  font-style:normal;
+  color:#666;
+  text-decoration:underline;
+  cursor:pointer;
+}

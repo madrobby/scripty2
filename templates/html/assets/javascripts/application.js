@@ -61,6 +61,7 @@ PDoc.highlight = function(element) {
 var s2doc = {
   init: function(){
     $$('.transition').each(s2doc.TransitionExample);
+    if ($('morph_example')) s2doc.MorphExample($('morph_example'));
   },
   
   TransitionExample: function(element){
@@ -80,6 +81,46 @@ var s2doc = {
     element.innerHTML = grid + $R(0,200).map(function(v){
       return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
     }).join('');
+  },
+  
+  MorphExample: function(element) {
+    function generateDemoParagraph() {
+      return new Element('p').update('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.');
+    };
+
+    var element = $(element),
+        options = new Element('div', { className: 'options' }),
+        input   = new Element('textarea');
+        button  = new Element('a', { href: '#', className: 'button' }).update('Morph'),
+        reset   = new Element('a', { href: '#', className: 'reset' }).update('Reset'),
+        hint    = new Element('div', { className: 'hint' });
+        p       = generateDemoParagraph();
+
+    function resetParagraph() {
+      p.remove();
+      p = generateDemoParagraph();
+      element.insert({ bottom: p });
+    };
+
+    hint.update('Example: <em>background:#666; color:#fff; border:5px solid #0f0; padding:15px; left:10px;</em>');
+
+    element.insert(options).insert(p);
+    options.insert(input).insert(button).insert(reset).insert(hint);
+
+    button.observe('click', function(event) {
+      event.stop();
+      p.morph(input.value);
+    });
+
+    reset.observe('click', function(event) {
+      event.stop();
+      resetParagraph();
+    });
+    
+    hint.observe('click', function(event) {
+      resetParagraph();
+      p.morph(hint.down('em').innerHTML);
+    });
   }
 };
 
