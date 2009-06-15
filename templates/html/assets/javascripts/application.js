@@ -61,6 +61,7 @@ PDoc.highlight = function(element) {
 var s2doc = {
   init: function(){
     $$('.transition').each(s2doc.TransitionExample);
+    if($('morph_example')) s2doc.MorphExample($('morph_example'));
   },
   
   TransitionExample: function(element){
