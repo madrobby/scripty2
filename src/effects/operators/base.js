@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  * s2.fx.Operators
  *  
  * Effect operators are reusable interpolation functions.

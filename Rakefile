@@ -86,14 +86,14 @@ namespace :doc do
       secretary.concatenation.save_to(temp.path)
       rm_rf SCRIPTY2_DOC_DIR
       
-      begin
+      #begin
         PDoc::Runner.new(temp.path,
           :output    => SCRIPTY2_DOC_DIR,
           :templates => TEMPLATES_DIRECTORY
         ).run
-      rescue 
+      #rescue 
         puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
-      end
+      #end
     end
     
     cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')

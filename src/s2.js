@@ -1,11 +1,16 @@
 //= require "license"
 
 /**
- *  == Misc ==
+ *  == scripty2 ui ==
+ *  DOM utility functions for CSS parsing, color normalization and CSS value interpolation.
+**/
+
+/**
+ *  == scripty2 core ==
  * Everything that's not part of any of the big functional groups in scripty2 belongs in here.
 **/
 
-/** section: Misc
+/** section: scripty2 core
  * s2
  * The s2 namespace is the main container for the various scripty2 frameworks
  * and also provides the libraries' version number and information about extensions.

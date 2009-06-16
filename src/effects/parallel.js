@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  *  class s2.fx.Parallel < s2.fx.Base
  *
  *  Effect to execute several other effects in parallel.

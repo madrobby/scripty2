@@ -1,4 +1,4 @@
-/** section: Effects
+/** section: scripty2 fx
  *  class s2.fx.Attribute < s2.fx.Base
  *
  *  This effect can change an object property or call

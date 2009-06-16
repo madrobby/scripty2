@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  *  class s2.fx.Style < s2.fx.Element
  *
  *  This effect is similiar to [[s2.fx.Morph]] but doesn't provide any

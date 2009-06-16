@@ -1,6 +1,6 @@
 //= require <effects/operators/style>
 
-/** section: Effects
+/**
  *  class s2.fx.Morph < s2.fx.Element
  *  
  *  "Morph" DOM elements to a new set of CSS style rules, while optionally

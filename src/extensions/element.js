@@ -1,4 +1,4 @@
-/** section: Effects
+/** section: scripty2 fx
  * Element
  *
  * A collection of shortcut methods that are added to all DOM elements.

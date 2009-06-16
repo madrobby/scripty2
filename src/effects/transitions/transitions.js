@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  * s2.fx.Transitions
  *
  * Transitions can fine-tune how an effect evolves over time. All effects, 
