@@ -41,7 +41,7 @@
  *  individually for complex animation effects:
  *
  *      $('element_id').morph('top:20px;left:50px;background-color:#000',{
- *        transitions: 'easeInOutExpo',
+ *        transition: 'easeInOutExpo',
  *        propertyTransitions: { 
  *          top: 'spring', left: 'easeInOutCirc'
  *        } 
