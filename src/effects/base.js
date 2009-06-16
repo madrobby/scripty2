@@ -1,11 +1,17 @@
 /**
  * ==  scripty2 fx ==
- * The scripty2 effects framework provides for time-based transformations of DOM elements 
- * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement 
+ * The scripty2 effects framework provides for time-based transformations of DOM elements
+ * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement
  * of the visual effects framework of script.aculo.us 1.X.
  *
  * In practice [[s2.fx.Morph]] is most often used, which allows transitions from one
  * set of CSS style rules to another.
+ *
+ * <h2>Introduction</h2
+ * (todo)
+ *
+ * <h2>What's new?</h2>
+ * (todo)
 **/
 
 /** section: scripty2 fx
