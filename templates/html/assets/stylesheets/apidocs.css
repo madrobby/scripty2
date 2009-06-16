@@ -34,6 +34,7 @@ div.transition {
   width: 200px;
   height: 200px;
   position: relative;
+  margin-bottom:10px;
 }
 
 div.transition div {
