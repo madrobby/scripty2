@@ -28,7 +28,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat.start() -> undefined
+   *  s2.fx.Heartbeat#start() -> undefined
    *  
    *  This function is called by [[s2.fx]] whenever there's a new active effect queued
    *  and there are no other effects running. This mechanism can be used to prevent
@@ -43,7 +43,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat.stop() -> undefined
+   *  s2.fx.Heartbeat#stop() -> undefined
    *  
    *  Called when the last active effect is dequeued.
   **/
@@ -55,7 +55,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat.beat() -> undefined
+   *  s2.fx.Heartbeat#beat() -> undefined
    *  
    *  This method fires an `effect:heartbeat` event which is in turn used by
    *  [[s2.fx]] to render all active effect queues.
@@ -68,7 +68,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat.getTimestamp() -> Date
+   *  s2.fx.Heartbeat#getTimestamp() -> Date
    *  
    *  Returns the current timestamp.
   **/
@@ -77,7 +77,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat.generateTimestamp() -> Date
+   *  s2.fx.Heartbeat#generateTimestamp() -> Date
    *  
    *  Returns the current date and time.
   **/
@@ -86,7 +86,7 @@ s2.fx.Heartbeat = Class.create({
   },
   
   /**
-   *  s2.fx.Heartbeat.updateTimestamp() -> undefined
+   *  s2.fx.Heartbeat#updateTimestamp() -> undefined
    *  
    *  Updates the current timestamp (sets it to the current date and time).
    *
