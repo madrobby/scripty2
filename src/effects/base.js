@@ -4,7 +4,7 @@
  * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement 
  * of the visual effects framework of script.aculo.us 1.X.
  *
- * In practice `s2.fx.Morph` is most often used, which allows transitions from one
+ * In practice [[s2.fx.Morph]] is most often used, which allows transitions from one
  * set of CSS style rules to another.
 **/
 
