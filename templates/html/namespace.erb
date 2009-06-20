@@ -1,7 +1,5 @@
 <% d = @doc_instance %>
-
 <% @title = "#{d.full_name} #{d.type}" %>
-
 <%= include "partials/breadcrumbs", :object => d %>
 
 <h2 class="page-title <%= class_names_for(d) %>">
@@ -15,9 +13,6 @@
   </div>
   <div class="section-content">
     <%= htmlize(d.description) %>
-    <p>
-      <span style="color:red">API IS NOT FINAL AND SUBJECT TO CHANGE</span>
-    </p>
   </div>
 </div>
 <% end %>

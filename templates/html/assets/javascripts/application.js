@@ -86,6 +86,7 @@ var s2doc = {
       '<div class="movement">movement</div>' +
       '<div class="color">color</div>' +
       '<div class="size">size</div>' +
+      '<div class="hint">hover over this area to see the transition at different speeds</div>' +
       '</div>';
       
     element.innerHTML = grid + graph + interactive;
