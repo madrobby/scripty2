@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  * s2.fx.Transitions
  *
  * Transitions can fine-tune how an effect evolves over time. All effects, 
@@ -64,6 +64,39 @@ s2.fx.Transitions = {
   **/
   reverse: function(pos) {
     return 1 - pos;
+  },
+  
+  /**
+   *  s2.fx.Transitions.mirror(pos, transition) -> Number
+   *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
+   *  - transition (Function): a s2.fx.Transitions transition function
+   *
+   *  The given transition is mirrored. Defaults to [[s2.fx.Transitions.sinusoidal]].
+   *  <div class="transition"></div>
+   *
+   *  You can use other transitions as per the following code sample:
+   *
+   *      $('element_id').morph('font-size:200px', {
+   *        transition: function(pos){ 
+   *          return s2.fx.Transitions.mirror(pos, s2.fx.Transitions.bounce); 
+   *        }
+   *      });
+   *  
+   *  If you plan to reuse such a mirrored transition often, define your own transition
+   *  function:
+   *
+   *      s2.fx.Transitions.mirroredBounce = function(pos){ 
+   *        return s2.fx.Transitions.mirror(pos, s2.fx.Transitions.bounce); 
+   *      });
+   *
+   *      $('element_id').morph('font-size:200px', { transition: 'mirroredBounce' });
+  **/
+  mirror: function(pos, transition) {
+    transition = transition || s2.fx.Transitions.sinusoidal;
+    if(pos<0.5)
+      return transition(pos*2);
+    else
+      return transition(1-(pos-0.5)*2);
   },
   
   /**

@@ -1,6 +1,6 @@
 //= require <effects/operators/style>
 
-/** section: Effects
+/**
  *  class s2.fx.Morph < s2.fx.Element
  *  
  *  "Morph" DOM elements to a new set of CSS style rules, while optionally
@@ -36,6 +36,18 @@
  *  
  *      $('element_id').setStyle('border:2px solid #cba;border-bottom-width:100px');
  *      $('element_id').morph('border:12px solid #abc', { duration: .7 });
+ *
+ *  It is also possible to specify a [[s2.fx.Transition]] for some or all CSS properties
+ *  individually for complex animation effects:
+ *
+ *      $('element_id').morph('top:20px;left:50px;background-color:#000',{
+ *        transition: 'easeInOutExpo',
+ *        propertyTransitions: { 
+ *          top: 'spring', left: 'easeInOutCirc'
+ *        } 
+ *      });
+ *
+ *  These transitions are in addition to the main effect transition.
  *
  *  <h4>Try any combination of supported properties in this demo:</h4>
  *  <div id="morph_example"></div>

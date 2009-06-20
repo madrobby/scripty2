@@ -1,4 +1,4 @@
-/** section: Effects
+/**
  *  class s2.fx.Queue
  *
  *  Effect queues manage the execution of effects in parallel or 

@@ -1,9 +1,4 @@
-/**
- *  == DOM ==
- *  DOM utility functions for CSS parsing, color normalization and CSS value interpolation.
-**/
-
-/** section: DOM
+/** section: scripty2 ui
  * s2.css
  * Utility functions for CSS parsing, color normalization and tweening.
 **/
