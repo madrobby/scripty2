@@ -4,6 +4,29 @@
  * A collection of shortcut methods that are added to all DOM elements.
  * [[Element.Morph]] is the preferred way to invoke morph effects.
 **/
+Element.__scrollTo = Element.scrollTo;
+Element.addMethods({
+  /** 
+   *  Element.scrollTo(@element[, to[, options]]) -> element
+   *  - to (Number): vertical scroll position in pixels
+   *  - options (Object): effect options
+   *
+   *  This method augments Prototype's Element.scrollTo method.
+   *
+   *  With just the `@element` parameter given, it will revert to
+   *  Prototype's default implementation: the viewport will be scrolled
+   *  (without animation) to contain the element.
+   *  
+   *  If given the `to` parameter, the elements contents will be 
+   *  smoothly scrolled to the specified scrollTop position.
+  **/  
+  scrollTo: function(element, to, options){
+    if(arguments.length == 1) return Element.__scrollTo(element);
+    new s2.fx.Scroll(element, Object.extend(options || {}, { to: to })).play();
+    return element;
+  }
+});
+
 Element.addMethods({
   /** 
    *  Element.effect(@element, effect[, options]) -> element
