@@ -404,7 +404,7 @@ margin: 60px auto 0;
 }
 
 .page-content .page-title {
-margin-left: 120px;
+margin-left: 140px;
 margin-bottom: 15px;
 font-size: 27px;
 letter-spacing: -1px;
@@ -412,7 +412,7 @@ color: #444;
 }
 
 .page-content .page-introduction {
-margin-left: 120px;
+margin-left: 140px;
 font-size: 15px;
 margin-bottom: 25px;
 }
@@ -428,7 +428,8 @@ margin: 10px 0 20px;
 }
 
 .page-content .section .section-title {
-width: 110px;
+width: 130px;
+margin-top: -4px;
 margin-right: 10px;
 padding-right: 0;
 float: left;
@@ -445,7 +446,7 @@ padding-bottom: 5px;
 }
 
 .page-content .section .section-content {
-width: 835px;
+width: 815px;
 float: left;
 }
 
@@ -532,14 +533,12 @@ background: url(../images/header-logo.png) no-repeat 0 1px;
 width: 300px;
 height: 93px;
 position: relative;
-left: 60px;
+left: 75px;
 }
 
 div#masthead a {
 text-decoration: none;
 }
-
-
 
 /* tag styles */
 pre {
@@ -561,7 +560,7 @@ div.about {
 margin-top: 20px;
 padding-top: 20px;
 width: 835px;
-margin-left: 120px;
+margin-left: 140px;
 border-top: 1px solid #aaa;
 color: #aaa;
 }
@@ -610,7 +609,7 @@ line-height: 100%;
 }
 
 ul.breadcrumbs {
-margin-left: 120px;
+margin-left: 140px;
 }
 
 ul.breadcrumbs li {
@@ -721,9 +720,11 @@ font-style: normal;
 /* Section icons */
 
 .page-content .section .section-title h3 {
-padding-right: 24px;
+padding-right: 34px;
 background-position: right 0;
 background-repeat: no-repeat;
+height: 24px;
+padding-top: 5px;
 }
 
 .section-constructor .section-title h3 {
