@@ -185,7 +185,7 @@ s2.css = {
    *      s2.css.interpolateNumber(1, 2, -0.5) -> 0.5
   **/
   interpolateNumber: function(from, to, position){
-    return (from||0).tween(to, position);
+    return parseFloat((from||0).tween(to, position).toFixed(3));
   },
 
   /**
@@ -204,7 +204,7 @@ s2.css = {
     if(!from) from = '0'+to.gsub(s2.css.NUMBER,'');
     to.scan(s2.css.NUMBER, function(match){ to = parseFloat(match[1]); });
     return from.gsub(s2.css.NUMBER, function(match){
-      return parseFloat(match[1]).tween(to, position).toString();
+      return parseFloat(parseFloat(match[1]).tween(to, position).toFixed(3)).toString();
     });
   },
   

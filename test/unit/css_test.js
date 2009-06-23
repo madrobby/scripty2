@@ -57,7 +57,11 @@ new Test.Unit.Runner({
     assertEqual('#111111', s2.css.interpolate('background-color','#000','#222222',.5));
     assertEqual('#111111', s2.css.interpolate('backgroundColor','#000000','#222222',.5));
     
+    assertEqual('0px', s2.css.interpolate('margin-top','10px','0px',.99999));
+    assertEqual('10px', s2.css.interpolate('margin-top','10px','0px',.00001));
+    
     assertEqual('0.5', s2.css.interpolate('opacity',0,1,.5));
+    assertEqual('0.000', s2.css.interpolate('opacity',0,1,.00000001));
     
     assertEqual('2', s2.css.interpolate('z-index','1','3',.5));
   }},
