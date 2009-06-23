@@ -11,6 +11,12 @@ new Test.Unit.Runner({
     assertEqual(2, s2.css.interpolateNumber(undefined, 4, .5));
     assertEqual(2, s2.css.interpolateNumber(null, 4, .5));
     
+    assertEqual(1, s2.css.interpolateInteger(1, 3, 0));
+    assertEqual(2, s2.css.interpolateInteger(1, 3, 0.5));
+    assertEqual(3, s2.css.interpolateInteger(1, 3, 1));
+    assertEqual(2, s2.css.interpolateInteger(1, 3, 0.25));
+    assertEqual(3, s2.css.interpolateInteger(1, 3, 0.75));
+    
     // lengths em|ex|px|in|cm|mm|pt|pc
     assertEqual('1px', s2.css.interpolateLength('1px', '3px', 0));
     assertEqual('3ex', s2.css.interpolateLength('1ex', '3ex', 1));
@@ -52,6 +58,8 @@ new Test.Unit.Runner({
     assertEqual('#111111', s2.css.interpolate('backgroundColor','#000000','#222222',.5));
     
     assertEqual('0.5', s2.css.interpolate('opacity',0,1,.5));
+    
+    assertEqual('2', s2.css.interpolate('z-index','1','3',.5));
   }},
   
   testStyleParsing: function() { with(this) {

@@ -223,7 +223,7 @@ s2.css = {
    *      s2.css.interpolateInteger(1, 2, -0.5); -> 1
   **/
   interpolateInteger: function(from, to, position){
-    return from.tween(to, position).round();
+    return parseInt(from).tween(to, position).round();
   },
   
   /**
