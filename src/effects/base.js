@@ -108,8 +108,10 @@ s2.fx.Base = Class.create({
    *    Sets the transition method for easing and other special effects.
    *  * `before`: Function to be executed before the first frame of the effect is rendered.
    *  * `after`: Function to be executed after the effect has finished.
-   *  * `beforeUpdate`: Function to be executed before each frame is rendered.
-   *  * `afterUpdate`: Function to be executed after each frame is renedred.
+   *  * `beforeUpdate`: Function to be executed before each frame is rendered. This function
+   *    is given two parameters: the effect instance and the current position (between 0 and 1).
+   *  * `afterUpdate`: Function to be executed after each frame is renedred. This function
+   *    is given two parameters: the effect instance and the current position (between 0 and 1).
    *  * `fps`: The maximum number of frames per second. Ensures that no more than `options.fps`
    *    frames per second are rendered, even if there's enough computation resources available.
    *    This can be used to make CPU-intensive effects use fewer resources.
@@ -147,9 +149,9 @@ s2.fx.Base = Class.create({
     
     if (this.options.beforeUpdate || this.options.afterUpdate) {
       this.update = this.updateWithoutWrappers.wrap( function(proceed,position){
-        if (this.options.beforeUpdate) this.options.beforeUpdate(this);
+        if (this.options.beforeUpdate) this.options.beforeUpdate(this, position);
         proceed(position);
-        if (this.options.afterUpdate) this.options.afterUpdate(this);
+        if (this.options.afterUpdate) this.options.afterUpdate(this, position);
       }.bind(this));
     }
     if(this.options.transition === false)
