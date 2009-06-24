@@ -224,6 +224,18 @@ s2.fx.Base = Class.create({
   },
 
   /**
+   *  s2.fx.Base#finish() -> undefined
+   *
+   *  Immediately render the last frame and halt execution of the effect
+   *  and call the `teardown`method if defined.
+  **/
+  finish: function(after) {
+    if(!this.state == 'running') return;
+    this.update(this.options.transition(1));
+    this.cancel(true);
+  },
+
+  /**
    *  s2.fx.Base#inspect() -> String
    *
    *  Returns the debug-oriented string representation of an effect.
