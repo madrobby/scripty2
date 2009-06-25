@@ -122,6 +122,7 @@ task :doc => ['doc:build']
 
 Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
   package.need_tar_gz = true
+  package.need_zip = true
   package.package_dir = SCRIPTY2_PKG_DIR
   package.package_files.include(
     'README.rdoc',
