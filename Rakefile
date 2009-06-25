@@ -131,8 +131,8 @@ Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
     'dist/prototype.min.js',
     'dist/s2.js',
     'dist/s2.min.js',
-    'doc/**',
-    'src/**'
+    'doc/**/*',
+    'src/**/*'
   )
 end
 
