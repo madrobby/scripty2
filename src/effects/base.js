@@ -7,11 +7,24 @@
  * In practice [[s2.fx.Morph]] is most often used, which allows transitions from one
  * set of CSS style rules to another.
  *
- * <h2>Introduction</h2
- * (todo)
+ * <h2>Features</h2>
  *
- * <h2>What's new?</h2>
- * (todo)
+ * * <a href="scripty2%20fx/element.html#morph-class_method">CSS morphing engine</a>: 
+ *   morph from one set of style properties to an other, including
+ *   support for all CSS length types (px, em, %, cm, pt, etc.)
+ * * <a href="scripty2%20fx/s2/fx/transitions.html">Extensive transition system</a>
+ *   for animation easing and special effects (e.g. bouncing)
+ * * Auto-adjusts to differences in computing and rendering speed (drops frames as necessary)
+ * * Limits the number of attempted frame renders to conserve CPU in fast computers
+ * * Flexible OOP-based implementation allows for easy extension and hacks
+ * * <a href="scripty2%20fx/s2/fx/queue.html">Effect queuing</a> to run an effect after other effects have finished
+ * * <a href="scripty2%20fx/element.html#morph-class_method">Chaining</a> and 
+ *   <a href="scripty2%20fx/s2/fx/base.html#new-constructor">default options</a>: 
+ *   easy-to-use syntax for most use cases
+ * * <a href="scripty2%20fx/s2/fx/element.html#play-instance_method">Reusable effect instances</a>
+ *   can be used with more than one DOM element
+ * * User-definable callback functions at any point in the effect lifecycle
+ * * Effects are abortable (either as-is or abort-to-end)
 **/
 
 /** section: scripty2 fx

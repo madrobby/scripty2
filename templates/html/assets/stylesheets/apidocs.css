@@ -450,6 +450,12 @@ width: 815px;
 float: left;
 }
 
+.page-content .section .section-content h2 {
+  color: #444;
+  font-size: 16px;
+  margin: 15px 0 5px 0;
+}
+
 .page-content a,
 .page-content a:link {
 color: #455C23;
