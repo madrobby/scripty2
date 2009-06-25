@@ -45,7 +45,7 @@ s2.fx = (function(){
   return {
     initialize: initialize,
     getQueues: function(){ return queues; },
-    addQueue: queues.push,
+    addQueue: function(queue){ queues.push(queue); },
     getHeartbeat: function(){ return heartbeat; },
     setHeartbeat: function(newHeartbeat){ 
       heartbeat = newHeartbeat; 

@@ -8,7 +8,8 @@
 /**
  *  == scripty2 core ==
  *
- *  Everything that's not part of any of the big functional groups in scripty2 belongs in here.
+ *  Core contains various JavaScript and DOM extensions used by [[scripty2 fx]] and [[scripty2 ui]],
+ *  and developer utility classes.
 **/
 
 /** section: scripty2 core
@@ -20,7 +21,7 @@ var s2 = {
   /**
    * s2.Version = '<%= SCRIPTY2_VERSION %>'
    * 
-   * This contants lists the version of scripty2.
+   * This constant lists the version of scripty2.
   **/
   Version: '<%= SCRIPTY2_VERSION %>',
   

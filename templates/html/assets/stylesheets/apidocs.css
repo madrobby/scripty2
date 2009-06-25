@@ -540,7 +540,6 @@ div#masthead a {
 text-decoration: none;
 }
 
-/* tag styles */
 pre {
 padding: 0;
 }
@@ -550,7 +549,6 @@ font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
 font-size: 12px;
 }
 
-/* footer */
 div#footer {
 width: 960px;
 margin: 0 auto;
@@ -559,22 +557,24 @@ margin: 0 auto;
 div.about {
 margin-top: 20px;
 padding-top: 20px;
-width: 835px;
+width: 745px;
 margin-left: 140px;
 border-top: 1px solid #aaa;
 color: #aaa;
+padding-left: 90px;
+background: url(../images/cc.png) no-repeat 20px left;
 }
 
 div.about a,
 div.about a:link {
-color: #aaa;
+color: #888;
 text-decoration: underline;
 border: 0;
 }
 
 div.copyright,
 div.credits {
-width: 360px;
+width: 372px;
 float: left;
 }
 
@@ -591,9 +591,8 @@ float: left;
 }
 
 div.credits {
-margin-left: 115px;
+text-align: right;
 }
-
 
 .page-title span.type {
 display: block;

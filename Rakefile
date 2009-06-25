@@ -138,6 +138,9 @@ namespace :test do
     browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
     tests_to_run     = ENV['TESTS'] && ENV['TESTS'].split(',')
     runner           = UnittestJS::WEBrickRunner::Runner.new(:test_dir => SCRIPTY2_TMP_DIR)
+    
+    cp File.join(SCRIPTY2_ROOT, 'templates', 'html', 'assets', 'javascripts', 'prototype.js'),
+      File.join(SCRIPTY2_TMP_DIR, 'lib_assets', 'prototype.js')
 
     Dir[File.join(SCRIPTY2_TMP_DIR, '*_test.html')].each do |file|
       file = File.basename(file)
