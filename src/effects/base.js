@@ -129,6 +129,8 @@ s2.fx.Base = Class.create({
    *    frames per second are rendered, even if there's enough computation resources available.
    *    This can be used to make CPU-intensive effects use fewer resources.
    *  * `queue`: Specify a [[s2.fx.Queue]] to be used for the effect.
+   *  * `position`: Position within the specified queue, `parallel` (start immediately, default) or `end` 
+   *    (queue up until the last effect in the queue is finished)
    *
    *  The effect won't start immediately, it will merely be initialized.
    *  To start the effect, call [[s2.fx.Base#play]].
