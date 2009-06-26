@@ -328,7 +328,7 @@ var Filterer = Class.create({
     urls.each( function(url) {
       var a  = new Element('a', {
         'class': url.type.gsub(/\s/, '_'),
-        href:    PDoc.pathPrefix + url.path
+        href:    PDoc.pathPrefix + 'temp/' + url.path
       }).update(url.name);
       var li = new Element('li', { 'class': 'menu-item' });
       li.appendChild(a);
