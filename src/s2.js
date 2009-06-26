@@ -8,8 +8,8 @@
 /**
  *  == scripty2 core ==
  *
- *  Core contains various JavaScript and DOM extensions used by [[scripty2 fx]] and [[scripty2 ui]],
- *  and developer utility classes.
+ *  Core contains various JavaScript and DOM extensions used by scripty2 fx and scripty2 ui,
+ *  plus developer utility classes.
 **/
 
 /** section: scripty2 core
