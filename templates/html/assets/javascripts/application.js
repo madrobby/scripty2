@@ -514,7 +514,23 @@ Form.GhostedField = Class.create({
   }
 });
 
+Function.prototype.deferUntil = function(condition){
+  this.interval = setInterval(function(){
+    if (!condition()) return;
+    clearInterval(this.interval);
+    this();
+  }.bind(this), 50);
+};
+
 document.observe("dom:loaded", function() {
   new Form.GhostedField($('search'), "Search");
   s2doc.init();
+  if(location && location.hostname && location.hostname == 'scripty2.com'){
+    var script = document.createElement('script');
+    script.type='text/javascript'; 
+    script.src=(("https:" == document.location.protocol) ? "https://ssl." : "http://www.") + "google-analytics.com/ga.js";
+    $(document.body).appendChild(script);
+    (function(){try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}})
+      .deferUntil(function(){ return !!window['_gat'] });
+  }
 });
