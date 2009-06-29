@@ -58,7 +58,7 @@ Element.addMethods({
    *
    *      $('element_id').morph('width:500px;height:500px', {
    *        duration: 4,
-   *        transition: '',
+   *        transition: 'linear',
    *        delay: .5, 
    *        propertyTransitions: {
    *          width: 'mirror', height: 'easeInOutCirc'
