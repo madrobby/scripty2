@@ -111,7 +111,7 @@ Element.addMethods({
    *  Fade out an element from it's current opacity setting (or 100%).
   **/
   fade: function(element, options){
-    return element.effect(Effect.Morph, Object.extend({
+    return element.effect('morph', Object.extend({
       style: 'opacity:0',
       after: element.hide.bind(element)
     }, options));
