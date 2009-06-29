@@ -46,13 +46,15 @@ def minify(src, target)
   puts "Minifying #{src}..."
   `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar #{src} -o #{target}`
   cp target, File.join(SCRIPTY2_DIST_DIR,'temp.js')
+  msize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js'))
   `gzip -9 #{File.join(SCRIPTY2_DIST_DIR,'temp.js')}`
   
-  osize = File.size(target)
+  osize = File.size(src)
   dsize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js.gz'))
   rm_rf File.join(SCRIPTY2_DIST_DIR,'temp.js.gz')
   
   puts "Original version: %.1fk" % (osize/1024.0)
+  puts "Minified: %.1fk" % (msize/1024.0)
   puts "Minified and gzipped: %.1fk, compression factor %.1f" % [dsize/1024.0, osize/dsize.to_f]  
 end
 
