@@ -7,7 +7,7 @@ s2.fx.Helpers = {
 };
 
 s2.fx.Operators.Zoom = Class.create(s2.fx.Operators.Style, {
-  initialize: function($super, object, options) {
+  initialize: function($super, effect, object, options) {
     var viewport = document.viewport.getDimensions(),
       offsets = document.viewport.getScrollOffsets(),
       dims = object.getDimensions(),
@@ -20,7 +20,7 @@ s2.fx.Operators.Zoom = Class.create(s2.fx.Operators.Style, {
       top: f[1] + (options.borderWidth || 0) + offsets.top + 'px',
       width: f[2] + 'px', height: f[3] + 'px'
     }});
-    $super(object, options);
+    $super(effect, object, options);
   }
 });
 
@@ -30,7 +30,7 @@ s2.fx.Zoom = Class.create(s2.fx.Element, {
     this.element.insert({before:this.clone});
     this.clone.absolutize().setStyle({zIndex:9999});
     
-    this.overlay = s2.fx.Helpers.viewportOverlay();
+    this.overlay = s2.viewportOverlay();
     if (this.options.overlayClassName) 
       this.overlay.addClassName(this.options.overlayClassName)
     else
