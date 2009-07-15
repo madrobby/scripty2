@@ -6,15 +6,15 @@ S2.FX.Debugger = Class.create({
   },
   
   renderQueueTimeline: function() {
-    var timestamp = Effect.heartbeat.getTimestamp();
+    var timestamp = s2.fx.getHeartbeat().getTimestamp();
     $('debug-timeline').innerHTML = 
       this.nextSpinner() + '<br/>' + 
       (new Date(timestamp)).toJSON().gsub(/"/,'') + '.' + (timestamp % 1000).toPaddedString(3) + '<br/>' +
-      Effect.queues.length + ' queue(s), ' + 
-      Effect.queues.inject(0, function(memo, queue) {
-        return memo + queue.effects.length
+      s2.fx.getQueues().length + ' queue(s), ' +
+      s2.fx.getQueues().inject(0, function(memo, queue) {
+        return memo + queue.getEffects().length
       }) + ' effect(s)' + '<br/>' +
-      Effect.queues[0].effects.map(function(effect){ 
+      s2.fx.getQueues()[0].getEffects().map(function(effect){
         return effect.inspect().escapeHTML();
       }).join('<br/>');
   },
@@ -29,7 +29,7 @@ S2.FX.Debugger = Class.create({
   },
   
   nextSpinner: function() {
-    return $w('| / – \\')[this.spinnerPosition++ % 4];
+    return $w('| / - \\')[this.spinnerPosition++ % 4];
   }
 });
 
