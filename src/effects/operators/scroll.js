@@ -1,11 +1,11 @@
 //= require <effects/operators/base>
 
 /**
- *  class s2.fx.Operators.Scroll < s2.fx.Operators.Base
+ *  class S2.FX.Operators.Scroll < S2.FX.Operators.Base
  *  
  *  Operator for scrolling the contents of an Element.
 **/
-s2.fx.Operators.Scroll = Class.create(s2.fx.Operators.Base, {
+S2.FX.Operators.Scroll = Class.create(S2.FX.Operators.Base, {
   initialize: function($super, effect, object, options) {
     $super(effect, object, options);
     this.start = object.scrollTop;

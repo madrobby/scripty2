@@ -100,7 +100,7 @@ namespace :doc do
           :templates => TEMPLATES_DIRECTORY
         ).run
       #rescue 
-        puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
+       # puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
       #end
     end
     

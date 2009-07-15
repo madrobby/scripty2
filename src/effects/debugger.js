@@ -1,4 +1,4 @@
-s2.fx.Debugger = Class.create({
+S2.FX.Debugger = Class.create({
   initialize: function() {
     this.buildQueueTimeline();
     this.spinnerPosition = 0;
@@ -33,7 +33,7 @@ s2.fx.Debugger = Class.create({
   }
 });
 
-s2.fx.Heartbeat.Stepper = Class.create(s2.fx.Heartbeat, {
+S2.FX.Heartbeat.Stepper = Class.create(S2.FX.Heartbeat, {
   initialize: function(stepSpeed) {
     this.stepSpeed = stepSpeed || 100;
     this.stepDirection = 1;

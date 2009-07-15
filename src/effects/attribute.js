@@ -1,10 +1,10 @@
 /** section: scripty2 fx
- *  class s2.fx.Attribute < s2.fx.Base
+ *  class S2.FX.Attribute < S2.FX.Base
  *
  *  This effect can change an object property or call
  *  a method with a numerical interpolation.
 **/
-s2.fx.Attribute = Class.create(s2.fx.Base, {
+S2.FX.Attribute = Class.create(S2.FX.Base, {
   initialize: function($super, object, from, to, options, method) {
     object = Object.isString(object) ? $(object) : object;
 

@@ -1,5 +1,5 @@
 /**
- *  s2.viewportOverlay() -> element
+ *  S2.viewportOverlay() -> element
  *  
  *  Creates a new absolutely positioned DIV element with the dimensions of the viewport.
  *  The element is not inserted into the DOM.
@@ -10,7 +10,7 @@
  *
 **/
 
-s2.viewportOverlay = function(){
+S2.viewportOverlay = function(){
   var viewport = document.viewport.getDimensions(),
     offsets = document.viewport.getScrollOffsets();
   return new Element('div').setStyle({

@@ -1,10 +1,10 @@
 /**
- *  class s2.fx.Style < s2.fx.Element
+ *  class S2.FX.Style < S2.FX.Element
  *
- *  This effect is similiar to [[s2.fx.Morph]] but doesn't provide any
+ *  This effect is similiar to [[S2.FX.Morph]] but doesn't provide any
  *  of the more advanced functionality, like content morphing.
 **/
-s2.fx.Style = Class.create(s2.fx.Element, {
+S2.FX.Style = Class.create(S2.FX.Element, {
   setup: function() {
     this.animate('style', this.element, { style: this.options.style });
   }

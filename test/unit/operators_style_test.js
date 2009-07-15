@@ -1,13 +1,13 @@
 new Test.Unit.Runner({ 
   testStyle: function(){ with(this) {
-    var operator = new s2.fx.Operators.Style(null, 'style_test', { style: 'font-size:20px' });
+    var operator = new S2.FX.Operators.Style(null, 'style_test', { style: 'font-size:20px' });
     assertMatch(/10px/, operator.valueAt(0));
     assertMatch(/15px/, operator.valueAt(.5));
     assertMatch(/20px/, operator.valueAt(1));
   }},
   
   testStyleSubvalues: function(){ with(this) {
-    var operator = new s2.fx.Operators.Style(null, 'style_test_subvalues', 
+    var operator = new S2.FX.Operators.Style(null, 'style_test_subvalues', 
       { style: ' border-left-width: 10px ' }
     );
     
@@ -17,7 +17,7 @@ new Test.Unit.Runner({
   }},
   
   testStyleColors: function(){ with(this) {
-    var operator = new s2.fx.Operators.Style(null, 'style_test_colors', 
+    var operator = new S2.FX.Operators.Style(null, 'style_test_colors', 
       { style: 'color:#987654; background-color: #fff ' }
     );
     

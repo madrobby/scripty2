@@ -1,27 +1,27 @@
 /**
- * s2.fx.Operators
+ * S2.FX.Operators
  *  
  * Effect operators are reusable interpolation functions.
- * Operators are used by [[s2.fx.Element]] and it's subclasses.
+ * Operators are used by [[S2.FX.Element]] and it's subclasses.
 **/
-s2.fx.Operators = { };
+S2.FX.Operators = { };
 
 /**
- *  class s2.fx.Operators.Base
+ *  class S2.FX.Operators.Base
  *  
  *  This is skeleton base class which must be extended to be useful.
 **/
-s2.fx.Operators.Base = Class.create({
+S2.FX.Operators.Base = Class.create({
   /**
-   *  new s2.fx.Operators.Base(effect, object[, options])
-   *  - effect (s2.fx.Effect): The effect which uses this operator
+   *  new S2.FX.Operators.Base(effect, object[, options])
+   *  - effect (S2.FX.Effect): The effect which uses this operator
    *  - object (Object): A releatd object (mostly elements)
    *  - options (Object): Additional options for the operator.
    *  
    *  This is skeleton base class which must be extended to be useful.
    *
    *  Options:
-   *    * `transition`: a [[s2.fx.Transition]] method, defaults to a linear transition
+   *    * `transition`: a [[S2.FX.Transition]] method, defaults to a linear transition
   **/
   initialize: function(effect, object, options) {
     this.effect = effect;
@@ -32,16 +32,16 @@ s2.fx.Operators.Base = Class.create({
   },
 
   /**
-   *  s2.fx.Operators.Base#inspect() -> String
+   *  S2.FX.Operators.Base#inspect() -> String
    *  
-   *  Returns the debug-oriented string representation of an s2.fx.Operator.
+   *  Returns the debug-oriented string representation of an S2.FX.Operator.
   **/
   inspect: function() {
-    return "#<s2.fx.Operators.Base:" + this.lastValue + ">";
+    return "#<S2.FX.Operators.Base:" + this.lastValue + ">";
   },
   
   /**
-   *  s2.fx.Operators.Base#setup() -> undefined
+   *  S2.FX.Operators.Base#setup() -> undefined
    *  
    *  Called when the operator is intialized.
    *  Intended to be overridden by subclasses.
@@ -50,7 +50,7 @@ s2.fx.Operators.Base = Class.create({
   },
   
   /**
-   *  s2.fx.Operators.Base#valueAt(position) -> Object
+   *  S2.FX.Operators.Base#valueAt(position) -> Object
    *  - position (Number): position between 0 (start of operator) and 1 (end of operator)
    *  
    *  Returns the value for a specific position.
@@ -60,7 +60,7 @@ s2.fx.Operators.Base = Class.create({
   },
   
   /**
-   *  s2.fx.Operators.Base#applyValue(value) -> undefined
+   *  S2.FX.Operators.Base#applyValue(value) -> undefined
    *  - value (Object): value to be rendered
    * 
    *  Needs to be overridden by subclasses.
@@ -69,9 +69,9 @@ s2.fx.Operators.Base = Class.create({
   },
 
   /**
-   *  s2.fx.Operators.Base#render() -> undefined
+   *  S2.FX.Operators.Base#render() -> undefined
    *  
-   *  Renders the Operator. This method is called by [[s2.fx.Element#animate]].
+   *  Renders the Operator. This method is called by [[S2.FX.Element#animate]].
   **/
   render: function(position) {
     var value = this.valueAt(this.options.transition(position));

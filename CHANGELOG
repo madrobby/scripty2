@@ -2,7 +2,7 @@
 
 * Element#morph is now queueing automatically  (Thomas Fuchs)
 
-* s2.fx.Base#cancel to abort effects in current state, s2.fx.Base#finish to instantaneously finish effects  (Thomas Fuchs)
+* S2.FX.Base#cancel to abort effects in current state, S2.FX.Base#finish to instantaneously finish effects  (Thomas Fuchs)
 
 * Effect options now recognize the following shortcuts: Strings "slow" and "fast" are mapped to { duration:1 } and { duration:.1 }, functions are mapped to { after: function }, and numbers are mapped to { duration:number }.  [#1 state:resolved] (Thomas Fuchs, Radoslav Stankov)
 

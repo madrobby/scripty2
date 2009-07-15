@@ -2,7 +2,7 @@
 
 /**
  *  == scripty2 ui ==
- *  * [[s2.css]]: functions for CSS parsing, color normalization and CSS value interpolation.
+ *  * [[S2.CSS]]: functions for CSS parsing, color normalization and CSS value interpolation.
 **/
 
 /**
@@ -13,20 +13,20 @@
 **/
 
 /** section: scripty2 core
- * s2
- * The s2 namespace is the main container for the various scripty2 frameworks
+ * S2
+ * The S2 namespace is the main container for the various scripty2 frameworks
  * and also provides the libraries' version number and information about extensions.
 **/
-var s2 = {
+var S2 = {
   /**
-   * s2.Version = '<%= SCRIPTY2_VERSION %>'
+   * S2.Version = '<%= SCRIPTY2_VERSION %>'
    * 
    * This constant lists the version of scripty2.
   **/
   Version: '<%= SCRIPTY2_VERSION %>',
   
   /**
-   * s2.Extensions
+   * S2.Extensions
    *
    * Holds information about extension modules plugged into scripty2. Currently unused.
   **/
@@ -35,6 +35,7 @@ var s2 = {
 
 //= require "css"
 //= require "effects"
+//= require "ui"
   
 //= require "extensions/misc"
 //= require "extensions/element"

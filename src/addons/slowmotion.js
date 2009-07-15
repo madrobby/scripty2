@@ -1,4 +1,4 @@
-s2.fx.Heartbeat.SlowMotion = Class.create(s2.fx.Heartbeat, {
+S2.FX.Heartbeat.SlowMotion = Class.create(S2.FX.Heartbeat, {
   initialize: function($super, options) {
     $super(options);
     this.timebase = new Date().getTime();

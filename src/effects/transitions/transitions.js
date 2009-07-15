@@ -1,5 +1,5 @@
 /**
- * s2.fx.Transitions
+ * S2.FX.Transitions
  *
  * Transitions can fine-tune how an effect evolves over time. All effects,
  * without the use of transitions, normally evolve linearily.
@@ -14,14 +14,14 @@
  *
  * <h4>Default transition</h4
  *
- * If no transition option is given to an effect, [[s2.fx.Transitions.sinusoidal]] is used.
- * This setting can be changed by redefining [[s2.fx.DefaultOptions.transition]].
+ * If no transition option is given to an effect, [[S2.FX.Transitions.sinusoidal]] is used.
+ * This setting can be changed by redefining [[S2.FX.DefaultOptions.transition]].
  *
  * <h4>Implementing your own transitions</h4>
  *
  * Transitions can easily be added, by using this template:
  *
- *     Object.extend(s2.fx.Transitions, {
+ *     Object.extend(S2.FX.Transitions, {
  *       myTransition: function(pos) {
  *         return pos; // do your calculations here!
  *       }
@@ -40,10 +40,10 @@
  * all rights reserved.
 **/
 
-s2.fx.Transitions = {
+S2.FX.Transitions = {
 
   /**
-   *  s2.fx.Transitions.linear(pos) -> Number
+   *  S2.FX.Transitions.linear(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Basic linear transition, no easing or other alteration of the effect.
@@ -52,7 +52,7 @@ s2.fx.Transitions = {
   linear: Prototype.K,
 
   /**
-   *  s2.fx.Transitions.sinusoidal(pos) -> Number
+   *  S2.FX.Transitions.sinusoidal(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Alters the effect timing to be aligned to a sine wave.
@@ -63,7 +63,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.reverse(pos) -> Number
+   *  S2.FX.Transitions.reverse(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Effect is executed in a reverse linear fashion.
@@ -74,32 +74,32 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.mirror(pos[, transition]) -> Number
+   *  S2.FX.Transitions.mirror(pos[, transition]) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
-   *  - transition (Function): a s2.fx.Transitions transition function
+   *  - transition (Function): a S2.FX.Transitions transition function
    *
-   *  The given transition is mirrored. Defaults to [[s2.fx.Transitions.sinusoidal]].
+   *  The given transition is mirrored. Defaults to [[S2.FX.Transitions.sinusoidal]].
    *  <div class="transition"></div>
    *
    *  You can use other transitions as per the following code sample:
    *
    *      $('element_id').morph('font-size:200px', {
    *        transition: function(pos){
-   *          return s2.fx.Transitions.mirror(pos, s2.fx.Transitions.bounce);
+   *          return S2.FX.Transitions.mirror(pos, S2.FX.Transitions.bounce);
    *        }
    *      });
    *
    *  If you plan to reuse such a mirrored transition often, define your own transition
    *  function:
    *
-   *      s2.fx.Transitions.mirroredBounce = function(pos){
-   *        return s2.fx.Transitions.mirror(pos, s2.fx.Transitions.bounce);
+   *      S2.FX.Transitions.mirroredBounce = function(pos){
+   *        return S2.FX.Transitions.mirror(pos, S2.FX.Transitions.bounce);
    *      });
    *
    *      $('element_id').morph('font-size:200px', { transition: 'mirroredBounce' });
   **/
   mirror: function(pos, transition) {
-    transition = transition || s2.fx.Transitions.sinusoidal;
+    transition = transition || S2.FX.Transitions.sinusoidal;
     if(pos<0.5)
       return transition(pos*2);
     else
@@ -107,7 +107,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.flicker(pos) -> Number
+   *  S2.FX.Transitions.flicker(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Effect flickers along a sine wave.
@@ -115,11 +115,11 @@ s2.fx.Transitions = {
   **/
   flicker: function(pos) {
     var pos = pos + (Math.random()-0.5)/5;
-    return s2.fx.Transitions.sinusoidal(pos < 0 ? 0 : pos > 1 ? 1 : pos);
+    return S2.FX.Transitions.sinusoidal(pos < 0 ? 0 : pos > 1 ? 1 : pos);
   },
 
   /**
-   *  s2.fx.Transitions.wobble(pos) -> Number
+   *  S2.FX.Transitions.wobble(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Effect wobbles increasingly fast between start and end positions.
@@ -130,7 +130,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.pulse(pos[, pulses]) -> Number
+   *  S2.FX.Transitions.pulse(pos[, pulses]) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *  - pulses (Number): Number of pulses, defaults to 5
    *
@@ -142,7 +142,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.blink(pos[, blinks]) -> Number
+   *  S2.FX.Transitions.blink(pos[, blinks]) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *  - pulses (Number): Number of blinks, defaults to 5
    *
@@ -154,7 +154,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.spring(pos) -> Number
+   *  S2.FX.Transitions.spring(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  Alters the effect timing to a "spring".
@@ -165,7 +165,7 @@ s2.fx.Transitions = {
   },
 
   /**
-   *  s2.fx.Transitions.none() -> Number
+   *  S2.FX.Transitions.none() -> Number
    *
    *  No transition, the effect stays in intial state (returns 0 regardless of input values).
    *  <div class="transition"></div>
@@ -173,7 +173,7 @@ s2.fx.Transitions = {
   none: Prototype.K.curry(0),
 
   /**
-   *  s2.fx.Transitions.full() -> Number
+   *  S2.FX.Transitions.full() -> Number
    *
    *  No transition, the effect is always in final state (returns 1 regardless of input values).
    *  <div class="transition"></div>
