@@ -1,14 +1,33 @@
 /**
- * == Effects ==
- * The scripty2 effects framework provides for time-based transformations of DOM elements 
- * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement 
+ * ==  scripty2 fx ==
+ * The scripty2 effects framework provides for time-based transformations of DOM elements
+ * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement
  * of the visual effects framework of script.aculo.us 1.X.
  *
- * In practice `s2.fx.Morph` is most often used, which allows transitions from one
+ * In practice [[s2.fx.Morph]] is most often used, which allows transitions from one
  * set of CSS style rules to another.
+ *
+ * <h2>Features</h2>
+ *
+ * * <a href="scripty2%20fx/element.html#morph-class_method">CSS morphing engine</a>: 
+ *   morph from one set of style properties to an other, including
+ *   support for all CSS length types (px, em, %, cm, pt, etc.)
+ * * <a href="scripty2%20fx/s2/fx/transitions.html">Extensive transition system</a>
+ *   for animation easing and special effects (e.g. bouncing)
+ * * Auto-adjusts to differences in computing and rendering speed (drops frames as necessary)
+ * * Limits the number of attempted frame renders to conserve CPU in fast computers
+ * * Flexible OOP-based implementation allows for easy extension and hacks
+ * * <a href="scripty2%20fx/s2/fx/queue.html">Effect queuing</a> to run an effect after other effects have finished
+ * * <a href="scripty2%20fx/element.html#morph-class_method">Chaining</a> and 
+ *   <a href="scripty2%20fx/s2/fx/base.html#new-constructor">default options</a>: 
+ *   easy-to-use syntax for most use cases
+ * * <a href="scripty2%20fx/s2/fx/element.html#play-instance_method">Reusable effect instances</a>
+ *   can be used with more than one DOM element
+ * * User-definable callback functions at any point in the effect lifecycle
+ * * Effects are abortable (either as-is or abort-to-end)
 **/
 
-/** section: Effects
+/** section: scripty2 fx
  * s2.fx
  * This is the main effects namespace.
 **/
@@ -39,7 +58,7 @@ s2.fx = (function(){
   return {
     initialize: initialize,
     getQueues: function(){ return queues; },
-    addQueue: queues.push,
+    addQueue: function(queue){ queues.push(queue); },
     getHeartbeat: function(){ return heartbeat; },
     setHeartbeat: function(newHeartbeat){ 
       heartbeat = newHeartbeat; 
@@ -102,12 +121,16 @@ s2.fx.Base = Class.create({
    *    Sets the transition method for easing and other special effects.
    *  * `before`: Function to be executed before the first frame of the effect is rendered.
    *  * `after`: Function to be executed after the effect has finished.
-   *  * `beforeUpdate`: Function to be executed before each frame is rendered.
-   *  * `afterUpdate`: Function to be executed after each frame is renedred.
+   *  * `beforeUpdate`: Function to be executed before each frame is rendered. This function
+   *    is given two parameters: the effect instance and the current position (between 0 and 1).
+   *  * `afterUpdate`: Function to be executed after each frame is renedred. This function
+   *    is given two parameters: the effect instance and the current position (between 0 and 1).
    *  * `fps`: The maximum number of frames per second. Ensures that no more than `options.fps`
    *    frames per second are rendered, even if there's enough computation resources available.
    *    This can be used to make CPU-intensive effects use fewer resources.
    *  * `queue`: Specify a [[s2.fx.Queue]] to be used for the effect.
+   *  * `position`: Position within the specified queue, `parallel` (start immediately, default) or `end` 
+   *    (queue up until the last effect in the queue is finished)
    *
    *  The effect won't start immediately, it will merely be initialized.
    *  To start the effect, call [[s2.fx.Base#play]].
@@ -141,9 +164,9 @@ s2.fx.Base = Class.create({
     
     if (this.options.beforeUpdate || this.options.afterUpdate) {
       this.update = this.updateWithoutWrappers.wrap( function(proceed,position){
-        if (this.options.beforeUpdate) this.options.beforeUpdate(this);
+        if (this.options.beforeUpdate) this.options.beforeUpdate(this, position);
         proceed(position);
-        if (this.options.afterUpdate) this.options.afterUpdate(this);
+        if (this.options.afterUpdate) this.options.afterUpdate(this, position);
       }.bind(this));
     }
     if(this.options.transition === false)
@@ -185,12 +208,12 @@ s2.fx.Base = Class.create({
         this.frameCount++;
         return this;
       }
-      if (timestamp >= this.endsAt) {
+      if (timestamp >= this.endsAt && !(this.state == 'finished')) {
         this.update(this.options.transition(1));
         if (this.teardown) this.teardown();
         if (this.options.after) this.options.after(this);
         this.state = 'finished';
-      } else {
+      } else if (this.state == 'running') {
         var position = 1 - (this.endsAt - timestamp) / this.duration;
         if ((this.maxFrames * position).floor() > this.frameCount) {
           this.update(this.options.transition(position));
@@ -213,6 +236,18 @@ s2.fx.Base = Class.create({
     if (this.teardown) this.teardown();
     if (after && this.options.after) this.options.after(this);
     this.state = 'finished';
+  },
+
+  /**
+   *  s2.fx.Base#finish() -> undefined
+   *
+   *  Immediately render the last frame and halt execution of the effect
+   *  and call the `teardown`method if defined.
+  **/
+  finish: function(after) {
+    if(!this.state == 'running') return;
+    this.update(this.options.transition(1));
+    this.cancel(true);
   },
 
   /**

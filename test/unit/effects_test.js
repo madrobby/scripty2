@@ -22,18 +22,33 @@ new Test.Unit.Runner({
   }},
   
   testQueuing: function() { with(this) {
-    $('sandbox').morph('font-size:10px');
+    new s2.fx.Morph('sandbox',{ style: 'font-size:10px' }).play();
     var q = s2.fx.DefaultOptions.queue;
     assertEqual(1, q.getEffects().length);
     wait(500, function(){
       assertEqual(0, q.getEffects().length);
       
-      $('sandbox').morph('font-size:20px');
-      $('sandbox').morph('color:#fff');
+      new s2.fx.Morph('sandbox',{ style: 'font-size:20px' }).play();
+      new s2.fx.Morph('sandbox',{ style: 'color:#fff' }).play();
       assertEqual(2, q.getEffects().length);
       
       wait(500, function(){
         assertEqual(0, q.getEffects().length);
+      });
+    });
+  }},
+  
+  testMorphChaining: function() { with(this) {
+    $('sandbox').morph('font-size:10px').morph('color:#fff');
+    wait(300, function(){
+      assertEqual('10px', $('sandbox').getStyle('font-size'));
+      assertNotEqual('#fff', $('sandbox').getStyle('color'));
+      wait(300, function(){
+        $('sandbox').morph('font-size:20px').morph('color:#000',{ position: 'parallel' });
+        wait(300, function(){
+          assertEqual('20px', $('sandbox').getStyle('font-size'));
+          assertNotEqual('#000', $('sandbox').getStyle('color'));
+        });
       });
     });
   }},
@@ -135,7 +150,6 @@ new Test.Unit.Runner({
           { transition: 'linear',     expected0: 0, expected1: 1 },
           { transition: 'sinusoidal', expected0: 0, expected1: 1 },
           { transition: 'reverse',    expected0: 1, expected1: 0 },
-          { transition: 'flicker',    expected0: 0, expected1: 1 },
           { transition: 'wobble',     expected0: 0, expected1: 1 },
           { transition: 'pulse',      expected0: 0, expected1: 1 },
           { transition: 'none',       expected0: 0, expected1: 0 },
@@ -253,10 +267,10 @@ new Test.Unit.Runner({
       color:            '#f00',
       backgroundColor:  '#ffffff'
     },{ duration:0.75 });
-    assertEqual('10px', $('error_test_ul').getStyle('font-size'), 'fails with CSS Transition support');
+    assertEqual('10px', $('error_test_ul').getStyle('font-size'));
     wait(100, function(){
       assertNotEqual('10px',$('error_test_ul').getStyle('font-size'));
-      assertNotEqual('40px',$('error_test_ul').getStyle('font-size'), 'fails with CSS Transition support');
+      assertNotEqual('40px',$('error_test_ul').getStyle('font-size'));
       wait(1000,function(){
         assertEqual('17px', $('error_test_ul').getStyle('margin-right'));
         assertEqual('40px', $('error_test_ul').getStyle('font-size'));
@@ -264,13 +278,6 @@ new Test.Unit.Runner({
         assertEqual('20px', $('error_message_2').getStyle('font-size'));
       });
     });
-  }},
-
-  testElementMorphChaining: function() { with(this) {
-    $('error_message').setStyle('font-size:10px;opacity:1').morph('font-size:17px').morph('opacity:0',{delay:2});
-    wait(3100,function(){ // 2000ms delay + 1000ms default duration
-      assertEqual(0, $('error_message').getStyle('opacity'));
-    });
   }}
-
+  
 });

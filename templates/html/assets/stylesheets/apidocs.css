@@ -34,6 +34,7 @@ div.transition {
   width: 200px;
   height: 200px;
   position: relative;
+  margin-bottom:10px;
 }
 
 div.transition div {
@@ -51,6 +52,116 @@ div.transition span {
   color: #888;
   width: 200px;
   left: 0px;
+}
+
+div.transition div.indicator {
+  background-color: #ABD474;
+  height: 200px;
+  top: 0px;
+  left: 0px;
+}
+
+div.transition div.interactive div.hint {
+  width: 100%;
+  top: 90px;
+  font-size: 18px;
+  text-align: center;
+  color: #888 !important;
+  background: transparent;
+  border: 0;
+  z-index: 1;
+}
+
+div.transition div.interactive.active div.hint {
+  display: none;
+}
+
+div.transition div.marker {
+  background-color: #ABD474;
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  left: 0px;
+  margin-bottom: -3px;
+  margin-left: -3px;
+}
+div.transition div.label {
+  background: transparent;
+  color: #ABD474;
+  font-size: 20px;
+  height: 20px;
+  width: 200px;
+  text-align: center;
+  top: 80px;
+  left: 0px;
+  z-index: -1;
+}
+
+div.transition div.interactive {
+  width: 590px;
+  height: 200px;
+  left: 240px;
+  border: 1px solid #dadada;
+  background: #fff;
+}
+
+div.transition div.interactive div {
+  color: #eee;
+}
+
+div.transition div.interactive.active div {
+  color: #000;
+}
+
+div.transition div.interactive div.movement {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #eee;
+  background: #fff;
+  text-align:center;
+  padding: 20px;
+  top: 20px;
+  left: 20px;
+}
+
+div.transition div.interactive.active div.movement {
+  background: #F9FFED;
+  border: 1px solid #ABD474;
+}
+
+div.transition div.interactive div.color {
+  width: 328px;
+  height: 20px;
+  border: 1px solid #eee;
+  background: #fff;
+  text-align:center;
+  padding: 10px;
+  top: 140px;
+  left: 20px;
+}
+
+div.transition div.interactive.active div.color {
+  background: #ABD474;
+}
+
+div.transition div.interactive div.size {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #eee;
+  background: #fff;
+  text-align:center;
+  padding: 20px;
+  top: 60px;
+  left: 450px;
+  margin: 0;
+  font-size: 100%;
+}
+
+div.transition div.interactive.active div.size {
+background: #F9FFED;
+border: 1px solid #ABD474;
 }
 
 body {
@@ -293,7 +404,7 @@ margin: 60px auto 0;
 }
 
 .page-content .page-title {
-margin-left: 120px;
+margin-left: 140px;
 margin-bottom: 15px;
 font-size: 27px;
 letter-spacing: -1px;
@@ -301,7 +412,7 @@ color: #444;
 }
 
 .page-content .page-introduction {
-margin-left: 120px;
+margin-left: 140px;
 font-size: 15px;
 margin-bottom: 25px;
 }
@@ -317,7 +428,8 @@ margin: 10px 0 20px;
 }
 
 .page-content .section .section-title {
-width: 110px;
+width: 130px;
+margin-top: -4px;
 margin-right: 10px;
 padding-right: 0;
 float: left;
@@ -334,8 +446,14 @@ padding-bottom: 5px;
 }
 
 .page-content .section .section-content {
-width: 835px;
+width: 815px;
 float: left;
+}
+
+.page-content .section .section-content h2 {
+  color: #444;
+  font-size: 16px;
+  margin: 15px 0 5px 0;
 }
 
 .page-content a,
@@ -421,16 +539,13 @@ background: url(../images/header-logo.png) no-repeat 0 1px;
 width: 300px;
 height: 93px;
 position: relative;
-left: 60px;
+left: 75px;
 }
 
 div#masthead a {
 text-decoration: none;
 }
 
-
-
-/* tag styles */
 pre {
 padding: 0;
 }
@@ -440,7 +555,6 @@ font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", monospace;
 font-size: 12px;
 }
 
-/* footer */
 div#footer {
 width: 960px;
 margin: 0 auto;
@@ -449,22 +563,24 @@ margin: 0 auto;
 div.about {
 margin-top: 20px;
 padding-top: 20px;
-width: 835px;
-margin-left: 120px;
+width: 745px;
+margin-left: 140px;
 border-top: 1px solid #aaa;
 color: #aaa;
+padding-left: 90px;
+background: url(../images/cc.png) no-repeat 20px left;
 }
 
 div.about a,
 div.about a:link {
-color: #aaa;
+color: #888;
 text-decoration: underline;
 border: 0;
 }
 
 div.copyright,
 div.credits {
-width: 360px;
+width: 372px;
 float: left;
 }
 
@@ -481,9 +597,8 @@ float: left;
 }
 
 div.credits {
-margin-left: 115px;
+text-align: right;
 }
-
 
 .page-title span.type {
 display: block;
@@ -499,7 +614,7 @@ line-height: 100%;
 }
 
 ul.breadcrumbs {
-margin-left: 120px;
+margin-left: 140px;
 }
 
 ul.breadcrumbs li {
@@ -610,9 +725,11 @@ font-style: normal;
 /* Section icons */
 
 .page-content .section .section-title h3 {
-padding-right: 24px;
+padding-right: 34px;
 background-position: right 0;
 background-repeat: no-repeat;
+height: 24px;
+padding-top: 5px;
 }
 
 .section-constructor .section-title h3 {
@@ -868,4 +985,73 @@ p.related-to {
 background-color: #f4f0f4;
 background-image: url(../images/related_to.png);
 border-color: #c9c;
+}
+
+#morph_example {
+  border:1px dashed #618AB8;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+
+#morph_example .options {
+  background:#CEDCEC;
+  padding:10px;
+}
+
+#morph_example .options textarea {
+  height:50px;
+  font-size:15px;
+  width:500px;
+  padding:2px;
+  float:left;
+}
+
+#morph_example .options a.button,
+#morph_example .options a.reset {
+  background:#618AB8;
+  text-decoration:none;
+  border:none;
+  color:#fff;
+  position:relative;
+  margin-left:5px;
+  display:block;
+  height:38px;
+  width:58px;
+  float:left;
+  text-align:center;
+  padding:18px 0 0 0;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+}
+
+#morph_example .options a.button:hover {
+  background:#365b85;
+}
+
+#morph_example .options a.reset {
+  background:#aaa;
+  margin-left:5px;
+}
+
+#morph_example .options a.reset:hover {
+  background:#888;
+}
+
+#morph_example p {
+  margin:50px auto;
+  width:400px;
+  position:relative;
+  border:0px solid #000;
+}
+
+#morph_example .hint {
+  clear:both;
+  font-size:12px;
+}
+
+#morph_example .hint em {
+  font-style:normal;
+  color:#666;
+  text-decoration:underline;
+  cursor:pointer;
 }

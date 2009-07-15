@@ -1,6 +1,6 @@
 //= require <effects/operators/scroll>
 
-/** section: Effects
+/**
  *  class s2.fx.Scroll < s2.fx.Element
  *
  *  Effect for scrolling an elements' contents.

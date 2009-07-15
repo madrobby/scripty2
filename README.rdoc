@@ -1,7 +1,77 @@
-== script.aculo.us 2
+== scripty2: for a more delicious web
 
-Coming soon, patches welcome! :)
+scripty2 is an open source JavaScript framework for advanced HTML-based user interfaces. Or simply put, scripty2 helps you build a more delicious web:
 
-= Testing
+* Visual effects: scripty2's heartpiece is an versatile real-time effects framework
+* CSS utilities
 
-...
+And there's more coming! scripty2 is currently in alpha status, so APIs can change and
+there's still a lot more functionality planned.
+
+scripty2 is a complete rewrite and reimplementation of script.aculo.us, with
+are modular structure intended to ease the development of highly customized
+user interface effects and behaviours.
+
+Please use http://groups.google.com/group/scripty2 for any development questions
+for scripty2. Patches, tests, demos, updates and documentation are always welcome.
+
+= Build
+
+For building, development and testing, you need to have a working Ruby setup. 
+You'll need the bluecloth, treetop and coderay gems installed.
+
+To build the distribution, run:
+
+  rake && rake package
+
+This will build the documentation (in /doc) and provides ready-to-deploy JavaScript
+packages in /dist.
+
+The build process uses the YUI Compressor to build a minified version of the library
+file. This requires Java to be installed and available.
+
+After the build process is done, you'll find two files in /dist:
+
+* s2.js (for debugging)
+* s2.min.js (minified version for production use)
+
+At the moment this is a prerelease alpha version and not meant for 
+production use (although it is used with great success on several high
+volume websites).
+
+= Usage
+
+scripty2 is dependent on the Prototype JavaScript framework. You'll need to grab
+the latest version from http://prototypejs.org/.
+
+Put prototype.js and s2.js in a folder of your website, and include them as follows:
+
+  <script src="/javascripts/prototype.js" type="text/javascript"></script>
+  <script src="/javascripts/s2.js" type="text/javascript"></script>
+
+You're ready to go! Now look at the documentation and demos (see below!).
+
+= Documentation
+
+To build the documentation, run:
+
+  rake doc
+
+The documentation is built with PDoc, which uses specially formatted
+source code comments to build a fully interactive HTML documentation set.
+
+Navigate a browser to /doc/index.html to view and browse the documentation.
+
+= Tests
+
+To run the unit tests, use:
+
+  rake test
+
+You can run specific tests, or use only specific browsers:
+
+  rake test BROWSERS=safari TESTS=css,heartbeat
+  
+= License
+
+scripty2 is is licensed under the terms of the MIT License, see the included MIT-LICENSE file.

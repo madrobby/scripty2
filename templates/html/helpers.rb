@@ -1,17 +1,8 @@
 require 'coderay'
 class BlueCloth
-  CodeBlockClassNameRegexp = /(?:\s*lang(?:uage)?:\s*(\w+)\s*\n)(.*)/
   def transform_code_blocks( str, rs )
-    @log.debug " Transforming code blocks"
-    class_name = "javascript"
     str.gsub( CodeBlockRegexp ) do |block|
-      codeblock = $1
-      remainder = $2
-      codeblock = codeblock.sub( CodeBlockClassNameRegexp ) do |b|
-        class_name = $1
-        $2
-      end
-      CodeRay.scan( outdent(codeblock).rstrip, :javascript ).div
+      CodeRay.scan( outdent($1).rstrip, :javascript ).div + $2
     end
   end
 end

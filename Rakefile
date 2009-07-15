@@ -39,21 +39,29 @@ task :default => [:dist, :min, :doc, :package, :clean_package_source]
 desc "Builds the distribution."
 task :dist do
   sprocketize("src", "s2.js")
+  cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.js')
 end
 
-desc "Generates a minified version of the distribution."
-task :min do
-  puts "Minifying..."
-  `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar dist/s2.js -o dist/s2.min.js`
-  cp File.join(SCRIPTY2_DIST_DIR,'s2.min.js'), File.join(SCRIPTY2_DIST_DIR,'temp.js')
-  `gzip -9 dist/temp.js`
+def minify(src, target)
+  puts "Minifying #{src}..."
+  `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar #{src} -o #{target}`
+  cp target, File.join(SCRIPTY2_DIST_DIR,'temp.js')
+  msize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js'))
+  `gzip -9 #{File.join(SCRIPTY2_DIST_DIR,'temp.js')}`
   
-  osize = File.size(File.join(SCRIPTY2_DIST_DIR,'s2.js'))
+  osize = File.size(src)
   dsize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js.gz'))
   rm_rf File.join(SCRIPTY2_DIST_DIR,'temp.js.gz')
   
   puts "Original version: %.1fk" % (osize/1024.0)
-  puts "Minified and gzipped: %.1fk, compression factor %.1f" % [dsize/1024.0, osize/dsize.to_f]
+  puts "Minified: %.1fk" % (msize/1024.0)
+  puts "Minified and gzipped: %.1fk, compression factor %.1f" % [dsize/1024.0, osize/dsize.to_f]  
+end
+
+desc "Generates a minified version of the distribution."
+task :min do
+  minify File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DIST_DIR,'s2.min.js')
+  minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.min.js')
 end
 
 
@@ -86,16 +94,17 @@ namespace :doc do
       secretary.concatenation.save_to(temp.path)
       rm_rf SCRIPTY2_DOC_DIR
       
-      begin
+      #begin
         PDoc::Runner.new(temp.path,
           :output    => SCRIPTY2_DOC_DIR,
           :templates => TEMPLATES_DIRECTORY
         ).run
-      rescue 
+      #rescue 
         puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
-      end
+      #end
     end
     
+    cp File.join(SCRIPTY2_ROOT, 'lib', 'prototype.js'), File.join(SCRIPTY2_DOC_DIR, 'javascripts')
     cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
   end  
   
@@ -115,14 +124,17 @@ task :doc => ['doc:build']
 
 Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
   package.need_tar_gz = true
+  package.need_zip = true
   package.package_dir = SCRIPTY2_PKG_DIR
   package.package_files.include(
     'README.rdoc',
     'MIT-LICENSE',
+    'dist/prototype.js',
+    'dist/prototype.min.js',
     'dist/s2.js',
     'dist/s2.min.js',
-    'doc/**',
-    'src/**'
+    'doc/**/*',
+    'src/**/*'
   )
 end
 
@@ -138,6 +150,9 @@ namespace :test do
     browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
     tests_to_run     = ENV['TESTS'] && ENV['TESTS'].split(',')
     runner           = UnittestJS::WEBrickRunner::Runner.new(:test_dir => SCRIPTY2_TMP_DIR)
+    
+    cp File.join(SCRIPTY2_ROOT, 'lib', 'prototype.js'),
+      File.join(SCRIPTY2_TMP_DIR, 'lib_assets', 'prototype.js')
 
     Dir[File.join(SCRIPTY2_TMP_DIR, '*_test.html')].each do |file|
       file = File.basename(file)

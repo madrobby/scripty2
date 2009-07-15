@@ -61,11 +61,12 @@ PDoc.highlight = function(element) {
 var s2doc = {
   init: function(){
     $$('.transition').each(s2doc.TransitionExample);
+    if($('morph_example')) s2doc.MorphExample($('morph_example'));
   },
   
   TransitionExample: function(element){
     var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
-      transition = s2.fx.Transitions[type];
+      transition = s2.fx.Transitions[type], active = false;
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
       min = Math.min(0, values.min()), max = Math.max(200, values.max());
@@ -75,11 +76,122 @@ var s2doc = {
     }
     
     var factor = 200/(max-min), grid = '<span style="bottom:'+((0-min)*factor).round()+'px">0</span>'+
-      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>';
+      '<span style="bottom:'+((200-min)*factor).round()+'px">1</span>', 
+      graph = $R(0,200).map(function(v){
+        return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
+      }).join('') + '<div class="indicator" style="display:none"></div><div class="marker" style="display:none"></div><div class="label"></div>';
       
-    element.innerHTML = grid + $R(0,200).map(function(v){
-      return '<div style="left:'+v+'px;bottom:'+((values[v]-min)*factor).round()+'px;height:1px"></div>';
-    }).join('');
+      
+    var interactive = '<div class="interactive">'+
+      '<div class="movement">movement</div>' +
+      '<div class="color">color</div>' +
+      '<div class="size">size</div>' +
+      '<div class="hint">hover over this area to see the transition at different speeds</div>' +
+      '</div>';
+      
+    element.innerHTML = grid + graph + interactive;
+    
+    var effectM, effectC, effectS,
+      interactive = element.down('div.interactive'),
+      movement = interactive.down('div.movement'),
+      color = interactive.down('div.color'),
+      size = interactive.down('div.size'),
+      indicator = element.down('div.indicator'),
+      marker = element.down('div.marker'),
+      label = element.down('div.label');
+      
+    var demoTransition = function(pos){
+      var value = transition(pos);
+      indicator.style.cssText += ';left:'+(pos*200).round()+'px';
+      marker.style.cssText += ';left:'+(pos*200).round()+'px;bottom:'+(((value*200)-min)*factor).round()+'px';
+      return value;
+    }
+    
+    interactive.observe('mouseenter', function(){
+      interactive.addClassName('active');
+      indicator.show();
+      marker.show();
+      var durations = [.2, .5, 1, 3, 5], i = -1, duration, delay = 0;
+      function animate(){
+        duration = durations[++i%durations.length];
+        effectM = new s2.fx.Morph(movement, { 
+          style: 'left:268px', transition: demoTransition, duration: duration, delay: delay,
+          before: function(){ 
+            label.innerHTML = duration + 's';
+            movement.setStyle('left:20px') 
+          },
+          after: function(){ if(active) animate(); }
+        });
+        effectM.play();
+        effectC = new s2.fx.Morph(color, { 
+          style: 'background-color:#9D74D4', duration: duration, delay: delay, transition: transition,
+          before: function(){ color.setStyle('background-color:#ABD474') }
+        });
+        
+        effectC.play();
+        effectS = new s2.fx.Morph(size, { 
+          style: 'top:20px;left:390px;width:135px;font-size:200%;height:120px', duration:duration, delay: delay, transition: transition,
+          before: function(){ size.setStyle('top:60px;left:450px;margin:0;width:30px;height:30px;font-size:100%') }
+        });
+        effectS.play();
+        delay = 1;
+      }
+      active = true;
+      animate();
+    }).observe('mouseleave', function(){
+      i = -1;
+      label.innerHTML = '';
+      indicator.hide();
+      marker.hide();
+      interactive.removeClassName('active');
+      if(effectM) effectM.cancel();
+      if(effectC) effectC.cancel();
+      if(effectS) effectS.cancel();
+      movement.setStyle('left:20px');
+      color.setStyle('background-color:#fff');
+      size.setStyle('top:60px;left:450px;width:30px;height:30px;font-size:100%');
+      active = false;
+    });
+  },
+  
+  MorphExample: function(element) {
+    function generateDemoParagraph() {
+      return new Element('p').update('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.');
+    };
+
+    var element = $(element),
+        options = new Element('div', { className: 'options' }),
+        input   = new Element('textarea');
+        button  = new Element('a', { href: '#', className: 'button' }).update('Morph'),
+        reset   = new Element('a', { href: '#', className: 'reset' }).update('Reset'),
+        hint    = new Element('div', { className: 'hint' });
+        p       = generateDemoParagraph();
+
+    function resetParagraph() {
+      p.remove();
+      p = generateDemoParagraph();
+      element.insert({ bottom: p });
+    };
+
+    hint.update('Example: <em>background:#666; color:#fff; border:5px solid #0f0; padding:15px; left:10px;</em>');
+
+    element.insert(options).insert(p);
+    options.insert(input).insert(button).insert(reset).insert(hint);
+
+    button.observe('click', function(event) {
+      event.stop();
+      p.morph(input.value);
+    });
+
+    reset.observe('click', function(event) {
+      event.stop();
+      resetParagraph();
+    });
+    
+    hint.observe('click', function(event) {
+      resetParagraph();
+      p.morph(hint.down('em').innerHTML);
+    });
   }
 };
 
@@ -216,7 +328,7 @@ var Filterer = Class.create({
     urls.each( function(url) {
       var a  = new Element('a', {
         'class': url.type.gsub(/\s/, '_'),
-        href:    PDoc.pathPrefix + url.path
+        href:    PDoc.pathPrefix + 'temp/' + url.path
       }).update(url.name);
       var li = new Element('li', { 'class': 'menu-item' });
       li.appendChild(a);
@@ -402,7 +514,23 @@ Form.GhostedField = Class.create({
   }
 });
 
+Function.prototype.deferUntil = function(condition){
+  this.interval = setInterval(function(){
+    if (!condition()) return;
+    clearInterval(this.interval);
+    this();
+  }.bind(this), 50);
+};
+
 document.observe("dom:loaded", function() {
   new Form.GhostedField($('search'), "Search");
   s2doc.init();
+  if(location && location.hostname && location.hostname == 'scripty2.com'){
+    var script = document.createElement('script');
+    script.type='text/javascript'; 
+    script.src=(("https:" == document.location.protocol) ? "https://ssl." : "http://www.") + "google-analytics.com/ga.js";
+    $(document.body).appendChild(script);
+    (function(){try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}})
+      .deferUntil(function(){ return !!window['_gat'] });
+  }
 });
