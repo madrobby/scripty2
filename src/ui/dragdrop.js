@@ -1,2 +1,3 @@
-//=require "dragdrop/draggable"
-//=require "dragdrop/droppable"
+//= require "dragdrop/draggable_emitter"
+//= require "dragdrop/draggable"
+//= require "dragdrop/droppable"

@@ -35,9 +35,11 @@ var S2 = {
 
 //= require "css"
 //= require "effects"
-//= require "ui"
   
 //= require "extensions/misc"
 //= require "extensions/element"
+
+//= require "ui"
+
 
 //= require "addons/helpers"

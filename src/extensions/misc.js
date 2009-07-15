@@ -1,3 +1,76 @@
+/**
+ *  S2.deepExtend(destination, source) -> Object
+ *  
+ *  A "deep" version of `Object.extend`. Performs a recursive deep extension.
+ *  
+ *  Used within Krang to blend user-set options with the defaults.
+**/
+
+S2.deepExtend = function(destination, source) {
+  for (var property in source) {
+    var type = typeof source[property], deep = true;
+    
+    if (source[property] === null || type !== 'object')
+      deep = false;
+      
+    if (Object.isElement(source[property]))
+      deep = false;
+      
+    if (source[property] && source[property].constructor &&
+     source[property].constructor !== Object) {
+      deep = false;
+    } 
+        
+    if (deep) {
+      destination[property] = destination[property] || {};
+      arguments.callee(destination[property], source[property]);
+    } else {
+      destination[property] = source[property];
+    }    
+  }
+  return destination;
+};
+
+S2.Mixin = {};
+
+/**
+ *  mixin S2.Mixin.Configurable
+ *  
+ *  A mixin for hassle-free blending of default options with user-defined
+ *  options.
+ *  
+ *  Expects default options to be defined in a `DEFAULT_OPTIONS` property
+ *  on the class itself.
+**/
+S2.Mixin.Configurable = {
+  /**
+   *  S2.Mixin.Configurable#setOptions(options) -> Object
+   *  - options (Object): A set of user-defined options that should override
+   *    the defaults.
+   *  
+   *  Sets options on the class.
+  **/
+  setOptions: function(options) {
+    this.options = {};
+    var constructor = this.constructor;
+    
+    if (constructor.superclass) {
+      // Build the inheritance chain.
+      var chain = [], klass = constructor;
+      while (klass = klass.superclass)
+        chain.push(klass);
+      chain = chain.reverse();
+      
+      for (var i = 0, l = chain.length; i < l; i++)
+        S2.deepExtend(this.options, chain[i].DEFAULT_OPTIONS || {});
+    }
+    
+    S2.deepExtend(this.options, constructor.DEFAULT_OPTIONS || {});
+    return S2.deepExtend(this.options, options || {});
+  }
+};
+
+
 Function.prototype.optionize = function(){
   var self = this, argumentNames = self.argumentNames(), optionIndex = argumentNames.length - 1, 
     method = function(){
