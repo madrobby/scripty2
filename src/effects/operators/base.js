@@ -15,8 +15,8 @@ S2.FX.Operators.Base = Class.create({
   /**
    *  new S2.FX.Operators.Base(effect, object[, options])
    *  - effect (S2.FX.Effect): The effect which uses this operator
-   *  - object (Object): A related object (mostly elements)
-   *  - options (Object): Additional options for the operator
+   *  - object (Object): A releatd object (mostly elements)
+   *  - options (Object): Additional options for the operator.
    *  
    *  This is a skeleton base class which must be extended to be useful.
    *

@@ -11,7 +11,7 @@ new Test.Unit.Runner({
     assertEqual(0, tmp);
     wait(250, function(){
       assertEqual(0, tmp);
-      new S2.FX.Morph('sandbox',{style:'font-size:20px',duration:.1}).play();
+      new S2.FX.Morph('sandbox',{style:'font-size:20px',duration:.5}).play();
       wait(750, function(){
         assert(tmp > 0);
         tmp2 = tmp;
