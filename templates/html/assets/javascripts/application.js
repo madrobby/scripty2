@@ -65,7 +65,7 @@ var s2doc = {
   },
   
   TransitionExample: function(element){
-    var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
+    var type = element.up().down('.ebnf').innerHTML.gsub(/S2\.FX\.Transitions\./,'').split('(').first(),
       transition = S2.FX.Transitions[type], active = false;
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
