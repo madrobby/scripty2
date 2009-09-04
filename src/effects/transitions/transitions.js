@@ -181,4 +181,5 @@ S2.FX.Transitions = {
   full: Prototype.K.curry(1)
 };
 
+//= require <effects/transitions/cubic-bezier>
 //= require <effects/transitions/penner>
