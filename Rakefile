@@ -93,6 +93,7 @@ namespace :doc do
         
       secretary.concatenation.save_to(temp.path)
       rm_rf SCRIPTY2_DOC_DIR
+      mkdir SCRIPTY2_DOC_DIR
       
       #begin
         PDoc::Runner.new(temp.path,
