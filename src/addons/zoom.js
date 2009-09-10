@@ -45,12 +45,12 @@ S2.FX.Zoom = Class.create(S2.FX.Element, {
   teardown: function() {
     this.clone.observe('click', function() {
       this.overlay.remove();
-      this.clone.morph('opacity:0', { 
+      this.clone.morph('opacity:0', {
         duration: 0.2,
         after: function() {
           this.clone.remove();
-        }.bind(this) 
-      });
+        }.bind(this)
+      })
     }.bind(this));
   }
 });
