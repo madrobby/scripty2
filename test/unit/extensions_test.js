@@ -21,13 +21,24 @@ new Test.Unit.Runner({
   
   testObjectPropertize: function(){ with(this) {
 		var propertizeTransitions = function(prop) { 
-			Object.propertize.curry(prop, S2.FX.Transitions);
+			return Object.propertize(prop, S2.FX.Transitions);
 		};
     assertEqual(propertizeTransitions('sinusoidal'), S2.FX.Transitions.sinusoidal);
 		assertEqual(propertizeTransitions(S2.FX.Transitions.sinusoidal), S2.FX.Transitions.sinusoidal);
   }},
   
   testFunctionOptionize: function(){ with(this) {
-    // TODO
+    var o = {a:1}
+        optionize = (function(a,b,options) {
+          return options;
+        }).optionize(),
+      
+    // options set to last object
+    assertEqual(o, optionize(o));
+    assertEqual(o, optionize(1,o));
+    assertEqual(o, optionize(1,2,o));
+    
+    // unless the argument is already filled in
+    assertEqual(3, optionize(1,2,3,o));
   }}
 });
