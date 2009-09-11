@@ -108,7 +108,7 @@ Element.addMethods({
   /** 
    *  Element#fade(@element[, options]) -> element
    *
-   *  Fade out an element from it's current opacity setting (or 100%).
+   *  Fade out an element from its current opacity setting (or 100%).
   **/
   fade: function(element, options){
     return element.effect('morph', Object.extend({
