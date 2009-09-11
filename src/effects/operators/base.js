@@ -2,23 +2,23 @@
  * S2.FX.Operators
  *  
  * Effect operators are reusable interpolation functions.
- * Operators are used by [[S2.FX.Element]] and it's subclasses.
+ * Operators are used by [[S2.FX.Element]] and its subclasses.
 **/
 S2.FX.Operators = { };
 
 /**
  *  class S2.FX.Operators.Base
  *  
- *  This is skeleton base class which must be extended to be useful.
+ *  This is a skeleton base class which must be extended to be useful.
 **/
 S2.FX.Operators.Base = Class.create({
   /**
    *  new S2.FX.Operators.Base(effect, object[, options])
    *  - effect (S2.FX.Effect): The effect which uses this operator
-   *  - object (Object): A releatd object (mostly elements)
-   *  - options (Object): Additional options for the operator.
+   *  - object (Object): A related object (mostly elements)
+   *  - options (Object): Additional options for the operator
    *  
-   *  This is skeleton base class which must be extended to be useful.
+   *  This is a skeleton base class which must be extended to be useful.
    *
    *  Options:
    *    * `transition`: a [[S2.FX.Transition]] method, defaults to a linear transition

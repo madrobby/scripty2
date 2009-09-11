@@ -54,8 +54,9 @@
    *  with WebKit's CSS transitions `-webkit-transition-timing-function`
    *  CSS property.
    *
-   *  See http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
-   *  for more information.
+   *  The W3C has more information about 
+   *  <a href="http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag">
+   *  CSS3 transition timing functions</a>.
   **/
   S2.FX.cubicBezierTransition = function(x1, y1, x2, y2){
     return (function(pos){

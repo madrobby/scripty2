@@ -20,7 +20,11 @@ new Test.Unit.Runner({
   }},
   
   testObjectPropertize: function(){ with(this) {
-    // TODO
+		var propertizeTransitions = function(prop) { 
+			Object.propertize.curry(prop, S2.FX.Transitions);
+		};
+    assertEqual(propertizeTransitions('sinusoidal'), S2.FX.Transitions.sinusoidal);
+		assertEqual(propertizeTransitions(S2.FX.Transitions.sinusoidal), S2.FX.Transitions.sinusoidal);
   }},
   
   testFunctionOptionize: function(){ with(this) {
