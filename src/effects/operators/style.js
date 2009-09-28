@@ -18,8 +18,6 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
       var property = item.underscore().dasherize(),
         from = this.element.getStyle(property), to = this.style[item];
       
-      console.log(item);
-      console.log(this.options.propertyTransitions);
       if(from!=to)
         this.tweens.push([
           property, S2.CSS.interpolate.curry(property, from, to),
