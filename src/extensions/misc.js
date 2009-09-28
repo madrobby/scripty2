@@ -1,4 +1,3 @@
-
 /** section: scripty2 core
  * class Function
  *  
@@ -27,16 +26,13 @@
  *      logOptions(1,2,3, {hello: "world"}) -> logs 3
 **/
 Function.prototype.optionize = function(){
-  var self = this, 
-    argumentNames = self.argumentNames(),
-    optionIndex = argumentNames.length - 1,
+  var self = this, argumentNames = self.argumentNames(), optionIndex = argumentNames.length - 1, 
     method = function(){
-      var args = $A(arguments), 
-         options = typeof args.last() == 'object' ? args.pop() : {},
-         prefilledArgs = (optionIndex == 0 ? [] : 
-           ((args.length > 0 ? args : [null]).inGroupsOf(optionIndex).flatten())).concat(options);
-      return self.apply(this, prefilledArgs);
-    };
+    var args = $A(arguments), options = typeof args.last() == 'object' ? args.pop() : {},
+      prefilledArgs = (optionIndex == 0 ? [] : 
+        ((args.length > 0 ? args : [null]).inGroupsOf(optionIndex).flatten())).concat(options);
+    return self.apply(this, prefilledArgs);
+  };
   method.argumentNames = function(){ return argumentNames };
   return method;
 };
