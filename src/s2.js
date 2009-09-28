@@ -28,16 +28,17 @@ var S2 = {
   /**
    * S2.Extensions
    *
-   * Holds information about extension modules plugged into scripty2. Currently unused.
+   * Holds information about extension modules plugged into scripty2.
   **/
   Extensions: {} 
 };
+
+//= require "extensions/misc"
 
 //= require "css"
 //= require "effects"
 //= require "ui"
   
-//= require "extensions/misc"
 //= require "extensions/element"
 
 //= require "addons/helpers"

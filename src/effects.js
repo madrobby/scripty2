@@ -9,4 +9,5 @@
 //= require "effects/scroll"
 
 //= require "effects/transitions/transitions"
-//= require "effects/transitions/penner"
+
+//= require "effects/webkit"
