@@ -106,10 +106,10 @@ S2.CSS = {
    *  
    *  Returns the value of a CSS color as a RGB triplet:
    *  
-   *  * #abc       -> [170, 187, 204]
-   *  * #aabbcc    -> not changed
+   *  * \#abc       -> [170, 187, 204]
+   *  * \#aabbcc    -> not changed
    *  * rgb(1,2,3) -> [1, 2, 3]
-   *  * #xyz       -> [NaN, NaN, NaN]
+   *  * \#xyz       -> [NaN, NaN, NaN]
    *  
    *  This method does not support HTML color constants.
   **/
@@ -127,9 +127,9 @@ S2.CSS = {
    *  
    *  Returns a normalized color in the #aabbcc format.
    *  
-   *  * #abc -> Expanded to #aabbcc
-   *  * #aabbcc -> not changed
-   *  * rgb(1,2,3) -> Expanded to #010203
+   *  * \#abc -> Expanded to #aabbcc
+   *  * \#aabbcc -> not changed
+   *  * rgb(1,2,3) -> Expanded to \#010203
    *  * other input -> not changed
    *  
    *  This method does not support HTML color constants.

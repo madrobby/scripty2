@@ -20,7 +20,7 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
       if(from!=to)
         this.tweens.push([
           property, S2.CSS.interpolate.curry(property, from, to),
-          item in this.options.propertyTransitions ? 
+          (this.options.propertyTransitions || []).include(item) ?
             Object.propertize(this.options.propertyTransitions[item], S2.FX.Transitions) : Prototype.K
         ]);
     }

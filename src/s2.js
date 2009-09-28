@@ -41,3 +41,4 @@ var S2 = {
 //= require "extensions/element"
 
 //= require "addons/helpers"
+//= require "addons/zoom"

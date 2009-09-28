@@ -10,7 +10,7 @@
  * <h2>Features</h2>
  *
  * * <a href="scripty2%20fx/element.html#morph-class_method">CSS morphing engine</a>: 
- *   morph from one set of style properties to an other, including
+ *   morph from one set of style properties to another, including
  *   support for all CSS length types (px, em, %, cm, pt, etc.)
  * * <a href="scripty2%20fx/s2/fx/transitions.html">Extensive transition system</a>
  *   for animation easing and special effects (e.g. bouncing)
