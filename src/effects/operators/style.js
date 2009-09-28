@@ -17,10 +17,13 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
     for(var item in this.style){
       var property = item.underscore().dasherize(),
         from = this.element.getStyle(property), to = this.style[item];
+      
+      console.log(item);
+      console.log(this.options.propertyTransitions);
       if(from!=to)
         this.tweens.push([
           property, S2.CSS.interpolate.curry(property, from, to),
-          (this.options.propertyTransitions || []).include(item) ?
+          (this.options.propertyTransitions && this.options.propertyTransitions[item]) ?
             Object.propertize(this.options.propertyTransitions[item], S2.FX.Transitions) : Prototype.K
         ]);
     }
