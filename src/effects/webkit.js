@@ -131,17 +131,19 @@ S2.Extensions.webkitCSSTransitions = false;
     
     S2.FX.Morph = Class.create(S2.FX.Morph, {
       setup: function(){
-        if (this.options.change) 
+        if (this.options.change)
           this.setupWrappers();
-        else if (this.options.style)
-          this.animate(isWebkitCSSTransitionCompatible(this) ? 
-            'webkitCssTransition' : 'style', this.destinationElement || this.element, { 
+        else if (this.options.style){
+          this.engine = isWebkitCSSTransitionCompatible(this) ? 'webkit' : 'javascript';
+          this.animate(this.engine == 'webkit' ?
+            'webkitCssTransition' : 'style', this.destinationElement || this.element, {
             style: this.options.style,
             propertyTransitions: this.options.propertyTransitions || { }
           });
+        }
       },
       render: function($super, position){
-        if(S2.Extensions.webkitCSSTransitions){
+        if(this.engine == 'webkit'){
           if(this.options.before)
             this.element.beforeStartEffect = this.options.before;
 
