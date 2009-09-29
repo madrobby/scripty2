@@ -3,11 +3,11 @@ S2.Extensions.webkitCSSTransitions = false;
 
 (function(){
   // test if WebKit CSS transitions are supported
-  //try {
-  //  document.createEvent("WebKitTransitionEvent");
-  //} catch(e) {
-  //  return;
-  //}
+  try {
+    document.createEvent("WebKitTransitionEvent");
+  } catch(e) {
+    return;
+  }
   
   /**
    *  S2.Extensions.webkitCSSTransitions = true | false
