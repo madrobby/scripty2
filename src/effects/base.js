@@ -2,7 +2,7 @@
  * ==  scripty2 fx ==
  * The scripty2 effects framework provides for time-based transformations of DOM elements
  * and arbitrary JavaScript objects. This is at the core of scripty2 and presents a refinement
- * of the visual effects framework of script.aculo.us 1.X.
+ * of the visual effects framework of script.aculo.us 1.
  *
  * In practice [[S2.FX.Morph]] is most often used, which allows transitions from one
  * set of CSS style rules to another.
@@ -14,6 +14,8 @@
  *   support for all CSS length types (px, em, %, cm, pt, etc.)
  * * <a href="scripty2%20fx/s2/fx/transitions.html">Extensive transition system</a>
  *   for animation easing and special effects (e.g. bouncing)
+ * * On supported browsers, uses browser-native visual effects (CSS Transitions),
+ *   fully automatically with no change to your code required
  * * Auto-adjusts to differences in computing and rendering speed (drops frames as necessary)
  * * Limits the number of attempted frame renders to conserve CPU in fast computers
  * * Flexible OOP-based implementation allows for easy extension and hacks

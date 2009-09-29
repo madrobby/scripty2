@@ -3,7 +3,11 @@ require 'rake/packagetask'
 
 SCRIPTY2_ROOT     = File.expand_path(File.dirname(__FILE__))
 SCRIPTY2_SRC_DIR  = File.join(SCRIPTY2_ROOT, 'src')
+
 SCRIPTY2_DIST_DIR = File.join(SCRIPTY2_ROOT, 'dist')
+SCRIPTY2_DEBUG_DIR = File.join(SCRIPTY2_DIST_DIR, 'debug')
+SCRIPTY2_RELEASE_DIR = File.join(SCRIPTY2_DIST_DIR, 'release')
+
 SCRIPTY2_DOC_DIR  = File.join(SCRIPTY2_ROOT, 'doc')
 SCRIPTY2_PKG_DIR  = File.join(SCRIPTY2_ROOT, 'pkg')
 SCRIPTY2_VERSION  = YAML.load(IO.read(File.join(SCRIPTY2_SRC_DIR, 'constants.yml')))['SCRIPTY2_VERSION']
@@ -31,27 +35,35 @@ def sprocketize(path, source, destination = source)
     :source_files => [source]
   )
   
-  secretary.concatenation.save_to(File.join(SCRIPTY2_DIST_DIR, destination))
+  secretary.concatenation.save_to(File.join(SCRIPTY2_DEBUG_DIR, destination))
 end
 
-task :default => [:dist, :min, :doc, :package, :clean_package_source]
+task :default => [:clean, :dist, :unified, :doc, :package, :clean_package_source]
+
+desc "Clean the distribution directory."
+task :clean do 
+  rm_rf SCRIPTY2_DIST_DIR
+  mkdir SCRIPTY2_DIST_DIR
+  mkdir SCRIPTY2_DEBUG_DIR
+  mkdir SCRIPTY2_RELEASE_DIR
+end
 
 desc "Builds the distribution."
 task :dist do
   sprocketize("src", "s2.js")
-  cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.js')
+  cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DEBUG_DIR,'prototype.js')
 end
 
 def minify(src, target)
   puts "Minifying #{src}..."
   `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar #{src} -o #{target}`
-  cp target, File.join(SCRIPTY2_DIST_DIR,'temp.js')
-  msize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js'))
-  `gzip -9 #{File.join(SCRIPTY2_DIST_DIR,'temp.js')}`
+  cp target, File.join(SCRIPTY2_DEBUG_DIR,'temp.js')
+  msize = File.size(File.join(SCRIPTY2_DEBUG_DIR,'temp.js'))
+  `gzip -9 #{File.join(SCRIPTY2_DEBUG_DIR,'temp.js')}`
   
   osize = File.size(src)
-  dsize = File.size(File.join(SCRIPTY2_DIST_DIR,'temp.js.gz'))
-  rm_rf File.join(SCRIPTY2_DIST_DIR,'temp.js.gz')
+  dsize = File.size(File.join(SCRIPTY2_DEBUG_DIR,'temp.js.gz'))
+  rm_rf File.join(SCRIPTY2_DEBUG_DIR,'temp.js.gz')
   
   puts "Original version: %.1fk" % (osize/1024.0)
   puts "Minified: %.1fk" % (msize/1024.0)
@@ -60,10 +72,18 @@ end
 
 desc "Generates a minified version of the distribution."
 task :min do
-  minify File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DIST_DIR,'s2.min.js')
-  minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.min.js')
+  minify File.join(SCRIPTY2_DEBUG_DIR,'s2.js'), File.join(SCRIPTY2_RELEASE_DIR,'s2.min.js')
+  minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_RELEASE_DIR,'prototype.min.js')
 end
 
+desc "Generate a unified minified version of Prototype and scripty2"
+task :unified => [:dist, :min] do
+  unified = IO.read(File.join(SCRIPTY2_DEBUG_DIR,'prototype.js')) + IO.read(File.join(SCRIPTY2_DEBUG_DIR,'s2.js'))
+  File.open(File.join(SCRIPTY2_DEBUG_DIR,'prototype.s2.js'), 'w') do |file|
+    file.write unified
+  end 
+  minify File.join(SCRIPTY2_DEBUG_DIR,'prototype.s2.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.s2.min.js')
+end
 
 namespace :doc do
   desc "Builds the documentation."

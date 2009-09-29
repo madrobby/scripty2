@@ -1,3 +1,5 @@
+*2.0.0 alpha 2* (September 28, 2009)
+
 * WebKit CSS transition support and support for cubic-bezier easing (JS implementation of transition-timing-function)
   WebKit support is transparent - if running on a supported browser, and the morph requested can be made
   with CSS-based animation, it will automatically use the -webkit-transition-* CSS properties instead of the 

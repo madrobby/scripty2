@@ -6,23 +6,24 @@
   <p>Welcome to the scripty2 API Documentation.</p>
   
   <p>
-    This complete rewrite of the venerable script.aculo.us
+    This rewrite of the script.aculo.us
     library is a prerelease alpha version and not meant for production use,
     although it is used in live projects like <a href="http://twistori.com">twistori</a>
     and <a href="http://letsfreckle.com">freckle</a> and it works great!).
+  </p>
+    
+  <p>
+    <b>Note for alpha 1 &amp; 2:</b> This alpha release concentrates exclusively on the new effects engine.
+  </p>
+  
+  <p>
+    scripty2 is divided into three parts, <em>core</em>, <em>fx</em>, and <em>ui</em>.
   </p>
   
   <p style="color:red">
     The API is not final and subject to change!
   </p>
   
-  <p>
-    <b>Note for alpha 1:</b> This alpha release concentrates exclusively on the new effects engine.
-  </p>
-  
-  <p>
-    scripty2 is divided into three parts, <em>core</em>, <em>fx</em>, and <em>ui</em>.
-  </p>
 </div>
 
 
@@ -54,13 +55,18 @@
     <ul class="section-list">
       <li>
         <p>
-          scripty2 depends on Prototype 1.6.1_rc3 or later. For your convenience, a development copy
+          scripty2 depends on Prototype 1.6.1 or later. For your convenience, a development copy
           and a minified version of Prototype is included in the distribution.
         </p>
         <p>
-          To use scripty2, include these lines in your HTML:
+          To use scripty2, include this line in your HTML:
+          <pre><code>&lt;script src=&quot;prototype.scripty2.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+        </p>
+        <p>
+          For debugging, you can also include the libraries seperately:
           <pre><code>&lt;script src=&quot;prototype.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;s2.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script src=&quot;s2.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+          </code></pre>
         </p>
       </li>
     </ul>

@@ -41,8 +41,9 @@ volume websites).
 
 = Usage
 
-scripty2 is dependent on the Prototype JavaScript framework. You'll need to grab
-the latest version from http://prototypejs.org/.
+scripty2 is dependent on the Prototype JavaScript framework. The download
+and source comes with a compatible version, or grab the latest version yourself
+from http://prototypejs.org/.
 
 Put prototype.js and s2.js in a folder of your website, and include them as follows:
 
