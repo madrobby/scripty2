@@ -30,7 +30,7 @@ S2.FX.Zoom = Class.create(S2.FX.Element, {
     this.element.insert({before:this.clone});
     this.clone.absolutize().setStyle({zIndex:9999});
     
-    this.overlay = s2.viewportOverlay();
+    this.overlay = S2.viewportOverlay();
     if (this.options.overlayClassName) 
       this.overlay.addClassName(this.options.overlayClassName)
     else

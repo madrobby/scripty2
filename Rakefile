@@ -150,7 +150,7 @@ Rake::PackageTask.new('scripty2', SCRIPTY2_VERSION) do |package|
   package.package_files.include(
     'README.rdoc',
     'MIT-LICENSE',
-    'dist/*',
+    'dist/**/*',
     'doc/**/*',
     'src/**/*'
   )
