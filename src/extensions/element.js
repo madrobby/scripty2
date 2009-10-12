@@ -145,7 +145,7 @@ Element.addMethods({
  *      // rotate by 1.5 radians, scale by 200%
  *      $('element_id').transform({ rotation: 1.5, scale: 2 });
  *  
- *  [[manipulate:update]] event memos can be direclty fed into [[Element#transform]]:
+ *  [[manipulate:update]] event memos can be directly fed into [[Element#transform]]:
  *
  *      $('element_id').observe('manipulate:update', function(event){
  *         $('element_id').transform(event.memo);

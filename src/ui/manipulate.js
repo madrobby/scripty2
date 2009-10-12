@@ -32,6 +32,10 @@
  * In addition to the usual event information, the manipulate:update event sends along four 
  * pieces of information in it's `memo` property:
  *
+ *     { panX: 12, panY: -110, rotation: 1.5707633, scale: 1.2 }
+ *     // panned 12px to the right, 110px up, about 90° rotated, scaled up by 20%
+ *
+ *
  * * `panX` and `panY` contain information about how an element was moved, 
  *   relatively to it's original page position. These values are given in pixels. 
  *   These panning coordinates persist between individual touch and dragging actions. 
@@ -39,7 +43,7 @@
  *   between those two touches. On browsers or hardware without touch or multitouch support, 
  *   dragging with the mouse initiates manipulate:update events that contain panX and panY information.
  * * `rotation` contains an element's rotation relative to it's original position 
- *   (set with Element#transform). This value is given in radians. If multitouch is supported, 
+ *   (set with [[Element#transform]]). This value is given in radians. If multitouch is supported, 
  *   the element can be rotated by using two fingers and making a rotation movement. On browsers or 
  *   hardware without touch or multitouch support, dragging with the mouse while holding down the 
  *   shift key initiates rotation (and scaling), relative to the element's mid-point.
@@ -59,7 +63,7 @@
 **/
 
 document.observe('dom:loaded',function(){
-  if(!S2.enableMultitouchSupport) false;
+  if(!S2.enableMultitouchSupport) return;
   
   var b = $(document.body), sequenceId = 0;
   
@@ -86,22 +90,22 @@ document.observe('dom:loaded',function(){
   
   function setupIPhoneEvent(){
     var element, rotation, scale,
-      touches = {}, t1 = null, t2 = null, state = 0, 
-      offsetX, offsetY, initialDistance;
-    // update internal touch representation and find out 
-    // first and second fingers
+      touches = {}, t1 = null, t2 = null, state = 0, oX, oY,
+      offsetX, offsetY, initialDistance, initialRotation;
     function updateTouches(touchlist){
       var i = touchlist.length;
       while(i--) touches[touchlist[i].identifier] = touchlist[i];
       var l = []; for(k in touches) l.push(k); l = l.sort();
       t1 = l.length > 0 ? l[0] : null;
       element = t1 ? touches[t1].target : null;
+      if(element && element.nodeType==3) element = element.parentNode;
       t2 = l.length > 1 ? l[1] : null;
       if(state==0 && (t1&&t2)) {
         offsetX = (touches[t1].pageX-touches[t2].pageX).abs();
         offsetY = (touches[t1].pageY-touches[t2].pageY).abs();
         if(element) initElementData(element);
         initialDistance = Math.sqrt(offsetX*offsetX + offsetY*offsetY);
+        initialRotation = Math.atan2(touches[t2].pageY-touches[t1].pageY,touches[t2].pageX-touches[t1].pageX);
         state = 1;
         return;
       }
@@ -113,22 +117,38 @@ document.observe('dom:loaded',function(){
     function touchCount(){
       var c=0; for(k in touches) c++; return c;
     }
-    
+
     b.observe('touchstart', function(event){
+      var t = t1, o;
       updateTouches(event.changedTouches);
+      if(t==null && t1) {
+        o = element.viewportOffset();
+        oX = o.left+(touches[t1].pageX-o.left), oY = o.top+(touches[t1].pageY-o.top);
+      }
+      event.stop();
     });
     b.observe('touchmove', function(event){
       updateTouches(event.changedTouches);
+      if(t1&&!t2) {
+        fireEvent(element, {
+          panX: (element._panX||0)+touches[t1].pageX-oX,
+          panY: (element._panY||0)+touches[t1].pageY-oY,
+          scale: element._scale,
+          rotation: element._rotation
+        });
+        event.stop();
+        return;
+      }
       if(!(t1&&t2)) return;
-      var a = touches[t2].pageX-touches[t1].pageX, 
+      var a = touches[t2].pageX-touches[t1].pageX,
         b = touches[t2].pageY-touches[t1].pageY,
-        cX = touches[t2].pageX - a/2 - offsetX,
-        cY = touches[t2].pageY - b/2 - offsetY,
+        cX = (element._panX||0) + touches[t2].pageX - a/2 - oX,
+        cY = (element._panY||0) + touches[t2].pageY - b/2 - oY,
         distance = Math.sqrt(a*a + b*b);
-        
-      scale = element._scale * distance/initialDistance;  
-      rotation = element._rotation + Math.atan2(b,a);
-      
+
+      scale = element._scale * distance/initialDistance;
+      rotation = element._rotation + Math.atan2(b,a) - initialRotation;
+
       fireEvent(element, { rotation: rotation, scale: scale, panX: cX, panY: cY });
       event.stop();
     });
