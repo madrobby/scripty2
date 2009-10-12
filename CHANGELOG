@@ -1,3 +1,7 @@
+*2.0.0 alpha 4* (October 12, 2009)
+
+* Add multi-touch behaviour support.
+
 *2.0.0 alpha 3* (September 29, 2009)
 
 * Reenable detection of WebKit CSS transition support.

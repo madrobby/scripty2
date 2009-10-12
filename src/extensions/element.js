@@ -130,3 +130,59 @@ Element.addMethods({
     return clone;
   }
 });
+
+/** 
+ *  Element#transform(@element, transforms) -> element
+ *  - transforms (Object): rotation angle and scale factor
+ *
+ *  Rotate and scale an element. `transforms` is an object containing:
+ *
+ *  * `rotation`: Rotation angle in radians
+ *  * `scale`: Scale factor
+ *
+ *  Example:
+ *
+ *      // rotate by 1.5 radians, scale by 200%
+ *      $('element_id').transform({ rotation: 1.5, scale: 2 });
+ *  
+ *  [[manipulate:update]] event memos can be direclty fed into [[Element#transform]]:
+ *
+ *      $('element_id').observe('manipulate:update', function(event){
+ *         $('element_id').transform(event.memo);
+ *      });
+ *
+ *  To convert degrees to radians, use:
+ *
+ *      radians = degrees * (Math.PI/180);
+ *  
+**/
+(function(){
+  var transform;
+  
+  if(window.CSSMatrix) transform = function(element, transform){
+    element.style.transform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(window.WebKitCSSMatrix) transform = function(element, transform){
+    element.style.webkitTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(Prototype.Browser.Gecko) transform = function(element, transform){
+    element.style.MozTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  // we don't support scaling for IE yet
+  else if(Prototype.Browser.IE) transform = function(element, transform){
+    if(!element._oDims)
+      element._oDims = [element.offsetWidth, element.offsetHeight];
+    var c = Math.cos(transform.rotation||0) * 1, s = Math.sin(transform.rotation||0) * 1,
+        filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11="+c+",M12="+(-s)+",M21="+s+",M22="+c+")";
+    element.style.filter = filter;
+    element.style.marginLeft = (element._oDims[0]-element.offsetWidth)/2+'px';
+    element.style.marginTop = (element._oDims[1]-element.offsetHeight)/2+'px';
+    return element; 
+  };
+  else transform = function(element){ return element; }
+  
+  Element.addMethods({ transform: transform });
+})();

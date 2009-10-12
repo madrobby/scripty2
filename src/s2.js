@@ -1,11 +1,6 @@
 //= require "license"
 
 /**
- *  == scripty2 ui ==
- *  * [[S2.CSS]]: functions for CSS parsing, color normalization and CSS value interpolation.
-**/
-
-/**
  *  == scripty2 core ==
  *
  *  Core contains various JavaScript and DOM extensions used by scripty2 fx and scripty2 ui,
@@ -37,6 +32,7 @@ var S2 = {
 
 //= require "css"
 //= require "effects"
+//= require "ui"
   
 //= require "extensions/element"
 
