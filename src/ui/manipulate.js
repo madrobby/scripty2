@@ -274,6 +274,9 @@ document.observe('dom:loaded',function(){
     });
     b.observe('dragstart', function(event){ event.stop(); });
   }
+  
+  if(navigator.userAgent.match(/SLBrowser/))
+    return setupBridgedEvent();
 
   if(navigator.userAgent.match(/QtLauncher/))
     return setupBridgedEvent();
