@@ -89,7 +89,7 @@ Object.extend(S2.FX, {
     else if (Object.isString(options))
       options = { duration: options == 'slow' ? 1 : options == 'fast' ? .1 : .2 };
       
-    return options;
+    return options || {};
   }
 });
 
