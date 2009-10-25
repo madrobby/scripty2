@@ -1,0 +1,369 @@
+(function(UI) {
+  
+  /**
+   *  class S2.UI.Dialog
+   *  includes S2.UI.Mixin.Configurable
+   *  
+   *  A class for showing dialogs on screen.
+   *  
+   *  *  <h4>Options</h4>
+   *  
+   *  * `zIndex` (`Number`): The CSS `z-index` for the dialog. Default is 
+   *    `1000`.
+   *  * `title`: (`String`): The text to display in the dialog's title bar.
+   *    Default is `"Dialog"`.
+   *  * `content`: (`String` | `Element`): The content to display as the body
+   *    of the dialog. Strings can be plaintext or HTML; they'll be
+   *    inserted as-is into the dialog. If `content` refers to an element
+   *    on the page, that element will be detached from its initial 
+   *    location _when the dialog is instantiated_.
+   *  * `submitForms` (`Boolean`): By default, a dialog will suppress the
+   *    `onsubmit` event of any forms included in the dialog's content (in
+   *    order to prevent navigation to a new page). Set this to `true` to
+   *    override this behavior.
+   *  * `closeOnEscape` (`Boolean`): Whether the dialog closes (with a
+   *    "cancel" outcome) when the ESC key is pressed. Default is `true`.
+   *  * `draggable` (`Boolean`): Whether the dialog should be draggable (with
+   *    the dialog's title bar as the handle). Default is `true`.
+   *  * `resizable` (`Boolean`): Whether the dialog should be resizable.
+   *    Default is `false`.
+   *  * `buttons` (`Array` | `Boolean`): A set of `Object`s that describe the 
+   *    buttons that should appear at the bottom of the dialog. Set to `false`
+   *    to omit buttons.
+   *  
+  **/
+  UI.Dialog = Class.create(UI.Mixin.Configurable, {
+    /**
+     *  new S2.UI.Dialog(element, options)
+     *  new S2.UI.Dialog(options)
+     *  
+     *  If `element` is given, that element will become the container for
+     *  the dialog. Otherwise, an element will be created to serve as the
+     *  container.
+     *  
+     *  Note that the dialog is not displayed on screen when it is created.
+     *  You must explicitly call [[S2.UI.Dialog#open]] first.
+    **/
+    initialize: function(element, options) {
+      if (!Object.isElement(element)) {
+        options = element;
+        element = null;
+      } else {
+        element = $(element);
+      }
+
+      var opt = this.setOptions(options);
+
+      this.element = element || new Element('div');
+      UI.addClassNames(this.element, 'ui-dialog ui-widget ' + 
+       'ui-widget-content ui-corner-all');
+
+      this.element.hide().setStyle({
+        position: 'absolute',
+        overflow: 'hidden',
+        zIndex:   opt.zIndex,
+        outline:  '0'
+      });
+
+      // ARIA.
+      this.element.writeAttribute({
+        tabIndex: '-1',
+        role: 'dialog'
+      });
+      
+      if (opt.content) {
+        this.content = Object.isElement(opt.content) ? opt.content :
+         new Element('div').update(opt.content);
+      } else {
+        this.content = new Element('div');
+      }
+      
+      // Dialog content.
+      UI.addClassNames(this.content, 'ui-dialog-content ui-widget-content');
+      this.element.insert(this.content);
+
+      // Dialog title bar.
+      this.titleBar = this.options.titleBar || new Element('div');
+      UI.addClassNames(this.titleBar, 'ui-dialog-titlebar ui-widget-header ' +
+  		 'ui-corner-all ui-helper-clearfix');
+  		this.element.insert({ top: this.titleBar });
+
+  	  // Close button.
+  	  this.closeButton = new Element('a', { 'href': '#' });
+  	  UI.addClassNames(this.closeButton, 'ui-dialog-titlebar-close ' +
+  	   'ui-corner-all');
+  	  new UI.Button(this.closeButton);
+  	  this.closeButton.observe('mousedown', Event.stop);
+  	  this.closeButton.observe('click', function(event) {
+  	    event.stop();
+  	    this.close(false);
+  	  }.bind(this));
+
+  	  this.titleBar.insert(this.closeButton);
+
+  	  // SPAN for close button.
+  	  this.closeText = new Element('span');
+  	  UI.addClassNames(this.closeText, 'ui-icon ui-icon-closethick');
+
+  	  this.closeButton.insert(this.closeText);
+
+  	  // Text for title bar.
+  	  this.titleText = new Element('span', { 'class': 'ui-dialog-title' });
+  	  this.titleText.update(this.options.title).identify();
+  	  // This is the label for ARIA.	  
+  	  this.element.writeAttribute('aria-labelledby',
+  	   this.titleText.readAttribute('id'));
+  	  this.titleBar.insert({ top: this.titleText }) ;
+
+      UI.disableTextSelection(this.element);
+
+      if (this.options.draggable) {
+        UI.addBehavior(this.element, UI.Behavior.Drag,
+         { handle: this.titleBar });
+      }
+
+      // TODO: Add resizability.
+
+      var buttons = this.options.buttons;
+
+      if (buttons && buttons.length) {
+        this._createButtons();
+      }
+
+      this.observers = {
+        keypress: this.keypress.bind(this)
+      };
+
+    },
+    
+    toElement: function() {
+      return this.element;
+    },
+
+    _createButtons: function() {
+      var buttons = this.options.buttons;
+      if (this.buttonPane) {
+        this.buttonPane.remove();
+      }
+
+      this.buttonPane = new Element('div');
+      UI.addClassNames(this.buttonPane,
+       'ui-dialog-buttonpane ui-widget-content ui-helper-clearfix');
+
+      buttons.each( function(button) {
+        var element = new Element('button', { type: 'button' });
+        UI.addClassNames(element, 'ui-state-default ui-corner-all');
+
+        if (button.primary) {
+          element.addClassName('ui-priority-primary');
+        }
+
+        if (button.secondary) {
+          element.addClassName('ui-priority-secondary');
+        }
+
+        element.update(button.label);
+        new UI.Button(element);
+        element.observe('click', button.action.bind(this, this));
+
+        this.buttonPane.insert(element);
+      }, this);
+
+      this.element.insert(this.buttonPane);
+    },
+
+    _position: function() {
+      // Find the middle of the viewport.
+      var vSize = document.viewport.getDimensions();
+      var dialog = this.element;
+      var dimensions = {
+        width: parseInt(dialog.getStyle('width'), 10),
+        height: parseInt(dialog.getStyle('height'), 10)
+      };
+      var position = {
+        left: ((vSize.width / 2) - (dimensions.width / 2)).round(),
+        top: ((vSize.height / 2) - (dimensions.height / 2)).round()
+      };
+
+      var offsets = document.viewport.getScrollOffsets();
+
+      position.left += offsets.left;
+      position.top  += offsets.top;
+
+      this.element.setStyle({
+        left: position.left + 'px',
+        top:  position.top  + 'px'
+      });
+    },
+
+    /**
+     *  S2.UI.Dialog#open() -> this
+     *  
+     *  Opens the dialog.
+    **/
+    open: function() {
+      if (this._isOpen) return;
+
+      // Fire an event to allow for suppression of the dialog.
+      var result = this.element.fire("ui:dialog:before:open",
+       { dialog: this });
+      if (result.stopped) return;
+
+      var opt = this.options;
+
+      this.overlay = opt.modal ? new UI.Overlay() : null;
+      $(document.body).insert(this.overlay);    
+      $(document.body).insert(this.element);
+
+      this.element.show();
+      this._position();
+
+      this.focusables = UI.findFocusables(this.element);
+
+      // Disable form submission.
+      if (!opt.submitForms) {
+        var forms = this.content.select('form');
+        forms.invoke('observe', 'submit', Event.stop);
+      }
+
+      // Figure out what to focus first, excluding the close button.
+      var f = this.focusables.without(this.closeButton);
+      var focus = opt.focus, foundFocusable = false;
+      if (focus === 'first') {
+        // Focus the first element.
+        f.first().focus();
+        foundFocusable = true;
+      } else if (focus === 'last') {
+        // Focus the last element.
+        f.last().focus();
+        foundFocusable = true;
+      } else if (Object.isElement(focus)) {
+        // Focus the passed-in element.
+        focus.focus();
+        foundFocusable = true;
+      } else {
+        // Focus the primary action button, if there is one.
+        if (this.buttonPane) {
+          var primary = this.buttonPane.down('.ui-priority-primary');
+          if (primary) {
+            primary.focus();
+            foundFocusable = true;
+          }
+        }
+      }
+
+      // If we didn't find anything, just focus the first focusable element.
+      if (!foundFocusable && f.length > 0) {
+        f.first().focus();
+      }
+
+      Event.observe(window, 'keydown', this.observers.keypress);
+      this._isOpen = true;
+
+      this.element.fire("ui:dialog:after:open", { dialog: this });
+      return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#close(success) -> this
+     *  - success (Boolean): Whether the dialog should be closed "successfully"
+     *    (i.e., _OK_) or "unsuccessfully" (i.e., _Cancel_).
+     *  
+     *  Closes the dialog.
+    **/
+    close: function(success) {
+      var result = this.element.fire("ui:dialog:before:close",
+       { dialog: this });
+      if (result.stopped) return;
+
+      if (this.overlay) {
+        this.overlay.destroy();
+      }
+
+      this.element.hide();
+      this._isOpen = false;
+      Event.stopObserving(window, 'keydown', this.observers.keypress);
+
+      var memo = { dialog: this, success: success };
+
+      // If the content area had a form, we'll get the values in object form and
+      // add them to the custom event metadata.
+      var form = this.content.down('form');
+      if (form) {
+        Object.extend(memo, { form: form.serialize({ hash: true }) });
+      }
+
+      this.element.fire("ui:dialog:after:close", memo);
+      UI.enableTextSelection(this.element, true);
+      return this;
+    },
+
+    keypress: function(event) {
+      var f = this.focusables, opt = this.options;
+      if (event.keyCode === Event.KEY_ESC) {
+        if (opt.closeOnEscape) this.close(false);
+        return;
+      }
+
+      if (event.keyCode === Event.KEY_RETURN) {
+        this.close(true);
+        return;
+      }
+
+      if (event.keyCode === Event.KEY_TAB) {
+        if (!this.options.modal) return;
+        if (!f) return;
+        // Don't allow the user to tab to an element below the overlay.
+        var next, current = event.findElement();
+        var index = f.indexOf(current);
+        // If none of the focusables are focused (WTF?), just focus the first one.
+        if (index === -1) {
+          next = f.first();
+        } else {
+          if (event.shiftKey) {
+            // Backward. Find the previous focusable.
+            next = index === 0 ? f.last() : f[index - 1];
+          } else {
+            // Forward. Find the next focusable.
+            next = (index === (f.length - 1)) ? f.first() : f[index + 1];
+          }
+        }
+
+        if (next) {
+          event.stop();
+          (function() { next.focus(); }).defer();
+        }
+      }
+    }
+  });
+  
+  Object.extend(UI.Dialog, {
+    DEFAULT_OPTIONS: {
+      zIndex: 1000,
+
+      title: "Dialog",
+      
+      content: null,
+      modal:   true,
+      focus:   'auto',
+
+      submitForms: false,
+
+      closeOnEscape: true,
+
+      draggable: true,
+      resizable: false,
+
+      buttons: [
+        {
+          label: "OK",
+          primary: true,
+          action: function(instance) {
+            instance.close(true);
+          }
+        }
+      ]
+    }
+  });
+  
+})(S2.UI);
