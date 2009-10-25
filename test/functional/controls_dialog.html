@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+  
+  <style type="text/css" media="screen">
+	  .ui-widget button.ui-button-with-icon {
+	    position: relative;
+	    padding-left: 20px;
+	  }
+	  
+    .ui-button-with-icon .ui-icon {
+      position: absolute;
+      left: -18px;
+      margin: -12px 5px 0 0;
+      top: 50%;
+	  }
+	  
+/*    .ui-button-container {
+      padding: 5px 10px;
+      background: #f4f4f4;
+      border: 1px solid #ccc;
+    }
+*/	  
+	</style>
+	
+
+</head>
+
+<body>
+  
+  <h1>Dialog Tests</h1>
+  
+  <!-- DIALOG 1 -->
+  <h2>Standard dialog</h2>
+  
+  <div class="ui-widget ui-button-container">
+
+  	<button id="dialog_link1" class="ui-button-with-icon">
+  	  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
+  	</button>
+  	
+  	<span id="result1"></span>
+	
+  	<script type="text/javascript">
+  	 new S2.UI.Button('dialog_link1');
+  	 
+  	 
+  	 $('dialog_link1').observe('click', function(event) {
+  	    event.stop();
+  	    var dialog = new S2.UI.Dialog();
+  	    dialog.open();
+  	    
+  	    
+
+        dialog.toElement().observe(
+          'ui:dialog:after:close',
+          function(event) {
+            var content = event.memo.success ? 'OK!' : 'Cancel!';
+            $('result1').update(content);
+    	    }
+    	  );
+  	  });
+	 
+     // $('dialog_link').observe('click', function(event) {
+     //    event.stop();
+     //    var dialog = new S2.UI.Dialog({
+     //      content: "Testing.",
+     //      buttons: [
+     //        {
+     //          label: 'OK',
+     //          primary: true,
+     //          action: function(instance) {
+     //            instance.close();
+     //          }
+     //        },
+     //        {
+     //          label: 'Cancel',
+     //          action: function(instance) {
+     //            instance.close();
+     //          }
+     //        }
+     //      ]
+     //    });
+     //    dialog.open();
+     // });
+  	</script>
+  	
+  </div> <!-- .ui-widget -->
+  
+  <div class="description">
+    <p>A dialog with no arguments or options.</p>
+    
+    <p>The <code>"Open Dialog"</code> button above launches the dialog.</p>
+    
+    <ul>
+      <li>It <strong>should</strong> have an <code>OK</code> button that dismisses the dialog when clicked. After dismissal, there should be an <code>"OK!"</code> message aside the launch button, confirming that the dialog was dismissed <em>with success</em>.</li>
+      <li>Pressing the <kbd>ESC</kbd> key <strong>should</strong> dismiss the dialog <em>without success</em>. Confirm that there is a <code>"Cancel!"</code> message aside the launch button after you press <kbd>ESC</kbd>.</li>
+      <li>It <strong>may</strong> have a "close" button on its title bar that does the same thing as the <kbd>ESC</kbd> key. (The button is always there, but a theme is free to hide it via CSS.)</li>
+      <li>A theme can hide the title bar with CSS, but if it's visible, it <strong>should</strong> be draggable.</li>
+      <li>A dialog is modal by default. It <strong>should</strong> be impossible to click on anything else on the page — or shift the focus with the <kbd>TAB</kbd> key to something underneath the modal layer — until the dialog has been dealt with.</li>
+    </ul>
+    
+  </div> <!-- .description -->
+  
+  
+  <!-- DIALOG 2 -->
+  <h2>Dialog with custom content & buttons</h2>
+  
+  <div class="ui-widget ui-button-container">
+
+  	<button id="dialog_link2" class="ui-button-with-icon">
+  	  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
+  	</button>
+  	
+  	<span id="result2"></span>
+	
+  	<script type="text/javascript">
+  	 new S2.UI.Button('dialog_link2');
+  	 
+     $('dialog_link2').observe('click', function(event) {
+        event.stop();
+        var dialog = new S2.UI.Dialog({
+          content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          buttons: [
+            {
+              label: 'OK',
+              primary: true,
+              action: function(instance) {
+                instance.close(true);
+              }
+            },
+            {
+              label: 'Cancel',
+              action: function(instance) {
+                instance.close(false);
+              }
+            }
+          ]
+        });
+        dialog.open();
+
+        dialog.toElement().observe(
+          'ui:dialog:after:close',
+          function(event) {
+            var content = event.memo.success ? 'OK!' : 'Cancel!';
+            $('result2').update(content);
+    	    }
+    	  );        
+     });
+  	</script>
+  	
+  </div> <!-- .ui-widget -->
+  
+  <div class="description">
+    <p>A dialog that has a string of text as its content, plus two custom buttons.</p>
+    
+    <ul>
+      <li>The <code>OK</code> button was designated the "primary" button in this dialog. It <strong>should</strong> be visually distinct from the <code>Cancel</code> button.</li>
+      <li>The <code>OK</code> button <strong>should</strong> receive focus when the dialog opens. Pressing <kbd>SPACE</kbd> or <kbd>ENTER</kbd> <strong>should</strong> press whatever button is in focus.</li>
+      <li>If the dialog has a visible "close" button, <em>three controls</em> <strong>should</strong> be eligible for keyboard focus: the <code>OK</code> button, the <code>Cancel</code> button, and the dialog's "close" button. Pressing <kbd>TAB</kbd> repeatedly should cycle through these three buttons (without focusing any elements underneath the modal layer). Pressing <kbd>SHIFT + TAB</kbd> should follow the same cycle in reverse.</li>
+      <li>If the dialog <em>does not</em> have a visible "close" button, it <strong>should not</strong> be focusable, even though it's still in the HTML. Confirm that pressing <kbd>TAB</kbd> cycles between the two buttons and nothing else.</li>
+    </ul>
+  </div> <!-- .description -->
+  
+</body>
+</html>

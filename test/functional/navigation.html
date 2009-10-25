@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="css/test.css" type="text/css" />
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body class="navigation">
+  
+  <h1 class="logo"><span>script.aculo.us</span></h1>
+  <h2>Functional Tests</h2>
+  
+  <div class="test-list">
+
+    <h3>Controls</h3>
+
+    <ul>
+      <li><a href="controls_buttons.html">Buttons</a></li>
+      <li><a href="controls_accordion.html">Accordion</a></li>
+      <li><a href="controls_tabs.html">Tabs</a></li>
+      <li><a href="controls_dialog.html">Dialog</a></li>
+      <li><a href="controls_slider.html">Slider</a></li>
+      <li><a href="controls_progress_bar.html">Progress Bar</a></li>
+    </ul>
+
+    
+  </div> <!-- .test-list -->
+  
+  <p>
+    script.aculo.us version <b id="scripty_version"></b><br />
+    Prototype version <b id="prototype_version"></b>
+  </p>
+  
+  
+  <script type="text/javascript">
+    $('scripty_version').update(S2.Version);
+    $('prototype_version').update(Prototype.Version);
+    
+    $$('a').each( function(anchor) {
+      anchor.writeAttribute('target', 'test');
+    });
+  </script>
+  
+  
+</body>
+</html>

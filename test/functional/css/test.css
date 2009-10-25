@@ -1,0 +1,107 @@
+body, div, p, h1, h2, h3, ul, ol, span, a, table, td, form, img, li {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-size: 0.8em;
+}
+
+code, tt, kbd {
+  /* ANYTHING BUT COURIER */
+  font-family: 'Panic Sans', 'Bitstream Vera Sans Mono', Menlo, Monaco, 'Andale Mono', 'Lucida Console', monospace;
+  font-size: 12px;
+}
+
+kbd {
+  border: 1px solid #B7DB88;
+  padding: 1px;
+}
+
+h1.logo {
+  width: 175px;
+  height: 54px;
+  background: transparent url(../images/header-logo-small.png) no-repeat 50% 50%;
+  margin: 0 auto 10px;
+}
+
+  h1.logo span { display: none; }
+  
+    
+.navigation {
+  background: #6c8f3f;
+  color: #fff;
+}
+
+  .navigation h2 { text-align: center; }    
+  
+    
+.test-list {
+  border: 5px solid #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0 0 3px #000;
+  -webkit-box-shadow: 0 0 3px #000;
+  
+  padding: 5px;
+  background: #e3ffbe;  
+  color: #65450d;
+}
+
+  .test-list h3 {
+    color: #ff9c00;
+    font-size: 23px;
+    margin: 0 0 5px;
+  }
+  
+  .test-list ul {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0 0 0 5px;
+  }
+  
+    .test-list ul li {
+      margin: 0 0 3px;
+    }
+  
+  .test-list a {
+    color: #65450d;
+  }
+
+
+.description {
+  margin: 10px 0;
+  border: 5px solid #6c8f3f;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  
+  padding: 5px;
+  background: #e3ffbe;  
+  color: #65450d;
+}
+  
+  .description p {
+    margin: 5px 0;
+  }
+
+  .description ul {
+    margin: 10px 0;
+    padding: 0 0 0 20px;
+  }
+  
+    .description ul li {
+      line-height: 140%;
+      margin: 0 0 5px;
+    }
+  
+  .description strong {
+    text-transform: uppercase;
+    background: #b6de78;
+    padding: 0 2px;
+    border: 1px solid #6c8f3f;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+  }
