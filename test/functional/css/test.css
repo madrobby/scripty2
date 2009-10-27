@@ -13,7 +13,9 @@ code, tt, kbd {
 }
 
 kbd {
-  border: 1px solid #B7DB88;
+  color: #fff;
+  background: #65450d;
+  border: 1px solid #65450d;
   padding: 1px;
 }
 
@@ -21,19 +23,20 @@ h1.logo {
   width: 175px;
   height: 54px;
   background: transparent url(../images/header-logo-small.png) no-repeat 50% 50%;
-  margin: 0 auto 10px;
+  margin: 0 auto;
 }
 
   h1.logo span { display: none; }
-  
     
 .navigation {
   background: #6c8f3f;
   color: #fff;
 }
 
-  .navigation h2 { text-align: center; }    
-  
+  .navigation h2 {
+    text-align: center;
+    margin: 0 0 10px;
+  }
     
 .test-list {
   border: 5px solid #fff;
