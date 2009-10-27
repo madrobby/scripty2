@@ -119,6 +119,16 @@ Object.extend(S2.UI, {
     }
     
     return elements;
+  },
+  
+  /**
+   *  S2.UI.modifierUsed(event) -> Boolean
+   *  
+   *  Given an event, returns `true` if at least one modifier key was pressed
+   *  during the event.
+  **/
+  modifierUsed: function(event) {
+    return event.shiftKey || event.metaKey || event.ctrlKey || event.altKey;
   }
 });
 

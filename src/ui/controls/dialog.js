@@ -272,6 +272,7 @@
      *  Closes the dialog.
     **/
     close: function(success) {
+      success = !!success; // Coerce to a boolean.
       var result = this.element.fire("ui:dialog:before:close",
        { dialog: this });
       if (result.stopped) return;
@@ -299,6 +300,8 @@
     },
 
     keypress: function(event) {
+      if (UI.modifierUsed(event)) return;
+
       var f = this.focusables, opt = this.options;
       if (event.keyCode === Event.KEY_ESC) {
         if (opt.closeOnEscape) this.close(false);
