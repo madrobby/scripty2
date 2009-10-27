@@ -692,12 +692,23 @@ body {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  
+  /* Fixes extra padding issue in IE 6-7 */
+  width: auto;
+  overflow: visible;
+  
 }
 
   /* 
    * Not wild about this, but using it until I figure out a browser 
    * targeting strategy.
    */
+   
+  * html .ui-widget button {
+    padding: 0 10px;
+    height: 22px;
+  }
+  
   @-moz-document url-prefix() {
     .ui-widget button {
       padding: 3px 10px 7px; /* perfect for firefox */
@@ -707,6 +718,7 @@ body {
   /* default state */
   .ui-widget button.ui-state-default {
     border-color: #aaafac;
+    background-color: #eee;
     background-image: url(images/button-default-middle.png);
     color: #000;
   }
