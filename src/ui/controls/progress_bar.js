@@ -62,6 +62,7 @@
      *  S2.UI.ProgressBar#setValue() -> this
     **/
     setValue: function(value) {
+      console.log("setValue", arguments);
       this._oldValue = this.getValue();
       this.value = value;
       this._refreshValue();
@@ -82,6 +83,7 @@
     },
 
     _refreshValue: function() {
+      console.log("_refreshValue");
       var value = this.getValue();
       if (!this.undoing) {
         // If the event is stopped, we undo the change.
@@ -99,9 +101,14 @@
       } else {
         this.valueElement.removeClassName('ui-corner-right');
       }
-
-      this.valueElement.setStyle({ width: value + '%' });
+      
+      
+      var width    = window.parseInt(this.element.getStyle('width'), 10);      
+      var newWidth = (width * value) / 100;
+      var css      = "width: #{0}px".interpolate([newWidth]);
+      
       UI.makeVisible(this.valueElement, (value > this.options.value.min));
+      this.valueElement.morph(css, { duration: 0.7, transition: 'linear' });
       this.element.writeAttribute('aria-valuenow', value);
     }
   });
