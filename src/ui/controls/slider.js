@@ -188,7 +188,6 @@ Object.extend(Number.prototype, {
     },
   
     keydown: function(event) {
-      console.log("keydown", arguments);
       if (this.options.disabled) return;
     
       var handle = event.findElement();
@@ -265,7 +264,6 @@ Object.extend(Number.prototype, {
      *    is assumed.
     **/
     setValue: function(sliderValue, handleIndex) {
-      console.log("setValue", arguments);
       if (!this.activeHandle) {
         this.activeHandle = this.handles[handleIndex || 0];
         this._updateStyles();
@@ -531,14 +529,13 @@ Object.extend(Number.prototype, {
       if (!this._oldValues) return;
       this.values = this._oldValues.clone();
     
-      console.log(this._oldValues);
-
       this.undoing = true;
       this._oldValues.each(this.setValue, this);
       this.undoing = false;
     },
   
     _updateFinished: function() {
+      console.log("_updateFinished");
       var result = this.element.fire("ui:slider:value:changed", {
         slider: this,
         values: this.values
@@ -551,6 +548,8 @@ Object.extend(Number.prototype, {
     
       this.activeHandle = null;
       this._updateStyles();
+      
+      console.log(this.values);
     
       this.options.onChange(this.values, this);
     },
