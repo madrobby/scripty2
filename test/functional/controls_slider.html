@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  
+  <h1>Slider Tests</h1>
+  
+  <h2>Horizontal slider</h2>
+  
+  <div style="width: 400px">
+    <div id="slider1"></div>  
+    <p>Value set to: <span id="log1"></span></p>
+  </div>
+  
+  
+  <script type="text/javascript">
+    new S2.UI.Slider('slider1', {
+      onSlide: function(values, slider) {
+        $('log1').update(values[0]);
+        $('log1').setStyle({ textDecoration: 'none' });
+      },
+      
+      onChange: function(values, slider) {
+        $('log1').update(values[0]);
+        $('log1').setStyle({ textDecoration: 'underline' });
+      }
+    });
+  </script>
+  
+  <div class="description">
+    <p>A standard horizontal slider with one value.</p>
+    <ul>
+      <li>It <strong>should</strong> start with a value of <code>0</code> and the slider handle all the way to the left of the track.</li>
+      <li>It <strong>should</strong> be able to be dragged all the way to the end of the track, at which point it <strong>should</strong> have a value of <code>100</code>.</li>
+      <li>The slider handle should be keyboard-focusable. When focused, it should move in increments of <code>1</code> when the left and right arrow keys are pressed. It should move to the beginning and end of the track when the <kbd>HOME</kbd> and <kbd>END</kbd> keys are pressed (respectively).</li>
+      <li>The slider has an <code>onSlide</code> callback that <strong>should</strong> update the value in the element below whenever the slider position changes. Verify that this happens — during a drag, while holding down an arrow key, and when pressing the mouse button down on an arbitrary section of the track.</li>
+      <li>The slider has an <code>onChange</code> callback that <strong>should</strong> update the value in the element below whenever the slider position <em>is set</em> (e.g., on <code>mouseup</code> or <code>keyup</code>). The number is underlined to distinguish this callback from the <code>onSlide</code> callback.</li>
+    </ul>
+  </div> <!-- .description -->
+  
+  <h2>Vertical slider</h2>
+  
+  <div style="height: 400px">
+    <div id="slider2"></div>  
+    <p>Value set to: <span id="log2"></span></p>
+  </div>
+  
+  
+  <script type="text/javascript">
+    new S2.UI.Slider('slider2', {
+      orientation: 'vertical',
+      onSlide: function(values, slider) {
+        $('log2').update(values[0]);
+        $('log2').setStyle({ textDecoration: 'none' });
+      },
+      
+      onChange: function(values, slider) {
+        $('log2').update(values[0]);
+        $('log2').setStyle({ textDecoration: 'underline' });
+      }
+    });
+  </script>
+  
+  <div class="description">
+    <p>A standard vertical slider with one value.</p>
+  </div> <!-- .description -->
+  
+  
+</body>
+</html>
