@@ -62,7 +62,6 @@
      *  S2.UI.ProgressBar#setValue() -> this
     **/
     setValue: function(value) {
-      console.log("setValue", arguments);
       this._oldValue = this.getValue();
       this.value = value;
       this._refreshValue();
@@ -83,7 +82,6 @@
     },
 
     _refreshValue: function() {
-      console.log("_refreshValue");
       var value = this.getValue();
       if (!this.undoing) {
         // If the event is stopped, we undo the change.

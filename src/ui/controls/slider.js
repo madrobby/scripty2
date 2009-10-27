@@ -535,7 +535,6 @@ Object.extend(Number.prototype, {
     },
   
     _updateFinished: function() {
-      console.log("_updateFinished");
       var result = this.element.fire("ui:slider:value:changed", {
         slider: this,
         values: this.values
@@ -549,8 +548,6 @@ Object.extend(Number.prototype, {
       this.activeHandle = null;
       this._updateStyles();
       
-      console.log(this.values);
-    
       this.options.onChange(this.values, this);
     },
   
