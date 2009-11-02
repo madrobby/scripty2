@@ -51,7 +51,7 @@ Object.extend(S2.UI, {
   /**
    *  S2.UI.FOCUSABLE_ELEMENTS = Array
    *  A list of tag names representing elements that are (typically)
-   *  focusable. Used by [S2.UI.isFocusable].
+   *  focusable. Used by [[S2.UI.isFocusable]].
   **/
   FOCUSABLE_ELEMENTS: $w('input select textarea button object'),
   
@@ -126,9 +126,12 @@ Object.extend(S2.UI, {
    *  
    *  Given an event, returns `true` if at least one modifier key was pressed
    *  during the event.
+   *  
+   *  For the purposes of this function, `SHIFT` is _not_ considered a
+   *  modifier key, because of commons shortcuts like `SHIFT + TAB`.
   **/
   modifierUsed: function(event) {
-    return event.shiftKey || event.metaKey || event.ctrlKey || event.altKey;
+    return event.metaKey || event.ctrlKey || event.altKey;
   }
 });
 
