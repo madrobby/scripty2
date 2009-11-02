@@ -6,3 +6,5 @@
 //= require "controls/dialog"
 //= require "controls/slider"
 //= require "controls/progress_bar"
+//= require "controls/menu"
+//= require "controls/autocompleter"
