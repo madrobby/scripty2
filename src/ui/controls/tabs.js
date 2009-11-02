@@ -32,6 +32,12 @@
       UI.addClassNames(this.tabs, 'ui-state-default ui-corner-top');
       UI.addBehavior(this.tabs, [UI.Behavior.Hover, UI.Behavior.Down]);
 
+      // ARIA.
+      this.element.writeAttribute({
+        'role': 'tablist',
+        'aria-multiselectable': 'false'
+      });
+      
       // Look for an anchor inside each tab. If one exists and correlates
       // to a panel that exists in the document, add the anchor and panel
       // to their respective collections.
@@ -43,6 +49,8 @@
         if (!href.include('#')) return;
 
         var hash = href.split('#').last(), panel = $(hash);
+        
+        li.writeAttribute('tabIndex', '0');
 
         if (panel) {
           panel.store('ui.tab', li);
@@ -52,6 +60,10 @@
           this.panels.push(panel);
         }
       }, this);
+      
+      // ARIA.
+      this.anchors.invoke('writeAttribute', 'role', 'tab');
+      this.panels.invoke('writeAttribute', 'role', 'tabpanel');
 
       this.tabs.first().addClassName('ui-position-first');
       this.tabs.last().addClassName('ui-position-last');
@@ -60,8 +72,9 @@
        'ui-tabs-panel ui-tabs-hide ui-widget-content ui-corner-bottom');
 
       this.observers = {
+        onKeyPress: this.onKeyPress.bind(this),
         onTabClick: this.onTabClick.bind(this)
-      };     
+      };
       this.addObservers();
 
       // Figure out which tab/panel should be active.
@@ -85,6 +98,7 @@
 
     addObservers: function() {
       this.anchors.invoke('observe', 'click', this.observers.onTabClick);
+      this.tabs.invoke('observe', 'keypress', this.observers.onKeyPress);
     },
 
     _setSelected: function(id) {
@@ -129,7 +143,45 @@
       var anchor = event.findElement('a'), tab = event.findElement('li');
 
       this.setSelectedTab(tab);
-    }
+    },
+    
+    onKeyPress: function(event) {
+      if (UI.modifierUsed(event)) return;      
+      var tab = event.findElement('li');      
+      var keyCode = event.keyCode || event.charCode;
+      
+      switch (keyCode) {
+      case Event.KEY_SPACE:  // fallthrough
+      case Event.KEY_RETURN:
+        console.log("space or return");
+        this.setSelectedTab(tab);
+        event.stop();
+        return;
+      case Event.KEY_UP: // fallthrough
+      case Event.KEY_LEFT:
+        this._focusTab(tab, -1);
+        return;
+      case Event.KEY_DOWN: // fallthrough
+      case Event.KEY_RIGHT:
+        this._focusTab(tab, 1);
+        return;
+      }
+    },
+    
+    _focusTab: function(tab, delta) {
+      // If delta is provided, move the specified number of slots.
+      if (Object.isNumber(delta)) {
+        var index = this.tabs.indexOf(tab);
+        index = index + delta;
+        if (index > (this.tabs.length - 1)) {
+          index = this.tabs.length - 1;
+        } else if (index < 0) {
+          index = 0;
+        }
+        tab = this.tabs[index];
+      }
+      (function() { tab.focus(); }).defer();
+    }    
   });
 
   Object.extend(UI.Tabs, {
