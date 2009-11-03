@@ -1,3 +1,6 @@
+//= require "layout"
+
+
 /**
  *  == scripty2 ui ==
  *  * [[S2.CSS]]: functions for CSS parsing, color normalization and CSS value interpolation.
