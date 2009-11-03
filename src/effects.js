@@ -7,6 +7,7 @@
 //= require "effects/morph"
 //= require "effects/parallel"
 //= require "effects/scroll"
+//= require "effects/slide"
 
 //= require "effects/transitions/transitions"
 //= require "effects/webkit"
