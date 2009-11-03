@@ -209,64 +209,28 @@ Object.extend(Event, {
         headerSelected: 'ui-icon-triangle-1-s'
       },
       
-      // TODO: Simplify and extract this into a generic SlideDown effect.
       transition: function(panel, previousPanel) {
-        var effects = [];
+        var effects = [], effect;
         
         if (previousPanel) {
-          var previousEffect = new S2.fx.Morph(previousPanel, {
-            duration: 0.2,
-            style: 'height: 0; padding-top: 0; padding-bottom: 0',
-            before: function() {
-              previousPanel.setStyle({ overflow: 'hidden' });
-            },
+          effect = new S2.fx.SlideUp(previousPanel, {
+            duration: 0.5,
             after: function() {
               previousPanel.removeClassName('ui-accordion-content-active');
-              previousPanel.setStyle({
-                height: '',
-                paddingTop: '',
-                paddingBottom: '',
-                overflow: 'visible'
-              });
             }
-          });          
-          effects.push(previousEffect);
+          });
+          effects.push(effect);
         }
         
         if (panel) {
-          var totalHeight = panel.getHeight(),
-           pTop = window.parseInt(panel.getStyle('padding-top'), 10),
-           pBottom = window.parseInt(panel.getStyle('padding-bottom'), 10);
-
-          var height = totalHeight - pTop - pBottom;
-
-          var css = 'height: #{0}px; padding-top: #{1}px; padding-bottom: #{2}px'.interpolate([height, pTop, pBottom]);
-
-          var panelEffect = new S2.fx.Morph(panel, {
-            duration: 0.2,
-            style: css,
+          effect = new S2.fx.SlideDown(panel, {
+            duration: 0.5,
             before: function() {
-              panel.setStyle({
-                height: '0px',
-                paddingTop: '0px',
-                paddingBottom: '0px',
-                overflow: 'hidden'
-              });
               panel.addClassName('ui-accordion-content-active');
-            },
-            after: function() {
-              panel.setStyle({
-                height: '',
-                paddingTop: '',
-                paddingBottom: '',
-                overflow: 'visible'
-              });
             }
           });
-
-          effects.push(panelEffect);    
+          effects.push(effect);
         }
-    
         
         // TODO: Figure out why fx.Parallel isn't working.
         effects.invoke('play');       
