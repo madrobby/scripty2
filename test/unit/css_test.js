@@ -30,6 +30,9 @@ new Test.Unit.Runner({
     assertEqual('2px', S2.CSS.interpolateLength('', '4px', .5));
     assertEqual('2px', S2.CSS.interpolateLength(null, '4px', .5));
     assertEqual('2px', S2.CSS.interpolateLength(undefined, '4px', .5));
+    assertEqual('0px', S2.CSS.interpolateLength('0pt', '4px', 0));
+    assertEqual('2px', S2.CSS.interpolateLength('0pt', '4px', 0.5));
+    assertEqual('4px', S2.CSS.interpolateLength('0pt', '4px', 1));
     
     // leave alone whitespace, we're only interested in replacing the value
     assertEqual('  -1  pc  ', S2.CSS.interpolateLength('  1  pc  ', ' \n3 \t pc  ', -1));

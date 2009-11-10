@@ -201,7 +201,7 @@ S2.CSS = {
    *      S2.CSS.interpolateLength('10%','30%',0.7) -> '24%'
   **/
   interpolateLength: function(from, to, position){
-    if(!from) from = '0'+to.gsub(S2.CSS.NUMBER,'');
+    if(!from || parseFloat(from)===0) from = '0'+to.gsub(S2.CSS.NUMBER,'');
     to.scan(S2.CSS.NUMBER, function(match){ to = 1*(match[1]); });
     return from.gsub(S2.CSS.NUMBER, function(match){
       return (1*(parseFloat(match[1]).tween(to, position).toFixed(3))).toString();
