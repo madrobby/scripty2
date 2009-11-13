@@ -35,7 +35,7 @@ def sprocketize(path, source, destination = source)
     :source_files => [source]
   )
   
-  secretary.concatenation.save_to(File.join(SCRIPTY2_DEBUG_DIR, destination))
+  secretary.concatenation.save_to(File.join(SCRIPTY2_DIST_DIR, destination))
 end
 
 task :default => [:clean, :dist, :unified, :doc, :package, :clean_package_source]
@@ -51,7 +51,7 @@ end
 desc "Builds the distribution."
 task :dist do
   sprocketize("src", "s2.js")
-  cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DEBUG_DIR,'prototype.js')
+  cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.js')
 end
 
 def minify(src, target)
