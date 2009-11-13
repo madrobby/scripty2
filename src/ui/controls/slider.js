@@ -1,35 +1,7 @@
 
-Object.extend(Number.prototype, {
-  /**
-   *  Number#constrain(n1, n2) -> Number
-  **/
-  constrain: function(n1, n2) {
-    var min = (n1 < n2) ? n1 : n2;
-    var max = (n1 < n2) ? n2 : n1;
-    
-    var num = Number(this);
-    
-    if (num < min) num = min;
-    if (num > max) num = max;
-    
-    return num;
-  },
-  
-  /**
-   *  Number#nearer(n1, n2) -> Number
-  **/
-  nearer: function(n1, n2) {
-    var num = Number(this);
-    
-    var diff1 = Math.abs(num - n1);
-    var diff2 = Math.abs(num - n2);
-    
-    return (diff1 < diff2) ? n1 : n2;
-  }
-});
 
 (function(UI) {
-  /**
+  /** section: scripty2 UI
    *  class S2.UI.Slider
    *  includes S2.UI.Mixin.Configurable
    *  
