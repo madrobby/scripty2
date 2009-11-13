@@ -153,7 +153,6 @@
       switch (keyCode) {
       case Event.KEY_SPACE:  // fallthrough
       case Event.KEY_RETURN:
-        console.log("space or return");
         this.setSelectedTab(tab);
         event.stop();
         return;

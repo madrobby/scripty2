@@ -163,7 +163,6 @@
      *    choice.
     **/
     selectChoice: function(element) {
-      console.log("selectChoice", element);
       var element;
       if (Object.isNumber(element)) {
         element = this.choices[element];
