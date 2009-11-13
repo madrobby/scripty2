@@ -213,7 +213,7 @@ Object.extend(Event, {
         var effects = [], effect;
         
         if (previousPanel) {
-          effect = new S2.fx.SlideUp(previousPanel, {
+          effect = new S2.FX.SlideUp(previousPanel, {
             duration: 0.2,
             after: function() {
               previousPanel.removeClassName('ui-accordion-content-active');
@@ -223,7 +223,7 @@ Object.extend(Event, {
         }
         
         if (panel) {
-          effect = new S2.fx.SlideDown(panel, {
+          effect = new S2.FX.SlideDown(panel, {
             duration: 0.2,
             before: function() {
               panel.addClassName('ui-accordion-content-active');

@@ -1,6 +1,6 @@
 
 
-s2.fx.SlideDown = Class.create(s2.fx.Element, {
+S2.FX.SlideDown = Class.create(S2.FX.Element, {
   setup: function() {
     var element = this.destinationElement || this.element;
     var layout = element.getLayout();
@@ -35,7 +35,7 @@ s2.fx.SlideDown = Class.create(s2.fx.Element, {
   }
 });
 
-s2.fx.SlideUp = Class.create(s2.fx.Morph, {
+S2.FX.SlideUp = Class.create(S2.FX.Morph, {
   setup: function() {
     var element = this.destinationElement || this.element;
     var layout = element.getLayout();
