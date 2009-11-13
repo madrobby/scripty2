@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+  
+  
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  
+  <h1>Accordion Tests</h1>
+
+  
+  <!-- ACCORDION 1 -->
+  <h2>Standard accordion</h2>
+
+	<div id="accordion1">
+		<h3><a href="#">Section 1</a></h3>
+		<div>
+			<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+		</div>
+
+		<h3><a href="#">Section 2</a></h3>
+		<div>
+			<p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+		</div>
+
+		<h3><a href="#">Section 3</a></h3>
+		<div>
+			<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.  
+			</p>
+			<ul>
+				<li>List item one</li>
+				<li>List item two</li>
+				<li>List item three</li>
+			</ul>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	  new S2.UI.Accordion('accordion1');
+	</script>
+
+  <div class="description">
+    <p>Standard accordion menu with all default options.</p>
+  	<ul>
+  	  <li>It <strong>should</strong> display exactly one pane at a time.</li>
+  	  <li>It <strong>should</strong> have an "active" state for the currently-selected accordion header.</li>
+  	  <li>It <strong>may</strong> have a "hover" state on accordion headers.</li>
+  	  <li>When a header is focused, using the arrow keys <strong>should</strong> switch focus between the headers.</li>
+  	  <li>Clicking on an <em>inactive</em> heading <strong>should</strong> trigger a transition that hides the active panel and shows the panel corresponding to the heading you clicked on.</li>
+  	  <li>Clicking on an <em>active</em> heading <strong>should</strong> do nothing, aside from giving focus to the heading.</li>
+  	</ul>
+  </div> <!-- .description -->
+  
+  
+  <!-- ACCORDION 2 -->
+  <h2>Multiple open at once</h2>
+
+	<div id="accordion2">
+		<h3><a href="#">Section 1</a></h3>
+		<div>
+			<p>Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.</p>
+		</div>
+
+		<h3><a href="#">Section 2</a></h3>
+		<div>
+			<p>Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna. </p>
+		</div>
+
+		<h3><a href="#">Section 3</a></h3>
+		<div>
+			<p>Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.  
+			</p>
+			<ul>
+				<li>List item one</li>
+				<li>List item two</li>
+				<li>List item three</li>
+			</ul>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	  new S2.UI.Accordion('accordion2', { multiple: true });
+	</script>
+
+  <div class="description">
+    <p>Like the above, except the <code>multiple</code> option is now <code>true</code>.</p>
+  	<ul>
+  	  <li>It <strong>should</strong> be able to expand and collapse panes independently of other panes. Anywhere from <em>zero</em> to <em>(all)</em> panes can be open, or closed, at once.</li>
+  	  <li>Clicking on the active header <strong>should</strong> collapse it.</li>
+  	</ul>
+  </div> <!-- .description -->  
+</body>
+</html>

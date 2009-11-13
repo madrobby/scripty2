@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  
+  <h1>Tabs Tests</h1>
+  
+  <h2>Standard tabs</h2>
+  <div id="tabs1">
+		<ul>
+			<li><a href="#panel-1">First</a></li>
+			<li><a href="#panel-2">Second</a></li>
+			<li><a href="#panel-3">Third</a></li>
+		</ul>
+		<div id="panel-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+
+		<div id="panel-2">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
+		<div id="panel-3">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
+	</div> <!-- #tabs -->
+	
+	<script type="text/javascript">
+	 new S2.UI.Tabs('tabs1');
+	</script>
+	
+	<div class="description">
+	  <p>A standard instance of <code>S2.UI.Tabs</code> with all the default options.</p>
+	 
+	</div> <!-- .description -->
+  
+  
+</body>
+</html>

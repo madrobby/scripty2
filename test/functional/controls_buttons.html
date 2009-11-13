@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  
+  <h1>Button Tests</h1>
+  
+  <div class="ui-widget">
+    <h2>Using the BUTTON element</h2>
+    
+    <button id="button1">Options…</button>
+    <button id="button2" disabled="disabled" class="ui-state-disabled">Don't Save</button>
+    <button id="button3">Save</button>
+    
+    <script type="text/javascript">
+      new S2.UI.Button('button1');
+      new S2.UI.Button('button2');
+      new S2.UI.Button('button3', { primary: true });
+    </script>
+    
+    <div class="description">
+      <ul>
+        <li>First button is normal. <strong>Should</strong> have hover state, focus state, and down state.</li>
+        <li>Second button is disabled. <strong>Should not</strong> change state when hovered over, clicked on, or focused.</li>
+        <li>Third button is "primary" — denotes most common action. <strong>Should</strong> look different from the first button. <strong>May</strong> have distinct hover and down states, if necessary.</li>
+      </ul>
+      
+    </div> <!-- .description -->
+    
+    
+  </div> <!-- .ui-widget -->
+  
+</body>
+</html>
