@@ -117,9 +117,30 @@
           break;
       }
     },
+    
+    // TODO: Implement tokenizing.
+    _getInput: function() {
+      return this.input.getValue();
+    },
+    
+    // TODO: Implement tokenizing.
+    _setInput: function(value) {
+      this.input.setValue(value);
+    },
      
     _change: function() {
-      var value = this._value, choices = this._getChoices();
+      this.findChoices();
+    },
+    
+    /**
+     *  S2.UI.Autocompleter#findChoices() -> undefined
+     *  
+     *  Triggers an update of the choices presented to the user. If results
+     *  come from the server, this is an asynchronous operation.
+    **/
+    findChoices: function() {
+      var value = this._getInput();
+      var choices = this.choices || [];
       var results = choices.inject([], function(memo, choice) {
         if (choice.toLowerCase().include(value.toLowerCase())) {
           memo.push(choice);
@@ -127,13 +148,12 @@
         return memo;
       });
       
-      this.results = results;
-      
-      this._updateMenu(results);
+      this.setChoices(results);
     },
     
-    _getChoices: function() {
-      return this.choices || [];
+    setChoices: function(results) {
+      this.results = results;
+      this._updateMenu(results);
     },
     
     _updateMenu: function(results) {
@@ -159,8 +179,7 @@
         this.menu.open();
       }      
     },
-    
-    
+        
     _moveMenuChoice: function(delta) {
       var choices = this.list.down('li');
       this._selectedIndex = (this._selectedIndex + delta).constrain(
@@ -180,26 +199,23 @@
         index = this._selectedIndex;
       }
 
-      console.log("_highlightMenuChoice", index, element, choices);
-
       UI.removeClassNames(choices, 'ui-state-active');      
-      if (index === -1) return;
+      if (index === -1 || index === null) return;
       choices[index].addClassName('ui-state-active');
       
       this._selectedIndex = index;
     },
     
     _selected: function(event) {
-      var memo = event.memo, li = memo.element;      
-      var newValue = li.retrieve('ui.autocompleter.value');
-      this.input.setValue(newValue);
+      var memo = event.memo, li = memo.element;
+      this._setInput(li.retrieve('ui.autocompleter.value'));
       this.menu.close();
     },
     
     _blur: function(event) {
       this._unschedule();
       this.menu.close();
-    }
+    }    
   });
   
   Object.extend(UI.Autocompleter, {
