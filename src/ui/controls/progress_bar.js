@@ -1,5 +1,5 @@
 (function(UI) {
-  /**
+  /** section: scripty2 UI
    *  class S2.UI.ProgressBar
    *  includes S2.UI.Mixin.Configurable
    *  

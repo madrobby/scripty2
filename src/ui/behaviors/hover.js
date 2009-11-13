@@ -1,4 +1,4 @@
-/**
+/** section: scripty2 UI
  *  class S2.UI.Behavior.Hover < S2.UI.Behavior
  *  
  *  Applies a hover behavior. Adds a `ui-state-hover` class to any 

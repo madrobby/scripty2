@@ -1,6 +1,6 @@
 
 (function(UI) {
-  /**
+  /** section: scripty2 UI
    *  class S2.UI.Menu
    *  includes UI.Mixin.Configurable
   **/
@@ -24,6 +24,7 @@
        
       this.choices = this.element.select('li');
 
+      // -1 means no items are highlighted.
       this._highlightedIndex = -1;
       
       // ARIA.
@@ -42,7 +43,7 @@
     },
     
     /**
-     *  S2.UI.addObservers() -> undefined
+     *  S2.UI.Menu#addObservers() -> undefined
     **/
     addObservers: function() {
       this.element.observe('mouseover', this.observers.mouseover);
@@ -50,7 +51,7 @@
     },
     
     /**
-     *  S2.UI.removeObservers() -> undefined
+     *  S2.UI.Menu#removeObservers() -> undefined
     **/
     removeObservers: function() {
       this.element.stopObserving('mouseover', this.observers.mouseover);

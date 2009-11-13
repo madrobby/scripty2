@@ -1,4 +1,4 @@
-/**
+/** section: scripty2 UI
  *  class S2.UI.Behavior
  *  
  *  Abstract base class for assigning sets of events.

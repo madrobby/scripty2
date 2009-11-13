@@ -2,13 +2,13 @@
 
 (function(UI) {
   
-  /**
-   *  class UI.Autocompleter
+  /** section: scripty2 UI
+   *  class S2.UI.Autocompleter
    *  includes UI.Mixin.Configurable
   **/
   UI.Autocompleter = Class.create(UI.Mixin.Configurable, {
     /**
-     *  new UI.Autocompleter(element, options)
+     *  new S2.UI.Autocompleter(element, options)
      *  
      *  Instantiates an autocompleter.
     **/

@@ -1,4 +1,4 @@
-/**
+/** section: scripty2 UI
  *  class S2.UI.Behavior.Drag < S2.UI.Behavior
  *  
  *  Applies a drag behavior. Takes a `handle` option that points to the drag

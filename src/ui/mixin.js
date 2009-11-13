@@ -17,12 +17,12 @@ Object.deepExtend = function(destination, source) {
   return destination;
 };
 
-/**
+/** section: scripty2 UI
  *  S2.UI.Mixin
 **/
 S2.UI.Mixin = {};
 
-/**
+/** section: scripty2 UI
  *  mixin S2.UI.Mixin.Configurable
  *  
  *  A mixin for hassle-free blending of default options with user-defined
@@ -60,7 +60,7 @@ S2.UI.Mixin.Configurable = {
   }
 };
 
-/**
+/** section: scripty2 UI
  *  mixin S2.UI.Mixin.Trackable
 **/
 S2.UI.Mixin.Trackable = {

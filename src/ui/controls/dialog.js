@@ -1,6 +1,6 @@
 (function(UI) {
   
-  /**
+  /** section: scripty2 UI
    *  class S2.UI.Dialog
    *  includes S2.UI.Mixin.Configurable
    *  

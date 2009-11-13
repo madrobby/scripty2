@@ -1,4 +1,4 @@
-/**
+/** section: scripty2 UI
  *  class S2.UI.Behavior.Resize < S2.UI.Behavior
 **/
 S2.UI.Behavior.Resize = Class.create(S2.UI.Behavior, {

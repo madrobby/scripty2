@@ -1,4 +1,4 @@
-/**
+/** section: scripty2 UI
  *  class UI.Behavior.Focus < S2.UI.Behavior
  *  
  *  Applies a focus behavior. Adds a `ui-state-focus` class to any
