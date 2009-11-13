@@ -562,8 +562,7 @@
   padding: 0;
   width: 300px;
   position: absolute;
-  -moz-box-shadow:    4px 4px 8px #ddd;
-  -webkit-box-shadow: 4px 4px 8px #ddd;
+  background-color: #fff;
 }
 
   .ui-menu li {
