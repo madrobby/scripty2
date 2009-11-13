@@ -11,11 +11,11 @@ new Test.Unit.Runner({
     assertEqual(0, tmp);
     wait(250, function(){
       assertEqual(0, tmp);
-      new s2.fx.Morph('sandbox',{style:'font-size:20px',duration:.5}).play();
+      new S2.FX.Morph('sandbox',{style:'font-size:20px',duration:.5}).play();
       wait(750, function(){
         assert(tmp > 0);
         tmp2 = tmp;
-        wait(250, function(){
+        wait(100, function(){
           assertEqual(tmp2, tmp, "heartbeats shouldn't continue when no fx running");
         });
       });
@@ -23,12 +23,12 @@ new Test.Unit.Runner({
   }},
   
   testHeartbeatFramerate: function(){ with(this) {
-    var oldHeartbeat = s2.fx.getHeartbeat();
+    var oldHeartbeat = S2.FX.getHeartbeat();
     oldHeartbeat.stop();
     delete oldHeartbeat;
     
-    var heartbeat = new s2.fx.Heartbeat({framerate:2}), frameCounter = 0;
-    s2.fx.setHeartbeat(heartbeat);
+    var heartbeat = new S2.FX.Heartbeat({framerate:2}), frameCounter = 0;
+    S2.FX.setHeartbeat(heartbeat);
     var o = function(){ frameCounter++; };
     document.observe('effect:heartbeat', o);
     

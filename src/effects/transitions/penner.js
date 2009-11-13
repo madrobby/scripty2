@@ -10,9 +10,9 @@
  *  Easing Equations (c) 2003 Robert Penner, all rights reserved.
  */
 
-Object.extend(s2.fx.Transitions, {
+Object.extend(S2.FX.Transitions, {
   /**
-   *  s2.fx.Transitions.easeInQuad(pos) -> Number
+   *  S2.FX.Transitions.easeInQuad(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -22,7 +22,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutQuad(pos) -> Number
+   *  S2.FX.Transitions.easeOutQuad(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -32,7 +32,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutQuad(pos) -> Number
+   *  S2.FX.Transitions.easeInOutQuad(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -43,7 +43,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInCubic(pos) -> Number
+   *  S2.FX.Transitions.easeInCubic(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -53,7 +53,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutCubic(pos) -> Number
+   *  S2.FX.Transitions.easeOutCubic(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -63,7 +63,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutCubic(pos) -> Number
+   *  S2.FX.Transitions.easeInOutCubic(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -74,7 +74,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInQuart(pos) -> Number
+   *  S2.FX.Transitions.easeInQuart(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -84,7 +84,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutQuart(pos) -> Number
+   *  S2.FX.Transitions.easeOutQuart(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -94,7 +94,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutQuart(pos) -> Number
+   *  S2.FX.Transitions.easeInOutQuart(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -105,7 +105,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInQuint(pos) -> Number
+   *  S2.FX.Transitions.easeInQuint(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -115,7 +115,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutQuint(pos) -> Number
+   *  S2.FX.Transitions.easeOutQuint(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -125,7 +125,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutQuint(pos) -> Number
+   *  S2.FX.Transitions.easeInOutQuint(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -136,7 +136,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInSine(pos) -> Number
+   *  S2.FX.Transitions.easeInSine(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -146,7 +146,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutSine(pos) -> Number
+   *  S2.FX.Transitions.easeOutSine(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -156,7 +156,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutSine(pos) -> Number
+   *  S2.FX.Transitions.easeInOutSine(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -166,7 +166,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInExpo(pos) -> Number
+   *  S2.FX.Transitions.easeInExpo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -176,7 +176,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutExpo(pos) -> Number
+   *  S2.FX.Transitions.easeOutExpo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -186,7 +186,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutExpo(pos) -> Number
+   *  S2.FX.Transitions.easeInOutExpo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -199,7 +199,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInCirc(pos) -> Number
+   *  S2.FX.Transitions.easeInCirc(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -209,7 +209,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutCirc(pos) -> Number
+   *  S2.FX.Transitions.easeOutCirc(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -219,7 +219,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutCirc(pos) -> Number
+   *  S2.FX.Transitions.easeInOutCirc(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -230,7 +230,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutBounce(pos) -> Number
+   *  S2.FX.Transitions.easeOutBounce(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -248,7 +248,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInBack(pos) -> Number
+   *  S2.FX.Transitions.easeInBack(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -259,7 +259,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeOutBack(pos) -> Number
+   *  S2.FX.Transitions.easeOutBack(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -270,7 +270,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeInOutBack(pos) -> Number
+   *  S2.FX.Transitions.easeInOutBack(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -282,7 +282,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.elastic(pos) -> Number
+   *  S2.FX.Transitions.elastic(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -292,7 +292,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.swingFromTo(pos) -> Number
+   *  S2.FX.Transitions.swingFromTo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -304,7 +304,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.swingFrom(pos) -> Number
+   *  S2.FX.Transitions.swingFrom(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -315,7 +315,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.swingTo(pos) -> Number
+   *  S2.FX.Transitions.swingTo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -326,7 +326,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.bounce(pos) -> Number
+   *  S2.FX.Transitions.bounce(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -344,7 +344,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.bouncePast(pos) -> Number
+   *  S2.FX.Transitions.bouncePast(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -362,7 +362,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeFromTo(pos) -> Number
+   *  S2.FX.Transitions.easeFromTo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -373,7 +373,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeFrom(pos) -> Number
+   *  S2.FX.Transitions.easeFrom(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>
@@ -383,7 +383,7 @@ Object.extend(s2.fx.Transitions, {
   },
 
   /**
-   *  s2.fx.Transitions.easeTo(pos) -> Number
+   *  S2.FX.Transitions.easeTo(pos) -> Number
    *  - pos (Number): position between 0 (start of effect) and 1 (end of effect)
    *
    *  <div class="transition"></div>

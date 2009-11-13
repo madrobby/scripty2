@@ -6,7 +6,7 @@
 Element.__scrollTo = Element.scrollTo;
 Element.addMethods({
   /** 
-   *  Element.scrollTo(@element[, to[, options]]) -> element
+   *  Element#scrollTo(@element[, to[, options]]) -> element
    *  - to (Number): vertical scroll position in pixels
    *  - options (Object): effect options
    *
@@ -21,7 +21,7 @@ Element.addMethods({
   **/  
   scrollTo: function(element, to, options){
     if(arguments.length == 1) return Element.__scrollTo(element);
-    new s2.fx.Scroll(element, Object.extend(options || {}, { to: to })).play();
+    new S2.FX.Scroll(element, Object.extend(options || {}, { to: to })).play();
     return element;
   }
 });
@@ -36,13 +36,13 @@ Element.addMethods({
     if (Object.isFunction(effect))
       effect = new effect(element, options);
     else if (Object.isString(effect))
-      effect = new s2.fx[effect.capitalize()](element, options);
+      effect = new S2.FX[effect.capitalize()](element, options);
     effect.play(element, options);
     return element;
   },
 
   /** 
-   *  Element.morph(@element, style[, options]) -> element
+   *  Element#morph(@element, style[, options]) -> element
    *
    *  Dynamically adjust an element's CSS styles to the CSS properties given
    *  in the `style` argument. 
@@ -72,7 +72,7 @@ Element.addMethods({
    *      // the width morph
    *      $('element_id').morph('width:500px').morph('height:500px');
    *
-   *  By default, `morph` will create a new [[s2.fx.Queue]] for the
+   *  By default, `morph` will create a new [[S2.FX.Queue]] for the
    *  element if there isn't on already, and use this queue for queueing
    *  up chained morphs. To prevent a morph from queuing at the end,
    *  use the `position: 'parallel'` option.
@@ -80,21 +80,21 @@ Element.addMethods({
    *      // the height morph will be executed at the same time as the width morph
    *      $('element_id').morph('width:500px').morph('height:500px',{ position: 'parallel' });
    *
-   *  See also [[s2.fx.Morph]].
+   *  See also [[S2.FX.Morph]].
   **/
   morph: function(element, style, options){
-    options = s2.fx.parseOptions(options);
+    options = S2.FX.parseOptions(options);
     if(!options.queue){
-      options.queue = element.retrieve('s2.fx.Queue');
+      options.queue = element.retrieve('S2.FX.Queue');
       if(!options.queue)
-        element.store('s2.fx.Queue', options.queue = new s2.fx.Queue());
+        element.store('S2.FX.Queue', options.queue = new S2.FX.Queue());
     }
     if(!options.position) options.position = 'end';
     return element.effect('morph', Object.extend(options, {style: style}));
   }.optionize(),
 
   /** 
-   *  Element.appear(@element[, options]) -> element
+   *  Element#appear(@element[, options]) -> element
    *
    *  Make an element appear by fading it in from 0% opacity.
   **/
@@ -106,9 +106,9 @@ Element.addMethods({
   },
 
   /** 
-   *  Element.fade(@element[, options]) -> element
+   *  Element#fade(@element[, options]) -> element
    *
-   *  Fade out an element from it's current opacity setting (or 100%).
+   *  Fade out an element from its current opacity setting (or 100%).
   **/
   fade: function(element, options){
     return element.effect('morph', Object.extend({
@@ -118,7 +118,7 @@ Element.addMethods({
   },
 
   /** 
-   *  Element.cloneWithoutIDs(@element) -> element
+   *  Element#cloneWithoutIDs(@element) -> element
    *
    *  Returns a clone of the element with all `id` attributed removed.
   **/
@@ -130,3 +130,59 @@ Element.addMethods({
     return clone;
   }
 });
+
+/** 
+ *  Element#transform(@element, transforms) -> element
+ *  - transforms (Object): rotation angle and scale factor
+ *
+ *  Rotate and scale an element. `transforms` is an object containing:
+ *
+ *  * `rotation`: Rotation angle in radians
+ *  * `scale`: Scale factor
+ *
+ *  Example:
+ *
+ *      // rotate by 1.5 radians, scale by 200%
+ *      $('element_id').transform({ rotation: 1.5, scale: 2 });
+ *  
+ *  [[manipulate:update]] event memos can be directly fed into [[Element#transform]]:
+ *
+ *      $('element_id').observe('manipulate:update', function(event){
+ *         $('element_id').transform(event.memo);
+ *      });
+ *
+ *  To convert degrees to radians, use:
+ *
+ *      radians = degrees * (Math.PI/180);
+ *  
+**/
+(function(){
+  var transform;
+  
+  if(window.CSSMatrix) transform = function(element, transform){
+    element.style.transform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(window.WebKitCSSMatrix) transform = function(element, transform){
+    element.style.webkitTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  else if(Prototype.Browser.Gecko) transform = function(element, transform){
+    element.style.MozTransform = 'scale('+(transform.scale||1)+') rotate('+(transform.rotation||0)+'rad)';
+    return element;
+  };
+  // we don't support scaling for IE yet
+  else if(Prototype.Browser.IE) transform = function(element, transform){
+    if(!element._oDims)
+      element._oDims = [element.offsetWidth, element.offsetHeight];
+    var c = Math.cos(transform.rotation||0) * 1, s = Math.sin(transform.rotation||0) * 1,
+        filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',M11="+c+",M12="+(-s)+",M21="+s+",M22="+c+")";
+    element.style.filter = filter;
+    element.style.marginLeft = (element._oDims[0]-element.offsetWidth)/2+'px';
+    element.style.marginTop = (element._oDims[1]-element.offsetHeight)/2+'px';
+    return element; 
+  };
+  else transform = function(element){ return element; }
+  
+  Element.addMethods({ transform: transform });
+})();

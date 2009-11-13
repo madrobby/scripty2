@@ -1,8 +1,8 @@
 /** section: scripty2 ui
- * s2.css
+ * S2.CSS
  * Utility functions for CSS parsing, color normalization and tweening.
 **/
-s2.css = {
+S2.CSS = {
   PROPERTY_MAP: {
     backgroundColor: 'color',
     borderBottomColor: 'color',
@@ -48,13 +48,13 @@ s2.css = {
   },
   
   /**
-   *  s2.css.LENGTH = /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/
+   *  S2.CSS.LENGTH = /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/
    *  Regular expression for a CSS length, for example 12px, 8.4in, 13% or 0.
   **/
   LENGTH: /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/,
   
   /**
-   *  s2.css.NUMBER = /([\+-]*\d+\.?\d*)/
+   *  S2.CSS.NUMBER = /([\+-]*\d+\.?\d*)/
    *  Regular expression for a CSS numeric value, for example '+12.90', '-2' or '21.5'.
   **/
   NUMBER: /([\+-]*\d+\.?\d*)/,
@@ -62,13 +62,13 @@ s2.css = {
   __parseStyleElement: document.createElement('div'),
   
   /**
-   *  s2.css.parseStyle(string) -> Object
+   *  S2.CSS.parseStyle(string) -> Object
    *  Takes a string of CSS rules and parses them into key/value pairs. 
    *  Shortcut properties, colors and opacity settings on IE are normalized.
    *  
    *  Example:
    *  
-   *      s2.css.parseStyle('font-size:11px; border:12px solid #abc; border-left-width: 5px') ->
+   *      S2.CSS.parseStyle('font-size:11px; border:12px solid #abc; border-left-width: 5px') ->
    *      
    *      {
    *        borderBottomColor: '#aabbcc',
@@ -83,15 +83,15 @@ s2.css = {
    *      }
   **/
   parseStyle: function(styleString) {
-    s2.css.__parseStyleElement.innerHTML = '<div style="' + styleString + '"></div>';
-    var style = s2.css.__parseStyleElement.childNodes[0].style, styleRules = {};
+    S2.CSS.__parseStyleElement.innerHTML = '<div style="' + styleString + '"></div>';
+    var style = S2.CSS.__parseStyleElement.childNodes[0].style, styleRules = {};
 
-    s2.css.NUMERIC_PROPERTIES.each( function(property){
+    S2.CSS.NUMERIC_PROPERTIES.each( function(property){
       if (style[property]) styleRules[property] = style[property]; 
     });
 
-    s2.css.COLOR_PROPERTIES.each( function(property){
-      if (style[property]) styleRules[property] = s2.css.colorFromString(style[property]);
+    S2.CSS.COLOR_PROPERTIES.each( function(property){
+      if (style[property]) styleRules[property] = S2.CSS.colorFromString(style[property]);
     });
     
     if (Prototype.Browser.IE && styleString.include('opacity'))
@@ -101,35 +101,35 @@ s2.css = {
   },
   
   /**
-   *  s2.css.normalizeColor(color) -> Array
+   *  S2.CSS.normalizeColor(color) -> Array
    *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
    *  
    *  Returns the value of a CSS color as a RGB triplet:
    *  
-   *  * #abc       -> [170, 187, 204]
-   *  * #aabbcc    -> not changed
+   *  * \#abc       -> [170, 187, 204]
+   *  * \#aabbcc    -> not changed
    *  * rgb(1,2,3) -> [1, 2, 3]
-   *  * #xyz       -> [NaN, NaN, NaN]
+   *  * \#xyz       -> [NaN, NaN, NaN]
    *  
    *  This method does not support HTML color constants.
   **/
   normalizeColor: function(color) {
     if (!color || color == 'rgba(0, 0, 0, 0)' || color == 'transparent') color = '#ffffff';
-    color = s2.css.colorFromString(color);
+    color = S2.CSS.colorFromString(color);
     return [
       parseInt(color.slice(1,3),16), parseInt(color.slice(3,5),16), parseInt(color.slice(5,7),16)
     ];
   },
   
   /**
-   *  s2.css.colorFromString(color) -> String
+   *  S2.CSS.colorFromString(color) -> String
    *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
    *  
    *  Returns a normalized color in the #aabbcc format.
    *  
-   *  * #abc -> Expanded to #aabbcc
-   *  * #aabbcc -> not changed
-   *  * rgb(1,2,3) -> Expanded to #010203
+   *  * \#abc -> Expanded to #aabbcc
+   *  * \#aabbcc -> not changed
+   *  * rgb(1,2,3) -> Expanded to \#010203
    *  * other input -> not changed
    *  
    *  This method does not support HTML color constants.
@@ -149,7 +149,7 @@ s2.css = {
   },
   
   /**
-   *  s2.css.interpolateColor(from, to, position) -> String
+   *  S2.CSS.interpolateColor(from, to, position) -> String
    *  - from (String): Original color in #abc, #aabbcc or rgba(1,2,3) format
    *  - to (String): Target color in #abc, #aabbcc or rgba(1,2,3) format
    *  - position (Number): interpolation position between 0 (original) and 1 (target)
@@ -157,13 +157,13 @@ s2.css = {
    *  Returns a color in #aabbcc format for an arbitrary position between two colors. 
    *  Positions less then 0 and greater than 1 are possible.
    *  
-   *      s2.css.interpolateColor('#ffffff', '#000000', 0.5) -> '#808080'
+   *      S2.CSS.interpolateColor('#ffffff', '#000000', 0.5) -> '#808080'
    *  
    *  This method does not support HTML color constants as input values.
   **/
   interpolateColor: function(from, to, position){
-    from = s2.css.normalizeColor(from);
-    to = s2.css.normalizeColor(to);
+    from = S2.CSS.normalizeColor(from);
+    to = S2.CSS.normalizeColor(to);
     
     return '#' + [0,1,2].map(function(index){ 
       return Math.max(Math.min(from[index].tween(to[index], position).round(), 255), 0).toColorPart();
@@ -171,7 +171,7 @@ s2.css = {
   },
   
   /**
-   *  s2.css.interpolateNumber(from, to, position) -> Number
+   *  S2.CSS.interpolateNumber(from, to, position) -> Number
    *  - from (Number): Original number
    *  - to (Number): Target number
    *  - position (Number): interpolation position between 0 (original) and 1 (destination)
@@ -179,17 +179,17 @@ s2.css = {
    *  Returns a number for an arbitrary position between two numbers. 
    *  Positions less then 0 and greater than 1 are possible.
    *  
-   *      s2.css.interpolateNumber(1, 2, 0.5)  -> 1.5
-   *      s2.css.interpolateNumber(1.5, 4.5, 0.1) -> 1.8
-   *      s2.css.interpolateNumber(1, 10, 2)   -> 3
-   *      s2.css.interpolateNumber(1, 2, -0.5) -> 0.5
+   *      S2.CSS.interpolateNumber(1, 2, 0.5)  -> 1.5
+   *      S2.CSS.interpolateNumber(1.5, 4.5, 0.1) -> 1.8
+   *      S2.CSS.interpolateNumber(1, 10, 2)   -> 3
+   *      S2.CSS.interpolateNumber(1, 2, -0.5) -> 0.5
   **/
   interpolateNumber: function(from, to, position){
     return 1*((from||0).tween(to, position).toFixed(3));
   },
 
   /**
-   *  s2.css.interpolateLength(from, to, position) -> String
+   *  S2.CSS.interpolateLength(from, to, position) -> String
    *  - from (Number): Original CSS length
    *  - to (Number): Target CSS length (unit must be the same as in the `from` argument)
    *  - position (Number): interpolation position between 0 (original) and 1 (destination)
@@ -197,19 +197,19 @@ s2.css = {
    *  Returns a CSS length for an arbitrary position between two CSS lengths. 
    *  Positions less then 0 and greater than 1 are possible.
    *  
-   *      s2.css.interpolateLength('12px','18px',0.5)-> '15px'
-   *      s2.css.interpolateLength('10%','30%',0.7) -> '24%'
+   *      S2.CSS.interpolateLength('12px','18px',0.5)-> '15px'
+   *      S2.CSS.interpolateLength('10%','30%',0.7) -> '24%'
   **/
   interpolateLength: function(from, to, position){
-    if(!from) from = '0'+to.gsub(s2.css.NUMBER,'');
-    to.scan(s2.css.NUMBER, function(match){ to = 1*(match[1]); });
-    return from.gsub(s2.css.NUMBER, function(match){
+    if(!from || parseFloat(from)===0) from = '0'+to.gsub(S2.CSS.NUMBER,'');
+    to.scan(S2.CSS.NUMBER, function(match){ to = 1*(match[1]); });
+    return from.gsub(S2.CSS.NUMBER, function(match){
       return (1*(parseFloat(match[1]).tween(to, position).toFixed(3))).toString();
     });
   },
   
   /**
-   *  s2.css.interpolateInteger(from, to, position) -> Number
+   *  S2.CSS.interpolateInteger(from, to, position) -> Number
    *  - from (Number): Original number
    *  - to (Number): Target number
    *  - position (Number): interpolation position between 0 (original) and 1 (destination)
@@ -217,17 +217,17 @@ s2.css = {
    *  Returns a number rounded to the next integer for an arbitrary position between two numbers. 
    *  Positions less then 0 and greater than 1 are possible.
    *  
-   *      s2.css.interpolateInteger(1, 5, 0.5);  -> 3
-   *      s2.css.interpolateInteger(2, 4, 0.1);  -> 2
-   *      s2.css.interpolateInteger(1, 10, 2);   -> 19
-   *      s2.css.interpolateInteger(1, 2, -0.5); -> 1
+   *      S2.CSS.interpolateInteger(1, 5, 0.5);  -> 3
+   *      S2.CSS.interpolateInteger(2, 4, 0.1);  -> 2
+   *      S2.CSS.interpolateInteger(1, 10, 2);   -> 19
+   *      S2.CSS.interpolateInteger(1, 2, -0.5); -> 1
   **/
   interpolateInteger: function(from, to, position){
     return parseInt(from).tween(to, position).round();
   },
   
   /**
-   *  s2.css.interpolate(property, from, to, position) -> Number | String
+   *  S2.CSS.interpolate(property, from, to, position) -> Number | String
    *  - property (String): CSS property name to interpolate (e.g. 'font-size')
    *  - from (String | Number): Original value
    *  - to (String | Number): Target value
@@ -237,19 +237,19 @@ s2.css = {
    *  The type of interpolation will be automatically choosen based on the the CSS property.
    *  Positions less then 0 and greater than 1 are possible.
    *  
-   *      s2.css.interpolate('font-size', '14px', '18px', 0.5) -> '16px'
-   *      s2.css.interpolate('background-color', '#abc', '#def', 0.5) -> '#c4d5e6'
-   *      s2.css.interpolate('opacity', 1, 0, 0.75) -> 0.25
-   *      s2.css.interpolate('zIndex', 1, 10, 0.75) -> 8
+   *      S2.CSS.interpolate('font-size', '14px', '18px', 0.5) -> '16px'
+   *      S2.CSS.interpolate('background-color', '#abc', '#def', 0.5) -> '#c4d5e6'
+   *      S2.CSS.interpolate('opacity', 1, 0, 0.75) -> 0.25
+   *      S2.CSS.interpolate('zIndex', 1, 10, 0.75) -> 8
    *
    *  To generate a list of supported CSS properties and types, use:
    *
-   *      $H(s2.css.PROPERTY_MAP).map(function(v){
+   *      $H(S2.CSS.PROPERTY_MAP).map(function(v){
    *        return v[0].underscore().dasherize(r)+' ('+v[1]+')';
    *      }).join(', ');
   **/
   interpolate: function(property, from, to, position){
-    return s2.css['interpolate'+s2.css.PROPERTY_MAP[property.camelize()].capitalize()](from, to, position);
+    return S2.CSS['interpolate'+S2.CSS.PROPERTY_MAP[property.camelize()].capitalize()](from, to, position);
   },
 
   ElementMethods: {
@@ -264,7 +264,7 @@ s2.css = {
     **/
     getStyles: function(element) {
       var css = document.defaultView.getComputedStyle($(element), null);
-      return s2.css.PROPERTIES.inject({ }, function(styles, property) {
+      return S2.CSS.PROPERTIES.inject({ }, function(styles, property) {
         styles[property] = css[property];
         return styles;
       });
@@ -272,17 +272,17 @@ s2.css = {
   }
 };
 
-s2.css.PROPERTIES = [];
-for(property in s2.css.PROPERTY_MAP) s2.css.PROPERTIES.push(property);
+S2.CSS.PROPERTIES = [];
+for(property in S2.CSS.PROPERTY_MAP) S2.CSS.PROPERTIES.push(property);
 
-s2.css.NUMERIC_PROPERTIES = s2.css.PROPERTIES.findAll(function(property){ return !property.endsWith('olor') });
-s2.css.COLOR_PROPERTIES   = s2.css.PROPERTIES.findAll(function(property){ return property.endsWith('olor') });
+S2.CSS.NUMERIC_PROPERTIES = S2.CSS.PROPERTIES.findAll(function(property){ return !property.endsWith('olor') });
+S2.CSS.COLOR_PROPERTIES   = S2.CSS.PROPERTIES.findAll(function(property){ return property.endsWith('olor') });
 
 if (!(document.defaultView && document.defaultView.getComputedStyle)) {
-  s2.css.ElementMethods.getStyles = function(element) {
+  S2.CSS.ElementMethods.getStyles = function(element) {
     element = $(element);
     var css = element.currentStyle, styles;
-    styles = s2.css.PROPERTIES.inject({ }, function(hash, property) {
+    styles = S2.CSS.PROPERTIES.inject({ }, function(hash, property) {
       hash[property] = css[property];
       return hash;
     });
@@ -291,4 +291,4 @@ if (!(document.defaultView && document.defaultView.getComputedStyle)) {
   };
 };
 
-Element.addMethods(s2.css.ElementMethods);
+Element.addMethods(S2.CSS.ElementMethods);

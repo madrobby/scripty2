@@ -1,9 +1,9 @@
 /**
- *  class s2.fx.Parallel < s2.fx.Base
+ *  class S2.FX.Parallel < S2.FX.Base
  *
  *  Effect to execute several other effects in parallel.
 **/
-s2.fx.Parallel = Class.create(s2.fx.Base, {
+S2.FX.Parallel = Class.create(S2.FX.Base, {
   initialize: function($super, effects, options) {
     this.effects = effects || [];
     return $super(options || {});

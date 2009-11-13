@@ -1,27 +1,28 @@
 //= require <effects/operators/base>
 
 /**
- *  class s2.fx.Operators.Style < s2.fx.Operators.Base
+ *  class S2.FX.Operators.Style < S2.FX.Operators.Base
  *  
  *  Operator for interpolatung the CSS styles of an Element.
 **/
-s2.fx.Operators.Style = Class.create(s2.fx.Operators.Base, {
+S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
   initialize: function($super, effect, object, options) {
     $super(effect, object, options);
     this.element = $(this.object);
 
     this.style = Object.isString(this.options.style) ?
-      s2.css.parseStyle(this.options.style) : this.options.style;
+      S2.CSS.parseStyle(this.options.style) : this.options.style;
 
     this.tweens = [];
     for(var item in this.style){
       var property = item.underscore().dasherize(),
         from = this.element.getStyle(property), to = this.style[item];
+      
       if(from!=to)
         this.tweens.push([
-          property, s2.css.interpolate.curry(property, from, to),
+          property, S2.CSS.interpolate.curry(property, from, to),
           item in this.options.propertyTransitions ? 
-            Object.propertize(this.options.propertyTransitions[item], s2.fx.Transitions) : Prototype.K
+            Object.propertize(this.options.propertyTransitions[item], S2.FX.Transitions) : Prototype.K
         ]);
     }
   },
