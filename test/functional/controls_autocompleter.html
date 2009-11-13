@@ -94,5 +94,19 @@
     });
   </script>
   
+  <div class="description">
+    A standard autocompleter (<code>Autocompleter.Local</code> in scripty1 parlance). The choices are the fifty U.S. states. It should behave like a regular text box, with a few exceptions:
+    <ul>
+      <li>When the user has typed at least one character in the box, a list of completions <strong>should</strong> be offered.</li>
+      <li>If the value in the box matches a substring of a possible choice, case-insensitively, then that choice <strong>should</strong> appear in the menu.</li>
+      <li>If there are no such matches, the menu <strong>should not</strong> appear.</li>
+      <li>When the menu appears, it <strong>should</strong> be free of any highlights.</li>
+      <li>While the menu is shown, the <kbd>UP</kbd> and <kbd>DOWN</kbd> arrow keys <strong>should</strong> move the highlight between choices.</li>
+      <li>When an item is highlighted, it can be "chosen" with <kbd>TAB</kbd> or <kbd>RETURN</kbd>. In both cases, pressing the key <strong>should</strong> fill the text box with the proper value, then blur the field. If <kbd>TAB</kbd> was pressed, focus <strong>should</strong> move to the dummy button control.</li>
+      <li>Hovering over a menu item with the mouse <strong>should</strong> highlight that item. Clicking on a menu item <strong>should</strong> behave identically to pressing <kbd>RETURN</kbd>.</li>
+      <li>The matching substring of a given choice <strong>should</strong> be bold.</li>
+    </ul>
+  </div> <!-- .description -->
+  
 </body>
 </html>
