@@ -72,7 +72,7 @@ end
 
 desc "Generates a minified version of the distribution."
 task :min do
-  minify File.join(SCRIPTY2_DEBUG_DIR,'s2.js'), File.join(SCRIPTY2_RELEASE_DIR,'s2.min.js')
+  minify File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_RELEASE_DIR,'s2.min.js')
   minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_RELEASE_DIR,'prototype.min.js')
 end
 
@@ -126,7 +126,7 @@ namespace :doc do
     end
     
     cp File.join(SCRIPTY2_ROOT, 'lib', 'prototype.js'), File.join(SCRIPTY2_DOC_DIR, 'javascripts')
-    cp File.join(SCRIPTY2_DEBUG_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
+    cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
   end  
   
   task :require do
