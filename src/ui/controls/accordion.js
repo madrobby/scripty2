@@ -4,7 +4,7 @@ Object.extend(Event, {
 
 (function(UI) {
   
-  /** section: scripty2 UI
+  /** section: scripty2 ui
    *  class S2.UI.Accordion
    *  includes S2.UI.Mixin.Configurable
   **/

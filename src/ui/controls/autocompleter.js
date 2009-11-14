@@ -2,9 +2,9 @@
 
 (function(UI) {
   
-  /** section: scripty2 UI
+  /** section: scripty2 ui
    *  class S2.UI.Autocompleter
-   *  includes UI.Mixin.Configurable
+   *  includes S2.UI.Mixin.Configurable
   **/
   UI.Autocompleter = Class.create(UI.Mixin.Configurable, {
     /**

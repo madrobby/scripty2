@@ -1,7 +1,7 @@
 
 
 (function(UI) {
-  /** section: scripty2 UI
+  /** section: scripty2 ui
    *  class S2.UI.Slider
    *  includes S2.UI.Mixin.Configurable
    *  
@@ -229,7 +229,7 @@
     },
   
     /**
-     *  S2.UI.Slider#setValue(sliderValue[, handleIndex]);
+     *  S2.UI.Slider#setValue(sliderValue[, handleIndex]) -> this
      *  - sliderValue (Number): The new value for the slider handle.
      *  - handleIndex (Number): The index of the handle to move (for use on
      *    sliders with more than one handle). If omitted, the first/only handle
@@ -279,6 +279,8 @@
         });
         this.options.onSlide(this.values, this);
       }
+      
+      return this;
     },
   
     _getNearestValue: function(value) {

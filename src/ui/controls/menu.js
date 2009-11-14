@@ -1,12 +1,12 @@
 
 (function(UI) {
-  /** section: scripty2 UI
+  /** section: scripty2 ui
    *  class S2.UI.Menu
-   *  includes UI.Mixin.Configurable
+   *  includes S2.UI.Mixin.Configurable
   **/
   UI.Menu = Class.create(UI.Mixin.Configurable, {
     /**
-     *  new S2.UI.Menu([element], [options])
+     *  new S2.UI.Menu([element][, options])
     **/
     initialize: function(element, options) {
       this.element = $(element);

@@ -1,4 +1,4 @@
-/** section: scripty2 UI
+/** section: scripty2 ui
  *  class S2.UI.Behavior.Down < UI.Behavior
  *  
  *  Applies a down-state behavior. Adds a `ui-state-down` class to any 
