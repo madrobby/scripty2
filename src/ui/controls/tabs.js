@@ -1,12 +1,13 @@
 
 (function(UI) {  
   /** section: scripty2 ui
-   *  class S2.UI.Tabs
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Tabs < S2.UI.Base
    *  
    *  A set of tabs.
   **/
-  UI.Tabs = Class.create(UI.Mixin.Configurable, {
+  UI.Tabs = Class.create(UI.Base, {
+    NAME: "S2.UI.Tabs",
+
     /**
      *  new S2.UI.Tabs(element, options)
     **/

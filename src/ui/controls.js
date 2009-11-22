@@ -1,4 +1,6 @@
 
+//= require "controls/base"
+
 //= require "controls/accordion"
 //= require "controls/button"
 //= require "controls/tabs"

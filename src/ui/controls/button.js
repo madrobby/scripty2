@@ -1,12 +1,13 @@
 
 (function(UI) {  
   /** section: scripty2 ui
-   *  class S2.UI.Button
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Button < S2.UI.Base
    *  
    *  Applies button-like behavior to an element.
   **/
-  UI.Button = Class.create(UI.Mixin.Configurable, {
+  UI.Button = Class.create(UI.Base, {
+    NAME: "S2.UI.Button",
+
     /**
      *  new S2.UI.Button(element, options)
     **/

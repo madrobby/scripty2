@@ -2,12 +2,13 @@
 
 (function(UI) {
   /** section: scripty2 ui
-   *  class S2.UI.Slider
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Slider < S2.UI.Base
    *  
    *  A slider.
   **/
-  UI.Slider = Class.create(UI.Mixin.Configurable, {
+  UI.Slider = Class.create(UI.Base, {
+    NAME: "S2.UI.Slider",
+
     /**
      *  new S2.UI.Slider(element, options)
      *  - element (Element): The element to act as the slider track.

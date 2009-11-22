@@ -3,10 +3,12 @@
 (function(UI) {
   
   /** section: scripty2 ui
-   *  class S2.UI.Autocompleter
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Autocompleter < S2.UI.Base
+   *  
   **/
-  UI.Autocompleter = Class.create(UI.Mixin.Configurable, {
+  UI.Autocompleter = Class.create(UI.Base, {
+    NAME: "S2.UI.Autocompleter",
+    
     /**
      *  new S2.UI.Autocompleter(element, options)
      *  

@@ -1,10 +1,12 @@
 
 (function(UI) {
   /** section: scripty2 ui
-   *  class S2.UI.Menu
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Menu < S2.UI.Base
+   *  includes S2.UI.Mixin.Shim
   **/
-  UI.Menu = Class.create(UI.Mixin.Configurable, {
+  UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, {
+    NAME: "S2.UI.Menu",
+
     /**
      *  new S2.UI.Menu([element][, options])
     **/

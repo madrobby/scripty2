@@ -5,10 +5,11 @@ Object.extend(Event, {
 (function(UI) {
   
   /** section: scripty2 ui
-   *  class S2.UI.Accordion
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Accordion < S2.UI.Base
   **/
-  UI.Accordion = Class.create(UI.Mixin.Configurable, {
+  UI.Accordion = Class.create(UI.Base, {
+    NAME: "S2.UI.Accordion",
+    
     initialize: function(element, options) {
       this.element = $(element);
       var opt = this.setOptions(options);
@@ -19,24 +20,17 @@ Object.extend(Event, {
         var lis = this.element.childElements().grep(new Selector('li'));
         UI.addClassNames(lis, 'ui-accordion-li-fix');
       }
-    
+
+      // Find all the headers.
       this.headers = this.element.select(opt.headerSelector);
       if (!this.headers || this.headers.length === 0) return;
     
       UI.addClassNames(this.headers, 'ui-accordion-header ui-helper-reset ' +
        'ui-state-default ui-corner-all');
       UI.addBehavior(this.headers, [UI.Behavior.Hover, UI.Behavior.Focus]);
-    
-      this.content = this.headers.map( function(h) { return h.next(); });
       
-      this.content.each( function(panel) {
-        var styles = {
-          height: panel.getStyle('height'),
-          paddingTop: panel.getStyle('padding-top'),
-          paddingBottom: panel.getStyle('padding-bottom')
-        };
-        panel.store('ui.accordion.styles', styles);
-      });
+      // The next sibling of each header is its corresponding content element.
+      this.content = this.headers.map( function(h) { return h.next(); });
       
       UI.addClassNames(this.content, 'ui-accordion-content ui-helper-reset ' +
        'ui-widget-content ui-corner-bottom');
@@ -47,7 +41,9 @@ Object.extend(Event, {
         UI.addClassNames(icon, 'ui-icon ' + opt.icons.header);
         header.insert({ top: icon });
       });
-    
+
+      // If the user specified an active header, mark it as active.
+      // Otherwise, the first one is active by default.
       this._markActive(opt.active || this.headers.first(), false);
     
       // ARIA.

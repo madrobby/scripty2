@@ -1,26 +1,31 @@
 (function(UI) {
   
   /** section: scripty2 ui
-   *  class S2.UI.Overlay
-   *  includes S2.UI.Mixin.Configurable, S2.UI.Mixin.Trackable
+   *  class S2.UI.Overlay < S2.UI.Base
+   *  includes S2.UI.Mixin.Shim
    *  
    *  A class for display a modal overlay on screen.
   **/
 
   UI.Overlay = Class.create(
-   UI.Mixin.Configurable,
-   UI.Mixin.Trackable, {
+   UI.Base,
+   UI.Mixin.Trackable,
+   UI.Mixin.Shim, {
+    NAME: "S2.UI.Overlay",
+     
     /**
      *  new S2.UI.Overlay(options)
     **/
     initialize: function(options) {
       this.setOptions(options);
-      this.register();
       this.element = new Element('div', {
         'class': 'ui-widget-overlay'
       });
 
-      this.constructor.onResize();
+      this.register();
+      this.createShim();
+      this.adjustShim();
+      this.constructor.onResize();      
     },
 
     destroy: function() {

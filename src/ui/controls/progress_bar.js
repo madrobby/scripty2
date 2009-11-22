@@ -1,12 +1,11 @@
 (function(UI) {
   /** section: scripty2 ui
-   *  class S2.UI.ProgressBar
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.ProgressBar < UI.Base
    *  
    *  A progress bar.
   **/
-  UI.ProgressBar = Class.create(UI.Mixin.Configurable, {
-    name: "UI.ProgressBar",
+  UI.ProgressBar = Class.create(UI.Base, {
+    NAME: "S2.UI.ProgressBar",
 
     /**
      *  new S2.UI.ProgressBar(element, options)
@@ -36,8 +35,7 @@
       this._refreshValue();
 
       this.element.insert(this.valueElement);
-
-      this.element.store(this.name, this);
+      this.element.store(this.NAME, this);
     },
 
     destroy: function() {
@@ -45,7 +43,7 @@
        'ui-widget-content ui-corner-all');
       UI.removeAttributes(this.element, 'role aria-valuemin aria-valuemax ' +
        'aria-valuenow');
-      this.element.getData().unset('UI.ProgressBar');
+      this.element.getData().unset(this.NAME);
     },
 
     /**

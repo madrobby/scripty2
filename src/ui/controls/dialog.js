@@ -1,8 +1,8 @@
 (function(UI) {
   
   /** section: scripty2 ui
-   *  class S2.UI.Dialog
-   *  includes S2.UI.Mixin.Configurable
+   *  class S2.UI.Dialog < S2.UI.Base
+   *  
    *  
    *  A class for showing dialogs on screen.
    *  
@@ -32,7 +32,9 @@
    *    to omit buttons.
    *  
   **/
-  UI.Dialog = Class.create(UI.Mixin.Configurable, {
+  UI.Dialog = Class.create(UI.Base, {
+    NAME: "S2.UI.Dialog",
+
     /**
      *  new S2.UI.Dialog(element, options)
      *  new S2.UI.Dialog(options)
