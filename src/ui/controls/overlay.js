@@ -59,12 +59,15 @@
       this.instances.each( function(instance) {
         var element = instance.element;
         element.setStyle({
-          width:  vSize.width + 'px',
+          width:  vSize.width  + 'px',
           height: vSize.height + 'px',
           left:   offsets.left + 'px',
-          top:    offsets.top + 'px'
+          top:    offsets.top  + 'px'
         });
       });
+      (function() {
+        this.instances.invoke('adjustShim');
+      }).bind(this).defer();
     }
   });
   
