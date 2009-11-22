@@ -125,6 +125,22 @@ Object.extend(S2.UI, {
       shouldBeRemoved.push(behavior);
     }
     $(element).set('ui.behaviors', behaviors.without(shouldBeRemoved));
+  },
+  
+  
+  /**
+   *  S2.UI.getBehavior(element, behaviorClass) -> S2.UI.Behavior
+  **/
+  getBehavior: function(element, behaviorClass) {
+    element = $(element);
+    
+    var behaviors = element.retrieve('ui.behaviors', []);
+    for (var i = 0, l = behaviors.length, b; i < l; i++) {
+      b = behaviors[i];
+      if (b.constructor === behaviorClass) return b;
+    }
+    
+    return null;
   }
 });
 
