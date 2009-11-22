@@ -38,6 +38,13 @@
       
       this.menu = new UI.Menu();
       this.element.insert(this.menu.element);
+
+      // Position the menu to appear directly below the input.
+      var iLayout = this.input.getLayout();      
+      this.menu.element.setStyle({
+        left: iLayout.get('left') + 'px',
+        top:  (iLayout.get('top') + iLayout.get('margin-box-height')) + 'px'
+      });
       
       this.observers = {
         blur: this._blur.bind(this),
