@@ -44,6 +44,10 @@ Function.prototype.optionize = function(){
   return method;
 };
 
+Function.ABSTRACT = function() {
+  throw "Abstract method. Implement in subclass.";
+};
+
 /** section: scripty2 core
  * class Number
  *  
