@@ -42,6 +42,14 @@
         click: this._click.bind(this)
       };      
       this.addObservers();
+      
+      // We set this flag to true right before we show the menu for the
+      // first time. Needed because the IFRAME shim needs to be handled
+      // _after_ insertion into the DOM, but _before_ initial display.
+      this._shown = false;
+      
+      this.createShim();
+      
     },
     
     /**
@@ -66,9 +74,9 @@
      *  Empties the menu of choices.
     **/
     clear: function() {
-      this.element.update();
-      return this;
+      this.element.select('li').invoke('remove');
       this.choices = [];
+      return this;
     },
     
     /**
@@ -189,12 +197,22 @@
      *  fires ui:menu:opened
     **/
     open: function() {
+      // if (!this._shown) {
+      //   // IFRAME shim for IE6.
+      //   UI.forceRedraw(this.element);
+      //   this._shown = true;
+      // }
+      
       var result = this.element.fire('ui:menu:opened', { instance: this });
-      if (!result.stopped) {
+      // TODO: Figure out why IE doesn't like this.
+      // if (!result.stopped) {
         this.element.removeClassName('ui-helper-hidden');
         this._highlightedIndex = -1;
-      }
-      return this;
+      // }
+      
+      if (Prototype.Browser.IE) {
+        this.adjustShim();
+      }      
     },
     
     /**
@@ -203,9 +221,10 @@
     **/
     close: function() {
       var result = this.element.fire('ui:menu:closed', { instance: this });
-      if (!result.stopped) {
+      // TODO: Figure out why IE doesn't like this.
+      // if (!result.stopped) {
         this.element.addClassName('ui-helper-hidden');      
-      }
+      // }
       return this;
     },
     
