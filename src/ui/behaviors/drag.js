@@ -23,17 +23,21 @@ S2.UI.Behavior.Drag = Class.create(S2.UI.Behavior, {
       left: window.parseInt(element.getStyle('left'), 10),
       top:  window.parseInt(element.getStyle('top'),  10)
     };
-    Event.observe(window, 'mousemove', this.__onmousemove);
+    document.observe('mousemove', this.__onmousemove);
   },
   
   "handle/onmouseup": function(event) {
     this._startPointer  = null;
     this._startPosition = null;
-    Event.stopObserving(window, 'mousemove', this.__onmousemove);
+    document.stopObserving('mousemove', this.__onmousemove);
   },
   
   _onmousemove: function(event) {
     var pointer = event.pointer();
+
+    // Can sometimes happen if the pointer exited the window during
+    // mousedown.
+    if (!this._startPointer) return;
     
     var delta = {
       x: pointer.x - this._startPointer.x,
