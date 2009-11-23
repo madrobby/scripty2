@@ -19,5 +19,3 @@ S2.UI = {};
 //= require "ui/controls"
 
 //= require "ui/manipulate"
-//= require "ui/dragdrop"
-
