@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet" href="css/test.css" />
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>  
+  <h1>Overlay Tests</h1>
+  
+  <h2>Standard overlay</h2>
+  
+  <div class="ui-widget">
+    <button id="button1">Show standard overlay</button>
+    <br/>(click the overlay to remove)
+  </div>
+  
+  <div class="description">
+    <ul>
+      <li>The standard overlay <strong>Should</strong> "gray out" the viewport.</li>
+      <li>The standard overlay <strong>Should</strong> resize with the window.</li>
+      <li>The standard overlay <strong>Should not</strong> cause scrollbars to appear.</li>
+    </ul>
+    
+  </div>
+  
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  
+  <script type="text/javascript">
+    new S2.UI.Button('button1');
+    
+    $('button1').observe('click', function(){
+      var overlay = new S2.UI.Overlay();
+      $(document.body).insert(overlay);
+      overlay.toElement().observe('click', overlay.destroy.bind(overlay));
+    });
+  </script>
+</body>
+</html>
