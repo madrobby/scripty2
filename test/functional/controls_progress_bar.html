@@ -31,7 +31,7 @@
   
   $('increment').observe('click', function(event) {
     event.stop();
-    var progressBar =  $('progress_bar').retrieve('UI.ProgressBar');
+    var progressBar =  $('progress_bar').retrieve('S2.UI.ProgressBar');
     var value = progressBar.getValue();
     progressBar.setValue(value + 5);
   });
