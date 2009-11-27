@@ -110,6 +110,15 @@ new Test.Unit.Runner({
     assert(isNaN(S2.CSS.normalizeColor('#abcedfgh')[0]));
     assert(isNaN(S2.CSS.normalizeColor('#abcedfgh')[1]));
     assert(isNaN(S2.CSS.normalizeColor('#abcedfgh')[2]));
+
+    assertEqual("#ffffff", S2.CSS.colorFromString("#fff"));
+    assertEqual("#ffffff", S2.CSS.colorFromString("#ffffff"));
+    assertEqual("#ffffff", S2.CSS.colorFromString("rgb(255,255,255)"));
+    assertEqual("transparent", S2.CSS.colorFromString("transparent"));
+
+    // rgba support not implemented. Should something with alpha 0 return "transparent"?
+    //assertEqual("#ffffff", S2.CSS.colorFromString("rgba(255,255,255,0)"));
+    //assertEqual("#000000", S2.CSS.colorFromString("rgba(0,0,0,0)"));
   }}
   
 });
