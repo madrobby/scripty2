@@ -456,6 +456,8 @@ float: left;
   margin: 15px 0 5px 0;
 }
 
+.page-content .section .section-content h4.inherited { clear: both; }
+
 .page-content a,
 .page-content a:link {
 color: #455C23;
