@@ -259,7 +259,17 @@ S2.FX.Base = Class.create({
   **/
   inspect: function() {
     return '#<S2.FX:' + [this.state, this.startsAt, this.endsAt].inspect() + '>';
-  }
+  },
+  
+  /**
+   *  S2.FX.Base#update() -> undefined
+   *
+   *  The update method is called for each frame to be rendered. The implementation
+   *  in S2.Fx.Base simply does nothing, and is intended to be overwritten by
+   *  subclasses. It is provided for cases where S2.FX.Base is instantiated directly
+   *  for ad-hoc effects using the beforeUpdate and afterUpdate callbacks.
+  **/
+  update: Prototype.emptyFunction
 });
 
 /**
