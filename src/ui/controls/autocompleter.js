@@ -40,11 +40,13 @@
       this.element.insert(this.menu.element);
 
       // Position the menu to appear directly below the input.
-      var iLayout = this.input.getLayout();      
-      this.menu.element.setStyle({
-        left: iLayout.get('left') + 'px',
-        top:  (iLayout.get('top') + iLayout.get('margin-box-height')) + 'px'
-      });
+      (function() {
+        var iLayout = this.input.getLayout();      
+        this.menu.element.setStyle({
+          left: iLayout.get('left') + 'px',
+          top:  (iLayout.get('top') + iLayout.get('margin-box-height')) + 'px'
+        });
+      }).bind(this).defer();
       
       this.observers = {
         blur: this._blur.bind(this),
