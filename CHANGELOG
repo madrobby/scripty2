@@ -1,3 +1,7 @@
+*2.0.0 alpha 6* (March 30, 2010)
+
+* Tweak multi-touch behaviour support to new version of Nokia Starlight specs.
+
 * Add empty S2.FX.Base#update function to allow for ad-hoc effects using before/afterUpdate
 
 *2.0.0 alpha 5* (November 23, 2009)
