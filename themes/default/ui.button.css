@@ -1,0 +1,170 @@
+/* BUTTONS */
+
+.ui-button {
+  border: 1px solid transparent;
+  margin: 0;
+  padding: 0 10px 10px;  /* perfect for safari  */
+  height: 24px;
+  line-height: 24px;
+  background-repeat: repeat-x;
+  background-position: 0 -1px;
+  
+  cursor: default;
+  
+  -moz-user-select: none;
+  
+  /* Fixes extra padding issue in IE 6-7 */
+  width: auto;
+  overflow: visible;
+}
+
+a.ui-button {
+  text-decoration: none;
+  padding: 3px 10px 5px;
+}
+
+label.ui-button {
+  padding: 3px 10px 5px;
+}
+
+.ui-button.ui-corner-all {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.ui-button.ui-corner-left {
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.ui-button.ui-corner-right {
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;  
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+  /* 
+   * Not wild about this, but using it until I figure out a browser 
+   * targeting strategy.
+   */
+   
+  * html .ui-button {
+    padding: 0 10px;
+    height: 22px;
+  }
+  
+  @-moz-document url-prefix() {
+    .ui-button {
+      padding: 3px 10px 7px; /* perfect for firefox */
+    }
+    a.ui-button {
+      padding: 3px 10px 5px;
+    }
+  }
+
+  /* default state */
+  .ui-button.ui-state-default {
+    border-color: #aaafac;
+    background-color: #eee;
+    background-image: url(images/button-default-middle.png);
+    color: #000;
+  }
+
+  /* hover state */
+  .ui-button.ui-state-hover {
+    background-image: url(images/button-hover-middle.png);
+  }
+  
+  /* active state */
+  .ui-button.ui-state-active {
+    color: #fff;
+    text-shadow: #000 0 0 2px;
+    border-color: #000;
+    background-image: url(images/button-active-default-middle.png);
+  }
+  
+    .ui-button.ui-state-active.ui-state-hover {
+      background-image: url(images/button-active-hover-middle.png);    
+    }
+
+  
+  /* priority: primary */
+  .ui-button.ui-priority-primary {
+    color: #fff;
+    text-shadow: #000 0 0 2px;
+    border-color: #406f39;
+    background-image: url(images/button-primary-default-middle.png);
+  }
+  
+    .ui-button.ui-priority-primary.ui-state-hover {
+      background-image: url(images/button-primary-hover-middle.png);    
+    }
+  
+    
+  /* down state */
+  .ui-button.ui-state-down {
+    border-color: #363636;
+    background-image: url(images/button-down-middle.png);
+  }
+  
+    .ui-button.ui-priority-primary.ui-state-down {
+      background-image: url(images/button-primary-down-middle.png);
+    }
+    
+    .ui-button.ui-state-active.ui-state-down {
+      background-image: url(images/button-active-down-middle.png);
+    }
+  
+  /* disabled state */
+  .ui-button.ui-state-disabled,
+  .ui-button.ui-state-disabled:active {
+    color: #999;
+    border-color: #d0d1d3;
+    outline: none !important;
+    -moz-outline: 0 !important;
+  }
+  
+  /* focus state */  
+  .ui-button.ui-state-focus,
+  .ui-button:active,
+  .ui-button:focus {
+    outline: auto 5px #bce16b;
+    outline-offset: -2px;
+    -moz-box-shadow: 0 0 2px 2px #bce16b; 
+  }
+  
+  input[type="text"]:focus,
+  input[type="text"]:active {
+    -moz-outline: 0px solid #000 !important;
+  }
+
+  .ui-button:focus::-moz-focus-inner {
+    border-color: transparent !important;
+  }
+
+
+/* Button Set */
+
+.ui-buttonset {
+  
+}
+
+  .ui-buttonset .ui-button {
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
