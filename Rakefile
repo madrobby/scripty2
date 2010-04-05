@@ -1,5 +1,6 @@
 require 'rake'
 require 'rake/packagetask'
+require 'yaml'
 
 SCRIPTY2_ROOT     = File.expand_path(File.dirname(__FILE__))
 SCRIPTY2_SRC_DIR  = File.join(SCRIPTY2_ROOT, 'src')
