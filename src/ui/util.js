@@ -18,7 +18,7 @@ Object.extend(S2.UI, {
     var j, className;
     for (var i = 0, element; element = elements[i]; i++) {
       for (j = 0; className = classNames[j]; j++) {
-        element.addClassName(className);
+        Element.addClassName(element, className);
       }
     }
     
@@ -43,7 +43,7 @@ Object.extend(S2.UI, {
     var j, className;
     for (var i = 0, element; element = elements[i]; i++) {
       for (j = 0; className = classNames[j]; j++) {
-        element.removeClassName(className);
+        Element.removeClassName(element, className);
       }
     }
   },
@@ -58,11 +58,11 @@ Object.extend(S2.UI, {
   /**
    *  S2.UI.isFocusable(element) -> Boolean
   **/
-  // Adapted from jQuery UI
+  // Adapted from jQuery UI.
   isFocusable: function(element) {
     var name = element.nodeName.toLowerCase(),
-      tabIndex = element.readAttribute('tabIndex'),
-      isFocusable = false;
+     tabIndex = element.readAttribute('tabIndex'),
+     isFocusable = false;
     
     if (S2.UI.FOCUSABLE_ELEMENTS.include(name)) {
       isFocusable = !element.disabled;
@@ -72,6 +72,17 @@ Object.extend(S2.UI, {
       isFocusable = tabIndex && !isNaN(tabIndex);
     }
     return !!isFocusable && S2.UI.isVisible(element);
+  },
+  
+  makeFocusable: function(elements, bool) {
+    if (Object.isElement(elements)) {
+      elements = [elements];
+    }
+    
+    var value = bool ? '0' : '-1';
+    for (var i = 0, element; element = elements[i]; i++) {
+      $(element).writeAttribute('tabIndex', value);
+    }
   },
 
   /**
@@ -132,6 +143,17 @@ Object.extend(S2.UI, {
   **/
   modifierUsed: function(event) {
     return event.metaKey || event.ctrlKey || event.altKey;
+  },
+  
+  /**
+   *  S2.UI.getText(element) -> String
+   *  
+   *  Returns the text content of an element.
+  **/
+  getText: function(element) {
+    element = $(element);
+    return element.innerText && !window.opera ? element.innerText :
+     element.innerHTML.stripScripts().unescapeHTML().replace(/[\n\r\s]+/g, ' ');
   }
 });
 
