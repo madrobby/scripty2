@@ -4,8 +4,14 @@
 <head>
   <title>script.aculo.us functional tests</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
-  <link type="text/css" rel="stylesheet" href="css/test.css" />
+  
+  
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
 
   <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
@@ -13,7 +19,37 @@
 </head>
 
 <body>
+  <div id="theme_switcher">
+    <ul>
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
   
+  <script type="text/javascript">
+    (function() {
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      });
+      
+    })();
+  </script>  
   <h1>Slider Tests</h1>
   
   <h2>Horizontal slider</h2>
@@ -43,7 +79,7 @@
     <ul>
       <li>It <strong>should</strong> start with a value of <code>0</code> and the slider handle all the way to the left of the track.</li>
       <li>It <strong>should</strong> be able to be dragged all the way to the end of the track, at which point it <strong>should</strong> have a value of <code>100</code>.</li>
-      <li>The slider handle should be keyboard-focusable. When focused, it should move in increments of <code>1</code> when the left and right arrow keys are pressed. It should move to the beginning and end of the track when the <kbd>HOME</kbd> and <kbd>END</kbd> keys are pressed (respectively).</li>
+      <li>The slider handle <strong>should</strong> be keyboard-focusable. When focused, it <strong>should</strong> move in increments of <code>1</code> when the left and right arrow keys are pressed. It <strong>should</strong> move to the beginning and end of the track when the <kbd>HOME</kbd> and <kbd>END</kbd> keys are pressed (respectively).</li>
       <li>The slider has an <code>onSlide</code> callback that <strong>should</strong> update the value in the element below whenever the slider position changes. Verify that this happens — during a drag, while holding down an arrow key, and when pressing the mouse button down on an arbitrary section of the track.</li>
       <li>The slider has an <code>onChange</code> callback that <strong>should</strong> update the value in the element below whenever the slider position <em>is set</em> (e.g., on <code>mouseup</code> or <code>keyup</code>). The number is underlined to distinguish this callback from the <code>onSlide</code> callback.</li>
     </ul>

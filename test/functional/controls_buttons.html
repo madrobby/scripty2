@@ -4,8 +4,14 @@
 <head>
   <title>script.aculo.us functional tests</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
-  <link type="text/css" rel="stylesheet" href="css/test.css" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
+
+  
 
   <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
@@ -13,6 +19,37 @@
 </head>
 
 <body>
+  <div id="theme_switcher">
+    <ul class="ui-helper-clearfix">
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
+  
+  <script type="text/javascript">
+    (function() {
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      });
+      
+    })();
+  </script>
   
   <h1>Button Tests</h1>
   
@@ -40,6 +77,98 @@
     
     
   </div> <!-- .ui-widget -->
+  
+  <div class="ui-widget">
+    <button id="button4">A button element</button>
+  	<input id="button5" type="submit" value="A submit button" />
+  	<a href="#" id="button6">An anchor</a>
+  	
+  	<script type="text/javascript">
+      new S2.UI.Button('button4', { toggle: true });
+      new S2.UI.Button('button5');
+      new S2.UI.Button('button6');
+    </script>
+    
+    <div class="description">
+      <p>A test to ensure that buttons made from different HTML elements are styled to look as similar as possible.</p>
+    </div> <!-- .description -->
+    
+  </div> <!-- .ui-widget -->
+  
+  
+  <div class="ui-widget">
+    
+    <div id="button_set" style="margin: 10px 0">
+      <button id="button7">A button element</button>
+      <button id="button8">Another button element</button>
+    </div> <!-- #button_set -->
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonSet('button_set');
+    </script>
+    
+    <div class="description">
+      <p>A basic <code>S2.UI.ButtonSet</code> with two buttons.</p>
+      <ul>
+        <li>The buttons <strong>should</strong> appear grouped. It's left to an individual theme to decide how to convey the grouping. In the default theme, the buttons appear "joined" at the spot where they meet; this spot <strong>should not</strong> have any rounded corners or empty space.</li>
+      </ul>
+    </div> <!-- .description -->
+    
+  </div> <!-- .ui-widget -->
+  
+  <div class="ui-widget" id="radio_example">
+    <div id="radio_button_set">
+      <input type="radio" name="radio-button" class="radio" id="radio_button_1" />
+      <label for="radio_button_1">Radio Button 1</label>
+
+      <input type="radio" name="radio-button" class="radio" id="radio_button_2" />
+      <label for="radio_button_2">Radio Button 2</label>
+    </div> <!-- #radio_button_set -->
+    
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonSet('radio_button_set');
+    </script>
+    
+    <div class="description">
+      <p>A <code>ButtonSet</code> with two radio buttons.</p>
+      
+      <ul>
+        <li>
+          <p>The buttons <strong>should</strong> behave like radio buttons. That means:</p>
+          <ul>
+            <li>There <strong>should not</strong> be more than one in the "active" state at once.</li>
+            <li>An active button <strong>should not</strong> change state when it is clicked on.</li>
+          </ul>
+        </li>
+      </ul>
+    </div> <!-- .description -->
+    
+    
+  </div> <!-- .ui-widget -->
+  
+  <br />
+  <br />
+  
+  
+  <div class="ui-widget">
+    <input type="checkbox" name="button9" id="button9" value="1" />
+    <label for="button9">Checkbox</label>
+    
+    <script type="text/javascript">
+      new S2.UI.Button('button9');
+    </script>
+  </div> <!-- .ui-widget -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 </body>
 </html>

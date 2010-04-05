@@ -5,12 +5,12 @@
   <title>script.aculo.us functional tests</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-  <!-- Default theme. -->
-  <link type="text/css" title="Default Theme"
-   rel="stylesheet" href="../../themes/default/theme.css" />
-   
-  <link type="text/css" rel="stylesheet" href="css/test.css" />
-
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
   <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
   
@@ -18,7 +18,37 @@
 </head>
 
 <body>
+  <div id="theme_switcher">
+    <ul>
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
   
+  <script type="text/javascript">
+    (function() {
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      });
+      
+    })();
+  </script>  
   <h1>Autocompleter Tests</h1>
   
   <h2>Standard Autocompleter</h2>
@@ -86,13 +116,18 @@
       'West Virginia',
       'Wisconsin',
       'Wyoming'
-    ];
-  
+    ];  
   
     new S2.UI.Autocompleter('autocompleter1', {
       choices: STATE_NAMES
     });
   </script>
+  
+  <div>
+    <select>
+      <option>Dummy select box</option>
+    </select>
+  </div>
   
   <div class="description">
     A standard autocompleter (<code>Autocompleter.Local</code> in scripty1 parlance). The choices are the fifty U.S. states. It should behave like a regular text box, with a few exceptions:

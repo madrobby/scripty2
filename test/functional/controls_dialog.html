@@ -4,11 +4,30 @@
 <head>
   <title>script.aculo.us functional tests</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <link type="text/css" rel="stylesheet" href="../../themes/default/theme.css" />
-  <link type="text/css" rel="stylesheet" href="css/test.css" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <!-- theme switcher -->
+  <!-- <link type="text/css" rel="stylesheet" href="http://jqueryui.com/themes/base/ui.all.css" /> -->
+  <!-- <script type="text/javascript" src="http://jqueryui.com/js/jquery.js"></script>
+  <script type="text/javascript" src="js/theme_switcher.js"></script> -->
+  
+  <!-- <script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(document).ready(function(){
+      jQuery('#switcher').themeswitcher();
+    });    
+  </script> -->
+    
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
 
   <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
   <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+  <!-- <script src="js/switcher.js" type="text/javascript" charset="utf-8"></script>
+ -->
   
   <style type="text/css" media="screen">
 	  .ui-widget button.ui-button-with-icon {
@@ -33,9 +52,42 @@
 </head>
 
 <body>
+  <div id="theme_switcher">
+    <ul>
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
   
+  <script type="text/javascript">
+    (function() {
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      });
+      
+    })();
+  </script>  
+
   <h1>Dialog Tests</h1>
   
+  <div id="switcher"></div> <!-- #switcher -->
+
   <!-- DIALOG 1 -->
   <h2>Standard dialog</h2>
   
@@ -46,17 +98,20 @@
   	</button>
   	
   	<span id="result1"></span>
+  	
+  	<div>
+      <select>
+        <option>Dummy select box</option>
+      </select>
+  	</div>
 	
   	<script type="text/javascript">
   	 new S2.UI.Button('dialog_link1');
-  	 
-  	 
+
   	 $('dialog_link1').observe('click', function(event) {
   	    event.stop();
   	    var dialog = new S2.UI.Dialog();
   	    dialog.open();
-  	    
-  	    
 
         dialog.toElement().observe(
           'ui:dialog:after:close',
@@ -66,29 +121,6 @@
     	    }
     	  );
   	  });
-	 
-     // $('dialog_link').observe('click', function(event) {
-     //    event.stop();
-     //    var dialog = new S2.UI.Dialog({
-     //      content: "Testing.",
-     //      buttons: [
-     //        {
-     //          label: 'OK',
-     //          primary: true,
-     //          action: function(instance) {
-     //            instance.close();
-     //          }
-     //        },
-     //        {
-     //          label: 'Cancel',
-     //          action: function(instance) {
-     //            instance.close();
-     //          }
-     //        }
-     //      ]
-     //    });
-     //    dialog.open();
-     // });
   	</script>
   	
   </div> <!-- .ui-widget -->
@@ -104,6 +136,7 @@
       <li>It <strong>may</strong> have a "close" button on its title bar that does the same thing as the <kbd>ESC</kbd> key. (The button is always there, but a theme is free to hide it via CSS.)</li>
       <li>A theme can hide the title bar with CSS, but if it's visible, it <strong>should</strong> be draggable.</li>
       <li>A dialog is modal by default. It <strong>should</strong> be impossible to click on anything else on the page — or shift the focus with the <kbd>TAB</kbd> key to something underneath the modal layer — until the dialog has been dealt with.</li>
+      <li>Both the dialog and its modal overlay <strong>should</strong> appear "above" any UI widgets like <code>SELECT</code> elements. IE 6 typically renders drop-down menus above everything on the page; we use a workaround involving an invisible <code>IFRAME</code> to prevent this. (As a side-effect, drop-down menus will <em>disappear altogether</em> in IE 6 when a semi-opaque overlay appears on top. Sadly, there is no workaround for this.)</li>
     </ul>
     
   </div> <!-- .description -->
@@ -164,7 +197,7 @@
       <li>The <code>OK</code> button was designated the "primary" button in this dialog. It <strong>should</strong> be visually distinct from the <code>Cancel</code> button.</li>
       <li>The <code>OK</code> button <strong>should</strong> receive focus when the dialog opens. Pressing <kbd>SPACE</kbd> or <kbd>ENTER</kbd> <strong>should</strong> press whatever button is in focus.</li>
       <li>If the dialog has a visible "close" button, <em>three controls</em> <strong>should</strong> be eligible for keyboard focus: the <code>OK</code> button, the <code>Cancel</code> button, and the dialog's "close" button. Pressing <kbd>TAB</kbd> repeatedly should cycle through these three buttons (without focusing any elements underneath the modal layer). Pressing <kbd>SHIFT + TAB</kbd> should follow the same cycle in reverse.</li>
-      <li>If the dialog <em>does not</em> have a visible "close" button, it <strong>should not</strong> be focusable, even though it's still in the HTML. Confirm that pressing <kbd>TAB</kbd> cycles between the two buttons and nothing else.</li>
+      <li>If the dialog's close button is not visibile, it <strong>should not</strong> be focusable, even though it's still in the HTML. Confirm that pressing <kbd>TAB</kbd> cycles between the two buttons and nothing else.</li>
     </ul>
   </div> <!-- .description -->
   
