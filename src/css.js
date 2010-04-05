@@ -120,18 +120,18 @@ S2.CSS = {
       parseInt(color.slice(1,3),16), parseInt(color.slice(3,5),16), parseInt(color.slice(5,7),16)
     ];
   },
-  
+
   /**
    *  S2.CSS.colorFromString(color) -> String
    *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
-   *  
+   *
    *  Returns a normalized color in the #aabbcc format.
-   *  
+   *
    *  * \#abc -> Expanded to #aabbcc
    *  * \#aabbcc -> not changed
    *  * rgb(1,2,3) -> Expanded to \#010203
    *  * other input -> not changed
-   *  
+   *
    *  This method does not support HTML color constants.
   **/
   colorFromString: function(color) {
@@ -139,15 +139,13 @@ S2.CSS = {
     if (color.slice(0,4) == 'rgb(') {
       cols = color.slice(4,color.length-1).split(',');
       i=3; while(i--) value += parseInt(cols[2-i]).toColorPart();
-    } else {
-      if (color.slice(0,1) == '#') {
+    } else if (color.slice(0,1) == '#') {
         if (color.length==4) for(i=1;i<4;i++) value += (color.charAt(i) + color.charAt(i)).toLowerCase();
         if (color.length==7) value = color.toLowerCase();
-      }
-    }
+    } else { value = color; }
     return (value.length==7 ? value : (arguments[1] || value));
   },
-  
+
   /**
    *  S2.CSS.interpolateColor(from, to, position) -> String
    *  - from (String): Original color in #abc, #aabbcc or rgba(1,2,3) format

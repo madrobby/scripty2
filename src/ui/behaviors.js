@@ -124,7 +124,7 @@ Object.extend(S2.UI, {
       behavior.destroy();
       shouldBeRemoved.push(behavior);
     }
-    $(element).set('ui.behaviors', behaviors.without(shouldBeRemoved));
+    $(element).store('ui.behaviors', behaviors.without(shouldBeRemoved));
   },
   
   

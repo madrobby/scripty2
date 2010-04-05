@@ -15,7 +15,6 @@
       if (!this.element) {
         var options = element;
         this.element = new Element('ul', { 'class': 'ui-helper-hidden' });
-        this.close();
       }
       
       this.activeId = this.element.identify() + '_active';

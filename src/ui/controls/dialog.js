@@ -1,21 +1,21 @@
 (function(UI) {
-  
+
   /** section: scripty2 ui
    *  class S2.UI.Dialog < S2.UI.Base
-   *  
-   *  
+   *
+   *
    *  A class for showing dialogs on screen.
-   *  
-   *  *  <h4>Options</h4>
-   *  
-   *  * `zIndex` (`Number`): The CSS `z-index` for the dialog. Default is 
+   *
+   *  <h4>Options</h4>
+   *
+   *  * `zIndex` (`Number`): The CSS `z-index` for the dialog. Default is
    *    `1000`.
-   *  * `title`: (`String`): The text to display in the dialog's title bar.
+   *  * `title` (`String`): The text to display in the dialog's title bar.
    *    Default is `"Dialog"`.
-   *  * `content`: (`String` | `Element`): The content to display as the body
+   *  * `content` (`String` | `Element`): The content to display as the body
    *    of the dialog. Strings can be plaintext or HTML; they'll be
    *    inserted as-is into the dialog. If `content` refers to an element
-   *    on the page, that element will be detached from its initial 
+   *    on the page, that element will be detached from its initial
    *    location _when the dialog is instantiated_.
    *  * `submitForms` (`Boolean`): By default, a dialog will suppress the
    *    `onsubmit` event of any forms included in the dialog's content (in
@@ -27,10 +27,10 @@
    *    the dialog's title bar as the handle). Default is `true`.
    *  * `resizable` (`Boolean`): Whether the dialog should be resizable.
    *    Default is `false`.
-   *  * `buttons` (`Array` | `Boolean`): A set of `Object`s that describe the 
+   *  * `buttons` (`Array` | `Boolean`): A set of `Object`s that describe the
    *    buttons that should appear at the bottom of the dialog. Set to `false`
    *    to omit buttons.
-   *  
+   *
   **/
   UI.Dialog = Class.create(UI.Base, {
     NAME: "S2.UI.Dialog",
