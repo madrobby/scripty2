@@ -1,6 +1,6 @@
 (function(UI) {
   /** section: scripty2 ui
-   *  class S2.UI.ProgressBar < UI.Base
+   *  class S2.UI.ProgressBar < S2.UI.Base
    *  
    *  A progress bar.
   **/
