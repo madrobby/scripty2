@@ -3,6 +3,7 @@
 
 //= require "controls/accordion"
 //= require "controls/button"
+//= require "controls/button_set"
 //= require "controls/tabs"
 //= require "controls/overlay"
 //= require "controls/dialog"
