@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <h1>Effects CSS unit tests</h1>
+  
+  <div class="description">
+    <ul>
+      <li>Elements <strong>should</strong> double in width when clicked.</li>
+    </ul>
+  </div>
+  
+  <div id="container"></div>
+  
+  <script type="text/javascript">
+    $w('px:100 pt:20 em:3 cm:2 mm:50 in:1 ex:20 pc:10 %:25').each( function(settings){
+      var unit = settings.split(':')[0], start = settings.split(':')[1], end = start*2;
+      
+      $('container').insert(
+        ('<h2>#{unit} (#{start} to #{end})</h2>'+
+        '<div id="fx_#{unit}" style="cursor: pointer; width: #{start}; background:red; height: 100px"></div>')
+        .interpolate({ unit: unit, start: start + unit, end: end + unit }));
+        
+      $('fx_'+unit).on('click', function(){
+        this.morph('width: ' + end + unit, 1);
+      });      
+    });
+  </script>
+  
+</body>
+</html>

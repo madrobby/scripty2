@@ -30,6 +30,13 @@
       <li><a href="controls_autocompleter.html">Autocompleter</a></li>
       <li><a href="controls_overlay.html">Overlay</a></li>
     </ul>
+    
+    <h3>Effects</h3>
+
+    <ul>
+      <li><a href="effects_units.html">CSS unit support</a></li>
+    </ul>
+    
 
     
   </div> <!-- .test-list -->
@@ -39,10 +46,23 @@
     Prototype version <b id="prototype_version"></b>
   </p>
   
+  <p id="config">
+    
+  </p>
+  
   
   <script type="text/javascript">
     $('scripty_version').update(S2.Version);
     $('prototype_version').update(Prototype.Version);
+    
+    var features = [];
+    for(var f in Prototype.BrowserFeatures)
+      if(Prototype.BrowserFeatures[f]) features.push(f);
+    
+    $('config').update(
+      navigator.userAgent + '<br/><br/>' +
+      'Supported features:<br/>'+features.join('<br/>')
+    );
     
     $$('a').each( function(anchor) {
       anchor.writeAttribute('target', 'test');

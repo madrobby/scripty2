@@ -3,7 +3,7 @@
 /**
  *  class S2.FX.Operators.Style < S2.FX.Operators.Base
  *  
- *  Operator for interpolatung the CSS styles of an Element.
+ *  Operator for interpolating the CSS styles of an Element.
 **/
 S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
   initialize: function($super, effect, object, options) {
