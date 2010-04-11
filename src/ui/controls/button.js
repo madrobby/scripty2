@@ -51,15 +51,15 @@
       this.setEnabled(!disabled);
       
       this.observers = {
-        click:   this._click.bind(this),
-        keydown: this._keydown.bind(this)
+        click: this._click.bind(this),
+        keyup: this._keyup.bind(this)
       };
       this.addObservers();
     },
     
     addObservers: function() {
       this.observe('click', this.observers.click);
-      this.observe('keydown', this.observers.keydown);
+      this.observe('keyup', this.observers.keyup);
     },
     
     removeObservers: function() {
@@ -82,7 +82,7 @@
       var isActive = this.isActive();
       if (Object.isUndefined(bool)) bool = !isActive;
       
-      var willChange = (bool !== isActive);
+      var willChange = (bool !== isActive);      
       if (willChange) {
         var result = this.toElement().fire('ui:button:toggle');
         if (result.stopped) return;
@@ -91,16 +91,22 @@
     },
     
     _click: function(event) {
-      this.toggle();
+      this.toggle(!this.isActive());
+      this.element.checked = this.isActive();
     },
     
-    _keydown: function(event) {
+    _keyup: function(event) {
       var code = event.keyCode;
       if (code !== Event.KEY_SPACE && code !== Event.KEY_RETURN)
         return;
-        
-      this.toggle();
-      this.element.checked = this.isActive();
+      
+      var isActive = this.isActive();  
+      
+      (function() {
+        if (isActive !== this.isActive()) return;
+        this.toggle(isActive);
+        this.element.checked = isActive;
+      }).bind(this).defer();
     },
     
     _isCheckboxOrRadio: function() {
