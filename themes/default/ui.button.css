@@ -1,10 +1,13 @@
 /* BUTTONS */
 
 .ui-button {
+  display: inline-block;
+  position: relative;
+  
   border: 1px solid transparent;
   margin: 0;
-  padding: 0 10px 10px;  /* perfect for safari  */
   height: 24px;
+  max-height: 24px;
   line-height: 24px;
   background-repeat: repeat-x;
   background-position: 0 -1px;
@@ -12,19 +15,29 @@
   cursor: default;
   
   -moz-user-select: none;
+  -webkit-user-select: none;
   
   /* Fixes extra padding issue in IE 6-7 */
   width: auto;
   overflow: visible;
 }
 
-a.ui-button {
-  text-decoration: none;
-  padding: 3px 10px 5px;
+/* One icon, no text */
+.ui-button-icon-only {
+  width: 24px;
 }
 
-label.ui-button {
-  padding: 3px 10px 5px;
+/* Two icons, no text */
+.ui-button-icons-only {
+  width: 42px;
+}
+
+a.ui-button {
+  text-decoration: none;
+}
+
+input.ui-button {
+  padding: 0 10px;
 }
 
 .ui-button.ui-corner-all {
@@ -62,12 +75,14 @@ label.ui-button {
   }
   
   @-moz-document url-prefix() {
+    /*
     .ui-button {
-      padding: 3px 10px 7px; /* perfect for firefox */
+      padding: 3px 10px 7px;
     }
     a.ui-button {
       padding: 3px 10px 5px;
     }
+    */
   }
 
   /* default state */
@@ -149,6 +164,80 @@ label.ui-button {
   .ui-button:focus::-moz-focus-inner {
     border-color: transparent !important;
   }
+  
+
+/* Button Text */
+
+.ui-button-text {
+  font-family: 'Lucida Sans', 'Lucida Grande', Verdana, sans-serif;
+  display: block;
+  line-height: 1.4;
+  padding: 2px 5px 4px;
+}
+
+  .ui-button-text-only .ui-button-text {
+    padding: 2px 5px 4px;
+  }
+  
+  .ui-button-icon-only .ui-button-text,
+  .ui-button-icons-only .ui-button-text {
+    text-indent: -9999999px;
+  }
+  
+  .ui-button-text-icon .ui-button-text,
+  .ui-button-text-icons .ui-button-text {
+    padding-left: 20px;
+  }
+  
+  .ui-button-text-icons .ui-button-text {
+    padding-right: 20px;
+  }
+  
+label.ui-button .ui-button-text,
+a.ui-button .ui-button-text {
+  padding: 5px 10px 1px;
+}
+
+  label.ui-button-text-icon .ui-button-text,
+  label.ui-button-text-icons .ui-button-text,
+  a.ui-button-text-icon .ui-button-text,
+  a.ui-button-text-icons .ui-button-text {
+    padding-left: 25px;
+  }
+  
+  label.ui-button-text-icons .ui-button-text,
+  a.ui-button-text-icons .ui-button-text {
+    padding-right: 25px;
+  }
+  
+
+/* Button Icons */
+
+.ui-button-icon-only .ui-icon,
+.ui-button-text-icon .ui-icon,
+.ui-button-text-icons .ui-icon,
+.ui-button-icons-only .ui-icon {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+}
+
+  .ui-button-icon-only .ui-icon {
+    left: 50%;
+    margin-left: -8px;
+  }
+  
+  .ui-button-text-icon .ui-button-icon-primary,
+  .ui-button-text-icons .ui-button-icon-primary,
+  .ui-button-icons-only .ui-button-icon-primary {
+    left: 5px;
+  }
+
+  .ui-button-text-icons .ui-button-icon-secondary,
+  .ui-button-icons-only .ui-button-icon-secondary {
+    right: 5px;
+  }
+  
 
 
 /* Button Set */
