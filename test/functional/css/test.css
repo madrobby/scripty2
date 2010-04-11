@@ -4,12 +4,17 @@ body, div, p, h1, h2, h3, ul, ol, span, a, table, td, form, img, li {
 
 body {
   font-size: 0.8em;
+  padding-top: 20px;
 }
 
 code, tt, kbd {
   /* ANYTHING BUT COURIER */
   font-family: 'Panic Sans', 'Bitstream Vera Sans Mono', Menlo, Monaco, 'Andale Mono', 'Lucida Console', monospace;
   font-size: 12px;
+}
+
+h1 code, h2 code, h3 code {
+  font-size: 100%;
 }
 
 kbd {
@@ -107,4 +112,56 @@ h1.logo {
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
+    white-space: nowrap;
+  }
+  
+  #theme_switcher {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #444;
+    padding: 5px 10px;
+    z-index: 10;
+  }
+  
+    #theme_switcher ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+    }
+    
+      #theme_switcher li {
+        float: left;
+        padding-right: 10px;
+        color: #eee;
+      }
+      
+    #theme_switcher a,
+    #theme_switcher a:link,
+    #theme_switcher a:visited {
+      color: #ccc;
+    }
+
+
+.functional-test {
+  padding: 0 15px;
+  margin-bottom: 25px;
+  border: 2px solid #ccc;
+  -moz-border-radius:    15px;
+  -webkit-border-radius: 15px;
+}
+
+fieldset {
+  padding: 10px 15px;
+  margin: 0 0 20px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+  legend {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0 5px;
   }
