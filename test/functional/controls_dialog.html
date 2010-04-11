@@ -93,9 +93,7 @@
   
   <div class="ui-widget ui-button-container">
 
-  	<button id="dialog_link1" class="ui-button-with-icon">
-  	  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
-  	</button>
+  	<button id="dialog_link1">Open Dialog</button>
   	
   	<span id="result1"></span>
   	
@@ -106,7 +104,9 @@
   	</div>
 	
   	<script type="text/javascript">
-  	 new S2.UI.Button('dialog_link1');
+  	 new S2.UI.Button('dialog_link1', {
+  	   icons: { primary: 'ui-icon-newwin' }
+  	 });
 
   	 $('dialog_link1').observe('click', function(event) {
   	    event.stop();
@@ -147,14 +147,13 @@
   
   <div class="ui-widget ui-button-container">
 
-  	<button id="dialog_link2" class="ui-button-with-icon">
-  	  <span class="ui-icon ui-icon-newwin"></span>Open Dialog
-  	</button>
-  	
+  	<button id="dialog_link2">Open Dialog</button>  	
   	<span id="result2"></span>
 	
   	<script type="text/javascript">
-  	 new S2.UI.Button('dialog_link2');
+   	 new S2.UI.Button('dialog_link2', {
+   	   icons: { primary: 'ui-icon-newwin' }
+   	 });
   	 
      $('dialog_link2').observe('click', function(event) {
         event.stop();
