@@ -35,6 +35,13 @@
   
   <script type="text/javascript">
     (function() {
+      function setActiveStylesheet(sheet) {
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      }
+      
       var STYLESHEETS = $A(document.getElementsByTagName('link'));
       
       $('theme_switcher').observe('click', function(event) {
@@ -42,43 +49,48 @@
         if (element.nodeName.toUpperCase() !== 'A') return;        
         var sheet = element.readAttribute('href').split('#').last();
         
-        STYLESHEETS.each( function(s) {
-          var title = s.readAttribute('title');
-          s.disabled = (title !== sheet);
-        });
+        setActiveStylesheet(sheet);
       });
+      
+      setActiveStylesheet('default');
       
     })();
   </script>
   
-  <h1>Button Tests</h1>
+  <h1>Tests for <code>S2.UI.Button</code></h1>
   
-  <div class="ui-widget">
-    <h2>Using the BUTTON element</h2>
-    
-    <button id="button1">Options…</button>
-    <button id="button2" disabled="disabled" class="ui-state-disabled">Don't Save</button>
-    <button id="button3">Save</button>
+
+  <div class="functional-test">    
+    <h2>Using the <code>button</code> element</h2>
+
+    <button id="normal_button_1">Regular</button>
+    <button id="normal_button_2" disabled="disabled">Disabled</button>
+    <button id="normal_button_3">Primary</button>
+    <button id="normal_button_4">Toggle</button>
     
     <script type="text/javascript">
-      new S2.UI.Button('button1');
-      new S2.UI.Button('button2');
-      new S2.UI.Button('button3', { primary: true });
+      new S2.UI.Button('normal_button_1');
+      new S2.UI.Button('normal_button_2');
+      new S2.UI.Button('normal_button_3', { primary: true });      
+      new S2.UI.Button('normal_button_4', { toggle: true  });
     </script>
     
     <div class="description">
       <ul>
-        <li>First button is normal. <strong>Should</strong> have hover state, focus state, and down state.</li>
-        <li>Second button is disabled. <strong>Should not</strong> change state when hovered over, clicked on, or focused.</li>
-        <li>Third button is "primary" — denotes most common action. <strong>Should</strong> look different from the first button. <strong>May</strong> have distinct hover and down states, if necessary.</li>
+        <li>First is a button with all the default settings. <strong>Should</strong> have hover state, focus state, and down state.</li>
+        <li>Second button is same as the first, but disabled. <strong>Should not</strong> change state when hovered over or clicked on. Should not receive focus when tabbing through page.</li>
+        <li>Third button is "primary" — denotes most common action. <strong>Should</strong> look different from the first button. <strong>May</strong> have its own distinct hover- and down-state styles, but can also re-use the styles for the regular button.</li>
+        <li>Fourth button is a toggle — each click switches the button between an active state and an inactive state. In the inactive state, the button is identical to an ordinary button. The active state <strong>should</strong> look sufficiently different so that the user can intuit that the button is a toggle.</li>
       </ul>
       
     </div> <!-- .description -->
-    
-    
-  </div> <!-- .ui-widget -->
+        
+  </div> <!-- .functional-test -->
   
-  <div class="ui-widget">
+
+  <div class="functional-test">
+    <h2>Using other kinds of elements</h2>
+
     <button id="button4">A button element</button>
   	<input id="button5" type="submit" value="A submit button" />
   	<a href="#" id="button6">An anchor</a>
@@ -96,8 +108,137 @@
   </div> <!-- .ui-widget -->
   
   
-  <div class="ui-widget">
+  <div class="functional-test">
+    <h2>Buttons with icons</h2>
     
+    <fieldset>
+      <legend>Regular buttons</legend>
+
+      <button id="button_text_one_icon">Button with one icon</button>
+      <button id="button_text_two_icons">Button with two icons</button>
+      <button id="button_one_icon">Button with one icon and no text</button>
+      <button id="button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Primary buttons</legend>
+
+      <button id="primary_button_text_one_icon">Button with one icon</button>
+      <button id="primary_button_text_two_icons">Button with two icons</button>
+      <button id="primary_button_one_icon">Button with one icon and no text</button>
+      <button id="primary_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Anchors as buttons</legend>
+
+      <a href="#" class="inert" id="anchor_button_text_one_icon">Button with one icon</a>
+      <a href="#" class="inert" id="anchor_button_text_two_icons">Button with two icons</a>
+      <a href="#" class="inert" id="anchor_button_one_icon">Button with one icon and no text</a>
+      <a href="#" class="inert" id="anchor_button_two_icons">Button with two icons and no text</a>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Disabled buttons</legend>
+      
+      <button disabled="disabled" id="disabled_button_text_one_icon">Button with one icon</button>
+      <button disabled="disabled" id="disabled_button_text_two_icons">Button with two icons</button>
+      <button disabled="disabled" id="disabled_button_one_icon">Button with one icon and no text</button>
+      <button disabled="disabled" id="disabled_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Toggle buttons</legend>
+      
+      <button id="toggle_button_text_one_icon">Button with one icon</button>
+      <button id="toggle_button_text_two_icons">Button with two icons</button>
+      <button id="toggle_button_one_icon">Button with one icon and no text</button>
+      <button id="toggle_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <script type="text/javascript">     
+      
+      $(document.body).on('click', '.inert', Event.stop);
+       
+      var buttonOptions = {
+        button_text_one_icon: {
+          icons: { primary: 'ui-icon-locked' }
+        },
+        button_text_two_icons: {
+          icons: { primary: 'ui-icon-gear', secondary: 'ui-icon-triangle-1-s' }
+        },        
+        button_one_icon: {
+          text: false, icons: { primary: 'ui-icon-locked' }
+        },        
+        button_two_icons: {
+          text: false, icons: { primary: 'ui-icon-gear', secondary: 'ui-icon-triangle-1-s' }  
+        }
+      };
+            
+      for (var id in buttonOptions) {
+        new S2.UI.Button(id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('anchor_' + id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('primary_' + id,
+         Object.extend({ primary: true }, buttonOptions[id]));
+        new S2.UI.Button('disabled_' + id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('toggle_' + id,
+         Object.extend({ toggle: true }, buttonOptions[id]));
+      }
+
+
+    </script>
+    
+    <div class="description">
+      <p>In all the above groups, ensure the following:</p>
+      <ul>
+        <li>For buttons with icon(s) and text, one icon <strong>should</strong> appear to the left of the text, without any overlap between the icon and the text.</li>
+        <li>For buttons with two icons and text, the second icon <strong>should</strong> appear to the right of the text, without any overlap between the icon and the text.</li>
+        <li>For buttons with icon(s) and text, the icon and text <strong>should</strong> be aligned similarly on the vertical axis.</li>
+        <li>For buttons with icon(s) and <em>no</em> text, the icon(s) <strong>should</strong> be centered inside the button.</li>
+      </ul>
+      
+      <p>In the "disabled" group, ensure the following:</p>
+      <ul>
+        <li>The icon <strong>should</strong> change color if the aesthetics of the theme imply it. For instance, in the default theme, the icon and the button text are the same color in the ordinary state, and <strong>should</strong> therefore be the same color in the disabled state.</li>
+        <li>Because buttons can have icons without text, themes <strong>should not</strong> rely too heavily on the text to convey the disabled state. (In other words: ensure the disabled icon-only buttons above look sufficiently disabled.)</li>
+      </ul>
+      
+      <p>In the "toggle" group, ensure the following:</p>
+      <ul>
+        <li>The icon <strong>should</strong> change color in the active state if the aesthetics of the theme imply it. (In the default theme, the icon <strong>should</strong> change color in the active to match the text.)</li>
+      </ul>
+    </div> <!-- .description -->
+    
+  </div> <!-- .ui-widget -->
+  
+
+  <div class="functional-test">
+    <h2>Using checkboxes</h2>
+
+    <input type="checkbox" name="button9" id="button9" value="1" />
+    <label for="button9">Checkbox</label>
+    
+    <script type="text/javascript">
+      new S2.UI.Button('button9');
+    </script>
+    
+    <div class="description">
+      <p><code>S2.UI.Button</code> can turn an <code>&lt;input type="checkbox" /&gt;</code> into a button with a "active" state and an "inactive" state.</p>
+      
+      <ul>
+        <li>The check box itself <strong>should not</strong> be visible.</li>
+        <li>Clicking on the button <strong>should</strong> switch the button from its ordinary state to its active state. Clicking again <strong>should</strong> switch the button back to its ordinary state.</li>
+      </ul>
+    </div> <!-- .description -->
+  </div> <!-- .ui-widget -->
+
+  
+  
+  <h1>Tests for <code>S2.UI.ButtonSet</code></h1>
+
+  <div class="functional-test">
+    <h2>Basic</h2>
+
     <div id="button_set" style="margin: 10px 0">
       <button id="button7">A button element</button>
       <button id="button8">Another button element</button>
@@ -108,15 +249,17 @@
     </script>
     
     <div class="description">
-      <p>A basic <code>S2.UI.ButtonSet</code> with two buttons.</p>
+      <p>A basic <code>S2.UI.ButtonSet</code> with two <code>button</code> elements.</p>
       <ul>
-        <li>The buttons <strong>should</strong> appear grouped. It's left to an individual theme to decide how to convey the grouping. In the default theme, the buttons appear "joined" at the spot where they meet; this spot <strong>should not</strong> have any rounded corners or empty space.</li>
+        <li>The buttons <strong>should</strong> appear grouped. A UI theme <strong>may</strong> signify this grouping in whatever way seems best. (In the default theme, the buttons appear "joined" at the spot where they meet; this spot <strong>should not</strong> have any rounded corners or empty space.)</li>
       </ul>
-    </div> <!-- .description -->
-    
+    </div> <!-- .description -->    
   </div> <!-- .ui-widget -->
   
-  <div class="ui-widget" id="radio_example">
+
+  <div class="functional-test">
+    <h2>Using radio buttons</h2>
+
     <div id="radio_button_set">
       <input type="radio" name="radio-button" class="radio" id="radio_button_1" />
       <label for="radio_button_1">Radio Button 1</label>
@@ -146,28 +289,6 @@
     
     
   </div> <!-- .ui-widget -->
-  
-  <br />
-  <br />
-  
-  
-  <div class="ui-widget">
-    <input type="checkbox" name="button9" id="button9" value="1" />
-    <label for="button9">Checkbox</label>
-    
-    <script type="text/javascript">
-      new S2.UI.Button('button9');
-    </script>
-  </div> <!-- .ui-widget -->
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   
 </body>
