@@ -6,6 +6,7 @@
   
   border: 1px solid transparent;
   margin: 0;
+  padding: 0;
   height: 24px;
   max-height: 24px;
   line-height: 24px;
@@ -64,26 +65,6 @@ input.ui-button {
   border-bottom-right-radius: 5px;
 }
 
-  /* 
-   * Not wild about this, but using it until I figure out a browser 
-   * targeting strategy.
-   */
-   
-  * html .ui-button {
-    padding: 0 10px;
-    height: 22px;
-  }
-  
-  @-moz-document url-prefix() {
-    /*
-    .ui-button {
-      padding: 3px 10px 7px;
-    }
-    a.ui-button {
-      padding: 3px 10px 5px;
-    }
-    */
-  }
 
   /* default state */
   .ui-button.ui-state-default {
@@ -156,15 +137,6 @@ input.ui-button {
     -moz-box-shadow: 0 0 2px 2px #bce16b; 
   }
   
-  input[type="text"]:focus,
-  input[type="text"]:active {
-    -moz-outline: 0px solid #000 !important;
-  }
-
-  .ui-button:focus::-moz-focus-inner {
-    border-color: transparent !important;
-  }
-  
 
 /* Button Text */
 
@@ -172,11 +144,11 @@ input.ui-button {
   font-family: 'Lucida Sans', 'Lucida Grande', Verdana, sans-serif;
   display: block;
   line-height: 1.4;
-  padding: 2px 5px 4px;
+  padding: 3px 10px;
 }
 
   .ui-button-text-only .ui-button-text {
-    padding: 2px 5px 4px;
+    padding: 3px 10px;
   }
   
   .ui-button-icon-only .ui-button-text,
@@ -186,11 +158,11 @@ input.ui-button {
   
   .ui-button-text-icon .ui-button-text,
   .ui-button-text-icons .ui-button-text {
-    padding-left: 20px;
+    padding-left: 25px;
   }
   
   .ui-button-text-icons .ui-button-text {
-    padding-right: 20px;
+    padding-right: 25px;
   }
   
 label.ui-button .ui-button-text,
@@ -219,7 +191,7 @@ a.ui-button .ui-button-text {
 .ui-button-icons-only .ui-icon {
   position: absolute;
   top: 50%;
-  margin-top: -8px;
+  margin-top: -9px;
 }
 
   .ui-button-icon-only .ui-icon {
@@ -250,10 +222,115 @@ a.ui-button .ui-button-text {
     
   }
   
+
+/* 
+ * Not wild about this, but using it until I figure out a browser 
+ * targeting strategy.
+ */
+ 
+* html .ui-button {
+  padding: 0 10px;
+  height: 22px;
+}
+
+@-moz-document url-prefix() {
+  
+  input[type="text"]:focus,
+  input[type="text"]:active {
+    -moz-outline: 0px solid #000 !important;
+  }
+
+  .ui-button:focus::-moz-focus-inner {
+    border-color: transparent !important;
+  }
+  
+  /* fixing evil default firefox padding */
+  .ui-button::-moz-focus-inner  {  
+    padding: 0 !important;
+    border-color: transparent !important;
+  }
+  
+  button.ui-button,
+  input.ui-button {
+    height: 25px;
+    max-height: 25px;
+  }
+
+  input.ui-button {
+    padding: 0 10px 2px;
+  }
   
   
+  .ui-button-icon-only .ui-icon,
+  .ui-button-text-icon .ui-icon,
+  .ui-button-text-icons .ui-icon,
+  .ui-button-icons-only .ui-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+  }
   
+  button.ui-button-icon-only .ui-icon,
+  button.ui-button-text-icon .ui-icon,
+  button.ui-button-text-icons .ui-icon,
+  button.ui-button-icons-only .ui-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+  }
+
+    button.ui-button-icon-only .ui-icon {
+      left: 50%;
+      margin-left: -10px;
+    }
+    
+  button.ui-button-text-icon .ui-button-icon-primary,
+  button.ui-button-text-icons .ui-button-icon-primary,
+  button.ui-button-icons-only .ui-button-icon-primary {
+    left: 2px;
+  }
+
+  button.ui-button-text-icons .ui-button-icon-secondary,
+  button.ui-button-icons-only .ui-button-icon-secondary {
+    right: 5px;
+  }
   
+  .ui-button .ui-button-text {
+    padding: 2px 10px 4px;
+  }
   
+  .ui-button-text-icon .ui-button-text,
+  .ui-button-text-icons .ui-button-text {
+    padding-left: 20px;
+  }
   
+  .ui-button-text-icons .ui-button-text {
+    padding-right: 20px;
+  }
   
+  label.ui-button .ui-button-text,
+  a.ui-button .ui-button-text {
+    padding: 4px 10px 3px;
+  }
+  
+  label.ui-button-text-icon .ui-button-text,
+  label.ui-button-text-icons .ui-button-text,
+  a.ui-button-text-icon .ui-button-text,
+  a.ui-button-text-icons .ui-button-text {
+    padding-left: 25px;
+  }
+  
+  label.ui-button-text-icons .ui-button-text,
+  a.ui-button-text-icons .ui-button-text {
+    padding-right: 25px;
+  }
+  
+  /*
+  .ui-button {
+    padding: 3px 10px 7px;
+  }
+  a.ui-button {
+    padding: 3px 10px 5px;
+  }
+  */
+}
