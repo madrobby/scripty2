@@ -30,9 +30,30 @@
    *  * `buttons` (`Array` | `Boolean`): A set of `Object`s that describe the
    *    buttons that should appear at the bottom of the dialog. Set to `false`
    *    to omit buttons.
+   *  
+   *  <h4>Events</h4>
+   *  
+   *  All events have a `dialog` property (e.g., `event.memo.dialog`) that
+   *  holds the relevant instance of `S2.UI.Dialog`. Some events have further
+   *  properties, as explained below.
+   *  
+   *  * `ui:dialog:before:open`: Fired when the dialog is told to open,
+   *    but before it is displayed on screen. **Cancelable**. If cancelled,
+   *    will suppress the display of the dialog.
+   *  * `ui:dialog:after:open`: Fired just after the dialog is displayed on
+   *    screen. Cannot be cancelled.
+   *  * `ui:dialog:before:close`: Fired when the dialog is told to close
+   *    (whether successfully or unsuccessfully), but before it has been
+   *    hidden. **Cancelable**. If cancelled, will suppress the hiding of the
+   *    dialog.
+   *  * `ui:dialog:after:close`: Fired just after the dialog disappears from
+   *    the screen. Cannot be cancelled. The `success` property is a boolean
+   *    that tells whether the dialog was closed in success. The `form`
+   *    property (present if the dialog's content contained a `FORM` element)
+   *    holds an `Object` serialization of the form's content.
    *
   **/
-  UI.Dialog = Class.create(UI.Base, {
+  UI.Dialog = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Dialog",
 
     /**
@@ -43,8 +64,8 @@
      *  the dialog. Otherwise, an element will be created to serve as the
      *  container.
      *  
-     *  Note that the dialog is not displayed on screen when it is created.
-     *  You must explicitly call [[S2.UI.Dialog#open]] first.
+     *  Note that **the dialog is not displayed on screen when it is
+     *  created**. You must explicitly call [[S2.UI.Dialog#open]] first.
     **/
     initialize: function(element, options) {
       if (!Object.isElement(element)) {
@@ -94,7 +115,10 @@
   	  this.closeButton = new Element('a', { 'href': '#' });
   	  UI.addClassNames(this.closeButton, 'ui-dialog-titlebar-close ' +
   	   'ui-corner-all');
-  	  new UI.Button(this.closeButton);
+  	  new UI.Button(this.closeButton, {
+  	    text: false,
+  	    icons: { primary: 'ui-icon-closethick' }
+  	  });
   	  this.closeButton.observe('mousedown', Event.stop);
   	  this.closeButton.observe('click', function(event) {
   	    event.stop();
@@ -104,10 +128,10 @@
   	  this.titleBar.insert(this.closeButton);
 
   	  // SPAN for close button.
-  	  this.closeText = new Element('span');
-  	  UI.addClassNames(this.closeText, 'ui-icon ui-icon-closethick');
-
-  	  this.closeButton.insert(this.closeText);
+      // this.closeText = new Element('span');
+      // UI.addClassNames(this.closeText, 'ui-icon ui-icon-closethick');
+      // 
+      // this.closeButton.insert(this.closeText);
 
   	  // Text for title bar.
   	  this.titleText = new Element('span', { 'class': 'ui-dialog-title' });
@@ -222,16 +246,26 @@
 
       this.focusables = UI.findFocusables(this.element);
 
+      var forms = this.content.select('form');
+      if (this.content.match('form')) {
+        forms.push(this.content);
+      }
+      
       // Disable form submission.
       if (!opt.submitForms) {
-        var forms = this.content.select('form');
         forms.invoke('observe', 'submit', Event.stop);
       }
 
       // Figure out what to focus first, excluding the close button.
       var f = this.focusables.without(this.closeButton);
       var focus = opt.focus, foundFocusable = false;
-      if (focus === 'first') {
+      if (focus === 'auto' && forms.length > 0) {
+        // 'auto' means we focus the first form element (if there is a form).
+        // Otherwise we let it fall through the conditional and focus either
+        // the primary button _or_ the first focusable element in the dialog.
+        Form.focusFirstElement(forms.first());
+        foundFocusable = true;
+      } else if (focus === 'first') {
         // Focus the first element.
         f.first().focus();
         foundFocusable = true;
@@ -291,7 +325,7 @@
 
       // If the content area had a form, we'll get the values in object form and
       // add them to the custom event metadata.
-      var form = this.content.down('form');
+      var form = this.content.match('form') ? this.content : this.content.down('form');      
       if (form) {
         Object.extend(memo, { form: form.serialize({ hash: true }) });
       }
