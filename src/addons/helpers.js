@@ -6,7 +6,7 @@
  *
  *  This can be used for a quick overlay like this:
  *
- *      $(document.body).insert(s2.viewportOverlay().setStyle('background:#000;opacity:0.5'));
+ *      $(document.body).insert(S2.viewportOverlay().setStyle('background:#000;opacity:0.5'));
  *
 **/
 
