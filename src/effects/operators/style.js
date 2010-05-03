@@ -13,6 +13,8 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
     this.style = Object.isString(this.options.style) ?
       S2.CSS.parseStyle(this.options.style) : this.options.style;
 
+    var translations = this.options.propertyTransitions || {};
+
     this.tweens = [];
     for(var item in this.style){
       var property = item.underscore().dasherize(),
@@ -20,9 +22,9 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
       
       if(from!=to)
         this.tweens.push([
-          property, S2.CSS.interpolate.curry(property, from, to),
-          item in this.options.propertyTransitions ? 
-            Object.propertize(this.options.propertyTransitions[item], S2.FX.Transitions) : Prototype.K
+          property,
+          S2.CSS.interpolate.curry(property, from, to),
+          item in translations ? Object.propertize(translations[item], S2.FX.Transitions) : Prototype.K
         ]);
     }
   },
