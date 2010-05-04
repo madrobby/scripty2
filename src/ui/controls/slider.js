@@ -141,10 +141,12 @@
         dim = handle.offsetHeight;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('height'), 10);
+        this._trackLength -= 2 * handle.getLayout().get('margin-top');
       } else {
         dim = handle.offsetWidth;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('width'), 10);
+        this._trackLength -= 2 * handle.getLayout().get('margin-left');
       }
     
       this._handleLength = length;
@@ -310,7 +312,7 @@
   
     _valueToPx: function(value) {
       var range = this.options.value;
-      var pixels = (this._trackLength - (this._handleLength / 2)) /
+      var pixels = (this._trackLength - this._handleLength ) /
        (range.max - range.min);
       pixels *= (value - range.min);
     
@@ -340,10 +342,8 @@
         var trackOffset = this.element.cumulativeOffset();
       
         var newPosition = {
-          x: Math.round((pointer.x - trackOffset.left) +
-           (this._handleLength / 4)),
-          y: Math.round((pointer.y - trackOffset.top) +
-           (this._handleLength / 4))
+          x: Math.round(pointer.x - trackOffset.left),
+          y: Math.round(pointer.y - trackOffset.top)
         };
       
         this.setValue(this._pxToValue(newPosition));
@@ -351,6 +351,7 @@
         this.activeHandle = this.activeHandle || this.handles.first();      
         handle = this.activeHandle;
         this._updateStyles();
+        this._offsets = {x: 0, y: 0};
       } else {
         // The user clicked on a handle.
         handle = event.findElement('.ui-slider-handle');
@@ -358,15 +359,13 @@
       
         this.activeHandle = handle;
         this._updateStyles();
+        var handleOffset = handle.cumulativeOffset();
+        this._offsets = {
+          x: pointer.x - (handleOffset.left + this._handleLength / 2),
+          y: pointer.y - (handleOffset.top + this._handleLength / 2)
+        };
       }
       
-      var handleOffset = handle.cumulativeOffset();
-    
-      this._offsets = {
-        x: pointer.x - handleOffset.left,
-        y: pointer.y - handleOffset.top
-      };
-    
       // Listen for mousemove and mouseup on document.
       document.observe('mousemove', this.observers.mousemove);
       document.observe('mouseup',   this.observers.mouseup);
@@ -463,17 +462,8 @@
       var pointer = event.pointer();
       var trackOffset = this.element.cumulativeOffset();
     
-      var newPosition = {
-        x: Math.round((pointer.x - trackOffset.left) +
-         (this._handleLength / 4)),
-        y: Math.round((pointer.y - trackOffset.top) +
-         (this._handleLength / 4))
-      };    
-    
       pointer.x -= (this._offsets.x + trackOffset.left);
       pointer.y -= (this._offsets.y + trackOffset.top);
-    
-      //pointer.x += this._handleLength;
     
       this.setValue(this._pxToValue(pointer));
     },

@@ -26,8 +26,8 @@
     }
 
     // Non-IE browsers will always return pixels.
-    if ((/^\d+(px)?$/i).test(value)) {
-      return window.parseInt(value, 10);      
+    if ((/^(?:-)?\d+(\.\d+)?(px)?$/i).test(value)) {
+      return window.parseFloat(value);
     }
     
     // When IE gives us something other than a pixel value, this technique
