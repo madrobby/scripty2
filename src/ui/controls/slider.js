@@ -134,25 +134,27 @@
   
     _computeHandleLength: function() {
       var handle = this.handles.first(), length, dim;
-    
+
       if (!handle) return;
-    
+
       if (this.orientation === 'vertical') {
         dim = handle.offsetHeight;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('height'), 10);
-        this._trackLength -= 2 * handle.getLayout().get('margin-top');
+        this._trackMargin = handle.getLayout().get('margin-top');
+        this._trackLength -= 2 * this._trackMargin;
       } else {
         dim = handle.offsetWidth;
         length = (dim !== 0) ? dim :
          window.parseInt(handle.getStyle('width'), 10);
-        this._trackLength -= 2 * handle.getLayout().get('margin-left');
+         this._trackMargin = handle.getLayout().get('margin-left');
+         this._trackLength -= 2 * this._trackMargin;
       }
-    
+
       this._handleLength = length;
       return length;
     },
-  
+
     _nextValue: function(currentValue, direction) {
       if (this.options.possibleValues) {
         var index = this._possibleValues.indexOf(currentValue);
@@ -342,8 +344,8 @@
         var trackOffset = this.element.cumulativeOffset();
       
         var newPosition = {
-          x: Math.round(pointer.x - trackOffset.left),
-          y: Math.round(pointer.y - trackOffset.top)
+          x: Math.round(pointer.x - trackOffset.left - this._handleLength / 2 - this._trackMargin),
+          y: Math.round(pointer.y - trackOffset.top - this._handleLength / 2 - this._trackMargin)
         };
       
         this.setValue(this._pxToValue(newPosition));
@@ -462,8 +464,8 @@
       var pointer = event.pointer();
       var trackOffset = this.element.cumulativeOffset();
     
-      pointer.x -= (this._offsets.x + trackOffset.left);
-      pointer.y -= (this._offsets.y + trackOffset.top);
+      pointer.x -= (this._offsets.x + trackOffset.left + this._handleLength / 2 + this._trackMargin);
+      pointer.y -= (this._offsets.y + trackOffset.top + this._handleLength / 2 + this._trackMargin);
     
       this.setValue(this._pxToValue(pointer));
     },
