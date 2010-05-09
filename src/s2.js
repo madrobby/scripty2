@@ -32,9 +32,7 @@ var S2 = {
 
 //= require "css"
 //= require "effects"
-//= require "ui"
-  
-//= require "extensions/element"
 
+//= require "extensions/element"
 //= require "addons/helpers"
 //= require "addons/zoom"

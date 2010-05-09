@@ -5,8 +5,8 @@ require 'yaml'
 SCRIPTY2_ROOT     = File.expand_path(File.dirname(__FILE__))
 SCRIPTY2_SRC_DIR  = File.join(SCRIPTY2_ROOT, 'src')
 
-SCRIPTY2_DIST_DIR = File.join(SCRIPTY2_ROOT, 'dist')
-SCRIPTY2_DEBUG_DIR = File.join(SCRIPTY2_DIST_DIR, 'debug')
+SCRIPTY2_DIST_DIR    = File.join(SCRIPTY2_ROOT, 'dist')
+SCRIPTY2_DEBUG_DIR   = File.join(SCRIPTY2_DIST_DIR, 'debug')
 SCRIPTY2_RELEASE_DIR = File.join(SCRIPTY2_DIST_DIR, 'release')
 
 SCRIPTY2_DOC_DIR  = File.join(SCRIPTY2_ROOT, 'doc')
@@ -17,9 +17,14 @@ SCRIPTY2_TEST_DIR      = File.join(SCRIPTY2_ROOT, 'test')
 SCRIPTY2_TEST_UNIT_DIR = File.join(SCRIPTY2_TEST_DIR, 'unit')
 SCRIPTY2_TMP_DIR       = File.join(SCRIPTY2_TEST_UNIT_DIR, 'tmp')
 
+TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "templates")
+TEMPLATES_DIRECTORY = File.join(TEMPLATES_ROOT, "html")
+
+
 $:.unshift File.join(SCRIPTY2_ROOT, 'vendor', 'sprockets', 'lib')
 
-def sprocketize(path, source, destination = source)
+def sprocketize(path, source, destination=nil)
+  destination ||= [*source].first
   begin
     require "sprockets"
   rescue LoadError => e
@@ -33,7 +38,7 @@ def sprocketize(path, source, destination = source)
   secretary = Sprockets::Secretary.new(
     :root         => File.join(SCRIPTY2_ROOT, path),
     :load_path    => [SCRIPTY2_SRC_DIR],
-    :source_files => [source]
+    :source_files => [*source]
   )
   
   secretary.concatenation.save_to(File.join(SCRIPTY2_DIST_DIR, destination))
@@ -49,10 +54,22 @@ task :clean do
   mkdir SCRIPTY2_RELEASE_DIR
 end
 
-desc "Builds the distribution."
-task :dist do
-  sprocketize("src", "s2.js")
+def dist_from_sources(sources)
+  sprocketize("src", sources, "s2.js")
   cp File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.js')
+end
+
+desc "Builds the distribution."
+task :dist => ['dist:default']
+namespace :dist do
+  task :default do
+    dist_from_sources(["s2.js"])
+  end
+  
+  desc "Builds the distribution, including experimental UI controls."
+  task :experimental do
+    dist_from_sources(["s2.js", "experimental.js"])
+  end
 end
 
 def minify(src, target)
@@ -86,50 +103,55 @@ task :unified => [:dist, :min] do
   minify File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.s2.min.js')
 end
 
+def doc_from_sources(sources)
+  
+  require 'tempfile'
+  begin
+    require "sprockets"
+  rescue LoadError => e
+    puts "\nYou'll need Sprockets to build script.aculo.us 2. Just run:\n\n"
+    puts "  $ git submodule init"
+    puts "  $ git submodule update"
+    puts "\nand you should be all set.\n\n"
+  end
+  
+  Tempfile.open("pdoc") do |temp|
+    secretary = Sprockets::Secretary.new(
+      :root           => File.join(SCRIPTY2_ROOT, "src"),
+      :load_path      => [SCRIPTY2_SRC_DIR],
+      :source_files   => sources,
+      :strip_comments => false
+    )
+      
+    secretary.concatenation.save_to(temp.path)
+    rm_rf SCRIPTY2_DOC_DIR
+    mkdir SCRIPTY2_DOC_DIR
+    
+    #begin
+      PDoc::Runner.new(temp.path,
+        :output    => SCRIPTY2_DOC_DIR,
+        :templates => TEMPLATES_DIRECTORY
+      ).run
+    #rescue 
+     # puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
+    #end
+  end
+  
+  cp File.join(SCRIPTY2_ROOT, 'lib', 'prototype.js'), File.join(SCRIPTY2_DOC_DIR, 'javascripts')
+  cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
+end
+
 namespace :doc do
   desc "Builds the documentation."
   task :build => [:require] do
-    
-    TEMPLATES_ROOT = File.join(SCRIPTY2_ROOT, "templates")
-    
-    TEMPLATES_DIRECTORY = File.join(TEMPLATES_ROOT, "html")
-    
-    require 'tempfile'
-    begin
-      require "sprockets"
-    rescue LoadError => e
-      puts "\nYou'll need Sprockets to build script.aculo.us 2. Just run:\n\n"
-      puts "  $ git submodule init"
-      puts "  $ git submodule update"
-      puts "\nand you should be all set.\n\n"
-    end
-    
-    Tempfile.open("pdoc") do |temp|
-      secretary = Sprockets::Secretary.new(
-        :root           => File.join(SCRIPTY2_ROOT, "src"),
-        :load_path      => [SCRIPTY2_SRC_DIR],
-        :source_files   => ["s2.js"],
-        :strip_comments => false
-      )
-        
-      secretary.concatenation.save_to(temp.path)
-      rm_rf SCRIPTY2_DOC_DIR
-      mkdir SCRIPTY2_DOC_DIR
-      
-      #begin
-        PDoc::Runner.new(temp.path,
-          :output    => SCRIPTY2_DOC_DIR,
-          :templates => TEMPLATES_DIRECTORY
-        ).run
-      #rescue 
-       # puts "\n\nEXCEPTION WHILE RUNNING PDOC, CONTINUING...\n\n"
-      #end
-    end
-    
-    cp File.join(SCRIPTY2_ROOT, 'lib', 'prototype.js'), File.join(SCRIPTY2_DOC_DIR, 'javascripts')
-    cp File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_DOC_DIR,'javascripts')
-  end  
+    doc_from_sources(["s2.js"])
+  end
   
+  desc "Builds the documentation, including experimental UI controls."
+  task :experimental => [:require] do
+    doc_from_sources(["s2.js", "experimental.js"])
+  end
+
   task :require do
     lib = 'vendor/pdoc/lib/pdoc'
     unless File.exists?(lib)
@@ -140,6 +162,7 @@ namespace :doc do
     end
     require lib
   end
+  
 end
 
 task :doc => ['doc:build']
