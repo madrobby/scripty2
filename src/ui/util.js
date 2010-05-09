@@ -5,6 +5,8 @@ Object.extend(S2.UI, {
    *  - elements (Element | Array): An element (or collection of elements).
    *  - classNames (String | Array): A space-separated string (or array) of
    *    class names to add.
+   *  
+   *  Adds the class names to each of the given elements.
   **/
   addClassNames: function(elements, classNames) {
     if (Object.isElement(elements)) {
@@ -30,6 +32,8 @@ Object.extend(S2.UI, {
    *  - elements (Element | Array): An element (or collection of elements).
    *  - classNames (String | Array): A space-separated string (or array) of
    *    class names to remove.
+   *  
+   *  Removes the class names from each of the given elements.
   **/
   removeClassNames: function(elements, classNames) {
     if (Object.isElement(elements)) {
@@ -57,6 +61,10 @@ Object.extend(S2.UI, {
   
   /**
    *  S2.UI.isFocusable(element) -> Boolean
+   *  - element (Element): An element.
+   *  Tests whether the element is focusable. Will return `true` if the
+   *  element is one of the commonly focusable kinds (and is not disabled) --
+   *  _or_ if the element has had a `tabIndex` attribute set.
   **/
   // Adapted from jQuery UI.
   isFocusable: function(element) {
@@ -66,7 +74,7 @@ Object.extend(S2.UI, {
     
     if (S2.UI.FOCUSABLE_ELEMENTS.include(name)) {
       isFocusable = !element.disabled;
-    } else if ($w('a area').include(name)) {
+    } else if (name === 'a' || name === 'area') {
       isFocusable = element.href || (tabIndex && !isNaN(tabIndex));
     } else {
       isFocusable = tabIndex && !isNaN(tabIndex);
@@ -74,12 +82,21 @@ Object.extend(S2.UI, {
     return !!isFocusable && S2.UI.isVisible(element);
   },
   
-  makeFocusable: function(elements, bool) {
+  
+  /**
+   *  S2.UI.makeFocusable(elements, bool) -> undefined
+   *  - elements (Element | Array): An element (or collection of elements).
+   *  - shouldBeFocusable (Boolean): Whether the elements should be
+   *    focusable.
+   *  
+   *  Alters the focusability of the element(s).
+  **/
+  makeFocusable: function(elements, shouldBeFocusable) {
     if (Object.isElement(elements)) {
       elements = [elements];
     }
     
-    var value = bool ? '0' : '-1';
+    var value = shouldBeFocusable ? '0' : '-1';
     for (var i = 0, element; element = elements[i]; i++) {
       $(element).writeAttribute('tabIndex', value);
     }
@@ -96,6 +113,10 @@ Object.extend(S2.UI, {
     
   /**
    *  S2.UI.isVisible(element) -> Boolean
+   *  
+   *  Tests whether the element is visible. _Does not test_ whether the
+   *  element is within the viewport -- only whether it (or any of its
+   *  ancestors) is hidden via CSS.
   **/
   isVisible: function(element) {
     element = $(element);
@@ -136,7 +157,8 @@ Object.extend(S2.UI, {
    *  S2.UI.modifierUsed(event) -> Boolean
    *  
    *  Given an event, returns `true` if at least one modifier key was pressed
-   *  during the event.
+   *  during the event. <kbd>Ctrl</kbd>, <kbd>Alt</kbd>, and
+   *  <kbd>Command</kbd> (on the Mac) are considered modifier keys.
    *  
    *  For the purposes of this function, `SHIFT` is _not_ considered a
    *  modifier key, because of commons shortcuts like `SHIFT + TAB`.
@@ -185,7 +207,8 @@ Object.extend(S2.UI, {
     enableTextSelection: function(element) {
       element.setStyle({
         '-moz-user-select': '',
-        '-webkit-user-select': ''
+        '-webkit-user-select': '',
+        'user-select': ''
       });
       IGNORED_ELEMENTS = IGNORED_ELEMENTS.without(element);
       return element;
@@ -199,7 +222,8 @@ Object.extend(S2.UI, {
     disableTextSelection: function(element) {
       element.setStyle({
         '-moz-user-select': 'none',
-        '-webkit-user-select': 'none'
+        '-webkit-user-select': 'none',
+        'user-select': ''
       });
       if (!IGNORED_ELEMENTS.include(element)) {
         IGNORED_ELEMENTS.push(element);              
