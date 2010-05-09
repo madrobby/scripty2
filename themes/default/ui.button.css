@@ -191,7 +191,7 @@ a.ui-button .ui-button-text {
 .ui-button-icons-only .ui-icon {
   position: absolute;
   top: 50%;
-  margin-top: -9px;
+  margin-top: -8px;
 }
 
   .ui-button-icon-only .ui-icon {
@@ -276,12 +276,12 @@ a.ui-button .ui-button-text {
   button.ui-button-icons-only .ui-icon {
     position: absolute;
     top: 50%;
-    margin-top: -10px;
+    margin-top: -8px;
   }
 
     button.ui-button-icon-only .ui-icon {
       left: 50%;
-      margin-left: -10px;
+      margin-left: -9px;
     }
     
   button.ui-button-text-icon .ui-button-icon-primary,
