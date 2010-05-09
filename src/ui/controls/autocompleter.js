@@ -219,7 +219,16 @@
     
     _selected: function(event) {
       var memo = event.memo, li = memo.element;
-      if(li) this._setInput(li.retrieve('ui.autocompleter.value'));
+      
+      if (li) {
+        var value = li.retrieve('ui.autocompleter.value');
+        var result = this.element.fire('ui:autocompleter:selected', {
+          instance: this,
+          value:    value,
+        });
+        if (result.stopped) return;
+        this._setInput(value);
+      }
       this.menu.close();
     },
     
