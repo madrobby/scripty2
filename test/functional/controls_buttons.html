@@ -232,6 +232,24 @@
     </div> <!-- .description -->
   </div> <!-- .ui-widget -->
 
+
+  <div class="functional-test">
+    <h2>Button with drop-down menu</h2>
+
+    <button id="button_with_menu">Choose Something</button>
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonWithMenu('button_with_menu', {
+        choices: $w('Lorem Ipsum Dolor')
+      }).observe('ui:button:menu:selected', function(event) {
+        console.log('chose: ', event.memo.element.innerHTML);
+      });
+    </script>
+    
+    <div class="description">
+      <p>A button with an associated drop-down menu.</p>
+    </div> <!-- .description -->
+  </div> <!-- .ui-widget -->
   
   
   <h1>Tests for <code>S2.UI.ButtonSet</code></h1>
@@ -296,198 +314,198 @@
     <h2>Icons</h2>
     
     <div id="icons" style="margin-bottom: 20px;" class="ui-helper-clearfix">      
-    	<button title=".ui-icon-carat-1-n"></button>
-			<button title=".ui-icon-carat-1-ne"></button>
-			<button title=".ui-icon-carat-1-e"></button>
+    	<button title=".ui-icon-carat-1-n">.</button>
+			<button title=".ui-icon-carat-1-ne">.</button>
+			<button title=".ui-icon-carat-1-e">.</button>
              
-			<button title=".ui-icon-carat-1-se"></button>
-			<button title=".ui-icon-carat-1-s"></button>
-			<button title=".ui-icon-carat-1-sw"></button>
-			<button title=".ui-icon-carat-1-w"></button>
-			<button title=".ui-icon-carat-1-nw"></button>
-			<button title=".ui-icon-carat-2-n-s"></button>
-			<button title=".ui-icon-carat-2-e-w"></button>
-			<button title=".ui-icon-triangle-1-n"></button>
-			<button title=".ui-icon-triangle-1-ne"></button>
+			<button title=".ui-icon-carat-1-se">.</button>
+			<button title=".ui-icon-carat-1-s">.</button>
+			<button title=".ui-icon-carat-1-sw">.</button>
+			<button title=".ui-icon-carat-1-w">.</button>
+			<button title=".ui-icon-carat-1-nw">.</button>
+			<button title=".ui-icon-carat-2-n-s">.</button>
+			<button title=".ui-icon-carat-2-e-w">.</button>
+			<button title=".ui-icon-triangle-1-n">.</button>
+			<button title=".ui-icon-triangle-1-ne">.</button>
              
-			<button title=".ui-icon-triangle-1-e"></button>
-			<button title=".ui-icon-triangle-1-se"></button>
-			<button title=".ui-icon-triangle-1-s"></button>
-			<button title=".ui-icon-triangle-1-sw"></button>
-			<button title=".ui-icon-triangle-1-w"></button>
-			<button title=".ui-icon-triangle-1-nw"></button>
-			<button title=".ui-icon-triangle-2-n-s"></button>
-			<button title=".ui-icon-triangle-2-e-w"></button>
-			<button title=".ui-icon-arrow-1-n"></button>
+			<button title=".ui-icon-triangle-1-e">.</button>
+			<button title=".ui-icon-triangle-1-se">.</button>
+			<button title=".ui-icon-triangle-1-s">.</button>
+			<button title=".ui-icon-triangle-1-sw">.</button>
+			<button title=".ui-icon-triangle-1-w">.</button>
+			<button title=".ui-icon-triangle-1-nw">.</button>
+			<button title=".ui-icon-triangle-2-n-s">.</button>
+			<button title=".ui-icon-triangle-2-e-w">.</button>
+			<button title=".ui-icon-arrow-1-n">.</button>
              
-			<button title=".ui-icon-arrow-1-ne"></button>
-			<button title=".ui-icon-arrow-1-e"></button>
-			<button title=".ui-icon-arrow-1-se"></button>
-			<button title=".ui-icon-arrow-1-s"></button>
-			<button title=".ui-icon-arrow-1-sw"></button>
-			<button title=".ui-icon-arrow-1-w"></button>
-			<button title=".ui-icon-arrow-1-nw"></button>
-			<button title=".ui-icon-arrow-2-n-s"></button>
-			<button title=".ui-icon-arrow-2-ne-sw"></button>
+			<button title=".ui-icon-arrow-1-ne">.</button>
+			<button title=".ui-icon-arrow-1-e">.</button>
+			<button title=".ui-icon-arrow-1-se">.</button>
+			<button title=".ui-icon-arrow-1-s">.</button>
+			<button title=".ui-icon-arrow-1-sw">.</button>
+			<button title=".ui-icon-arrow-1-w">.</button>
+			<button title=".ui-icon-arrow-1-nw">.</button>
+			<button title=".ui-icon-arrow-2-n-s">.</button>
+			<button title=".ui-icon-arrow-2-ne-sw">.</button>
              
-			<button title=".ui-icon-arrow-2-e-w"></button>
-			<button title=".ui-icon-arrow-2-se-nw"></button>
-			<button title=".ui-icon-arrowstop-1-n"></button>
-			<button title=".ui-icon-arrowstop-1-e"></button>
-			<button title=".ui-icon-arrowstop-1-s"></button>
-			<button title=".ui-icon-arrowstop-1-w"></button>
-			<button title=".ui-icon-arrowthick-1-n"></button>
-			<button title=".ui-icon-arrowthick-1-ne"></button>
-			<button title=".ui-icon-arrowthick-1-e"></button>
+			<button title=".ui-icon-arrow-2-e-w">.</button>
+			<button title=".ui-icon-arrow-2-se-nw">.</button>
+			<button title=".ui-icon-arrowstop-1-n">.</button>
+			<button title=".ui-icon-arrowstop-1-e">.</button>
+			<button title=".ui-icon-arrowstop-1-s">.</button>
+			<button title=".ui-icon-arrowstop-1-w">.</button>
+			<button title=".ui-icon-arrowthick-1-n">.</button>
+			<button title=".ui-icon-arrowthick-1-ne">.</button>
+			<button title=".ui-icon-arrowthick-1-e">.</button>
              
-			<button title=".ui-icon-arrowthick-1-se"></button>
-			<button title=".ui-icon-arrowthick-1-s"></button>
-			<button title=".ui-icon-arrowthick-1-sw"></button>
-			<button title=".ui-icon-arrowthick-1-w"></button>
-			<button title=".ui-icon-arrowthick-1-nw"></button>
-			<button title=".ui-icon-arrowthick-2-n-s"></button>
-			<button title=".ui-icon-arrowthick-2-ne-sw"></button>
-			<button title=".ui-icon-arrowthick-2-e-w"></button>
-			<button title=".ui-icon-arrowthick-2-se-nw"></button>
+			<button title=".ui-icon-arrowthick-1-se">.</button>
+			<button title=".ui-icon-arrowthick-1-s">.</button>
+			<button title=".ui-icon-arrowthick-1-sw">.</button>
+			<button title=".ui-icon-arrowthick-1-w">.</button>
+			<button title=".ui-icon-arrowthick-1-nw">.</button>
+			<button title=".ui-icon-arrowthick-2-n-s">.</button>
+			<button title=".ui-icon-arrowthick-2-ne-sw">.</button>
+			<button title=".ui-icon-arrowthick-2-e-w">.</button>
+			<button title=".ui-icon-arrowthick-2-se-nw">.</button>
              
-			<button title=".ui-icon-arrowthickstop-1-n"></button>
-			<button title=".ui-icon-arrowthickstop-1-e"></button>
-			<button title=".ui-icon-arrowthickstop-1-s"></button>
-			<button title=".ui-icon-arrowthickstop-1-w"></button>
-			<button title=".ui-icon-arrowreturnthick-1-w"></button>
-			<button title=".ui-icon-arrowreturnthick-1-n"></button>
-			<button title=".ui-icon-arrowreturnthick-1-e"></button>
-			<button title=".ui-icon-arrowreturnthick-1-s"></button>
-			<button title=".ui-icon-arrowreturn-1-w"></button>
+			<button title=".ui-icon-arrowthickstop-1-n">.</button>
+			<button title=".ui-icon-arrowthickstop-1-e">.</button>
+			<button title=".ui-icon-arrowthickstop-1-s">.</button>
+			<button title=".ui-icon-arrowthickstop-1-w">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-w">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-n">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-e">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-s">.</button>
+			<button title=".ui-icon-arrowreturn-1-w">.</button>
              
-			<button title=".ui-icon-arrowreturn-1-n"></button>
-			<button title=".ui-icon-arrowreturn-1-e"></button>
-			<button title=".ui-icon-arrowreturn-1-s"></button>
-			<button title=".ui-icon-arrowrefresh-1-w"></button>
-			<button title=".ui-icon-arrowrefresh-1-n"></button>
-			<button title=".ui-icon-arrowrefresh-1-e"></button>
-			<button title=".ui-icon-arrowrefresh-1-s"></button>
-			<button title=".ui-icon-arrow-4"></button>
-			<button title=".ui-icon-arrow-4-diag"></button>
+			<button title=".ui-icon-arrowreturn-1-n">.</button>
+			<button title=".ui-icon-arrowreturn-1-e">.</button>
+			<button title=".ui-icon-arrowreturn-1-s">.</button>
+			<button title=".ui-icon-arrowrefresh-1-w">.</button>
+			<button title=".ui-icon-arrowrefresh-1-n">.</button>
+			<button title=".ui-icon-arrowrefresh-1-e">.</button>
+			<button title=".ui-icon-arrowrefresh-1-s">.</button>
+			<button title=".ui-icon-arrow-4">.</button>
+			<button title=".ui-icon-arrow-4-diag">.</button>
              
-			<button title=".ui-icon-extlink"></button>
-			<button title=".ui-icon-newwin"></button>
-			<button title=".ui-icon-refresh"></button>
-			<button title=".ui-icon-shuffle"></button>
-			<button title=".ui-icon-transfer-e-w"></button>
-			<button title=".ui-icon-transferthick-e-w"></button>
-			<button title=".ui-icon-folder-collapsed"></button>
-			<button title=".ui-icon-folder-open"></button>
-			<button title=".ui-icon-document"></button>
+			<button title=".ui-icon-extlink">.</button>
+			<button title=".ui-icon-newwin">.</button>
+			<button title=".ui-icon-refresh">.</button>
+			<button title=".ui-icon-shuffle">.</button>
+			<button title=".ui-icon-transfer-e-w">.</button>
+			<button title=".ui-icon-transferthick-e-w">.</button>
+			<button title=".ui-icon-folder-collapsed">.</button>
+			<button title=".ui-icon-folder-open">.</button>
+			<button title=".ui-icon-document">.</button>
              
-			<button title=".ui-icon-document-b"></button>
-			<button title=".ui-icon-note"></button>
-			<button title=".ui-icon-mail-closed"></button>
-			<button title=".ui-icon-mail-open"></button>
-			<button title=".ui-icon-suitcase"></button>
-			<button title=".ui-icon-comment"></button>
-			<button title=".ui-icon-person"></button>
-			<button title=".ui-icon-print"></button>
-			<button title=".ui-icon-trash"></button>
+			<button title=".ui-icon-document-b">.</button>
+			<button title=".ui-icon-note">.</button>
+			<button title=".ui-icon-mail-closed">.</button>
+			<button title=".ui-icon-mail-open">.</button>
+			<button title=".ui-icon-suitcase">.</button>
+			<button title=".ui-icon-comment">.</button>
+			<button title=".ui-icon-person">.</button>
+			<button title=".ui-icon-print">.</button>
+			<button title=".ui-icon-trash">.</button>
              
-			<button title=".ui-icon-locked"></button>
-			<button title=".ui-icon-unlocked"></button>
-			<button title=".ui-icon-bookmark"></button>
-			<button title=".ui-icon-tag"></button>
-			<button title=".ui-icon-home"></button>
-			<button title=".ui-icon-flag"></button>
-			<button title=".ui-icon-calculator"></button>
-			<button title=".ui-icon-cart"></button>
-			<button title=".ui-icon-pencil"></button>
+			<button title=".ui-icon-locked">.</button>
+			<button title=".ui-icon-unlocked">.</button>
+			<button title=".ui-icon-bookmark">.</button>
+			<button title=".ui-icon-tag">.</button>
+			<button title=".ui-icon-home">.</button>
+			<button title=".ui-icon-flag">.</button>
+			<button title=".ui-icon-calculator">.</button>
+			<button title=".ui-icon-cart">.</button>
+			<button title=".ui-icon-pencil">.</button>
              
-			<button title=".ui-icon-clock"></button>
-			<button title=".ui-icon-disk"></button>
-			<button title=".ui-icon-calendar"></button>
-			<button title=".ui-icon-zoomin"></button>
-			<button title=".ui-icon-zoomout"></button>
-			<button title=".ui-icon-search"></button>
-			<button title=".ui-icon-wrench"></button>
-			<button title=".ui-icon-gear"></button>
-			<button title=".ui-icon-heart"></button>
+			<button title=".ui-icon-clock">.</button>
+			<button title=".ui-icon-disk">.</button>
+			<button title=".ui-icon-calendar">.</button>
+			<button title=".ui-icon-zoomin">.</button>
+			<button title=".ui-icon-zoomout">.</button>
+			<button title=".ui-icon-search">.</button>
+			<button title=".ui-icon-wrench">.</button>
+			<button title=".ui-icon-gear">.</button>
+			<button title=".ui-icon-heart">.</button>
              
-			<button title=".ui-icon-star"></button>
-			<button title=".ui-icon-link"></button>
-			<button title=".ui-icon-cancel"></button>
-			<button title=".ui-icon-plus"></button>
-			<button title=".ui-icon-plusthick"></button>
-			<button title=".ui-icon-minus"></button>
-			<button title=".ui-icon-minusthick"></button>
-			<button title=".ui-icon-close"></button>
-			<button title=".ui-icon-closethick"></button>
+			<button title=".ui-icon-star">.</button>
+			<button title=".ui-icon-link">.</button>
+			<button title=".ui-icon-cancel">.</button>
+			<button title=".ui-icon-plus">.</button>
+			<button title=".ui-icon-plusthick">.</button>
+			<button title=".ui-icon-minus">.</button>
+			<button title=".ui-icon-minusthick">.</button>
+			<button title=".ui-icon-close">.</button>
+			<button title=".ui-icon-closethick">.</button>
              
-			<button title=".ui-icon-key"></button>
-			<button title=".ui-icon-lightbulb"></button>
-			<button title=".ui-icon-scissors"></button>
-			<button title=".ui-icon-clipboard"></button>
-			<button title=".ui-icon-copy"></button>
-			<button title=".ui-icon-contact"></button>
-			<button title=".ui-icon-image"></button>
-			<button title=".ui-icon-video"></button>
-			<button title=".ui-icon-script"></button>
-			<button title=".ui-icon-alert"></button>
+			<button title=".ui-icon-key">.</button>
+			<button title=".ui-icon-lightbulb">.</button>
+			<button title=".ui-icon-scissors">.</button>
+			<button title=".ui-icon-clipboard">.</button>
+			<button title=".ui-icon-copy">.</button>
+			<button title=".ui-icon-contact">.</button>
+			<button title=".ui-icon-image">.</button>
+			<button title=".ui-icon-video">.</button>
+			<button title=".ui-icon-script">.</button>
+			<button title=".ui-icon-alert">.</button>
              
-			<button title=".ui-icon-info"></button>
-			<button title=".ui-icon-notice"></button>
-			<button title=".ui-icon-help"></button>
-			<button title=".ui-icon-check"></button>
-			<button title=".ui-icon-bullet"></button>
-			<button title=".ui-icon-radio-off"></button>
-			<button title=".ui-icon-radio-on"></button>
-			<button title=".ui-icon-pin-w"></button>
-			<button title=".ui-icon-pin-s"></button>
-			<button title=".ui-icon-play"></button>
-			<button title=".ui-icon-pause"></button>
+			<button title=".ui-icon-info">.</button>
+			<button title=".ui-icon-notice">.</button>
+			<button title=".ui-icon-help">.</button>
+			<button title=".ui-icon-check">.</button>
+			<button title=".ui-icon-bullet">.</button>
+			<button title=".ui-icon-radio-off">.</button>
+			<button title=".ui-icon-radio-on">.</button>
+			<button title=".ui-icon-pin-w">.</button>
+			<button title=".ui-icon-pin-s">.</button>
+			<button title=".ui-icon-play">.</button>
+			<button title=".ui-icon-pause">.</button>
              
-			<button title=".ui-icon-seek-next"></button>
-			<button title=".ui-icon-seek-prev"></button>
-			<button title=".ui-icon-seek-end"></button>
-			<button title=".ui-icon-seek-first"></button>
-			<button title=".ui-icon-stop"></button>
-			<button title=".ui-icon-eject"></button>
-			<button title=".ui-icon-volume-off"></button>
-			<button title=".ui-icon-volume-on"></button>
-			<button title=".ui-icon-power"></button>
+			<button title=".ui-icon-seek-next">.</button>
+			<button title=".ui-icon-seek-prev">.</button>
+			<button title=".ui-icon-seek-end">.</button>
+			<button title=".ui-icon-seek-first">.</button>
+			<button title=".ui-icon-stop">.</button>
+			<button title=".ui-icon-eject">.</button>
+			<button title=".ui-icon-volume-off">.</button>
+			<button title=".ui-icon-volume-on">.</button>
+			<button title=".ui-icon-power">.</button>
              
-			<button title=".ui-icon-signal-diag"></button>
-			<button title=".ui-icon-signal"></button>
-			<button title=".ui-icon-battery-0"></button>
-			<button title=".ui-icon-battery-1"></button>
-			<button title=".ui-icon-battery-2"></button>
-			<button title=".ui-icon-battery-3"></button>
-			<button title=".ui-icon-circle-plus"></button>
-			<button title=".ui-icon-circle-minus"></button>
-			<button title=".ui-icon-circle-close"></button>
+			<button title=".ui-icon-signal-diag">.</button>
+			<button title=".ui-icon-signal">.</button>
+			<button title=".ui-icon-battery-0">.</button>
+			<button title=".ui-icon-battery-1">.</button>
+			<button title=".ui-icon-battery-2">.</button>
+			<button title=".ui-icon-battery-3">.</button>
+			<button title=".ui-icon-circle-plus">.</button>
+			<button title=".ui-icon-circle-minus">.</button>
+			<button title=".ui-icon-circle-close">.</button>
              
-			<button title=".ui-icon-circle-triangle-e"></button>
-			<button title=".ui-icon-circle-triangle-s"></button>
-			<button title=".ui-icon-circle-triangle-w"></button>
-			<button title=".ui-icon-circle-triangle-n"></button>
-			<button title=".ui-icon-circle-arrow-e"></button>
-			<button title=".ui-icon-circle-arrow-s"></button>
-			<button title=".ui-icon-circle-arrow-w"></button>
-			<button title=".ui-icon-circle-arrow-n"></button>
-			<button title=".ui-icon-circle-zoomin"></button>
+			<button title=".ui-icon-circle-triangle-e">.</button>
+			<button title=".ui-icon-circle-triangle-s">.</button>
+			<button title=".ui-icon-circle-triangle-w">.</button>
+			<button title=".ui-icon-circle-triangle-n">.</button>
+			<button title=".ui-icon-circle-arrow-e">.</button>
+			<button title=".ui-icon-circle-arrow-s">.</button>
+			<button title=".ui-icon-circle-arrow-w">.</button>
+			<button title=".ui-icon-circle-arrow-n">.</button>
+			<button title=".ui-icon-circle-zoomin">.</button>
              
-			<button title=".ui-icon-circle-zoomout"></button>
-			<button title=".ui-icon-circle-check"></button>
-			<button title=".ui-icon-circlesmall-plus"></button>
-			<button title=".ui-icon-circlesmall-minus"></button>
-			<button title=".ui-icon-circlesmall-close"></button>
-			<button title=".ui-icon-squaresmall-plus"></button>
-			<button title=".ui-icon-squaresmall-minus"></button>
-			<button title=".ui-icon-squaresmall-close"></button>
-			<button title=".ui-icon-grip-dotted-vertical"></button>
+			<button title=".ui-icon-circle-zoomout">.</button>
+			<button title=".ui-icon-circle-check">.</button>
+			<button title=".ui-icon-circlesmall-plus">.</button>
+			<button title=".ui-icon-circlesmall-minus">.</button>
+			<button title=".ui-icon-circlesmall-close">.</button>
+			<button title=".ui-icon-squaresmall-plus">.</button>
+			<button title=".ui-icon-squaresmall-minus">.</button>
+			<button title=".ui-icon-squaresmall-close">.</button>
+			<button title=".ui-icon-grip-dotted-vertical">.</button>
              
-			<button title=".ui-icon-grip-dotted-horizontal"></button>
-			<button title=".ui-icon-grip-solid-vertical"></button>
-			<button title=".ui-icon-grip-solid-horizontal"></button>
-			<button title=".ui-icon-gripsmall-diagonal-se"></button>
-			<button title=".ui-icon-grip-diagonal-se"></button>
+			<button title=".ui-icon-grip-dotted-horizontal">.</button>
+			<button title=".ui-icon-grip-solid-vertical">.</button>
+			<button title=".ui-icon-grip-solid-horizontal">.</button>
+			<button title=".ui-icon-gripsmall-diagonal-se">.</button>
+			<button title=".ui-icon-grip-diagonal-se">.</button>
 		</div> <!-- #icons -->
 		
 		<script type="text/javascript">

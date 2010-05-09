@@ -4,7 +4,7 @@
    *  class S2.UI.Menu < S2.UI.Base
    *  includes S2.UI.Mixin.Shim
   **/
-  UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, {
+  UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, UI.Mixin.Element, {
     NAME: "S2.UI.Menu",
 
     /**
@@ -55,16 +55,16 @@
      *  S2.UI.Menu#addObservers() -> undefined
     **/
     addObservers: function() {
-      this.element.observe('mouseover', this.observers.mouseover);
-      this.element.observe('mousedown', this.observers.click);
+      this.observe('mouseover', this.observers.mouseover);
+      this.observe('mouseup',   this.observers.click    );
     },
     
     /**
      *  S2.UI.Menu#removeObservers() -> undefined
     **/
     removeObservers: function() {
-      this.element.stopObserving('mouseover', this.observers.mouseover);
-      this.element.stopObserving('mousedown', this.observers.click);
+      this.stopObserving('mouseover', this.observers.mouseover);
+      this.stopObserving('mouseup',   this.observers.click    );
     },
     
     /**
@@ -202,7 +202,7 @@
       //   this._shown = true;
       // }
       
-      var result = this.element.fire('ui:menu:opened', { instance: this });
+      var result = this.element.fire('ui:menu:before:open', { instance: this });
       // TODO: Figure out why IE doesn't like this.
       // if (!result.stopped) {
         this.element.removeClassName('ui-helper-hidden');
@@ -211,7 +211,9 @@
       
       if (Prototype.Browser.IE) {
         this.adjustShim();
-      }      
+      }   
+      
+      this.element.fire('ui:menu:after:open', { instance: this });
     },
     
     /**
@@ -219,12 +221,14 @@
      *  fires ui:menu:closed
     **/
     close: function() {
-      var result = this.element.fire('ui:menu:closed', { instance: this });
+      var result = this.element.fire('ui:menu:before:close', { instance: this });
       // TODO: Figure out why IE doesn't like this.
       // if (!result.stopped) {
         this.element.addClassName('ui-helper-hidden');      
       // }
       return this;
+      
+      this.element.fire('ui:menu:after:close', { instance: this });      
     },
     
     /**
