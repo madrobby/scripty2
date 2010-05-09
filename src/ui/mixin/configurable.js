@@ -1,3 +1,22 @@
+/**
+ *  Object.deepExtend(destination, source) -> Object
+ *  
+ *  A "deep" version of `Object.extend`. Performs a recursive deep extension.
+**/
+
+Object.deepExtend = function(destination, source) {
+  for (var property in source) {
+    if (source[property] && source[property].constructor &&
+     source[property].constructor === Object) {
+      destination[property] = destination[property] || {};
+      arguments.callee(destination[property], source[property]);
+    } else {
+      destination[property] = source[property];
+    }
+  }
+  return destination;
+};
+
 /** section: scripty2 ui
  *  mixin S2.UI.Mixin.Configurable
  *  
@@ -13,7 +32,9 @@ S2.UI.Mixin.Configurable = {
    *  - options (Object): A set of user-defined options that should override
    *    the defaults.
    *  
-   *  Sets options on the class.
+   *  Sets options on the class. Can be called multiple times; will copy any
+   *  options defined in `options` onto an existing `this.options` property
+   *  (or will define that property if it does not exist).
   **/
   setOptions: function(options) {
     if (!this.options) {

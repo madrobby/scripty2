@@ -7,7 +7,8 @@
 
 (function() {
   var METHODS = $w('observe stopObserving show hide ' + 
-   'addClassName removeClassName hasClassName');
+   'addClassName removeClassName hasClassName setStyle getStyle' +
+   'writeAttribute readAttribute on fire');
   
   var E = {};
   
