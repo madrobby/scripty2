@@ -1,4 +1,4 @@
-/** section: scripty2 ui
+/** section: scripty2 fx
  * S2.CSS
  * Utility functions for CSS parsing, color normalization and tweening.
 **/
