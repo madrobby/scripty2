@@ -14,7 +14,7 @@
   }  
   
   /**
-   *  S2.Extensions.CSSTransitions = true | false
+   *  S2.Extensions.WebkitCSSTransitions = true | false
    * 
    *  This boolean variable states wheter or not WebKit CSS Transition
    *  support is available and enabled.
@@ -23,7 +23,7 @@
    *  use the JavaScript-based effects engine.
   **/
   
-  Prototype.BrowserFeatures.webkitCSSTransitions = true;
+  Prototype.BrowserFeatures.WebkitCSSTransitions = true;
   S2.Extensions.webkitCSSTransitions = true;
   
   CSS_TRANSITIONS_PROPERTIES = $w(
