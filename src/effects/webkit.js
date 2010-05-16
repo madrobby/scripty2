@@ -29,8 +29,16 @@
   CSS_TRANSITIONS_PROPERTIES = $w(
    'webkitBorderTopLeftRadius webkitBorderTopRightRadius ' +
    'webkitBorderBottomLeftRadius webkitBorderBottomRightRadius ' +
-   'webkitBackgroundSize'
+   'webkitBackgroundSize webkitTransform'
   );
+  
+  CSS_TRANSITIONS_PROPERTIES.each(function(property) {
+    S2.CSS.PROPERTIES.push(property);  
+  });
+
+  S2.CSS.NUMERIC_PROPERTIES = S2.CSS.PROPERTIES.findAll(function(property) {
+    return !property.endsWith('olor') 
+  });
   
   // Properties that we might be able to hardware-accelerate.
   CSS_TRANSITIONS_HARDWARE_ACCELERATED_PROPERTIES =
