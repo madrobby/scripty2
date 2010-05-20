@@ -239,8 +239,8 @@ new Test.Unit.Runner({
   
   testShortcutOptions: function() { with(this) {
     var testVar="?";    
-    $('sandbox').morph('font-size:10px',0.05);
-    wait(100, function() {
+    $('sandbox').morph('font-size:10px', 0.05);
+    wait(150, function() {
       assertEqual('10px', $('sandbox').getStyle('font-size'));
       $('sandbox').morph('font-size:20px',function(){ testVar='!'; });
       wait(500, function() {
