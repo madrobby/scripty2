@@ -186,6 +186,7 @@ S2.FX.Base = Class.create({
   play: function(options) {
     this.setOptions(options);
     this.frameCount = 0;
+    this.state = 'idle';
     this.options.queue.add(this);
     this.maxFrames = this.options.fps * this.duration / 1000;
     return this;
