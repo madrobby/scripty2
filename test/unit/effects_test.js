@@ -214,7 +214,7 @@ new Test.Unit.Runner({
     var opt;
     
     opt = S2.FX.parseOptions();
-    assertUndefined(opt);
+    assertNotUndefined(opt);
 
     opt = S2.FX.parseOptions({duration:1,blech:'2'});
     assert('duration' in opt);
