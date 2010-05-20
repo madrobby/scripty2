@@ -188,6 +188,23 @@ new Test.Unit.Runner({
     });
   }},
   
+  testReplayabilityWithDiffrentOptions: function() { with(this) {
+    var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
+    
+    $('sandbox').setStyle('font-size:15px');
+    assertEqual('15px', $('sandbox').getStyle('font-size'));
+    e1.play();
+    wait(750, function(){
+      assertEqual('5px', $('sandbox').getStyle('font-size'));
+      $('sandbox').setStyle('font-size:15px');
+      assertEqual('15px', $('sandbox').getStyle('font-size'));
+      e1.play(null, {style: 'font-size:25px'});
+      wait(750, function(){
+        assertEqual('25px', $('sandbox').getStyle('font-size'));
+      });
+    });
+  }},
+  
   testInspect: function() { with(this) {
     var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
     assertEqual(0, e1.inspect().indexOf('#<S2.FX:'));
