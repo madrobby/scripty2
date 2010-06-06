@@ -1,15 +1,15 @@
 /**
- *  class s2.fx.Queue
+ *  class S2.FX.Queue
  *
  *  Effect queues manage the execution of effects in parallel or 
  *  end-to-end over time.
 **/
-s2.fx.Queue = (function(){ 
+S2.FX.Queue = (function(){ 
   return function(){
     var effects = [];
     
     /**
-     *  s2.fx.Queue#getEffects() -> Array
+     *  S2.FX.Queue#getEffects() -> Array
      *
      *  Returns an array of any effects currently running or queued up.
     **/
@@ -18,7 +18,7 @@ s2.fx.Queue = (function(){
     }
     
     /**
-     *  s2.fx.Queue#active() -> Boolean
+     *  S2.FX.Queue#active() -> Boolean
      *
      *  Returns whether there are any effects currently running or queued up.
     **/
@@ -27,8 +27,8 @@ s2.fx.Queue = (function(){
     }
     
     /**
-     *  s2.fx.Queue#add(effect) -> s2.fx.Queue
-     *  - effect (s2.fx.Base): Effect to be queued
+     *  S2.FX.Queue#add(effect) -> S2.FX.Queue
+     *  - effect (S2.FX.Base): Effect to be queued
      *
      *  Add an effect to the queue. The effects' options can optionally
      *  contain a `position` option that can be either `parallel` 
@@ -47,8 +47,8 @@ s2.fx.Queue = (function(){
     }
 
     /**
-     *  s2.fx.Queue#remove(effect) -> s2.fx.Queue
-     *  - effect (s2.fx.Base): Effect to be removed from the Queue.
+     *  S2.FX.Queue#remove(effect) -> S2.FX.Queue
+     *  - effect (S2.FX.Base): Effect to be removed from the Queue.
      *
      *  Removes an effect from the Queue and destroys the effect.
      *  Returns the Queue.
@@ -63,7 +63,7 @@ s2.fx.Queue = (function(){
     }
 
     /**
-     *  s2.fx.Queue#render(timestamp) -> s2.fx.Queue
+     *  S2.FX.Queue#render(timestamp) -> S2.FX.Queue
      *  - timestamp (Date): Timestamp given to the individual effects' render methods.
      *
      *  Renders all effects that are currently in the Queue.
@@ -79,7 +79,7 @@ s2.fx.Queue = (function(){
 
     function calculateTiming(effect){
       var position = effect.options.position || 'parallel',
-        startsAt = s2.fx.getHeartbeat().getTimestamp();
+        startsAt = S2.FX.getHeartbeat().getTimestamp();
 
       if (position == 'end')
         startsAt = effects.without(effect).pluck('endsAt').max() || startsAt;

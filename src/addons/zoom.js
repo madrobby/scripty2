@@ -1,4 +1,4 @@
-s2.fx.Helpers = { 
+S2.FX.Helpers = { 
   fitIntoRectangle: function(w, h, rw, rh){
     var f = w/h, rf = rw/rh; return f < rf ? 
       [(rw - (w*(rh/h)))/2, 0, w*(rh/h), rh] : 
@@ -6,12 +6,12 @@ s2.fx.Helpers = {
   }
 };
 
-s2.fx.Operators.Zoom = Class.create(s2.fx.Operators.Style, {
-  initialize: function($super, object, options) {
+S2.FX.Operators.Zoom = Class.create(S2.FX.Operators.Style, {
+  initialize: function($super, effect, object, options) {
     var viewport = document.viewport.getDimensions(),
       offsets = document.viewport.getScrollOffsets(),
       dims = object.getDimensions(),
-      f = s2.fx.Helpers.fitIntoRectangle(dims.width, dims.height, 
+      f = S2.FX.Helpers.fitIntoRectangle(dims.width, dims.height, 
       viewport.width - (options.borderWidth || 0)*2, 
       viewport.height - (options.borderWidth || 0)*2);
     
@@ -20,17 +20,17 @@ s2.fx.Operators.Zoom = Class.create(s2.fx.Operators.Style, {
       top: f[1] + (options.borderWidth || 0) + offsets.top + 'px',
       width: f[2] + 'px', height: f[3] + 'px'
     }});
-    $super(object, options);
+    $super(effect, object, options);
   }
 });
 
-s2.fx.Zoom = Class.create(s2.fx.Element, {
+S2.FX.Zoom = Class.create(S2.FX.Element, {
   setup: function() {
     this.clone = this.element.cloneWithoutIDs();
     this.element.insert({before:this.clone});
     this.clone.absolutize().setStyle({zIndex:9999});
     
-    this.overlay = s2.fx.Helpers.viewportOverlay();
+    this.overlay = S2.viewportOverlay();
     if (this.options.overlayClassName) 
       this.overlay.addClassName(this.options.overlayClassName)
     else
@@ -45,12 +45,12 @@ s2.fx.Zoom = Class.create(s2.fx.Element, {
   teardown: function() {
     this.clone.observe('click', function() {
       this.overlay.remove();
-      this.clone.morph('opacity:0', { 
+      this.clone.morph('opacity:0', {
         duration: 0.2,
         after: function() {
           this.clone.remove();
-        }.bind(this) 
-      });
+        }.bind(this)
+      })
     }.bind(this));
   }
 });

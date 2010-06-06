@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scripty2 Demos| Basic invocation</title>
+    <style type="text/css" media="screen">
+      p {
+        margin: 10px;
+        width:300px;
+        background:#88f;
+        height:100px;
+        padding:20px;
+        font-size:13px;
+        border:0 solid #fff;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Basic demos</h1>
+    <p id="hello1" onclick="$('hello1').morph('width:400px;font-size:30px')">
+      Hello scripty2! (animate width, font-size)
+    </p>
+    <p id="hello2" onclick="$('hello2').morph('width:200px;background:#ff8', 2)">
+      Hello scripty2! (animate width, background color, set duration to 2 seconds)
+    </p>
+    
+    <p id="hello3" onclick="$('hello3').morph('opacity:0')">
+      Hello scripty2! (animate transparency)
+    </p>
+    <p id="hello4" onclick="$('hello4').morph('border:40px solid #ff8')">
+      Hello scripty2! (animate border)
+    </p>
+    <script type="text/javascript" src="../dist/prototype.s2.min.js"></script>
+  </body>
+</html>

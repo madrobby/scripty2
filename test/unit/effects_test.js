@@ -22,14 +22,14 @@ new Test.Unit.Runner({
   }},
   
   testQueuing: function() { with(this) {
-    new s2.fx.Morph('sandbox',{ style: 'font-size:10px' }).play();
-    var q = s2.fx.DefaultOptions.queue;
+    new S2.FX.Morph('sandbox',{ style: 'font-size:10px' }).play();
+    var q = S2.FX.DefaultOptions.queue;
     assertEqual(1, q.getEffects().length);
     wait(500, function(){
       assertEqual(0, q.getEffects().length);
       
-      new s2.fx.Morph('sandbox',{ style: 'font-size:20px' }).play();
-      new s2.fx.Morph('sandbox',{ style: 'color:#fff' }).play();
+      new S2.FX.Morph('sandbox',{ style: 'font-size:20px' }).play();
+      new S2.FX.Morph('sandbox',{ style: 'color:#fff' }).play();
       assertEqual(2, q.getEffects().length);
       
       wait(500, function(){
@@ -55,12 +55,12 @@ new Test.Unit.Runner({
   
   testExceptionOnNonExistingElement: function() { with(this) {
     assertRaise('ElementDoesNotExistError',
-      function(){new s2.fx.Morph('nothing-to-see-here',{style:'font-size:50px'})});
+      function(){new S2.FX.Morph('nothing-to-see-here',{style:'font-size:50px'})});
   }},
   
   testCallbacks: function() { with(this) {
     var tmp = 0;
-    var e1 = new s2.fx.Morph('sandbox',{style:'',delay:1,duration:0.5,
+    var e1 = new S2.FX.Morph('sandbox',{style:'',delay:1,duration:0.5,
       before: function() { tmp++ },
       after:  function() { tmp++ }
     }).play();
@@ -134,14 +134,14 @@ new Test.Unit.Runner({
   
   testTransition: function() { with(this) {
     // false implies linear
-    var e = new s2.fx.Morph('sandbox',{transition:false,style:'opacity:0.25',duration:0.5}).play();
-    assert(e.options.transition === s2.fx.Transitions.linear);
+    var e = new S2.FX.Morph('sandbox',{transition:false,style:'opacity:0.25',duration:0.5}).play();
+    assert(e.options.transition === S2.FX.Transitions.linear);
     
     wait(1000, function() {
       assertEqual(0.25, $('sandbox').getStyle('opacity'));
       // default to sinoidal
-      var e = new s2.fx.Morph('sandbox',{style:'opacity:0.25',duration:0.5}).play();
-      assert(e.options.transition === s2.fx.Transitions.sinusoidal);
+      var e = new S2.FX.Morph('sandbox',{style:'opacity:0.25',duration:0.5}).play();
+      assert(e.options.transition === S2.FX.Transitions.sinusoidal);
 
       wait(1000, function() {
         assertEqual(0.25, $('sandbox').getStyle('opacity'));
@@ -157,12 +157,12 @@ new Test.Unit.Runner({
         ];
         
         transitions.each(function(t){
-          assertEqual(t.expected0, s2.fx.Transitions[t.transition](0), t.transition + '@0');
-          assertEqual(t.expected1, s2.fx.Transitions[t.transition](1), t.transition + '@1');
+          assertEqual(t.expected0, S2.FX.Transitions[t.transition](0), t.transition + '@0');
+          assertEqual(t.expected1, S2.FX.Transitions[t.transition](1), t.transition + '@1');
         });
         
         $('sandbox').setStyle('font-size:10px');
-        var e = new s2.fx.Morph('sandbox',{style:'font-size:5px',transition:'none'}).play();
+        var e = new S2.FX.Morph('sandbox',{style:'font-size:5px',transition:'none'}).play();
         wait(10, function(){
           assertEqual('10px', $('sandbox').getStyle('font-size'));
         });
@@ -172,7 +172,7 @@ new Test.Unit.Runner({
   }},
   
   testReplayability: function() { with(this) {
-    var e1 = new s2.fx.Morph('sandbox',{style:'font-size:5px',duration:0.5});
+    var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
     
     $('sandbox').setStyle('font-size:15px');
     assertEqual('15px', $('sandbox').getStyle('font-size'));
@@ -188,9 +188,26 @@ new Test.Unit.Runner({
     });
   }},
   
+  testReplayabilityWithDiffrentOptions: function() { with(this) {
+    var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
+    
+    $('sandbox').setStyle('font-size:15px');
+    assertEqual('15px', $('sandbox').getStyle('font-size'));
+    e1.play();
+    wait(750, function(){
+      assertEqual('5px', $('sandbox').getStyle('font-size'));
+      $('sandbox').setStyle('font-size:15px');
+      assertEqual('15px', $('sandbox').getStyle('font-size'));
+      e1.play(null, {style: 'font-size:25px'});
+      wait(750, function(){
+        assertEqual('25px', $('sandbox').getStyle('font-size'));
+      });
+    });
+  }},
+  
   testInspect: function() { with(this) {
-    var e1 = new s2.fx.Morph('sandbox',{style:'font-size:5px',duration:0.5});
-    assertEqual(0, e1.inspect().indexOf('#<s2.fx:'));
+    var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
+    assertEqual(0, e1.inspect().indexOf('#<S2.FX:'));
     assert(e1.inspect().indexOf('idle')>0);
     e1.play();
     wait(1000, function() {
@@ -199,48 +216,48 @@ new Test.Unit.Runner({
   }},
   
   testDefaultOptions: function() { with(this) {
-    var oldDefaultOptions = Object.extend({}, s2.fx.DefaultOptions);
-    assertEqual(0.2, s2.fx.DefaultOptions.duration);
-    s2.fx.DefaultOptions.duration = 0.1;
-    var e1 = (new s2.fx.Morph('sandbox',{ style:'font-size:100px'})).play();
+    var oldDefaultOptions = Object.extend({}, S2.FX.DefaultOptions);
+    assertEqual(0.2, S2.FX.DefaultOptions.duration);
+    S2.FX.DefaultOptions.duration = 0.1;
+    var e1 = (new S2.FX.Morph('sandbox',{ style:'font-size:100px'})).play();
     assertEqual(0.1, e1.options.duration);
     wait(500, function() {
       assertEqual('finished', e1.state);
-      s2.fx.DefaultOptions = oldDefaultOptions;
+      S2.FX.DefaultOptions = oldDefaultOptions;
     });
   }},
   
   testParseOptions: function() { with(this) {
     var opt;
     
-    opt = s2.fx.parseOptions();
-    assertUndefined(opt);
+    opt = S2.FX.parseOptions();
+    assertNotUndefined(opt);
 
-    opt = s2.fx.parseOptions({duration:1,blech:'2'});
+    opt = S2.FX.parseOptions({duration:1,blech:'2'});
     assert('duration' in opt);
     assert('blech' in opt);
     
-    opt = s2.fx.parseOptions('slow');
+    opt = S2.FX.parseOptions('slow');
     assertEqual(1, opt.duration);
     
-    opt = s2.fx.parseOptions('fast');
+    opt = S2.FX.parseOptions('fast');
     assertEqual(.1, opt.duration);
     
-    opt = s2.fx.parseOptions('blech');
-    assertEqual(s2.fx.DefaultOptions.duration, opt.duration);
+    opt = S2.FX.parseOptions('blech');
+    assertEqual(S2.FX.DefaultOptions.duration, opt.duration);
     
-    opt = s2.fx.parseOptions(4);
+    opt = S2.FX.parseOptions(4);
     assertEqual(4, opt.duration);
     
     var f = function(){};
-    opt = s2.fx.parseOptions(f);
+    opt = S2.FX.parseOptions(f);
     assertIdentical(opt.after, f);
   }},
   
   testShortcutOptions: function() { with(this) {
     var testVar="?";    
-    $('sandbox').morph('font-size:10px',0.05);
-    wait(100, function() {
+    $('sandbox').morph('font-size:10px', 0.05);
+    wait(150, function() {
       assertEqual('10px', $('sandbox').getStyle('font-size'));
       $('sandbox').morph('font-size:20px',function(){ testVar='!'; });
       wait(500, function() {
@@ -274,7 +291,7 @@ new Test.Unit.Runner({
       wait(1000,function(){
         assertEqual('17px', $('error_test_ul').getStyle('margin-right'));
         assertEqual('40px', $('error_test_ul').getStyle('font-size'));
-        assertEqual('#ffffff', s2.css.colorFromString($('error_message_2').getStyle('background-color')));
+        assertEqual('#ffffff', S2.CSS.colorFromString($('error_message_2').getStyle('background-color')));
         assertEqual('20px', $('error_message_2').getStyle('font-size'));
       });
     });

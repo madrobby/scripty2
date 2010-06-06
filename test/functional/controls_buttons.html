@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
+
+  
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <div id="theme_switcher">
+    <ul class="ui-helper-clearfix">
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
+  
+  <script type="text/javascript">
+    (function() {
+      function setActiveStylesheet(sheet) {
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      }
+      
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        setActiveStylesheet(sheet);
+      });
+      
+      setActiveStylesheet('default');
+      
+    })();
+  </script>
+  
+  <h1>Tests for <code>S2.UI.Button</code></h1>
+  
+
+  <div class="functional-test">    
+    <h2>Using the <code>button</code> element</h2>
+
+    <button id="normal_button_1">Regular</button>
+    <button id="normal_button_2" disabled="disabled">Disabled</button>
+    <button id="normal_button_3">Primary</button>
+    <button id="normal_button_4">Toggle</button>
+    
+    <script type="text/javascript">
+      new S2.UI.Button('normal_button_1');
+      new S2.UI.Button('normal_button_2');
+      new S2.UI.Button('normal_button_3', { primary: true });      
+      new S2.UI.Button('normal_button_4', { toggle: true  });
+    </script>
+    
+    <div class="description">
+      <ul>
+        <li>First is a button with all the default settings. <strong>Should</strong> have hover state, focus state, and down state.</li>
+        <li>Second button is same as the first, but disabled. <strong>Should not</strong> change state when hovered over or clicked on. Should not receive focus when tabbing through page.</li>
+        <li>Third button is "primary" — denotes most common action. <strong>Should</strong> look different from the first button. <strong>May</strong> have its own distinct hover- and down-state styles, but can also re-use the styles for the regular button.</li>
+        <li>Fourth button is a toggle — each click switches the button between an active state and an inactive state. In the inactive state, the button is identical to an ordinary button. The active state <strong>should</strong> look sufficiently different so that the user can intuit that the button is a toggle.</li>
+      </ul>
+      
+    </div> <!-- .description -->
+        
+  </div> <!-- .functional-test -->
+  
+
+  <div class="functional-test">
+    <h2>Using other kinds of elements</h2>
+
+    <button id="button4">A button element</button>
+  	<input id="button5" type="submit" value="A submit button" />
+  	<a href="#" id="button6">An anchor</a>
+  	
+  	<script type="text/javascript">
+      new S2.UI.Button('button4');
+      new S2.UI.Button('button5');
+      new S2.UI.Button('button6');
+    </script>
+    
+    <div class="description">
+      <p>A test to ensure that buttons made from different HTML elements are styled to look as similar as possible.</p>
+    </div> <!-- .description -->
+    
+  </div> <!-- .ui-widget -->
+  
+  
+  <div class="functional-test">
+    <h2>Buttons with icons</h2>
+    
+    <fieldset>
+      <legend>Regular buttons</legend>
+
+      <button id="button_text_one_icon">Button with one icon</button>
+      <button id="button_text_two_icons">Button with two icons</button>
+      <button id="button_one_icon">Button with one icon and no text</button>
+      <button id="button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Primary buttons</legend>
+
+      <button id="primary_button_text_one_icon">Button with one icon</button>
+      <button id="primary_button_text_two_icons">Button with two icons</button>
+      <button id="primary_button_one_icon">Button with one icon and no text</button>
+      <button id="primary_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Anchors as buttons</legend>
+
+      <a href="#" class="inert" id="anchor_button_text_one_icon">Button with one icon</a>
+      <a href="#" class="inert" id="anchor_button_text_two_icons">Button with two icons</a>
+      <a href="#" class="inert" id="anchor_button_one_icon">Button with one icon and no text</a>
+      <a href="#" class="inert" id="anchor_button_two_icons">Button with two icons and no text</a>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Disabled buttons</legend>
+      
+      <button disabled="disabled" id="disabled_button_text_one_icon">Button with one icon</button>
+      <button disabled="disabled" id="disabled_button_text_two_icons">Button with two icons</button>
+      <button disabled="disabled" id="disabled_button_one_icon">Button with one icon and no text</button>
+      <button disabled="disabled" id="disabled_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Toggle buttons</legend>
+      
+      <button id="toggle_button_text_one_icon">Button with one icon</button>
+      <button id="toggle_button_text_two_icons">Button with two icons</button>
+      <button id="toggle_button_one_icon">Button with one icon and no text</button>
+      <button id="toggle_button_two_icons">Button with two icons and no text</button>
+    </fieldset>
+    
+    <script type="text/javascript">     
+      
+      $(document.body).on('click', '.inert', Event.stop);
+       
+      var buttonOptions = {
+        button_text_one_icon: {
+          icons: { primary: 'ui-icon-locked' }
+        },
+        button_text_two_icons: {
+          icons: { primary: 'ui-icon-gear', secondary: 'ui-icon-triangle-1-s' }
+        },        
+        button_one_icon: {
+          text: false, icons: { primary: 'ui-icon-locked' }
+        },        
+        button_two_icons: {
+          text: false, icons: { primary: 'ui-icon-gear', secondary: 'ui-icon-triangle-1-s' }  
+        }
+      };
+            
+      for (var id in buttonOptions) {
+        new S2.UI.Button(id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('anchor_' + id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('primary_' + id,
+         Object.extend({ primary: true }, buttonOptions[id]));
+        new S2.UI.Button('disabled_' + id, Object.clone(buttonOptions[id]));
+        new S2.UI.Button('toggle_' + id,
+         Object.extend({ toggle: true }, buttonOptions[id]));
+      }
+
+
+    </script>
+    
+    <div class="description">
+      <p>In all the above groups, ensure the following:</p>
+      <ul>
+        <li>For buttons with icon(s) and text, one icon <strong>should</strong> appear to the left of the text, without any overlap between the icon and the text.</li>
+        <li>For buttons with two icons and text, the second icon <strong>should</strong> appear to the right of the text, without any overlap between the icon and the text.</li>
+        <li>For buttons with icon(s) and text, the icon and text <strong>should</strong> be aligned similarly on the vertical axis.</li>
+        <li>For buttons with icon(s) and <em>no</em> text, the icon(s) <strong>should</strong> be centered inside the button.</li>
+      </ul>
+      
+      <p>In the "disabled" group, ensure the following:</p>
+      <ul>
+        <li>The icon <strong>should</strong> change color if the aesthetics of the theme imply it. For instance, in the default theme, the icon and the button text are the same color in the ordinary state, and <strong>should</strong> therefore be the same color in the disabled state.</li>
+        <li>Because buttons can have icons without text, themes <strong>should not</strong> rely too heavily on the text to convey the disabled state. (In other words: ensure the disabled icon-only buttons above look sufficiently disabled.)</li>
+      </ul>
+      
+      <p>In the "toggle" group, ensure the following:</p>
+      <ul>
+        <li>The icon <strong>should</strong> change color in the active state if the aesthetics of the theme imply it. (In the default theme, the icon <strong>should</strong> change color in the active to match the text.)</li>
+      </ul>
+    </div> <!-- .description -->
+    
+  </div> <!-- .ui-widget -->
+  
+
+  <div class="functional-test">
+    <h2>Using checkboxes</h2>
+
+    <input type="checkbox" name="button9" id="button9" value="1" />
+    <label for="button9">Checkbox</label>
+    
+    <script type="text/javascript">
+      new S2.UI.Button('button9');
+    </script>
+    
+    <div class="description">
+      <p><code>S2.UI.Button</code> can turn an <code>&lt;input type="checkbox" /&gt;</code> into a button with a "active" state and an "inactive" state.</p>
+      
+      <ul>
+        <li>The check box itself <strong>should not</strong> be visible.</li>
+        <li>Clicking on the button <strong>should</strong> switch the button from its ordinary state to its active state. Clicking again <strong>should</strong> switch the button back to its ordinary state.</li>
+      </ul>
+    </div> <!-- .description -->
+  </div> <!-- .ui-widget -->
+
+
+  <div class="functional-test">
+    <h2>Button with drop-down menu</h2>
+
+    <button id="button_with_menu">Choose Something</button>
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonWithMenu('button_with_menu', {
+        choices: $w('Lorem Ipsum Dolor')
+      }).observe('ui:button:menu:selected', function(event) {
+        console.log('chose: ', event.memo.element.innerHTML);
+      });
+    </script>
+    
+    <div class="description">
+      <p>A button with an associated drop-down menu.</p>
+    </div> <!-- .description -->
+  </div> <!-- .ui-widget -->
+  
+  
+  <h1>Tests for <code>S2.UI.ButtonSet</code></h1>
+
+  <div class="functional-test">
+    <h2>Basic</h2>
+
+    <div id="button_set" style="margin: 10px 0">
+      <button id="button7">A button element</button>
+      <button id="button8">Another button element</button>
+    </div> <!-- #button_set -->
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonSet('button_set');
+    </script>
+    
+    <div class="description">
+      <p>A basic <code>S2.UI.ButtonSet</code> with two <code>button</code> elements.</p>
+      <ul>
+        <li>The buttons <strong>should</strong> appear grouped. A UI theme <strong>may</strong> signify this grouping in whatever way seems best. (In the default theme, the buttons appear "joined" at the spot where they meet; this spot <strong>should not</strong> have any rounded corners or empty space.)</li>
+      </ul>
+    </div> <!-- .description -->    
+  </div> <!-- .ui-widget -->
+  
+
+  <div class="functional-test">
+    <h2>Using radio buttons</h2>
+
+    <div id="radio_button_set">
+      <input type="radio" name="radio-button" class="radio" id="radio_button_1" />
+      <label for="radio_button_1">Radio Button 1</label>
+
+      <input type="radio" name="radio-button" class="radio" id="radio_button_2" />
+      <label for="radio_button_2">Radio Button 2</label>
+    </div> <!-- #radio_button_set -->
+    
+    
+    <script type="text/javascript">
+      new S2.UI.ButtonSet('radio_button_set');
+    </script>
+    
+    <div class="description">
+      <p>A <code>ButtonSet</code> with two radio buttons.</p>
+      
+      <ul>
+        <li>
+          <p>The buttons <strong>should</strong> behave like radio buttons. That means:</p>
+          <ul>
+            <li>There <strong>should not</strong> be more than one in the "active" state at once.</li>
+            <li>An active button <strong>should not</strong> change state when it is clicked on.</li>
+          </ul>
+        </li>
+      </ul>
+    </div> <!-- .description -->
+    
+    
+  </div> <!-- .ui-widget -->
+  
+  <h1>Miscellaneous</h1>
+  
+  <div class="functional-test">
+    <h2>Icons</h2>
+    
+    <div id="icons" style="margin-bottom: 20px;" class="ui-helper-clearfix">      
+    	<button title=".ui-icon-carat-1-n">.</button>
+			<button title=".ui-icon-carat-1-ne">.</button>
+			<button title=".ui-icon-carat-1-e">.</button>
+             
+			<button title=".ui-icon-carat-1-se">.</button>
+			<button title=".ui-icon-carat-1-s">.</button>
+			<button title=".ui-icon-carat-1-sw">.</button>
+			<button title=".ui-icon-carat-1-w">.</button>
+			<button title=".ui-icon-carat-1-nw">.</button>
+			<button title=".ui-icon-carat-2-n-s">.</button>
+			<button title=".ui-icon-carat-2-e-w">.</button>
+			<button title=".ui-icon-triangle-1-n">.</button>
+			<button title=".ui-icon-triangle-1-ne">.</button>
+             
+			<button title=".ui-icon-triangle-1-e">.</button>
+			<button title=".ui-icon-triangle-1-se">.</button>
+			<button title=".ui-icon-triangle-1-s">.</button>
+			<button title=".ui-icon-triangle-1-sw">.</button>
+			<button title=".ui-icon-triangle-1-w">.</button>
+			<button title=".ui-icon-triangle-1-nw">.</button>
+			<button title=".ui-icon-triangle-2-n-s">.</button>
+			<button title=".ui-icon-triangle-2-e-w">.</button>
+			<button title=".ui-icon-arrow-1-n">.</button>
+             
+			<button title=".ui-icon-arrow-1-ne">.</button>
+			<button title=".ui-icon-arrow-1-e">.</button>
+			<button title=".ui-icon-arrow-1-se">.</button>
+			<button title=".ui-icon-arrow-1-s">.</button>
+			<button title=".ui-icon-arrow-1-sw">.</button>
+			<button title=".ui-icon-arrow-1-w">.</button>
+			<button title=".ui-icon-arrow-1-nw">.</button>
+			<button title=".ui-icon-arrow-2-n-s">.</button>
+			<button title=".ui-icon-arrow-2-ne-sw">.</button>
+             
+			<button title=".ui-icon-arrow-2-e-w">.</button>
+			<button title=".ui-icon-arrow-2-se-nw">.</button>
+			<button title=".ui-icon-arrowstop-1-n">.</button>
+			<button title=".ui-icon-arrowstop-1-e">.</button>
+			<button title=".ui-icon-arrowstop-1-s">.</button>
+			<button title=".ui-icon-arrowstop-1-w">.</button>
+			<button title=".ui-icon-arrowthick-1-n">.</button>
+			<button title=".ui-icon-arrowthick-1-ne">.</button>
+			<button title=".ui-icon-arrowthick-1-e">.</button>
+             
+			<button title=".ui-icon-arrowthick-1-se">.</button>
+			<button title=".ui-icon-arrowthick-1-s">.</button>
+			<button title=".ui-icon-arrowthick-1-sw">.</button>
+			<button title=".ui-icon-arrowthick-1-w">.</button>
+			<button title=".ui-icon-arrowthick-1-nw">.</button>
+			<button title=".ui-icon-arrowthick-2-n-s">.</button>
+			<button title=".ui-icon-arrowthick-2-ne-sw">.</button>
+			<button title=".ui-icon-arrowthick-2-e-w">.</button>
+			<button title=".ui-icon-arrowthick-2-se-nw">.</button>
+             
+			<button title=".ui-icon-arrowthickstop-1-n">.</button>
+			<button title=".ui-icon-arrowthickstop-1-e">.</button>
+			<button title=".ui-icon-arrowthickstop-1-s">.</button>
+			<button title=".ui-icon-arrowthickstop-1-w">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-w">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-n">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-e">.</button>
+			<button title=".ui-icon-arrowreturnthick-1-s">.</button>
+			<button title=".ui-icon-arrowreturn-1-w">.</button>
+             
+			<button title=".ui-icon-arrowreturn-1-n">.</button>
+			<button title=".ui-icon-arrowreturn-1-e">.</button>
+			<button title=".ui-icon-arrowreturn-1-s">.</button>
+			<button title=".ui-icon-arrowrefresh-1-w">.</button>
+			<button title=".ui-icon-arrowrefresh-1-n">.</button>
+			<button title=".ui-icon-arrowrefresh-1-e">.</button>
+			<button title=".ui-icon-arrowrefresh-1-s">.</button>
+			<button title=".ui-icon-arrow-4">.</button>
+			<button title=".ui-icon-arrow-4-diag">.</button>
+             
+			<button title=".ui-icon-extlink">.</button>
+			<button title=".ui-icon-newwin">.</button>
+			<button title=".ui-icon-refresh">.</button>
+			<button title=".ui-icon-shuffle">.</button>
+			<button title=".ui-icon-transfer-e-w">.</button>
+			<button title=".ui-icon-transferthick-e-w">.</button>
+			<button title=".ui-icon-folder-collapsed">.</button>
+			<button title=".ui-icon-folder-open">.</button>
+			<button title=".ui-icon-document">.</button>
+             
+			<button title=".ui-icon-document-b">.</button>
+			<button title=".ui-icon-note">.</button>
+			<button title=".ui-icon-mail-closed">.</button>
+			<button title=".ui-icon-mail-open">.</button>
+			<button title=".ui-icon-suitcase">.</button>
+			<button title=".ui-icon-comment">.</button>
+			<button title=".ui-icon-person">.</button>
+			<button title=".ui-icon-print">.</button>
+			<button title=".ui-icon-trash">.</button>
+             
+			<button title=".ui-icon-locked">.</button>
+			<button title=".ui-icon-unlocked">.</button>
+			<button title=".ui-icon-bookmark">.</button>
+			<button title=".ui-icon-tag">.</button>
+			<button title=".ui-icon-home">.</button>
+			<button title=".ui-icon-flag">.</button>
+			<button title=".ui-icon-calculator">.</button>
+			<button title=".ui-icon-cart">.</button>
+			<button title=".ui-icon-pencil">.</button>
+             
+			<button title=".ui-icon-clock">.</button>
+			<button title=".ui-icon-disk">.</button>
+			<button title=".ui-icon-calendar">.</button>
+			<button title=".ui-icon-zoomin">.</button>
+			<button title=".ui-icon-zoomout">.</button>
+			<button title=".ui-icon-search">.</button>
+			<button title=".ui-icon-wrench">.</button>
+			<button title=".ui-icon-gear">.</button>
+			<button title=".ui-icon-heart">.</button>
+             
+			<button title=".ui-icon-star">.</button>
+			<button title=".ui-icon-link">.</button>
+			<button title=".ui-icon-cancel">.</button>
+			<button title=".ui-icon-plus">.</button>
+			<button title=".ui-icon-plusthick">.</button>
+			<button title=".ui-icon-minus">.</button>
+			<button title=".ui-icon-minusthick">.</button>
+			<button title=".ui-icon-close">.</button>
+			<button title=".ui-icon-closethick">.</button>
+             
+			<button title=".ui-icon-key">.</button>
+			<button title=".ui-icon-lightbulb">.</button>
+			<button title=".ui-icon-scissors">.</button>
+			<button title=".ui-icon-clipboard">.</button>
+			<button title=".ui-icon-copy">.</button>
+			<button title=".ui-icon-contact">.</button>
+			<button title=".ui-icon-image">.</button>
+			<button title=".ui-icon-video">.</button>
+			<button title=".ui-icon-script">.</button>
+			<button title=".ui-icon-alert">.</button>
+             
+			<button title=".ui-icon-info">.</button>
+			<button title=".ui-icon-notice">.</button>
+			<button title=".ui-icon-help">.</button>
+			<button title=".ui-icon-check">.</button>
+			<button title=".ui-icon-bullet">.</button>
+			<button title=".ui-icon-radio-off">.</button>
+			<button title=".ui-icon-radio-on">.</button>
+			<button title=".ui-icon-pin-w">.</button>
+			<button title=".ui-icon-pin-s">.</button>
+			<button title=".ui-icon-play">.</button>
+			<button title=".ui-icon-pause">.</button>
+             
+			<button title=".ui-icon-seek-next">.</button>
+			<button title=".ui-icon-seek-prev">.</button>
+			<button title=".ui-icon-seek-end">.</button>
+			<button title=".ui-icon-seek-first">.</button>
+			<button title=".ui-icon-stop">.</button>
+			<button title=".ui-icon-eject">.</button>
+			<button title=".ui-icon-volume-off">.</button>
+			<button title=".ui-icon-volume-on">.</button>
+			<button title=".ui-icon-power">.</button>
+             
+			<button title=".ui-icon-signal-diag">.</button>
+			<button title=".ui-icon-signal">.</button>
+			<button title=".ui-icon-battery-0">.</button>
+			<button title=".ui-icon-battery-1">.</button>
+			<button title=".ui-icon-battery-2">.</button>
+			<button title=".ui-icon-battery-3">.</button>
+			<button title=".ui-icon-circle-plus">.</button>
+			<button title=".ui-icon-circle-minus">.</button>
+			<button title=".ui-icon-circle-close">.</button>
+             
+			<button title=".ui-icon-circle-triangle-e">.</button>
+			<button title=".ui-icon-circle-triangle-s">.</button>
+			<button title=".ui-icon-circle-triangle-w">.</button>
+			<button title=".ui-icon-circle-triangle-n">.</button>
+			<button title=".ui-icon-circle-arrow-e">.</button>
+			<button title=".ui-icon-circle-arrow-s">.</button>
+			<button title=".ui-icon-circle-arrow-w">.</button>
+			<button title=".ui-icon-circle-arrow-n">.</button>
+			<button title=".ui-icon-circle-zoomin">.</button>
+             
+			<button title=".ui-icon-circle-zoomout">.</button>
+			<button title=".ui-icon-circle-check">.</button>
+			<button title=".ui-icon-circlesmall-plus">.</button>
+			<button title=".ui-icon-circlesmall-minus">.</button>
+			<button title=".ui-icon-circlesmall-close">.</button>
+			<button title=".ui-icon-squaresmall-plus">.</button>
+			<button title=".ui-icon-squaresmall-minus">.</button>
+			<button title=".ui-icon-squaresmall-close">.</button>
+			<button title=".ui-icon-grip-dotted-vertical">.</button>
+             
+			<button title=".ui-icon-grip-dotted-horizontal">.</button>
+			<button title=".ui-icon-grip-solid-vertical">.</button>
+			<button title=".ui-icon-grip-solid-horizontal">.</button>
+			<button title=".ui-icon-gripsmall-diagonal-se">.</button>
+			<button title=".ui-icon-grip-diagonal-se">.</button>
+		</div> <!-- #icons -->
+		
+		<script type="text/javascript">
+		  $('icons').select('button').each( function(btn) {
+		    var iconName = btn.readAttribute('title').substring(1);
+		    new S2.UI.Button(btn, { text: false, icons: { primary: iconName } });
+		  });
+		</script>
+  </div> <!-- .functional-test -->
+  
+  
+</body>
+</html>

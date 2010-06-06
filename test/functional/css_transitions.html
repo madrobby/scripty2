@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("../functional/css/test.css");
+  </style>  
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+  
+  <style type="text/css" media="screen">
+  
+    .wrapper {
+      padding: 50px;
+      position: relative;
+      height: 300px;
+    }
+  
+    #test1, #test2, #test3 {
+      width: 300px;
+      height: 80px;
+      position: absolute;
+      left: 500px;
+      border: 5px solid #036;
+      background-color: #f0f0f0;
+      padding: 5px;
+    }
+    
+    #test1 { top: 20px;  }
+    #test2 { top: 140px; }
+    #test3 { top: 260px; }
+    
+    #test3 {
+      -webkit-transition-property: -webkit-transform opacity;
+      -webkit-transition-timing-function: ease-in-out;
+      -webkit-transition-duration: 0.6s;
+    }
+    
+  </style>
+
+</head>
+
+<body>
+
+  <h1>Effects test</h1>
+  <p>Movement along one axis. In environments where animation can be hardware-accelerated, example 1 should look like example 3. Both should appear much smoother than example 2.</p>
+
+
+  <div class="wrapper">
+    
+    <p id="test1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+    <p id="test2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    
+    <p id="test3">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    
+  </div> <!-- .wrapper -->
+  
+  <div>
+    <button id="animate_regular">With CSS transitions</button>
+    <button id="animate_no_transitions">Without CSS transitions</button>
+    <button id="animate_transforms">With animated CSS transforms</button>
+
+    <button id="animate_all">All at the same time</button>
+    
+    <label>
+      <input type="checkbox" id="slow" /> Slow motion
+    </label>
+  </div>
+  
+  <script type="text/javascript">
+    function getDuration() {
+      return $('slow').checked ? 6 : 0.6;
+    }
+    
+    function start1() {
+      $('test1').setStyle({ opacity: '1', left: '500px' });
+      $('test1').morph('opacity: 0; left: 0px', { duration: getDuration() });
+    }
+    
+    function start2() {
+      $('test2').setStyle({ opacity: '1', left: '500px' });
+      $('test2').morph('opacity: 0; left: 0px', { duration: getDuration(), engine: 'javascript' });
+    }
+    
+    function start3() {
+      $('test3').setStyle({
+        WebkitTransitionDuration: "0s",
+        WebkitTransform: "translate(0px, 0px)",
+        opacity: '1'
+      });
+      
+      window.setTimeout(function() {
+        $('test3').setStyle({
+          WebkitTransitionDuration: getDuration() + 's',
+          WebkitTransform: "translate(-500px, 0px)",
+          opacity: '0'
+        });
+      }, 100);
+    }
+    
+    function startAll() {
+      $('test1', 'test2').invoke('setStyle', { left: '500px', opacity: '1' });
+      
+      var effect1 = new S2.FX.Morph($('test1'), {
+        style: 'opacity: 0; left: 0px',
+        duration: getDuration()
+      });
+      
+      var effect2 = new S2.FX.Morph($('test2'), {
+        style: 'opacity: 0; left: 0px',
+        duration: getDuration(),
+        engine: 'javascript'
+      });
+      
+      var parallelEffect = new S2.FX.Parallel([effect1, effect2], {
+        duration: getDuration()
+      });
+      parallelEffect.play();  
+      
+      start3();
+    }
+    
+    $('animate_regular').observe('click', start1);
+    $('animate_no_transitions').observe('click', start2);    
+    $('animate_transforms').observe('click', start3);
+    $('animate_all').observe('click', startAll);
+  </script>
+
+</body>
+</html>

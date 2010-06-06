@@ -65,8 +65,8 @@ var s2doc = {
   },
   
   TransitionExample: function(element){
-    var type = element.up().down('.ebnf').innerHTML.gsub(/s2\.fx\.Transitions\./,'').split('(').first(),
-      transition = s2.fx.Transitions[type], active = false;
+    var type = element.up().down('.ebnf').innerHTML.gsub(/S2\.FX\.Transitions\./,'').split('(').first(),
+      transition = S2.FX.Transitions[type], active = false;
       
     var values = $R(0,200).map(function(v){ return transition(v/200)*200; }),
       min = Math.min(0, values.min()), max = Math.max(200, values.max());
@@ -114,7 +114,7 @@ var s2doc = {
       var durations = [.2, .5, 1, 3, 5], i = -1, duration, delay = 0;
       function animate(){
         duration = durations[++i%durations.length];
-        effectM = new s2.fx.Morph(movement, { 
+        effectM = new S2.FX.Morph(movement, { 
           style: 'left:268px', transition: demoTransition, duration: duration, delay: delay,
           before: function(){ 
             label.innerHTML = duration + 's';
@@ -123,13 +123,13 @@ var s2doc = {
           after: function(){ if(active) animate(); }
         });
         effectM.play();
-        effectC = new s2.fx.Morph(color, { 
+        effectC = new S2.FX.Morph(color, { 
           style: 'background-color:#9D74D4', duration: duration, delay: delay, transition: transition,
           before: function(){ color.setStyle('background-color:#ABD474') }
         });
         
         effectC.play();
-        effectS = new s2.fx.Morph(size, { 
+        effectS = new S2.FX.Morph(size, { 
           style: 'top:20px;left:390px;width:135px;font-size:200%;height:120px', duration:duration, delay: delay, transition: transition,
           before: function(){ size.setStyle('top:60px;left:450px;margin:0;width:30px;height:30px;font-size:100%') }
         });

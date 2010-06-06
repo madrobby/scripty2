@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type="text/css" rel="stylesheet" title="default" href="../../themes/default/theme.css" />
+  <link type="text/css" rel="stylesheet disabled" title="alternate" href="../../themes/test/theme.css" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+  </style>
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <div id="theme_switcher">
+    <ul>
+      <li>
+        <strong>Theme:</strong>
+      </li>
+      <li>
+        <a href="#default">Default</a>
+      </li>
+      <li>
+        <a href="#alternate">Alternate</a>
+      </li>
+    </ul>    
+  </div> <!-- #theme_switcher -->
+  
+  <script type="text/javascript">
+    (function() {
+      var STYLESHEETS = $A(document.getElementsByTagName('link'));
+      
+      $('theme_switcher').observe('click', function(event) {
+        var element = event.element();
+        if (element.nodeName.toUpperCase() !== 'A') return;        
+        var sheet = element.readAttribute('href').split('#').last();
+        
+        STYLESHEETS.each( function(s) {
+          var title = s.readAttribute('title');
+          s.disabled = (title !== sheet);
+        });
+      });
+      
+    })();
+  </script>  
+<h1>Progress Bar Tests</h1>
+
+<h2>Standard progress bar</h2>
+
+<div id="progress_bar"></div>
+
+
+<div class="ui-widget" style="margin-top: 10px">
+  <button id="increment">Increment by 5%</button>    
+</div> <!-- .ui-widget -->
+
+<script type="text/javascript">
+  new S2.UI.Button('increment');
+  var progressBar = new S2.UI.ProgressBar('progress_bar');
+  
+  $('increment').observe('click', function(event) {
+    event.stop();
+    var progressBar =  $('progress_bar').retrieve('S2.UI.ProgressBar');
+    var value = progressBar.getValue();
+    progressBar.setValue(value + 5);
+  });
+</script>
+
+<div class="description">
+  <p>A standard progress bar with all the default options.</p>
+</div> <!-- .description -->
+
+</body>
+</html>

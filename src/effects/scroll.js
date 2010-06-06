@@ -1,11 +1,11 @@
-//= require <effects/operators/scroll>
+//= require "operators/scroll"
 
 /**
- *  class s2.fx.Scroll < s2.fx.Element
+ *  class S2.FX.Scroll < S2.FX.Element
  *
  *  Effect for scrolling an elements' contents.
 **/
-s2.fx.Scroll = Class.create(s2.fx.Element, {
+S2.FX.Scroll = Class.create(S2.FX.Element, {
   setup: function() {
     this.animate('scroll', this.element, { scrollTo: this.options.to });
   }

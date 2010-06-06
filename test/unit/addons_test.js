@@ -23,7 +23,7 @@ new Test.Unit.Runner({
     ];
     
     fits.each( function(fit,index){
-      assertEnumEqual(solution[index], s2.fx.Helpers.fitIntoRectangle(fit[0], fit[1], fit[2], fit[3]));
+      assertEnumEqual(solution[index], S2.FX.Helpers.fitIntoRectangle(fit[0], fit[1], fit[2], fit[3]));
     });
   }}
   

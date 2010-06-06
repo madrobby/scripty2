@@ -1,5 +1,5 @@
 /** section: scripty2 fx
- *  class s2.fx.Heartbeat
+ *  class S2.FX.Heartbeat
  *
  *  The heartbeat class provides for effects timing. An instance of this class
  *  is automatically created when the first effect on a page is instantiated.
@@ -7,18 +7,18 @@
  *  This class can be extended and replaced by your own implementation:
  *
  *      // call before effects are created
- *      var myHeartbeat = Class.create(s2.fx.Heartbeat, { ... });
- *      s2.fx.initialize(new myHeartbeat());
+ *      var myHeartbeat = Class.create(S2.FX.Heartbeat, { ... });
+ *      S2.FX.initialize(new myHeartbeat());
  *
  *  This can be used to implement customized debugging and more.
 **/
-s2.fx.Heartbeat = Class.create({
+S2.FX.Heartbeat = Class.create({
   /**
-   *  new s2.fx.Heartbeat([options])
+   *  new S2.FX.Heartbeat([options])
    *  - options (Object): options hash
    *
    *  The following options are available:
-   *  * [[framerate]]: set (maximum) framerate for calls to [[s2.fx.beat]]/
+   *  * [[framerate]]: set (maximum) framerate for calls to [[S2.FX.beat]]/
   **/
   initialize: function(options) {
     this.options = Object.extend({
@@ -28,11 +28,11 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat#start() -> undefined
+   *  S2.FX.Heartbeat#start() -> undefined
    *  
-   *  This function is called by [[s2.fx]] whenever there's a new active effect queued
+   *  This function is called by [[S2.FX]] whenever there's a new active effect queued
    *  and there are no other effects running. This mechanism can be used to prevent
-   *  unnecessary timeouts/intervals from being active, as [[s2.fx.Hearbeat.beat]] is only
+   *  unnecessary timeouts/intervals from being active, as [[S2.FX.Hearbeat.beat]] is only
    *  called when there are active effects that need to be rendered. 
   **/
   start: function() {
@@ -43,7 +43,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat#stop() -> undefined
+   *  S2.FX.Heartbeat#stop() -> undefined
    *  
    *  Called when the last active effect is dequeued.
   **/
@@ -55,10 +55,10 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat#beat() -> undefined
+   *  S2.FX.Heartbeat#beat() -> undefined
    *  
    *  This method fires an `effect:heartbeat` event which is in turn used by
-   *  [[s2.fx]] to render all active effect queues.
+   *  [[S2.FX]] to render all active effect queues.
    * 
    *  Fires: effect:heartbeat
   **/
@@ -68,7 +68,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat#getTimestamp() -> Date
+   *  S2.FX.Heartbeat#getTimestamp() -> Date
    *  
    *  Returns the current timestamp.
   **/
@@ -77,7 +77,7 @@ s2.fx.Heartbeat = Class.create({
   },
 
   /**
-   *  s2.fx.Heartbeat#generateTimestamp() -> Date
+   *  S2.FX.Heartbeat#generateTimestamp() -> Date
    *  
    *  Returns the current date and time.
   **/
@@ -86,7 +86,7 @@ s2.fx.Heartbeat = Class.create({
   },
   
   /**
-   *  s2.fx.Heartbeat#updateTimestamp() -> undefined
+   *  S2.FX.Heartbeat#updateTimestamp() -> undefined
    *  
    *  Updates the current timestamp (sets it to the current date and time).
    *
