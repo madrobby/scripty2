@@ -5,7 +5,8 @@
  *  end-to-end over time.
 **/
 S2.FX.Queue = (function(){ 
-  return function(){
+  return function() {
+    var instance = this;
     var effects = [];
     
     /**
@@ -13,7 +14,7 @@ S2.FX.Queue = (function(){
      *
      *  Returns an array of any effects currently running or queued up.
     **/
-    function getEffects(){
+    function getEffects() {
       return effects;
     }
     
@@ -22,7 +23,7 @@ S2.FX.Queue = (function(){
      *
      *  Returns whether there are any effects currently running or queued up.
     **/
-    function active(){
+    function active() {
       return effects.length > 0;
     }
     
@@ -32,18 +33,17 @@ S2.FX.Queue = (function(){
      *
      *  Add an effect to the queue. The effects' options can optionally
      *  contain a `position` option that can be either `parallel` 
-     *  (the effect will start immediately) or 
-     *  `end` (the effect will start when the last of the 
-     *  currently queued effects end).
+     *  (the effect will start immediately) or `end` (the effect will start
+     *  when the last of the currently-queued effects ends).
      *  Returns the Queue.
      *
      *  fires: effect:queued
     **/
-    function add(effect){
+    function add(effect) {
       calculateTiming(effect);
       effects.push(effect);
-      document.fire('effect:queued', this);
-      return this;
+      document.fire('effect:queued', instance);
+      return instance;
     }
 
     /**
@@ -55,11 +55,11 @@ S2.FX.Queue = (function(){
      *
      *  fires: effect:dequeued
     **/
-    function remove(effect){
+    function remove(effect) {
       effects = effects.without(effect);
+      document.fire('effect:dequeued', instance);
       delete effect;
-      document.fire('effect:dequeued', this);
-      return this;
+      return instance;
     }
 
     /**
@@ -69,28 +69,37 @@ S2.FX.Queue = (function(){
      *  Renders all effects that are currently in the Queue.
      *  Returns the Queue.
     **/
-    function render(timestamp){
-      effects.invoke('render', timestamp);
-      effects.select(function(effect) {
-        return effect.state == 'finished';
-      }).each(remove);
-      return this;
+    function render(timestamp) {
+      for (var i = 0, effect; effect = effects[i]; i++) {
+        effect.render(timestamp);
+        if (effect.state === 'finished') remove(effect);
+      }
+      
+      return instance;
     }
 
-    function calculateTiming(effect){
+    function calculateTiming(effect) {
       var position = effect.options.position || 'parallel',
-        startsAt = S2.FX.getHeartbeat().getTimestamp();
+        now = S2.FX.getHeartbeat().getTimestamp();
 
-      if (position == 'end')
-        startsAt = effects.without(effect).pluck('endsAt').max() || startsAt;
-
-      effect.startsAt = 
-        startsAt + (effect.options.delay || 0) * 1000;
-      effect.endsAt = 
-        effect.startsAt + (effect.options.duration || 1) * 1000;
+      var startsAt;
+      if (position === 'end') {
+        startsAt = effects.without(effect).pluck('endsAt').max() || now;
+        if (startsAt < now) startsAt = now;
+      } else {
+        startsAt = now;
+      }
+       
+      // If the user specified a delay, we convert it to ms and add it to the
+      // `startsAt` time. 
+      var delay = (effect.options.delay || 0) * 1000;      
+      effect.startsAt = startsAt + delay;
+      
+      var duration = (effect.options.duration || 1) * 1000;      
+      effect.endsAt = effect.startsAt + duration;
     }
     
-    Object.extend(this, {
+    Object.extend(instance, {
       getEffects: getEffects,
       active: active,
       add: add,

@@ -47,6 +47,40 @@ S2.CSS = {
     zoom: 'number'
   },
   
+  // An attempt to support vendor-specific properties in a sane way.
+  // TODO: Do more research into what ought to be added to this list.
+  VENDOR_MAP: {
+    webkit: {
+      // DEFAULT means that the vendorized prefix is obtained simply by
+      // prepending the vendor prefix. Some properties (like
+      // `border-radius-top-left`) are named differently in different
+      // browsers, so their equivalents must be specified outright.
+      DEFAULT: $w('border-radius box-shadow transform transition ' + 
+       'transition-duration transition-timing-function transition-property ' +
+       'transition-delay ' + 
+       'border-top-left-radius border-top-right-radius border-bottom-left-radius ' + 
+       'border-bottom-right-radius'
+      )
+    },
+    moz: {
+      DEFAULT: $w('border-radius box-shadow transform transition ' + 
+       'transition-duration transition-timing-function transition-property ' +
+       'transition-delay '
+      ),
+      'border-top-left-radius':     '-moz-border-radius-topleft',
+      'border-top-right-radius':    '-moz-border-radius-topright',
+      'border-bottom-left-radius':  '-moz-border-radius-bottomleft',
+      'border-bottom-right-radius': '-moz-border-radius-bottomright'
+    },
+      
+    o: {
+      // TODO: Figure out what Opera supports.
+    }
+  },
+  
+  // Determined below.
+  VENDOR_PREFIX: null,
+  
   /**
    *  S2.CSS.LENGTH = /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/
    *  Regular expression for a CSS length, for example 12px, 8.4in, 13% or 0.
@@ -100,6 +134,90 @@ S2.CSS = {
     return styleRules;
   },
   
+  parse: function(styleString) {
+    return S2.CSS.parseStyle(styleString);
+  },
+  
+  /**
+   *  S2.CSS.normalize(element, style) -> Object
+   *  - element (Element): The element on which the styles will be applied.
+   *  - style (Object | String): The styles to be applied to the element.
+   *  
+   *  "Normalizes" the given CSS by removing lines that will have no effect
+   *  on the element. For instance, will remove "width: 200px" from the style
+   *  if the element is _already_ `200px` wide.
+   *  
+  **/
+  normalize: function(element, style) {
+    if (Object.isHash(style)) style = style.toObject();
+    if (typeof style === 'string') style = S2.CSS.parseStyle(style);
+    
+    var result = {}, current;
+    
+    for (var property in style) {
+      current = element.getStyle(property);
+      if (style[property] !== current) {
+        result[property] = style[property];
+      }
+    }
+
+    return result;
+  },
+
+  /**
+   *  S2.CSS.serialize(object) -> String
+   *  - object (Object): An object of CSS property-value pairs.
+   *  
+   *  Converts an object of CSS property-value pairs into a string
+   *  suitable for setting an element's `cssText` property.
+  **/
+  serialize: function(object) {
+    if (Object.isHash(object)) object = object.toObject();
+    var output = "", value;
+    for (var property in object) {
+      value = object[property];
+      property = this.vendorizeProperty(property);
+      output += (property + ": " + value + ';');
+    }    
+    return output;
+  },
+  
+  /**
+   *  S2.CSS.vendorizeProperty(property) -> String
+   *  - property (String): A CSS property.
+   *  
+   *  Converts a non-vendor-prefixed CSS property into its vendor-prefixed
+   *  equivalent, if one exists.
+   *  
+   *  #### Examples
+   *  
+   *      S2.CSS.vendorizeProperty('border-radius');
+   *      //-> "-moz-border-radius" (if the user is running Firefox)
+   *      S2.CSS.vendorizeProperty('width'); //-> "width"
+   *      S2.CSS.vendorizeProperty('narf');  //-> "narf"
+   *  
+  **/
+  vendorizeProperty: function(property) {
+    var prefix = S2.CSS.VENDOR_PREFIX;
+    
+    property = property.underscore().dasherize();
+    
+    if (prefix) {
+      var table = S2.CSS.VENDOR_MAP[prefix.toLowerCase()];
+      if (table.DEFAULT.include(property)) {
+        property = prefix + '-' + property;
+      } else if (table[property]) {
+        property = table[property];
+      }
+    }
+
+    // Ensure vendor-prefixed properties begin with a hyphen.
+    if (property.match(/^(?:webkit|moz|ms|o|khtml)-/))
+      property = '-' + property;
+
+    return property;
+  },
+  
   /**
    *  S2.CSS.normalizeColor(color) -> Array
    *  - color (String): Color in #abc, #aabbcc or rgba(1,2,3) format
@@ -108,7 +226,7 @@ S2.CSS = {
    *  
    *  * \#abc       -> [170, 187, 204]
    *  * \#aabbcc    -> not changed
-   *  * rgb(1,2,3) -> [1, 2, 3]
+   *  * rgb(1,2,3)  -> [1, 2, 3]
    *  * \#xyz       -> [NaN, NaN, NaN]
    *  
    *  This method does not support HTML color constants.
@@ -274,7 +392,7 @@ S2.CSS = {
 };
 
 S2.CSS.PROPERTIES = [];
-for(property in S2.CSS.PROPERTY_MAP) S2.CSS.PROPERTIES.push(property);
+for (var property in S2.CSS.PROPERTY_MAP) S2.CSS.PROPERTIES.push(property);
 
 S2.CSS.NUMERIC_PROPERTIES = S2.CSS.PROPERTIES.findAll(function(property){ return !property.endsWith('olor') });
 S2.CSS.COLOR_PROPERTIES   = S2.CSS.PROPERTIES.findAll(function(property){ return property.endsWith('olor') });
@@ -293,3 +411,18 @@ if (!(document.defaultView && document.defaultView.getComputedStyle)) {
 };
 
 Element.addMethods(S2.CSS.ElementMethods);
+
+(function() {
+  // Use border-radius as a test to see which vendor prefix we should
+  // be using.  
+  var div = document.createElement('div');  
+  var style = div.style, prefixes = $w('webkit Moz');
+    
+  var prefix = prefixes.detect( function(p) {
+    return typeof style[p + 'BorderRadius'] !== 'undefined';
+  });
+  
+  S2.CSS.VENDOR_PREFIX = prefix;
+  
+  div = null;
+})();

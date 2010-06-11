@@ -1,4 +1,9 @@
-
+/**
+ *  class S2.FX.SlideDown < S2.FX.Element
+ *  
+ *  Effect to hide an element by animating its CSS `height`, `padding-top`,
+ *  and `padding-bottom` from their ordinary values to zero.
+**/
 
 S2.FX.SlideDown = Class.create(S2.FX.Element, {
   setup: function() {

@@ -1,37 +1,227 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>scripty2 Demos| Basic invocation</title>
-    <style type="text/css" media="screen">
-      p {
-        margin: 10px;
-        width:300px;
-        background:#88f;
-        height:100px;
-        padding:20px;
-        font-size:13px;
-        border:0 solid #fff;
-        cursor: pointer;
-      }
-      p#hello1 {
-        position: relative;
-        left: 0;
-        top: 0;
-      }
-      p#hello2 {
-        position: relative;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Basic demos</h1>
-    <p id="hello1" onclick="$('hello1').morph('left:200px;top:100px',1)">
-      Hello scripty2! (animate left/top, hw-accel if possible)
-    </p>
-    <p id="hello2" onclick="$('hello2').morph('left:200px;width:700px',1)">
-      Hello scripty2! (animate left/width)
-    </p>
-    <script type="text/javascript" src="../dist/prototype.s2.min.js"></script>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>scripty2: demos</title>
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="demos.css" media="screen" rel="stylesheet" type="text/css" />
+
+  <style type="text/css" media="screen">
+    body {
+      background: url(images/body.jpg);
+    }
+  </style>
+  
+  
+  
+  <script src="../dist/prototype.js" type="text/javascript"></script>
+  <script src="../dist/s2.js" type="text/javascript"></script>
+  
+  <style type="text/css" media="screen">
+    #panel div.panel {
+      position: absolute;
+    }
+  </style>
+  
+  <script type="text/javascript">
+    function crossfade(hiding, showing) {
+      return function() {
+        hiding = $(hiding); showing = $(showing);
+
+        hiding.fade({ duration: 0.5, delay: 0.5 });
+        showing.appear({ duration: 0.5, delay: 0.5 });
+      };
+    }
+  </script>
+  
+  
+
+</head>
+<body>
+  
+  <div class="canvas">
+    
+    <div id="panel" style="width: 300px; position: absolute; left: 25px; top: 25px; position: relative;">
+      
+      <div id="frame_1" class="panel big">
+        <h1>CSS Transitions</h1>
+        
+        <p id="transitions_unsupported" class="warning" style="display: none">
+          <b>NOTE:</b> Your browser doesn't support CSS transitions. The demonstrations on this page will work properly,
+          but cannot take advantage of CSS transitions or hardware-accelerated animation.
+        </p>
+        
+        <p id="hw_acceleration_unsupported" class="warning" style="display: none">
+          <b>NOTE:</b> Your browser supports CSS transitions, but not accelerated compositing.
+          The demonstrations on this page will work properly, but cannot take advantage of hardware-accelerated animation.
+        </p>
+        
+        <p>
+          script.aculo.us 2.0 boasts brand-new support for <strong>CSS transitions</strong>.
+          In browsers that support them, scripty2 will try to animate <code>Effect.Morph</code>
+          effects with CSS transitions instead of DHTML-style animation.
+        </p>
+        
+        <p>
+          This box has a width of <code>300px</code>. We can widen it to <code>600px</code> like this:
+        </p>
+        
+        <pre><code>$('panel').morph('width: 600px');</code></pre>
+        
+        <p style="margin-bottom: 0;">
+          <button id="step_1">Try it.</button>          
+        </p>
+        
+        <script type="text/javascript">
+          
+          if (!S2.Extensions.CSSTransitions) {
+            $('transitions_unsupported').show();
+          } else if (!S2.Extensions.HardwareAcceleratedCSSTransitions) {
+            $('hw_acceleration_unsupported').show();
+          }
+          
+          $('step_1').on('click', function() {
+            $('panel').morph('width: 600px', crossfade('frame_1', 'frame_2'));
+          });
+        </script>
+        
+      </div> <!-- #frame_1 -->
+      
+      <div id="frame_2" class="panel big" style="display: none;">
+        <h1>CSS Transitions</h1>
+        
+        <p>
+          In general, CSS transitions are smoother than JS-driven animations, but
+          not as much as you'd think. To animate this box getting wider, a CSS transition still
+          must re-render the element for each frame of the animation, meaning it must re-calculate
+          its dimensions and those of its descendants <em>and</em> re-flow the text.
+        </p>
+        
+        <p>Let's morph back to a narrow box so you can see this in action again.</p>
+        
+        <pre><code>$('panel').morph('width: 300px');</code></pre>
+        
+        <p style="margin-bottom: 0;">
+          <button id="step_2">Try it.</button>          
+        </p>
+        
+        <script type="text/javascript">
+          $('step_2').on('click', function() {
+            $('panel').morph('width: 300px', crossfade('frame_2', 'frame_3'));
+          });
+        </script>
+        
+        
+      </div> <!-- #frame_2 -->
+      
+      <div id="frame_3" class="panel big" style="display: none;">
+        <h1>CSS Transitions</h1>
+        
+        <p>
+          But another new feature called <strong>CSS transforms</strong> offers a way
+          around this bottleneck. CSS transforms allow for visual manipulation of an element &mdash;
+          scaling, rotating, and translating &mdash; <strong>without</strong> altering the normal 
+          layout of the element.
+        </p>
+
+        <p>
+          WebKit browsers support both <strong>CSS transitions</strong> and <strong>CSS
+          transforms</strong>. In Safari (and MobileSafari), the two features combine to produce
+          <strong>hardware-accelerated animation</strong>.
+        </p>
+        
+        <p>
+          Let's demonstrate non-accelerated animation once more by moving this box
+          across the screen in slow-motion.
+        </p>
+        
+<pre><code>$('panel').morph('left: 500px;', {
+  accelerate: <b>false</b>,
+  duration: 3.0
+});</code></pre>
+        
+        <p style="margin-bottom: 0;">
+          <button id="step_3">Try it.</button>          
+        </p>
+        
+        
+        <script type="text/javascript">
+          $('step_3').on('click', function() {
+            $('panel').morph('left: 500px;', {
+              accelerate: false,
+              duration: 3.0,
+              after: crossfade('frame_3', 'frame_4')
+            });
+          });
+        </script>
+        
+      </div> <!-- #frame_3 -->
+      
+      <div id="frame_4" class="panel big" style="display: none;">
+        <h1>CSS Transitions</h1>
+        
+        <p>
+          This last animation was different from the first two: it didn't change the dimensions
+          of the box (only its position).
+        </p>
+        
+        <p>
+          That means scripty2 can animate <code style="white-space: nowrap">-webkit-transform</code> instead of animating <code>left</code>
+          and get all the benefits of hardware acceleration. When the animation is done, we'll apply the <code>left</code> style
+          and undo the changes we made to <code style="white-space: nowrap">-webkit-transform</code> all at once.
+        </p>
+        
+        <p>
+          Let's try animating back to where we were &mdash; with acceleration turned on.
+        </p>
+        
+<pre><code>$('panel').morph('left: 25px;', {
+  accelerate: <b>true</b>,
+  duration: 3.0
+});</code></pre>
+        
+        <p style="margin-bottom: 0;">
+          <button id="step_4">Try it.</button>          
+        </p>
+        
+        <script type="text/javascript">
+          $('step_4').on('click', function() {
+            $('panel').morph('left: 25px;', {
+              accelerate: true,
+              duration: 3.0,
+              after: crossfade('frame_4', 'frame_5')
+            });
+          });
+        </script>
+      </div> <!-- #frame_4 -->
+      
+      <div id="frame_5" class="panel big" style="display: none;">
+        <h1>CSS Transitions</h1>
+        
+        <p>
+          If you're in a browser that supports hardware acceleration, you likely noticed how much
+          smoother this last animation was.
+        </p>
+
+        <p>
+          Effects can't always be hardware-accelerated, but scripty2 ensures that each browser &mdash; 
+          whether mobile or desktop &mdash; gets the <strong>smoothest animation possible</strong>.
+        </p>
+        <p id="iphone">Here's a short URL for this page. Try it on an iPhone or iPad!</p>
+        
+        <script type="text/javascript">
+          if (Prototype.Browser.MobileSafari) {
+            $('iphone').hide();
+          }
+        </script>
+      </div> <!-- #frame_5 -->
+      
+    </div> <!-- .panel -->
+    
+    
+  </div> <!-- .canvas -->
+  
+  
+  
+</body>
 </html>
