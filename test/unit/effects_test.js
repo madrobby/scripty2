@@ -188,6 +188,23 @@ new Test.Unit.Runner({
     });
   }},
   
+  testReplayabilityWithDiffrentOptions: function() { with(this) {
+    var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
+    
+    $('sandbox').setStyle('font-size:15px');
+    assertEqual('15px', $('sandbox').getStyle('font-size'));
+    e1.play();
+    wait(750, function(){
+      assertEqual('5px', $('sandbox').getStyle('font-size'));
+      $('sandbox').setStyle('font-size:15px');
+      assertEqual('15px', $('sandbox').getStyle('font-size'));
+      e1.play(null, {style: 'font-size:25px'});
+      wait(750, function(){
+        assertEqual('25px', $('sandbox').getStyle('font-size'));
+      });
+    });
+  }},
+  
   testInspect: function() { with(this) {
     var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
     assertEqual(0, e1.inspect().indexOf('#<S2.FX:'));
@@ -214,7 +231,7 @@ new Test.Unit.Runner({
     var opt;
     
     opt = S2.FX.parseOptions();
-    assertUndefined(opt);
+    assertNotUndefined(opt);
 
     opt = S2.FX.parseOptions({duration:1,blech:'2'});
     assert('duration' in opt);
@@ -239,8 +256,8 @@ new Test.Unit.Runner({
   
   testShortcutOptions: function() { with(this) {
     var testVar="?";    
-    $('sandbox').morph('font-size:10px',0.05);
-    wait(100, function() {
+    $('sandbox').morph('font-size:10px', 0.05);
+    wait(150, function() {
       assertEqual('10px', $('sandbox').getStyle('font-size'));
       $('sandbox').morph('font-size:20px',function(){ testVar='!'; });
       wait(500, function() {
