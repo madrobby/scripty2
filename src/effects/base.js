@@ -386,6 +386,7 @@ S2.FX.Element = Class.create(S2.FX.Base, {
   **/
   play: function($super, element, options) {
     if (element) this.element = $(element);
+    this.operators = [];
     return $super(options);
   },
 
