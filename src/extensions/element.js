@@ -36,7 +36,7 @@ Element.addMethods({
     if (Object.isFunction(effect))
       effect = new effect(element, options);
     else if (Object.isString(effect))
-      effect = new S2.FX[effect.capitalize()](element, options);
+      effect = new S2.FX[effect.charAt(0).toUpperCase() + effect.substring(1)](element, options);
     effect.play(element, options);
     return element;
   },
