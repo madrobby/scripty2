@@ -34,7 +34,7 @@ def sprocketize(path, source, destination=nil)
     puts "\nand you should be all set.\n\n"
   end
   
-  puts "Sprocketizing..."
+  puts "Sprocketizing (#{[*source].join(', ')})..."
   secretary = Sprockets::Secretary.new(
     :root         => File.join(SCRIPTY2_ROOT, path),
     :load_path    => [SCRIPTY2_SRC_DIR],
@@ -94,19 +94,25 @@ task :min do
   minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_RELEASE_DIR,'prototype.min.js')
 end
 
+def unify_distribution
+  unified = IO.read(File.join(SCRIPTY2_DIST_DIR,'prototype.js')) + IO.read(File.join(SCRIPTY2_DIST_DIR,'s2.js'))
+  File.open(File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), 'w') do |file|
+    file.write unified
+  end 
+  minify File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.s2.min.js')
+end
+
 desc "Generate a unified minified version of Prototype and scripty2"
 task :unified => ['unified:default']
 namespace :unified do
   task :default => [:dist, :min] do
-    unified = IO.read(File.join(SCRIPTY2_DIST_DIR,'prototype.js')) + IO.read(File.join(SCRIPTY2_DIST_DIR,'s2.js'))
-    File.open(File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), 'w') do |file|
-      file.write unified
-    end 
-    minify File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.s2.min.js')
+    unify_distribution
   end
   
   desc "Generate a unified minified version of Prototype and scripty2, including experimental UI controls."
-  task :experimental => ['dist:experimental', :min, :unified]
+  task :experimental => ['dist:experimental', :min] do
+    unify_distribution
+  end
 end
 
 def doc_from_sources(sources)
