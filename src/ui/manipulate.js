@@ -183,8 +183,8 @@ document.observe('dom:loaded',function(){
       element = event.element();
       rotation = element._rotation + event.rotate;
       scale = element._scale * event.scale;
-      panX = element._panX + event.panX;
-      panY = element._panY + event.panY;
+      panX = element._panX + event.translateX;
+      panY = element._panY + event.translateY;
       
       fireEvent(element, { 
         rotation: rotation, scale: scale,
@@ -281,9 +281,8 @@ document.observe('dom:loaded',function(){
   
   try {
     document.createEvent("TransformActionEvent");
-    alert('transformactions supported')
     return setupBridgedEvent();
-  } catch(e) { alert(Object.toJSON(e)) }
+  } catch(e) {}
 
   try {
     document.createEvent("TouchEvent");
