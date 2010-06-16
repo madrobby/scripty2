@@ -21,7 +21,7 @@
  * * Nokia's Multitouch API - on supported devices/browsers, 
  *   touching an element with one or more fingers fire the manipulate:update event. 
  *   Panning, scaling and rotation can take place at the same time.
- * * Apple's iPhone Touch API - on Safari mobile on iPhone and iPod touch, 
+ * * Apple's Touch API - on iOS devices (Safari/WebKit on iPad, iPhone and iPod touch), 
  *   touching an element with one or more fingers fire the manipulate:update 
  *   event. Panning, scaling and rotation can take place at the same time.
  * * Mouse dragging (with optional shift key) - on all other browsers, 
