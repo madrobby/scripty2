@@ -106,13 +106,7 @@ namespace :unified do
   end
   
   desc "Generate a unified minified version of Prototype and scripty2, including experimental UI controls."
-  task :experimental => ['dist:experimental', :min] do
-    unified = IO.read(File.join(SCRIPTY2_DIST_DIR,'prototype.js')) + IO.read(File.join(SCRIPTY2_DIST_DIR,'s2.js'))
-    File.open(File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), 'w') do |file|
-      file.write unified
-    end 
-    minify File.join(SCRIPTY2_RELEASE_DIR,'prototype.s2.js'), File.join(SCRIPTY2_DIST_DIR,'prototype.s2.min.js')
-  end
+  task :experimental => ['dist:experimental', :min, :unified]
 end
 
 def doc_from_sources(sources)
