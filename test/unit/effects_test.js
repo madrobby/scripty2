@@ -20,7 +20,7 @@ new Test.Unit.Runner({
     // remove all queued effects
     //Effect.Queue.each(function(e) { e.cancel() });
   }},
-  
+
   testQueuing: function() { with(this) {
     new S2.FX.Morph('sandbox',{ style: 'font-size:10px' }).play();
     var q = S2.FX.DefaultOptions.queue;
@@ -181,13 +181,15 @@ new Test.Unit.Runner({
       assertEqual('5px', $('sandbox').getStyle('font-size'));
       $('sandbox').setStyle('font-size:15px');
       assertEqual('15px', $('sandbox').getStyle('font-size'));
+      assertEqual(1, e1.operators.length);
       e1.play();
       wait(750, function(){
         assertEqual('5px', $('sandbox').getStyle('font-size'));
+        assertEqual(1, e1.operators.length);
       });
     });
   }},
-  
+ 
   testReplayabilityWithDiffrentOptions: function() { with(this) {
     var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
     
@@ -198,9 +200,16 @@ new Test.Unit.Runner({
       assertEqual('5px', $('sandbox').getStyle('font-size'));
       $('sandbox').setStyle('font-size:15px');
       assertEqual('15px', $('sandbox').getStyle('font-size'));
+      assertEqual(1, e1.operators.length);
       e1.play(null, {style: 'font-size:25px'});
       wait(750, function(){
         assertEqual('25px', $('sandbox').getStyle('font-size'));
+        assertEqual(1, e1.operators.length);
+        e1.play(null, {style: 'font-size:10px'});
+        wait(750, function(){
+          assertEqual('10px', $('sandbox').getStyle('font-size'));
+          assertEqual(1, e1.operators.length);
+        });
       });
     });
   }},
