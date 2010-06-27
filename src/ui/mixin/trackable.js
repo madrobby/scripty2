@@ -3,6 +3,9 @@
  *  mixin S2.UI.Mixin.Trackable
 **/
 S2.UI.Mixin.Trackable = {
+  /**
+   *  S2.UI.Mixin.Trackable.register() -> undefined
+  **/
   register: function() {
     var klass = this.constructor;
     if (!klass.instances) {
@@ -17,6 +20,9 @@ S2.UI.Mixin.Trackable = {
     }
   },
   
+  /**
+   *  S2.UI.Mixin.Trackable.unregister() -> undefined
+  **/
   unregister: function() {
     var klass = this.constructor;
     klass.instances = klass.instances.without(this);
