@@ -14,6 +14,8 @@ new Test.Unit.Runner({
 
   setup: function() { with(this) {
     $('sandbox').innerHTML = "sandbox";
+    S2.FX.DefaultOptions.accelerate = false;
+    S2.FX.DefaultOptions.engine = 'javascript';
   }},
   
   teardown: function() { with(this) {
@@ -190,7 +192,7 @@ new Test.Unit.Runner({
     });
   }},
  
-  testReplayabilityWithDiffrentOptions: function() { with(this) {
+  testReplayabilityWithDifferentOptions: function() { with(this) {
     var e1 = new S2.FX.Morph('sandbox',{style:'font-size:5px',duration:0.5});
     
     $('sandbox').setStyle('font-size:15px');

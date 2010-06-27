@@ -198,14 +198,14 @@ document.observe('dom:loaded',function(){
       if(element) setElementData(element, rotation, scale, panX, panY);
       active = false;
       
-      var speed = Math.sqrt(event.panSpeedX*event.panSpeedX + 
-          event.panSpeedY*event.panSpeedY);
+      var speed = Math.sqrt(event.translateSpeedX*event.translateSpeedX + 
+          event.translateSpeedY*event.translateSpeedY);
         
       if(speed>25){
         //$('debug').innerHTML = speed+',x:'+event.panSpeedX+',y:'+event.panSpeedY;
         element.fire('manipulate:flick', { 
           speed: speed, 
-          direction: Math.atan2(event.panSpeedY,event.panSpeedX) 
+          direction: Math.atan2(event.translatenSpeedY,event.translateSpeedX) 
         });
       }
     });
