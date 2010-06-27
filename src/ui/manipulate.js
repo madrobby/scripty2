@@ -205,7 +205,7 @@ document.observe('dom:loaded',function(){
         //$('debug').innerHTML = speed+',x:'+event.panSpeedX+',y:'+event.panSpeedY;
         element.fire('manipulate:flick', { 
           speed: speed, 
-          direction: Math.atan2(event.translatenSpeedY,event.translateSpeedX) 
+          direction: Math.atan2(event.translateSpeedY,event.translateSpeedX) 
         });
       }
     });
