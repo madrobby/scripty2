@@ -224,7 +224,7 @@
         var value = li.retrieve('ui.autocompleter.value');
         var result = this.element.fire('ui:autocompleter:selected', {
           instance: this,
-          value:    value,
+          value:    value
         });
         if (result.stopped) return;
         this._setInput(value);
