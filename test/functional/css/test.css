@@ -165,3 +165,9 @@ fieldset {
     font-size: 14px;
     padding: 0 5px;
   }
+  
+.test-element {
+  width: 200px;
+  height: 200px;
+  background-color: red;
+}
