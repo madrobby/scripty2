@@ -10,5 +10,5 @@
 //= require "effects/slide"
 
 //= require "effects/transitions/transitions"
-//= require "effects/webkit"
 //= require "effects/transitions/penner"
+//= require "effects/css_transitions"

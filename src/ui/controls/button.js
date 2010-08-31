@@ -2,6 +2,7 @@
 (function(UI) {  
   /** section: scripty2 ui
    *  class S2.UI.Button < S2.UI.Base
+   *  includes S2.UI.Mixin.Element
    *  
    *  Applies button-like behavior to an element.
   **/

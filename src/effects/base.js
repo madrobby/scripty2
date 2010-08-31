@@ -37,16 +37,21 @@ S2.FX = (function(){
   var queues = [], globalQueue, 
     heartbeat, activeEffects = 0;
   
-  function beatOnDemand(dir){
-    heartbeat[(activeEffects += dir) > 0 ? 'start' : 'stop']();
+  function beatOnDemand(dir) {
+    activeEffects += dir;
+    if (activeEffects > 0) heartbeat.start();
+    else heartbeat.stop();
   }
   
-  function renderQueues(){
-    queues.invoke('render', heartbeat.getTimestamp());
+  function renderQueues() {
+    var timestamp = heartbeat.getTimestamp();
+    for (var i = 0, queue; queue = queues[i]; i++) {
+      queue.render(timestamp);
+    }
   }
   
   function initialize(initialHeartbeat){
-    if(globalQueue) return;
+    if (globalQueue) return;
     queues.push(globalQueue = new S2.FX.Queue());
     S2.FX.DefaultOptions.queue = globalQueue;
     heartbeat = initialHeartbeat || new S2.FX.Heartbeat();
@@ -57,14 +62,19 @@ S2.FX = (function(){
       .observe('effect:dequeued',  beatOnDemand.curry(-1));
   }
   
+  function formatTimestamp(timestamp) {
+    if (!timestamp) timestamp = (new Date()).valueOf();
+    var d = new Date(timestamp);
+    return d.getSeconds() + '.' + d.getMilliseconds() + 's';
+  }
+  
   return {
-    initialize: initialize,
-    getQueues: function(){ return queues; },
-    addQueue: function(queue){ queues.push(queue); },
-    getHeartbeat: function(){ return heartbeat; },
-    setHeartbeat: function(newHeartbeat){ 
-      heartbeat = newHeartbeat; 
-    }    
+    initialize:   initialize,
+    getQueues:    function() { return queues; },
+    addQueue:     function(queue) { queues.push(queue); },
+    getHeartbeat: function() { return heartbeat; },
+    setHeartbeat: function(newHeartbeat) { heartbeat = newHeartbeat; },
+    formatTimestamp: formatTimestamp
   }
 })();
 
@@ -90,7 +100,29 @@ Object.extend(S2.FX, {
       options = { duration: options == 'slow' ? 1 : options == 'fast' ? .1 : .2 };
       
     return options || {};
-  }
+  },
+  
+  ready: function(element) {
+    var table = this._ready;
+    var uid = element._prototypeUID;
+    if (!uid) return true;
+    
+    bool = table[uid];
+    return Object.isUndefined(bool) ? true : bool;
+  },
+  
+  setReady: function(element, bool) {
+    var table = this._ready;
+    var uid = element._prototypeUID;
+    if (!uid) {
+      element.getStorage();
+      uid = element._prototypeUID;
+    }
+    
+    table[uid] = bool;
+  },
+  
+  _ready: {}
 });
 
 /**
@@ -170,8 +202,10 @@ S2.FX.Base = Class.create({
         if (this.options.afterUpdate) this.options.afterUpdate(this, position);
       }.bind(this));
     }
-    if(this.options.transition === false)
+
+    if (this.options.transition === false)
       this.options.transition = S2.FX.Transitions.linear;
+
     this.options.transition = Object.propertize(this.options.transition, S2.FX.Transitions);
   },
 
@@ -201,21 +235,33 @@ S2.FX.Base = Class.create({
    *  is rendered. 
   **/
   render: function(timestamp) {
+    if (this.options.debug) {
+      // this.debug("render called at " + S2.FX.formatTimestamp(timestamp));
+    }
     if (timestamp >= this.startsAt) {
-      if (this.state == 'idle') {
-        if (this.options.before) this.options.before(this);
-        if (this.setup) this.setup();
-        this.state = 'running';
-        this.update(this.options.transition(0));
+      // Effect should be active.
+      if (this.state == 'idle' && S2.FX.ready(this.element)) {
+        // The element is ready for a new effect, but this effect hasn't yet
+        // been started. Start it now.
+        this.debug('starting the effect at ' + S2.FX.formatTimestamp(timestamp));
+        // Reschedule the end time in case we're running behind schedule.
+        this.endsAt = this.startsAt + this.duration;
+        this.start();
         this.frameCount++;
         return this;
       }
-      if (timestamp >= this.endsAt && !(this.state == 'finished')) {
-        this.update(this.options.transition(1));
-        if (this.teardown) this.teardown();
-        if (this.options.after) this.options.after(this);
-        this.state = 'finished';
-      } else if (this.state == 'running') {
+      
+      if (timestamp >= this.endsAt && this.state !== 'finished') {
+        // The effect has exceeded its scheduled time but has not yet been
+        // stopped yet. Stop it now.
+        this.debug('stopping the effect at ' + S2.FX.formatTimestamp(timestamp));
+        this.finish();
+        return this;
+      }
+      
+      if (this.state === 'running') {
+        // The effect is running. Figure out its new tweening coefficient
+        // and update the animation.
         var position = 1 - (this.endsAt - timestamp) / this.duration;
         if ((this.maxFrames * position).floor() > this.frameCount) {
           this.update(this.options.transition(position));
@@ -226,6 +272,13 @@ S2.FX.Base = Class.create({
     return this;
   },
   
+  start: function() {
+    if (this.options.before) this.options.before(this);
+    if (this.setup) this.setup();
+    this.state = 'running';
+    this.update(this.options.transition(0));
+  },
+  
   /**
    *  S2.FX.Base#cancel([after]) -> undefined
    *  - after (Boolean): if true, run the after method (if defined), defaults to false
@@ -234,7 +287,7 @@ S2.FX.Base = Class.create({
    *  method if defined. 
   **/
   cancel: function(after) {
-    if(!this.state == 'running') return;
+    if (this.state !== 'running') return;
     if (this.teardown) this.teardown();
     if (after && this.options.after) this.options.after(this);
     this.state = 'finished';
@@ -246,8 +299,8 @@ S2.FX.Base = Class.create({
    *  Immediately render the last frame and halt execution of the effect
    *  and call the `teardown`method if defined.
   **/
-  finish: function(after) {
-    if(!this.state == 'running') return;
+  finish: function() {
+    if (this.state !== 'running') return;
     this.update(this.options.transition(1));
     this.cancel(true);
   },
@@ -265,11 +318,18 @@ S2.FX.Base = Class.create({
    *  S2.FX.Base#update() -> undefined
    *
    *  The update method is called for each frame to be rendered. The implementation
-   *  in S2.Fx.Base simply does nothing, and is intended to be overwritten by
-   *  subclasses. It is provided for cases where S2.FX.Base is instantiated directly
+   *  in `S2.FX.Base` simply does nothing, and is intended to be overwritten by
+   *  subclasses. It is provided for cases where `S2.FX.Base` is instantiated directly
    *  for ad-hoc effects using the beforeUpdate and afterUpdate callbacks.
   **/
-  update: Prototype.emptyFunction
+  update: Prototype.emptyFunction,
+  
+  debug: function(message) {
+    if (!this.options.debug) return;
+    if (window.console && console.log) {
+      console.log(message);
+    }
+  }
 });
 
 /**
@@ -326,10 +386,13 @@ S2.FX.Element = Class.create(S2.FX.Base, {
   **/
   play: function($super, element, options) {
     if (element) this.element = $(element);
+    this.operators = [];
     return $super(options);
   },
 
   update: function(position) {
-    this.operators.invoke('render', position);
+    for (var i = 0, operator; operator = this.operators[i]; i++) {
+      operator.render(position);
+    }
   }
 });

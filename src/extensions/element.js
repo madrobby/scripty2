@@ -36,7 +36,7 @@ Element.addMethods({
     if (Object.isFunction(effect))
       effect = new effect(element, options);
     else if (Object.isString(effect))
-      effect = new S2.FX[effect.capitalize()](element, options);
+      effect = new S2.FX[effect.charAt(0).toUpperCase() + effect.substring(1)](element, options);
     effect.play(element, options);
     return element;
   },
@@ -73,24 +73,25 @@ Element.addMethods({
    *      $('element_id').morph('width:500px').morph('height:500px');
    *
    *  By default, `morph` will create a new [[S2.FX.Queue]] for the
-   *  element if there isn't on already, and use this queue for queueing
+   *  element if there isn't one already, and use this queue for queueing
    *  up chained morphs. To prevent a morph from queuing at the end,
    *  use the `position: 'parallel'` option.
    *
    *      // the height morph will be executed at the same time as the width morph
-   *      $('element_id').morph('width:500px').morph('height:500px',{ position: 'parallel' });
+   *      $('element_id').morph('width:500px').morph('height:500px', { position: 'parallel' });
    *
    *  See also [[S2.FX.Morph]].
   **/
-  morph: function(element, style, options){
+  morph: function(element, style, options) {
     options = S2.FX.parseOptions(options);
-    if(!options.queue){
+    if (!options.queue) {
       options.queue = element.retrieve('S2.FX.Queue');
-      if(!options.queue)
+      if (!options.queue) {
         element.store('S2.FX.Queue', options.queue = new S2.FX.Queue());
+      }
     }
-    if(!options.position) options.position = 'end';
-    return element.effect('morph', Object.extend(options, {style: style}));
+    if (!options.position) options.position = 'end';
+    return element.effect('morph', Object.extend(options, { style: style }));
   }.optionize(),
 
   /** 
@@ -99,10 +100,7 @@ Element.addMethods({
    *  Make an element appear by fading it in from 0% opacity.
   **/
   appear: function(element, options){
-    return element.effect('morph', Object.extend({
-      before: function(){ element.show().setStyle({opacity: 0}); },
-      style:  'opacity:1'
-    }, options));
+    return element.setStyle('opacity: 0;').show().morph('opacity: 1', options);    
   },
 
   /** 
@@ -111,10 +109,10 @@ Element.addMethods({
    *  Fade out an element from its current opacity setting (or 100%).
   **/
   fade: function(element, options){
-    return element.effect('morph', Object.extend({
-      style: 'opacity:0',
-      after: element.hide.bind(element)
-    }, options));
+    options = Object.extend({
+      after: Element.hide.curry(element)
+    }, options || {});
+    return element.morph('opacity: 0', options);
   },
 
   /** 

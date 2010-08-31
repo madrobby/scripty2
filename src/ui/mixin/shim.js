@@ -1,5 +1,18 @@
 /** section: scripty2 ui
  *  mixin S2.UI.Mixin.Shim
+ *
+ *  Provides an implementation of a "shim" for Internet Explorer 6. On that browser,
+ *  some elements (like SELECT boxes) do not adhere to vertical CSS order 
+ *  rules or setting z-index, because they are rendered as an OS "window",
+ *  which is always above all other elements.
+ *
+ *  The solution used to solve this problem is drawing an empty IFRAME element
+ *  in the background of the element that should be displayed above all other
+ *  elements, acting as a "shim".
+ *
+ *  The shim will automatically adjust itself to any changes in the parent element's 
+ *  size or position. A positioning and/or size change can also be forced manually 
+ *  by calling `adjustShim`.
 **/
 S2.UI.Mixin.Shim = {
   __SHIM_TEMPLATE: new Template(

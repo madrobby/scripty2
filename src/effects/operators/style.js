@@ -16,27 +16,31 @@ S2.FX.Operators.Style = Class.create(S2.FX.Operators.Base, {
     var translations = this.options.propertyTransitions || {};
 
     this.tweens = [];
-    for(var item in this.style){
+    
+    for (var item in this.style) {
       var property = item.underscore().dasherize(),
-        from = this.element.getStyle(property), to = this.style[item];
+       from = this.element.getStyle(property), to = this.style[item];
       
-      if(from!=to)
+      if (from != to) {
         this.tweens.push([
           property,
           S2.CSS.interpolate.curry(property, from, to),
-          item in translations ? Object.propertize(translations[item], S2.FX.Transitions) : Prototype.K
+          item in translations ?
+           Object.propertize(translations[item], S2.FX.Transitions) :
+           Prototype.K
         ]);
+      }
     }
   },
 
   valueAt: function(position) {
     return this.tweens.map( function(tween){
-      return tween[0]+':'+tween[1](tween[2](position));
-    }).join(';')
+      return tween[0] + ':' + tween[1](tween[2](position));
+    }).join(';');
   },
 
   applyValue: function(value) {
-    if(this.currentStyle == value) return;
+    if (this.currentStyle == value) return;
     this.element.setStyle(value);
     this.currentStyle = value;
   }
