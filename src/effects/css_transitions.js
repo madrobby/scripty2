@@ -378,51 +378,51 @@
     var element = event.element();
     if (!element) return;
     
+    // We make sure the element which dispatched the event
+    // has an effect attached to it.
     var effect = element.retrieve('s2.effect');
-    
-    function adjust(element, effect) {
-      var targetStyle = element.retrieve('s2.targetStyle');
-      if (!targetStyle) return;
+    if (effect) {
+      function adjust(element, effect){
+        var targetStyle = element.retrieve('s2.targetStyle');
+        if (!targetStyle) return;
+        
+        element.setStyle(targetStyle);
+        
+        var originalTransitionStyle = element.retrieve('s2.originalTransitionStyle');
+        
+        var storage = element.getStorage();
+        storage.unset('s2.targetStyle');
+        storage.unset('s2.originalTransitionStyle');
+        storage.unset('s2.effect');
+        
+        // Once we've done all this stuff, the element should _finally_
+        // be ready to process the next queued effect.
+        (function(){
+          if (originalTransitionStyle) {
+            element.setStyle(originalTransitionStyle);
+          }
+          S2.FX.setReady(element);
+        }).defer();
+      }  // Make sure the duration is properly reset after each transition.
+      // The next line crashes current WebKit if not called deferred.
+      // (reported as https://bugs.webkit.org/show_bug.cgi?id=22398)
+      (function(element, effect){
+        var durationProperty = v('transition-duration').camelize();
+        element.style[durationProperty] = '';
+        
+        // We need to defer this call because we've just set
+        // TransitionDuration to 0, but it won't take effect until
+        // the stack is empty (because of style batching).
+        // (see https://bugs.webkit.org/show_bug.cgi?id=27159)
+        adjust(element, effect);
+      }).defer(element, effect);
       
-      element.setStyle(targetStyle);
+      // Mark the effect as finished so it gets removed from its queue.
+      effect.state = 'finished';
       
-      var originalTransitionStyle =
-       element.retrieve('s2.originalTransitionStyle');
-       
-      var storage = element.getStorage();
-      storage.unset('s2.targetStyle');
-      storage.unset('s2.originalTransitionStyle');
-      storage.unset('s2.effect');
-
-      // Once we've done all this stuff, the element should _finally_
-      // be ready to process the next queued effect.
-      (function() {
-        if (originalTransitionStyle) {
-          element.setStyle(originalTransitionStyle);
-        }
-        S2.FX.setReady(element);        
-      }).defer();
-    }
-    
-    // Make sure the duration is properly reset after each transition.
-    // The next line crashes current WebKit if not called deferred.
-    // (reported as https://bugs.webkit.org/show_bug.cgi?id=22398)
-    (function (element, effect) {
-      var durationProperty = v('transition-duration').camelize();
-      element.style[durationProperty] = '';
-      
-      // We need to defer this call because we've just set
-      // TransitionDuration to 0, but it won't take effect until
-      // the stack is empty (because of style batching).
-      // (see https://bugs.webkit.org/show_bug.cgi?id=27159)
-      adjust(element, effect);
-    }).defer(element, effect);
-    
-    // Mark the effect as finished so it gets removed from its queue.
-    effect.state = 'finished';
-    
-    // Fire the `after` callback.
-    var after = effect.options.after;
-    if (after) after(effect);    
+      // Fire the `after` callback.
+      var after = effect.options.after;
+      if (after) after(effect);
+    };
   });
 })(S2.FX);
