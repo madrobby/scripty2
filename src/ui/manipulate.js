@@ -18,10 +18,10 @@
  *
  * <img src="../../../images/manipulate.png" alt="Manipulations"/>
  *
- * * Nokia's Starlight Multitouch API - on supported devices/browsers, 
+ * * Nokia's Multitouch API - on supported devices/browsers, 
  *   touching an element with one or more fingers fire the manipulate:update event. 
  *   Panning, scaling and rotation can take place at the same time.
- * * Apple's iPhone Touch API - on Safari mobile on iPhone and iPod touch, 
+ * * Apple's Touch API - on iOS devices (Safari/WebKit on iPad, iPhone and iPod touch), 
  *   touching an element with one or more fingers fire the manipulate:update 
  *   event. Panning, scaling and rotation can take place at the same time.
  * * Mouse dragging (with optional shift key) - on all other browsers, 
@@ -164,23 +164,27 @@ document.observe('dom:loaded',function(){
   
   function setupBridgedEvent(){
     var element, rotation, scale, panX, panY, active = false;
-    b.observe('manipulatestart', function(event){
+    
+    b.observe('touchstart', function(event){
+      event.preventDefault();
+    });
+    
+    b.observe('transformactionstart', function(event){
       // for now, always stop the default manipulation events
       // this prevents Starlight from zooming/panning the window
       // with touching
-      
       event.stop();
       
       element = event.element();
       initElementData(element);
       active = true;
-    });
-    b.observe('manipulatemove', function(event){
+    });    
+    b.observe('transformactionupdate', function(event){
       element = event.element();
-      rotation = element._rotation + event.rotation;
+      rotation = element._rotation + event.rotate;
       scale = element._scale * event.scale;
-      panX = element._panX + event.panX;
-      panY = element._panY + event.panY;
+      panX = element._panX + event.translateX;
+      panY = element._panY + event.translateY;
       
       fireEvent(element, { 
         rotation: rotation, scale: scale,
@@ -189,29 +193,29 @@ document.observe('dom:loaded',function(){
       });
       event.stop();
     }, false);
-    b.observe('manipulateend', function(event){
+    b.observe('transformactionend', function(event){
       element = event.element();
       if(element) setElementData(element, rotation, scale, panX, panY);
       active = false;
       
-      var speed = Math.sqrt(event.panSpeedX*event.panSpeedX + 
-          event.panSpeedY*event.panSpeedY);
+      var speed = Math.sqrt(event.translateSpeedX*event.translateSpeedX + 
+          event.translateSpeedY*event.translateSpeedY);
         
       if(speed>25){
         //$('debug').innerHTML = speed+',x:'+event.panSpeedX+',y:'+event.panSpeedY;
         element.fire('manipulate:flick', { 
           speed: speed, 
-          direction: Math.atan2(event.panSpeedY,event.panSpeedX) 
+          direction: Math.atan2(event.translateSpeedY,event.translateSpeedX) 
         });
       }
     });
-    b.observe('mousemove', function(event){
+    b.on('mousemove', function(event){
       event.stop();
     });
-    b.observe('mousedown', function(event){
+    b.on('mousedown', function(event){
       event.stop();
     });
-    b.observe('mouseup', function(event){
+    b.on('mouseup', function(event){
       event.stop();
     });
   }
@@ -275,20 +279,11 @@ document.observe('dom:loaded',function(){
     b.observe('dragstart', function(event){ event.stop(); });
   }
   
-  if(navigator.userAgent.match(/SLBrowser/))
-    return setupBridgedEvent();
-
-  if(navigator.userAgent.match(/QtLauncher/))
-    return setupBridgedEvent();
-
-  if(navigator.userAgent.match(/Starlight/))
-    return setupBridgedEvent();
-  
   try {
-    document.createEvent("ManipulateEvent");
+    document.createEvent("TransformActionEvent");
     return setupBridgedEvent();
-  } catch(e) {}  
-  
+  } catch(e) {}
+
   try {
     document.createEvent("TouchEvent");
     return setupIPhoneEvent();

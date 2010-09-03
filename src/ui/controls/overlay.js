@@ -2,7 +2,7 @@
   
   /** section: scripty2 ui
    *  class S2.UI.Overlay < S2.UI.Base
-   *  includes S2.UI.Mixin.Shim
+   *  includes S2.UI.Mixin.Shim, S2.UI.Mixin.Trackable
    *  
    *  A class for display a modal overlay on screen.
   **/

@@ -2,7 +2,7 @@
 (function(UI) {
   /** section: scripty2 ui
    *  class S2.UI.Menu < S2.UI.Base
-   *  includes S2.UI.Mixin.Shim
+   *  includes S2.UI.Mixin.Shim, S2.UI.Mixin.Element
   **/
   UI.Menu = Class.create(UI.Base, UI.Mixin.Shim, UI.Mixin.Element, {
     NAME: "S2.UI.Menu",

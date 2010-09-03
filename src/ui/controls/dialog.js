@@ -2,7 +2,7 @@
 
   /** section: scripty2 ui
    *  class S2.UI.Dialog < S2.UI.Base
-   *
+   *  includes S2.UI.Mixin.Element
    *
    *  A class for showing dialogs on screen.
    *

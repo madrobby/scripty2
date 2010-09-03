@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>script.aculo.us functional tests</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  
+  <style type="text/css" media="screen">  
+    @import url("css/test.css");
+    
+    #test-element {
+      position: relative;
+    }
+  </style>
+
+  <script src="../../lib/prototype.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../dist/s2.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../src/ui/manipulate.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <h1>Tests for Pan Manipulations</h1>
+  
+  <div class="howto">
+    <img src="images/manipulations_pan.jpg" alt="Pan works with one finger, 2 fingers or dragging with the mouse." />
+  </div>
+  <div class="description">
+    <ul>
+      <li>Pan <strong>should</strong> work with single finger</li>
+      <li>Pan <strong>should</strong> work with 2 fingers</li>
+      <li>Pan <strong>should</strong> work with mouse dragging</li>
+      <li>Panning <strong>should</strong> trigger manipulate:update events</li>
+      <li>Scrolling the page on touch devise <strong>should</strong> be possible</li>
+      <li>Text selection on other elements <strong>should</strong> be possible</li>
+      <li>If two fingers are used to drag, the panning <strong>should</strong> be relative to the mid point between those two touches.</li>
+    </ul>
+  </div>
+  
+  <div id="test-element" class="test-element"></div>
+  
+  <script type="text/javascript">
+    S2.enableMultitouchSupport = true;
+    
+    $('test-element').observe('manipulate:update', function(event) {
+      event.element().setStyle('left:'+(event.memo.panX)+'px;top:'+(event.memo.panY)+'px;');
+    });
+  </script>
+  
+</body>
+</html>

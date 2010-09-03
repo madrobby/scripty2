@@ -3,6 +3,15 @@
  *  
  *  Provides a few convenience methods for widgets that map easily to a
  *  single element.
+ *
+ *  The following methods are mapped from Prototype's `Element` API:
+ *  `observe`, `stopObserving`, `show`, `hide`, 
+ *  `addClassName`, `removeClassName`, `hasClassName`, 
+ *  `setStyle`, `getStyle`, `writeAttribute`, `readAttribute`,
+ *  `on`, and `fire`.
+ *
+ *  See <a href="http://api.prototypejs.org/dom/element/">http://api.prototypejs.org/dom/element/</a> 
+ *  for more information.
 **/
 
 (function() {
@@ -18,7 +27,7 @@
       return element[name].apply(element, arguments);
     };
   });
-  
+
   E.on = function() {
     if (!this.__observers) this.__observers = [];
     var element = this.toElement();
