@@ -9,7 +9,14 @@
     NAME: "S2.UI.Button",
 
     /**
-     *  new S2.UI.Button(element, options)
+     *  new S2.UI.Button(element[, options])
+     *  - element (Element): The element to serve as the button's base. Can
+     *    be a typical `input` (with `type` set to `submit` or `button`); or
+     *    a `button` or `a` element. The latter two options allow for more
+     *    customization of the button's content.
+     *  - options (Object): A set of options for customizing the button.
+     *  
+     *  Creates an `S2.UI.Button`.
     **/
     initialize: function(element, options) {
       this.element = $(element);
@@ -76,8 +83,18 @@
       this[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
     },
     
+    /**
+     *  S2.UI.Button#toggle([bool]) -> S2.UI.Button
+     *  - bool (Boolean): Whether the button should be active or inactive. If
+     *    omitted, defaults to the _opposite_ of the button's current state.
+     *  
+     *  Toggles the button between active and inactive. Returns the instance.
+     *  
+     *  If the button isn't a "toggle" button, the instance will immediately
+     *  return itself.
+    **/
     toggle: function(bool) {
-      if (!this._isToggleButton()) return;
+      if (!this._isToggleButton()) return this;
       
       var isActive = this.isActive();
       if (Object.isUndefined(bool)) bool = !isActive;
@@ -88,6 +105,8 @@
         if (result.stopped) return;
       }
       this._buttonElement[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
+      
+      return this;
     },
     
     _click: function(event) {
@@ -146,6 +165,8 @@
       return new Element('span', { 'class': classNames });
     },
     
+    // Handles assignment of icons, wrapping text in a SPAN, and other stuff
+    // for buttons that can have HTML contents (i.e., everything but INPUTs).
     _interpretContent: function(element) {
       if (!this._isContainer()) return;
 
@@ -265,7 +286,7 @@
       text:    true,
       toggle:  false,
       icons: {
-        primary: null,
+        primary:   null,
         secondary: null
       }
     }
