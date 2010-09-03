@@ -63,7 +63,7 @@
       this.input.observe('keyup',   this.observers.keyup);
       this.input.observe('keydown', this.observers.keydown);
       
-      this.menu.element.observe('ui:menu:selected', 
+      this.menu.observe('ui:menu:selected', 
        this.observers.selected);
     },
     
@@ -224,7 +224,7 @@
         var value = li.retrieve('ui.autocompleter.value');
         var result = this.element.fire('ui:autocompleter:selected', {
           instance: this,
-          value:    value,
+          value:    value
         });
         if (result.stopped) return;
         this._setInput(value);
@@ -235,7 +235,7 @@
     _blur: function(event) {
       this._unschedule();
       this.menu.close();
-    }    
+    }
   });
   
   Object.extend(UI.Autocompleter, {
