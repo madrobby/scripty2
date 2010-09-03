@@ -195,7 +195,7 @@ Object.extend(S2.UI, {
   if (document.attachEvent) {
     document.onselectstart = _textSelectionHandler.bindAsEventListener(window);    
   } else {
-    document.observe('mousedown', _textSelectionHandler);
+    //document.observe('mousedown', _textSelectionHandler);
   }
 
   Object.extend(S2.UI, {
