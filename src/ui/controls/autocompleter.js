@@ -177,7 +177,7 @@
       for (var i = 0, result, li, text; result = results[i]; i++) {
         text = opt.highlightSubstring ? 
          result.replace(needle, "<b>$&</b>") :
-         text;
+         result;
          
         li = new Element('li').update(text);
         li.store('ui.autocompleter.value', result);
