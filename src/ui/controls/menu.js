@@ -14,14 +14,14 @@
       this.element = $(element);
       if (!this.element) {
         var options = element;
-        this.element = new Element('ul', { 'class': 'ui-helper-hidden' });
+        this.element = new Element('ul');
       }
       
       this.activeId = this.element.identify() + '_active';
       var opt = this.setOptions();
       
-      UI.addClassNames(this.element, 'ui-widget ui-widget-content ' +
-       'ui-menu ui-corner-' + opt.corner);
+      UI.addClassNames(this.element, 'ui-helper-hidden ui-widget ' +
+       'ui-widget-content ui-menu ui-corner-' + opt.corner);
        
       this.choices = this.element.select('li');
 
@@ -56,7 +56,7 @@
     **/
     addObservers: function() {
       this.observe('mouseover', this.observers.mouseover);
-      this.observe('mouseup',   this.observers.click    );
+      this.observe('mousedown', this.observers.click);
     },
     
     /**
@@ -64,7 +64,7 @@
     **/
     removeObservers: function() {
       this.stopObserving('mouseover', this.observers.mouseover);
-      this.stopObserving('mouseup',   this.observers.click    );
+      this.stopObserving('mousedown', this.observers.click);
     },
     
     /**
@@ -140,7 +140,6 @@
     
     /**
      *  S2.UI.Menu#highlightChoice([element]) -> this
-     *  fires
     **/
     highlightChoice: function(element) {
       var choices = this.choices, index;
@@ -193,7 +192,7 @@
     
     /**
      *  S2.UI.Menu#open() -> this
-     *  fires ui:menu:opened
+     *  fires ui:menu:before:open, ui:menu:after:open
     **/
     open: function() {
       // if (!this._shown) {
@@ -211,14 +210,23 @@
       
       if (Prototype.Browser.IE) {
         this.adjustShim();
-      }   
+      }
+      
+      if (this.options.closeOnOutsideClick) {
+        this._outsideClickObserver = $(this.element.ownerDocument).on('click', function(event) {
+          var element = event.element();
+          if (element !== this.element && !element.descendantOf(this.element)) {
+            this.close();
+          }
+        }.bind(this));
+      }
       
       this.element.fire('ui:menu:after:open', { instance: this });
     },
     
     /**
      *  S2.UI.Menu#close() -> this
-     *  fires ui:menu:closed
+     *  fires ui:menu:before:close, ui:menu:after:close
     **/
     close: function() {
       var result = this.element.fire('ui:menu:before:close', { instance: this });
@@ -226,9 +234,16 @@
       // if (!result.stopped) {
         this.element.addClassName('ui-helper-hidden');      
       // }
-      return this;
+      //return this;
       
-      this.element.fire('ui:menu:after:close', { instance: this });      
+      this.element.fire('ui:menu:after:close', { instance: this });
+      
+      if (this._outsideClickObserver) {
+        this._outsideClickObserver.stop();
+        this._outsideClickObserver = null;
+      }
+      
+      return this;
     },
     
     /**
@@ -241,7 +256,8 @@
   
   Object.extend(UI.Menu, {
     DEFAULT_OPTIONS: {
-      corner: 'all'
+      corner: 'all',
+      closeOnOutsideClick: true
     }
   });
   
