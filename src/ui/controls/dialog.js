@@ -201,14 +201,11 @@
     _position: function() {
       // Find the middle of the viewport.
       var vSize = document.viewport.getDimensions();
-      var dialog = this.element;
-      var dimensions = {
-        width: parseInt(dialog.getStyle('width'), 10),
-        height: parseInt(dialog.getStyle('height'), 10)
-      };
+      var dialog = this.element, layout = dialog.getLayout();
+      
       var position = {
-        left: ((vSize.width / 2) - (dimensions.width / 2)).round(),
-        top: ((vSize.height / 2) - (dimensions.height / 2)).round()
+        left: ((vSize.width  / 2) - (layout.get('width')  / 2)).round(),
+        top:  ((vSize.height / 2) - (layout.get('height') / 2)).round()
       };
 
       var offsets = document.viewport.getScrollOffsets();
@@ -239,7 +236,7 @@
 
       this.overlay = opt.modal ? new UI.Overlay() : null;
       $(document.body).insert(this.overlay);    
-      $(document.body).insert(this.element);
+      $(document.body).insert(this);
 
       this.element.show();
       this._position();

@@ -6,10 +6,36 @@ Object.extend(Event, {
   
   /** section: scripty2 ui
    *  class S2.UI.Accordion < S2.UI.Base
+   *  
+   *  Applies "accordion menu" behavior to an element and its contents.
+   *  
+   *  ##### Options
+   *  
+   *  * `multiple` (Boolean): Whether multiple panels can be open at once.
+   *    Defaults to `false`.
+   *  * `headerSelector` (String): A CSS selector that identifies the
+   *    child elements to use as accordion headers. Defaults to `"h3"`.
+   *  * `icons` (Object): The icons to use for each of the header states.
+   *    Expects two properties &mdash; `header` and `headerSelected` &mdash;
+   *    and a `String` for each. Defaults to `{ header:
+   *    'ui-icon-triangle-1-e', headerSelected: 'ui-icon-triangle-1-s' }`.
+   *  * `transition` (Function): A function that handles the transition
+   *    effect when a panel is selected. Takes two arguments, `panel` and
+   *    `previousPanel`, which reference the panel to be shown and the panel
+   *    to be hidden, respectively. (When there is no panel to be hidden, the
+   *    `previousPanel` argument will be `null`.) Defaults to a function that
+   *    applies a "slide down"/"slide up" effect.
   **/
   UI.Accordion = Class.create(UI.Base, {
     NAME: "S2.UI.Accordion",
     
+    /**
+     *  new S2.UI.Accordion(element[, options])
+     *  - element (Element): A container element.
+     *  - options (Object): A set of options for customizing the widget.
+     *  
+     *  Creates an `S2.UI.Accordion`.
+    **/
     initialize: function(element, options) {
       this.element = $(element);
       var opt = this.setOptions(options);
