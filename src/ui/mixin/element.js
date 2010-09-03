@@ -8,7 +8,7 @@
 (function() {
   var METHODS = $w('observe stopObserving show hide ' + 
    'addClassName removeClassName hasClassName setStyle getStyle' +
-   'writeAttribute readAttribute on fire');
+   'writeAttribute readAttribute fire');
   
   var E = {};
   
@@ -18,7 +18,14 @@
       return element[name].apply(element, arguments);
     };
   });
-
+  
+  E.on = function() {
+    if (!this.__observers) this.__observers = [];
+    var element = this.toElement();
+    var result = element.on.apply(element, arguments);
+    this.__observers.push(result);
+  };
+  
   window.S2.UI.Mixin.Element = E;  
 })();
 
