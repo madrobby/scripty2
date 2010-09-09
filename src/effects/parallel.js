@@ -3,8 +3,8 @@
  *
  *  Effect to execute several other effects in parallel.
  *
- *  Instead of reitering what exists for [[S2.FX]] and [[S2.FX.Base]], lets
- *  just get down to business with an example!
+ *  Instead of reitering what already exists for [[S2.FX]] and [[S2.FX.Base]], lets
+ *  just get down to business with a quick example!
  *
  *  <h4>Morphing 2 elements example</h4>
  *  
@@ -34,6 +34,14 @@
  *      ],{
  *         duration: 1                                    // the overall length of this effect
  *      });
+ *
+ *  <h4>Notes</h4>
+ *
+ *  It is recommended that you set any effects position to "parallel" to ensure
+ *  that it will be executed properly.
+ *
+ *  As shown above, anything from [[S2.FX.Base]] can be applied to the parallel
+ *  effect itself.
 **/
 S2.FX.Parallel = Class.create(S2.FX.Base, {
   initialize: function($super, effects, options) {
