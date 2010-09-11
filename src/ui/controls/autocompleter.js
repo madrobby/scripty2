@@ -63,7 +63,7 @@
       this.input.observe('keyup',   this.observers.keyup);
       this.input.observe('keydown', this.observers.keydown);
       
-      this.menu.element.observe('ui:menu:selected', 
+      this.menu.observe('ui:menu:selected', 
        this.observers.selected);
     },
     
@@ -177,7 +177,7 @@
       for (var i = 0, result, li, text; result = results[i]; i++) {
         text = opt.highlightSubstring ? 
          result.replace(needle, "<b>$&</b>") :
-         text;
+         result;
          
         li = new Element('li').update(text);
         li.store('ui.autocompleter.value', result);
@@ -235,7 +235,7 @@
     _blur: function(event) {
       this._unschedule();
       this.menu.close();
-    }    
+    }
   });
   
   Object.extend(UI.Autocompleter, {
