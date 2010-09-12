@@ -19,7 +19,7 @@
   
   (function() {
     var eventNames = {
-      'WebKitTransitionEvent': 'WebKitTransitionEnd',
+      'WebKitTransitionEvent': 'webkitTransitionEnd',
       'TransitionEvent': 'transitionend'
     };
     if (S2.CSS.VENDOR.PREFIX) {
