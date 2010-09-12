@@ -369,7 +369,7 @@
     "moz": "transitionend"
   };
   
-  var eventName = EVENT_NAMES[S2.CSS.VENDOR_PREFIX.toLowerCase()];
+  var eventName = EVENT_NAMES[S2.CSS.VENDOR.PREFIX.toLowerCase()];
   
   // We listen for the `transitionEnd` event that fires when a CSS transition
   // is done, so that we can mark the effect as "finished," fire the `after`
