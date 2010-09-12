@@ -193,7 +193,7 @@ S2.CSS = {
 
     if (property in S2.CSS.VENDOR.PROPERTY_MAP) {
       property = S2.CSS.VENDOR.PROPERTY_MAP[property];
-    };
+    }
 
     return property;
   },
@@ -399,23 +399,23 @@ Element.addMethods(S2.CSS.ElementMethods);
   var uncamelize = function(prop, prefix) {
     if (prefix) {
       prop = '-' + prefix.toLowerCase() + '-' + uncamelize(prop);
-    };
+    }
     return prop.underscore().dasherize();
-  };
+  }
     
   S2.CSS.VENDOR.LOOKUP_PROPERTIES.each(function(prop) {
     if (!prefix) { // We attempt to detect a prefix
       prefix = S2.CSS.VENDOR.LOOKUP_PREFIXES.detect( function(p) {
-        return !Object.isUndefined(style[p + prop])
-      })
-    };
+        return !Object.isUndefined(style[p + prop]);
+      });
+    }
     if (prefix) { // If we detected a prefix
       if ((prefix + prop) in style) {
         S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(prop, prefix);
       } else if (prop in edgeCases && (prefix + edgeCases[prop]) in style) {
         S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(edgeCases[prop], prefix);
-      };
-    };
+      }
+    }
   });
   
   S2.CSS.VENDOR.PREFIX = prefix;

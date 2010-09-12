@@ -25,7 +25,7 @@
     if (S2.CSS.VENDOR.PREFIX) {
       var p = S2.CSS.VENDOR.PREFIX;
       eventNames[p + 'TransitionEvent'] = p + 'TransitionEnd';
-    };
+    }
     
     for (var e in eventNames) {
       try {
@@ -34,10 +34,10 @@
         supported = true;
         if (e == 'WebkitTransitionEvent') {
           hardwareAccelerationSupported = isHWAcceleratedSafari();
-        };
+        }
         return;
-      } catch (e) { };
-    };
+      } catch (e) { }
+    }
   })();
   
   if (!supported) return;
