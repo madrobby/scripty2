@@ -9,6 +9,7 @@
   // Test if CSS transitions are supported.
   var supported = false;
   var hardwareAccelerationSupported = false;
+  var transitionEndEventName = null;
   
   function isHWAcceleratedSafari() {
     var ua = navigator.userAgent, av = navigator.appVersion;
@@ -17,20 +18,26 @@
   }
   
   (function() {
-    var div = document.createElement('div');
-    
-    try {
-      document.createEvent("WebKitTransitionEvent");
-      supported = true;
-      
-      hardwareAccelerationSupported = isHWAcceleratedSafari();
-    } catch(e) {
-      if (typeof div.style.MozTransition !== 'undefined') {
-        supported = true;
-      }
+    var eventNames = {
+      'WebKitTransitionEvent': 'webkitTransitionEnd',
+      'TransitionEvent': 'transitionend'
+    };
+    if (S2.CSS.VENDOR.PREFIX) {
+      var p = S2.CSS.VENDOR.PREFIX;
+      eventNames[p + 'TransitionEvent'] = p + 'TransitionEnd';
     }
     
-    div = null;
+    for (var e in eventNames) {
+      try {
+        document.createEvent(e);
+        transitionEndEventName = eventNames[e];
+        supported = true;
+        if (e == 'WebkitTransitionEvent') {
+          hardwareAccelerationSupported = isHWAcceleratedSafari();
+        }
+        return;
+      } catch (e) { }
+    }
   })();
   
   if (!supported) return;
@@ -270,11 +277,19 @@
       s[v('transition-duration').camelize()] = (effect.duration / 1000).toFixed(3) + 's';
       s[v('transition-timing-function').camelize()] = timingFunctionForTransition(effect.options.transition);
       
-      this.element.setStyle(style.toObject());
+      // We make sure the browser interpreted the transitions properties
+      // Opera needs deferring
+      if (Prototype.Browser.Opera) {
+        this._setStyle.bind(this).defer(style.toObject());
+      } else this._setStyle(style.toObject());
       this.running = true;
 
       // Replace ourselves with a no-op.
       this.render = Prototype.emptyFunction;
+    },
+    
+    _setStyle: function(style) {
+      this.element.setStyle(style);
     }
   });
   
@@ -364,17 +379,10 @@
     }
   });
   
-  var EVENT_NAMES = {
-    "webkit": "webkitTransitionEnd",
-    "moz": "transitionend"
-  };
-  
-  var eventName = EVENT_NAMES[S2.CSS.VENDOR_PREFIX.toLowerCase()];
-  
   // We listen for the `transitionEnd` event that fires when a CSS transition
   // is done, so that we can mark the effect as "finished," fire the `after`
   // callback, and do other custodial tasks.
-  document.observe(eventName, function(event) {
+  document.observe(transitionEndEventName, function(event) {
     var element = event.element();
     if (!element) return;
     

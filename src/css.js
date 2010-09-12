@@ -49,37 +49,28 @@ S2.CSS = {
   
   // An attempt to support vendor-specific properties in a sane way.
   // TODO: Do more research into what ought to be added to this list.
-  VENDOR_MAP: {
-    webkit: {
-      // DEFAULT means that the vendorized prefix is obtained simply by
-      // prepending the vendor prefix. Some properties (like
-      // `border-radius-top-left`) are named differently in different
-      // browsers, so their equivalents must be specified outright.
-      DEFAULT: $w('border-radius box-shadow transform transition ' + 
-       'transition-duration transition-timing-function transition-property ' +
-       'transition-delay ' + 
-       'border-top-left-radius border-top-right-radius border-bottom-left-radius ' + 
-       'border-bottom-right-radius'
-      )
+  VENDOR: {
+    // Determined below.
+    PREFIX: null,
+    
+    // Lookups for possible supported vendor-specific properties
+    LOOKUP_PREFIXES: ['webkit', 'Moz', 'O'],
+    LOOKUP_PROPERTIES: $w('BorderRadius BoxShadow Transform Transition ' + 
+     'TransitionDuration TransitionTimingFunction TransitionProperty ' +
+     'TransitionDelay ' + 
+     'BorderTopLeftRadius BorderTopRightRadius BorderBottomLeftRadius ' + 
+     'BorderBottomRightRadius'
+    ),
+    LOOKUP_EDGE_CASES: {
+      'BorderTopLeftRadius': 'BorderRadiusTopleft',
+      'BorderTopRightRadius': 'BorderRadiusTopright',
+      'BorderBottomLeftRadius': 'BorderRadiusBottomleft',
+      'BorderBottomRightRadius': 'BorderRadiusBottomright'
     },
-    moz: {
-      DEFAULT: $w('border-radius box-shadow transform transition ' + 
-       'transition-duration transition-timing-function transition-property ' +
-       'transition-delay '
-      ),
-      'border-top-left-radius':     '-moz-border-radius-topleft',
-      'border-top-right-radius':    '-moz-border-radius-topright',
-      'border-bottom-left-radius':  '-moz-border-radius-bottomleft',
-      'border-bottom-right-radius': '-moz-border-radius-bottomright'
-    },
-      
-    o: {
-      // TODO: Figure out what Opera supports.
-    }
+    
+    // Populated below.
+    PROPERTY_MAP: {}
   },
-  
-  // Determined below.
-  VENDOR_PREFIX: null,
   
   /**
    *  S2.CSS.LENGTH = /^(([\+\-]?[0-9\.]+)(em|ex|px|in|cm|mm|pt|pc|\%))|0$/
@@ -198,22 +189,11 @@ S2.CSS = {
    *  
   **/
   vendorizeProperty: function(property) {
-    var prefix = S2.CSS.VENDOR_PREFIX;
-    
     property = property.underscore().dasherize();
-    
-    if (prefix) {
-      var table = S2.CSS.VENDOR_MAP[prefix.toLowerCase()];
-      if (table.DEFAULT.include(property)) {
-        property = prefix + '-' + property;
-      } else if (table[property]) {
-        property = table[property];
-      }
-    }
 
-    // Ensure vendor-prefixed properties begin with a hyphen.
-    if (property.match(/^(?:webkit|moz|ms|o|khtml)-/))
-      property = '-' + property;
+    if (property in S2.CSS.VENDOR.PROPERTY_MAP) {
+      property = S2.CSS.VENDOR.PROPERTY_MAP[property];
+    }
 
     return property;
   },
@@ -413,16 +393,32 @@ if (!(document.defaultView && document.defaultView.getComputedStyle)) {
 Element.addMethods(S2.CSS.ElementMethods);
 
 (function() {
-  // Use border-radius as a test to see which vendor prefix we should
-  // be using.  
   var div = document.createElement('div');  
-  var style = div.style, prefixes = $w('webkit Moz');
+  var style = div.style, prefix = null;
+  var edgeCases = S2.CSS.VENDOR.LOOKUP_EDGE_CASES;
+  var uncamelize = function(prop, prefix) {
+    if (prefix) {
+      prop = '-' + prefix.toLowerCase() + '-' + uncamelize(prop);
+    }
+    return prop.underscore().dasherize();
+  }
     
-  var prefix = prefixes.detect( function(p) {
-    return typeof style[p + 'BorderRadius'] !== 'undefined';
+  S2.CSS.VENDOR.LOOKUP_PROPERTIES.each(function(prop) {
+    if (!prefix) { // We attempt to detect a prefix
+      prefix = S2.CSS.VENDOR.LOOKUP_PREFIXES.detect( function(p) {
+        return !Object.isUndefined(style[p + prop]);
+      });
+    }
+    if (prefix) { // If we detected a prefix
+      if ((prefix + prop) in style) {
+        S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(prop, prefix);
+      } else if (prop in edgeCases && (prefix + edgeCases[prop]) in style) {
+        S2.CSS.VENDOR.PROPERTY_MAP[uncamelize(prop)] = uncamelize(edgeCases[prop], prefix);
+      }
+    }
   });
   
-  S2.CSS.VENDOR_PREFIX = prefix;
+  S2.CSS.VENDOR.PREFIX = prefix;
   
   div = null;
 })();
