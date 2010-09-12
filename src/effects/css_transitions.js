@@ -278,11 +278,18 @@
       s[v('transition-timing-function').camelize()] = timingFunctionForTransition(effect.options.transition);
       
       // We make sure the browser interpreted the transitions properties
-      (function(element){element.setStyle(style.toObject())}).defer(this.element);
+      // Opera needs deferring
+      if (Prototype.Browser.Opera) {
+        this._setStyle.bind(this).defer(style.toObject());
+      } else this._setStyle(style.toObject());
       this.running = true;
 
       // Replace ourselves with a no-op.
       this.render = Prototype.emptyFunction;
+    },
+    
+    _setStyle: function(style) {
+      this.element.setStyle(style);
     }
   });
   
