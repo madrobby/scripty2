@@ -54,7 +54,7 @@ S2.CSS = {
     PREFIX: null,
     
     // Lookups for possible supported vendor-specific properties
-    LOOKUP_PREFIXES: ['webkit', 'Moz', 'o'],
+    LOOKUP_PREFIXES: ['webkit', 'Moz', 'O'],
     LOOKUP_PROPERTIES: $w('BorderRadius BoxShadow Transform Transition ' + 
      'TransitionDuration TransitionTimingFunction TransitionProperty ' +
      'TransitionDelay ' + 

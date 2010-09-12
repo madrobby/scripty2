@@ -277,7 +277,8 @@
       s[v('transition-duration').camelize()] = (effect.duration / 1000).toFixed(3) + 's';
       s[v('transition-timing-function').camelize()] = timingFunctionForTransition(effect.options.transition);
       
-      this.element.setStyle(style.toObject());
+      // We make sure the browser interpreted the transitions properties
+      (function(element){element.setStyle(style.toObject())}).defer(this.element);
       this.running = true;
 
       // Replace ourselves with a no-op.
