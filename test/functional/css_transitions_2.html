@@ -80,20 +80,35 @@
     }
     
     function start1() {
-      $('test1').setStyle({ opacity: '1', left: '500px' });
-      $('test1').morph('opacity: 0; left: 0px; top: 300px', { duration: getDuration() });
+      $('test1').morph('opacity: 0; left: 0px; top: 300px', {
+        duration: getDuration(),
+        after: function() {
+          console.log('after');
+          $('test1').setStyle({ opacity: '1', left: '500px', top: '20px' });
+          window.setTimeout(function() {
+            console.log('wtf');
+          }, 0);
+        }
+      });
     }
     
     function start2() {
-      $('test2').setStyle({ opacity: '1', left: '500px' });
-      $('test2').morph('opacity: 0; left: 0px; top: 440px', { duration: getDuration(), engine: 'javascript' });
+      $('test2').morph('opacity: 0; left: 0px; top: 440px', {
+        duration: getDuration(),
+        after: function() {
+          $('test2').setStyle({ opacity: '', left: '', top: '' });
+        },
+        engine: 'javascript'
+      });
     }
     
-    function start3() {
-      $('test3').setStyle({
-        WebkitTransitionDuration: "0s",
-        WebkitTransform: "translate(0px, 0px)",
-        opacity: '1'
+    function start3() {      
+      window.addEventListener('webkitTransitionEnd', function() {
+        $('test3').setStyle({
+          WebkitTransitionDuration: "0s",
+          WebkitTransform: "translate(0px, 0px)",
+          opacity: ''
+        });
       });
       
       window.setTimeout(function() {
@@ -106,25 +121,7 @@
     }
     
     function startAll() {
-      $('test1', 'test2').invoke('setStyle', { left: '500px', top: '', opacity: '1' });
-      
-      var effect1 = new S2.FX.Morph($('test1'), {
-        style: 'opacity: 0; left: 0px; top: 300px',
-        duration: getDuration()
-      });
-      
-      var effect2 = new S2.FX.Morph($('test2'), {
-        style: 'opacity: 0; left: 0px; top: 440px',
-        duration: getDuration(),
-        engine: 'javascript'
-      });
-      
-      start3();
-
-      var parallelEffect = new S2.FX.Parallel([effect1, effect2], {
-        duration: getDuration()
-      });
-      parallelEffect.play();      
+      start1(); start2(); start3();
     }
     
     $('animate_regular').observe('click', start1);
