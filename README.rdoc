@@ -36,9 +36,7 @@ After the build process is done, you'll find two files in /dist:
 * s2.js (for debugging)
 * s2.min.js (minified version for production use)
 
-At the moment this is a prerelease alpha version and not meant for 
-production use (although it is used with great success on several high
-volume websites).
+Though scripty2 has been used to great effect on several high-volume websites, keep in mind that scripty2 effects are in beta. APIs are subject to change before final release.
 
 == Build with UI
 
