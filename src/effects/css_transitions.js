@@ -32,11 +32,11 @@
         document.createEvent(e);
         transitionEndEventName = eventNames[e];
         supported = true;
-        if (e == 'WebkitTransitionEvent') {
+        if (e == 'WebKitTransitionEvent') {
           hardwareAccelerationSupported = isHWAcceleratedSafari();
         }
         return;
-      } catch (e) { }
+      } catch (ex) { }
     }
   })();
   
