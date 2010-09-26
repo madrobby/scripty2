@@ -46,7 +46,7 @@ The scripty2 UI controls are under heavy development and are still in alpha. The
 
   rake dist:experimental
   
-There are several other +*:experimental+ tasks corresponding to common actions. Run +rake -T+ to see the list of tasks.
+There are several other <tt>*:experimental</tt> tasks corresponding to common actions. Run <tt>rake -T</tt> to see the list of tasks.
 
 = Usage
 
