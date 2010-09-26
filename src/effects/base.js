@@ -103,6 +103,7 @@ Object.extend(S2.FX, {
   },
   
   ready: function(element) {
+    if (!element) return;
     var table = this._ready;
     var uid = element._prototypeUID;
     if (!uid) return true;
@@ -112,8 +113,8 @@ Object.extend(S2.FX, {
   },
   
   setReady: function(element, bool) {
-    var table = this._ready;
-    var uid = element._prototypeUID;
+    if (!element) return;
+    var table = this._ready, uid = element._prototypeUID;
     if (!uid) {
       element.getStorage();
       uid = element._prototypeUID;
