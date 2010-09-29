@@ -1,3 +1,7 @@
+* Fix S2.FX.Parallel and other non-element based effects
+
+* Properly detect Opera's CSS transition support
+
 *2.0.0 beta 1* (September 26, 2010)
 
 * Update to Prototype 1.7rc2
