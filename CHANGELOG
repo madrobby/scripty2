@@ -1,3 +1,5 @@
+* Update to Prototype 1.7rc2
+
 * Fix S2.FX.Parallel and other non-element based effects
 
 * Properly detect Opera's CSS transition support
