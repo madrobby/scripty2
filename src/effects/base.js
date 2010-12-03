@@ -103,6 +103,7 @@ Object.extend(S2.FX, {
   },
   
   ready: function(element) {
+    if (!element) return;
     var table = this._ready;
     var uid = element._prototypeUID;
     if (!uid) return true;
@@ -112,8 +113,8 @@ Object.extend(S2.FX, {
   },
   
   setReady: function(element, bool) {
-    var table = this._ready;
-    var uid = element._prototypeUID;
+    if (!element) return;
+    var table = this._ready, uid = element._prototypeUID;
     if (!uid) {
       element.getStorage();
       uid = element._prototypeUID;
@@ -240,9 +241,9 @@ S2.FX.Base = Class.create({
     }
     if (timestamp >= this.startsAt) {
       // Effect should be active.
-      if (this.state == 'idle' && S2.FX.ready(this.element)) {
-        // The element is ready for a new effect, but this effect hasn't yet
-        // been started. Start it now.
+      if (this.state == 'idle' && (!this.element || S2.FX.ready(this.element))) {
+        // If there's an element, it's ready for a new effect, but this effect 
+        // hasn't yet been started. Start it now.
         this.debug('starting the effect at ' + S2.FX.formatTimestamp(timestamp));
         // Reschedule the end time in case we're running behind schedule.
         this.endsAt = this.startsAt + this.duration;

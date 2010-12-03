@@ -14,7 +14,11 @@
   
   
   
-  <script src="prototype.s2.min.js" type="text/javascript"></script>
+  <script src="../dist/prototype.s2.min.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    window.SHORT_URL = 'http://is.gd/ftW8A';
+  </script>
   
   <style type="text/css" media="screen">
     #panel div.panel {
@@ -206,12 +210,18 @@
           Effects can't always be hardware-accelerated, but scripty2 ensures that each browser &mdash; 
           whether mobile or desktop &mdash; gets the <strong>smoothest animation possible</strong>.
         </p>
-        <p id="iphone">Here's a short URL for this page: http://. Try it on an iPhone or iPad!</p>
+        <p id="iphone">Here's a short URL for this page: <a href="" class="url"></a>. Try it on an iPhone or iPad!</p>
         
         <script type="text/javascript">
-          if (Prototype.Browser.MobileSafari) {
-            $('iphone').hide();
-          }
+          (function() {
+            if (!SHORT_URL || Prototype.Browser.MobileSafari) {
+              $('iphone').hide();
+            } else {
+              var anchor = $('iphone').down('.url');
+              anchor.writeAttribute('href', SHORT_URL);
+              anchor.update(SHORT_URL);
+            }
+          })();
         </script>
       </div> <!-- #frame_5 -->
       

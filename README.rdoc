@@ -4,6 +4,7 @@ scripty2 is an open source JavaScript framework for advanced HTML-based user int
 
 * Visual effects: scripty2's heartpiece is an versatile real-time effects framework
 * CSS utilities
+* UI components (experimental)
 
 And there's more coming! scripty2 is currently in alpha status, so APIs can change and
 there's still a lot more functionality planned.
@@ -35,9 +36,15 @@ After the build process is done, you'll find two files in /dist:
 * s2.js (for debugging)
 * s2.min.js (minified version for production use)
 
-At the moment this is a prerelease alpha version and not meant for 
-production use (although it is used with great success on several high
-volume websites).
+Though scripty2 has been used to great effect on several high-volume websites, keep in mind that scripty2 effects are in beta. APIs are subject to change before final release.
+
+== Build with UI
+
+The scripty2 UI controls are under heavy development and are still in alpha. They're not included when you run the standard rake tasks. To build a distributable with UI controls included, run:
+
+  rake dist:experimental
+  
+There are several other <tt>*:experimental</tt> tasks corresponding to common actions. Run <tt>rake -T</tt> to see the list of tasks.
 
 = Usage
 

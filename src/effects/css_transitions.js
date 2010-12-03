@@ -9,6 +9,7 @@
   // Test if CSS transitions are supported.
   var supported = false;
   var hardwareAccelerationSupported = false;
+  var transitionEndEventName = null;
   
   function isHWAcceleratedSafari() {
     var ua = navigator.userAgent, av = navigator.appVersion;
@@ -17,20 +18,27 @@
   }
   
   (function() {
-    var div = document.createElement('div');
-    
-    try {
-      document.createEvent("WebKitTransitionEvent");
-      supported = true;
-      
-      hardwareAccelerationSupported = isHWAcceleratedSafari();
-    } catch(e) {
-      if (typeof div.style.MozTransition !== 'undefined') {
-        supported = true;
-      }
+    var eventNames = {
+      'WebKitTransitionEvent': 'webkitTransitionEnd',
+      'TransitionEvent': 'transitionend',
+      'OTransitionEvent': 'oTransitionEnd'
+    };
+    if (S2.CSS.VENDOR.PREFIX) {
+      var p = S2.CSS.VENDOR.PREFIX;
+      eventNames[p + 'TransitionEvent'] = p + 'TransitionEnd';
     }
     
-    div = null;
+    for (var e in eventNames) {
+      try {
+        document.createEvent(e);
+        transitionEndEventName = eventNames[e];
+        supported = true;
+        if (e == 'WebKitTransitionEvent') {
+          hardwareAccelerationSupported = isHWAcceleratedSafari();
+        }
+        return;
+      } catch (ex) { }
+    }
   })();
   
   if (!supported) return;
@@ -270,11 +278,19 @@
       s[v('transition-duration').camelize()] = (effect.duration / 1000).toFixed(3) + 's';
       s[v('transition-timing-function').camelize()] = timingFunctionForTransition(effect.options.transition);
       
-      this.element.setStyle(style.toObject());
+      // We make sure the browser interpreted the transitions properties
+      // Opera needs deferring
+      if (Prototype.Browser.Opera) {
+        this._setStyle.bind(this).defer(style.toObject());
+      } else this._setStyle(style.toObject());
       this.running = true;
 
       // Replace ourselves with a no-op.
       this.render = Prototype.emptyFunction;
+    },
+    
+    _setStyle: function(style) {
+      this.element.setStyle(style);
     }
   });
   
@@ -364,59 +380,45 @@
     }
   });
   
-  var EVENT_NAMES = {
-    "webkit": "webkitTransitionEnd",
-    "moz": "transitionend"
-  };
-  
-  var eventName = EVENT_NAMES[S2.CSS.VENDOR_PREFIX.toLowerCase()];
-  
   // We listen for the `transitionEnd` event that fires when a CSS transition
   // is done, so that we can mark the effect as "finished," fire the `after`
   // callback, and do other custodial tasks.
-  document.observe(eventName, function(event) {
+  document.observe(transitionEndEventName, function(event) {
     var element = event.element();
     if (!element) return;
     
+    // We make sure the element which dispatched the event
+    // has an effect attached to it.
     var effect = element.retrieve('s2.effect');
     
-    function adjust(element, effect) {
+    if (!effect || effect.state === 'finished') return;
+    
+    function adjust(element, effect){
       var targetStyle = element.retrieve('s2.targetStyle');
       if (!targetStyle) return;
       
       element.setStyle(targetStyle);
       
-      var originalTransitionStyle =
-       element.retrieve('s2.originalTransitionStyle');
-       
+      var originalTransitionStyle = element.retrieve('s2.originalTransitionStyle');
+      
       var storage = element.getStorage();
       storage.unset('s2.targetStyle');
       storage.unset('s2.originalTransitionStyle');
       storage.unset('s2.effect');
-
-      // Once we've done all this stuff, the element should _finally_
-      // be ready to process the next queued effect.
-      (function() {
-        if (originalTransitionStyle) {
-          element.setStyle(originalTransitionStyle);
-        }
-        S2.FX.setReady(element);        
-      }).defer();
-    }
+      
+      if (originalTransitionStyle) {
+        element.setStyle(originalTransitionStyle);
+      }
+      S2.FX.setReady(element);
+    } 
     
     // Make sure the duration is properly reset after each transition.
-    // The next line crashes current WebKit if not called deferred.
-    // (reported as https://bugs.webkit.org/show_bug.cgi?id=22398)
-    (function (element, effect) {
-      var durationProperty = v('transition-duration').camelize();
-      element.style[durationProperty] = '';
-      
-      // We need to defer this call because we've just set
-      // TransitionDuration to 0, but it won't take effect until
-      // the stack is empty (because of style batching).
-      // (see https://bugs.webkit.org/show_bug.cgi?id=27159)
-      adjust(element, effect);
-    }).defer(element, effect);
+    // NOTE: This was previously wrapped in an anonymous function and
+    // deferred, but now it appears to work (in Safari 5, Chrome, and
+    // Minefield) without needing this.
+    var durationProperty = v('transition-duration').camelize();
+    element.style[durationProperty] = '';
+    adjust(element, effect);
     
     // Mark the effect as finished so it gets removed from its queue.
     effect.state = 'finished';

@@ -60,6 +60,8 @@ new Test.Unit.Runner({
       function(){new S2.FX.Morph('nothing-to-see-here',{style:'font-size:50px'})});
   }},
   
+  // TODO: add tests for S2.FX.Parallel, incl. callbacks
+  
   testCallbacks: function() { with(this) {
     var tmp = 0;
     var e1 = new S2.FX.Morph('sandbox',{style:'',delay:1,duration:0.5,

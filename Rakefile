@@ -72,9 +72,13 @@ namespace :dist do
   end
 end
 
-def minify(src, target)
+def minify(src, target, compressor = 'yui')
   puts "Minifying #{src}..."
-  `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar #{src} -o #{target}`
+  if compressor == 'yui'
+    `java -jar vendor/yuicompressor/yuicompressor-2.4.2.jar #{src} -o #{target}`
+  elsif compressor == 'google'
+    `java -jar vendor/google-compiler/compiler.jar --js #{src} --summary_detail_level 3 --js_output_file #{target}`
+  end
   cp target, File.join(SCRIPTY2_DEBUG_DIR,'temp.js')
   msize = File.size(File.join(SCRIPTY2_DEBUG_DIR,'temp.js'))
   `gzip -9 #{File.join(SCRIPTY2_DEBUG_DIR,'temp.js')}`
@@ -88,10 +92,16 @@ def minify(src, target)
   puts "Minified and gzipped: %.1fk, compression factor %.1f" % [dsize/1024.0, osize/dsize.to_f]  
 end
 
-desc "Generates a minified version of the distribution."
+desc "Generates a minified version of the distribution (using YUI Compressor)."
 task :min do
   minify File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_RELEASE_DIR,'s2.min.js')
   minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_RELEASE_DIR,'prototype.min.js')
+end
+
+desc "Generates a minified version of the distribution (using Google Closure Compiler)."
+task :min_google do
+  minify File.join(SCRIPTY2_DIST_DIR,'s2.js'), File.join(SCRIPTY2_RELEASE_DIR,'s2.min.js'), 'google'
+  minify File.join(SCRIPTY2_ROOT,'lib','prototype.js'), File.join(SCRIPTY2_RELEASE_DIR,'prototype.min.js'), 'google'
 end
 
 def unify_distribution
