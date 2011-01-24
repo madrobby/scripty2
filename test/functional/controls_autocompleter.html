@@ -157,7 +157,7 @@
       { client: { login: "RStankov", name: "Radoslav Stankov"} },
       { client: { login: "smith", name: "Nathan L Smith"} },
       { client: { login: "joe-loco", name: "Philipp Markovics"} },
-      { client: { login: "kommen", name: "Dieter Komendera",} },
+      { client: { login: "kommen", name: "Dieter Komendera"} },
       { client: { login: "eric1234", name: "Eric Anderson"} },
       { client: { login: "sgruhier", name: "Sébastien Gruhier"} },
       { client: { login: "stepheneb", name: "Stephen Bannasch"} },
@@ -169,8 +169,8 @@
 
     new S2.UI.Autocompleter('autocompleter2', {
       choices: choices.collect(function(o) { return o.client }),
-      choiceAttribute: 'name',
-      listTemplate: new Template('#{text} <em>(#{object.login})</em>')
+      choiceValue: function(choice) { return choice.name; },
+      choiceTemplate: new Template('#{text} <em>(#{object.login})</em>')
     });
   </script>
 

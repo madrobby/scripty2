@@ -152,12 +152,11 @@
     findChoices: function() {
       var value = this._getInput(),
           choices = this.choices || [],
-          choiceValue,
-          choiceAttribute = this.options.choiceAttribute;
+          opt = this.options;
 
       var results = choices.inject([], function(memo, choice) {
-        choiceValue = Object.isUndefined(choiceAttribute) ? choice : choice[choiceAttribute]
-        if (choiceValue.toLowerCase().include(value.toLowerCase())) {
+        if (opt.choiceValue(choice).toLowerCase().include(
+         value.toLowerCase())) {
           memo.push(choice);
         }
         return memo;
@@ -179,13 +178,12 @@
       // Build a case-insensitive regexp for highlighting the substring match.
       var needle = new RegExp(RegExp.escape(this._value), 'i');
       for (var i = 0, result, li, text; result = results[i]; i++) {
-        value = Object.isUndefined(opt.choiceAttribute) ? result : result[opt.choiceAttribute]
-
         text = opt.highlightSubstring ? 
-         value.replace(needle, "<b>$&</b>") :
-         value;
+         opt.choiceValue(result).replace(needle, "<b>$&</b>") :
+         opt.choiceValue(result);
 
-        li = new Element('li').update(Object.isUndefined(opt.listTemplate) ? text : opt.listTemplate.evaluate({text: text, object: result}));
+        li = new Element('li').update((opt.choiceTemplate instanceof Template) ?
+         opt.choiceTemplate.evaluate({text: text, object: result}) : text);
         li.store('ui.autocompleter.value', result);
         this.menu.addChoice(li);
       }
@@ -233,7 +231,7 @@
           value:    value
         });
         if (result.stopped) return;
-        this._setInput(Object.isUndefined(this.options.choiceAttribute) ? value : value[this.options.choiceAttribute]);
+        this._setInput(this.options.choiceValue(value));
       }
       this.menu.close();
     },
@@ -253,7 +251,9 @@
       highlightSubstring: true,
 
       onShow: Prototype.K,
-      onHide: Prototype.K
+      onHide: Prototype.K,
+
+      choiceValue: function(choice) { return choice.toString(); }
     }
   });  
 
