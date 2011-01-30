@@ -102,7 +102,7 @@
     
       this.addObservers();
     
-      this.values.each(this.setValue, this);
+      this.values.each(this._setValue, this);
     
       this.initialized = true;
     },
@@ -171,7 +171,7 @@
     
       var handle = event.findElement();
       var index  = handle.retrieve('ui.slider.handle');
-      var allow = true, opt = this.options;
+      var opt = this.options;
     
       if (!Object.isNumber(index)) return;
     
@@ -182,10 +182,10 @@
       event.preventDefault();
     
       handle.addClassName('ui-state-active');
-    
+      
       var currentValue, newValue, step = this.keyboardStep;
       currentValue = newValue = this.values[index];
-
+      
       switch (event.keyCode) {
       case Event.KEY_HOME:
         newValue = opt.value.min; break;
@@ -206,8 +206,8 @@
       // We're 'dragging' in the sense that we don't want the "changed"
       // event to fire until keyup.
       this.dragging = true;
-      this.setValue(newValue, index);
-    
+      this._setValue(newValue, index);
+      
       // In Safari, the keydown event fires repeatedly when the user holds the
       // button down. In other browsers, we have to do this manually.
       if (!Prototype.Browser.WebKit) {
@@ -215,11 +215,7 @@
         // thereafter.
         var interval = this._timer ? 0.1 : 1;
         this._timer = arguments.callee.bind(this).delay(interval, event);
-      }
-    
-      if (!allow) {
-        event.stop();
-      }
+      }    
     },
   
     keyup: function(event) {
@@ -242,6 +238,12 @@
      *    is assumed.
     **/
     setValue: function(sliderValue, handleIndex) {
+      this._saveValues();
+      this._setValue(sliderValue, handleIndex);
+      this._fireChangedEvent();
+    },
+    
+    _setValue: function(sliderValue, handleIndex) {
       if (!this.activeHandles) {
         this.activeHandles = [this.handles[handleIndex || 0]];
         this._updateStyles();
@@ -263,13 +265,11 @@
         }
       }
     
-      sliderValue = this._getNearestValue(sliderValue);
-    
+      sliderValue = this._getNearestValue(sliderValue);    
       this.values[handleIndex] = sliderValue;
     
       var prop = (this.orientation === 'vertical') ? 'top' : 'left';
-      var css = {};
-    
+      var css = {};    
       css[prop] = this._valueToPx(sliderValue) + 'px';    
       this.handles[handleIndex].setStyle(css);
     
@@ -339,7 +339,7 @@
       if (event.findElement('.ui-slider-range')) return;
       
       // Remember the old values in case we have to undo the action.
-      this._oldValues = this.values.clone();
+      this._saveValues();
     
       this.active = true;
       var target  = event.findElement();
@@ -354,7 +354,7 @@
           y: Math.round(pointer.y - trackOffset.top - this._handleLength / 2 - this._trackMargin)
         };
       
-        this.setValue(this._pxToValue(newPosition));
+        this._setValue(this._pxToValue(newPosition));
       
         this.activeHandles = this.activeHandles || [this.handles.first()];
         handle = this.activeHandles.first();
@@ -415,11 +415,13 @@
         y: Math.round(pointer.y - trackOffset.top)
       };
     
+      this._saveValues();
       this._rangeInitialValues = this.values.clone();
       this._rangePseudoValue = this._pxToValue(newPosition);
     
       document.observe('mousemove', this.observers.rangeMouseMove);
       document.observe('mouseup',   this.observers.rangeMouseUp);
+      
          
       // Mark both handles as active.
       this.activeHandles = this.handles.clone();
@@ -457,7 +459,7 @@
          function(v) { return v + valueDelta; });
       }
 
-      newValues.each(this.setValue, this);
+      newValues.each(this._setValue, this);
     },
   
     rangeMouseUp: function(event) {
@@ -477,7 +479,7 @@
       pointer.x -= (this._offsets.x + trackOffset.left + this._handleLength / 2 + this._trackMargin);
       pointer.y -= (this._offsets.y + trackOffset.top + this._handleLength / 2 + this._trackMargin);
     
-      this.setValue(this._pxToValue(pointer));
+      this._setValue(this._pxToValue(pointer));
     },
   
     _pxToValue: function(offsets) {
@@ -501,22 +503,47 @@
      *  S2.UI.Slider#undo() -> this
      *  
      *  Reverts the effect of the previous call to [[S2.UI.Slider#setValue]].
+     *
+     *  NOTE: Calling this method will change the slider's value and thus
+     *  broadcast a `ui:slider:value:changed` event. Ordinarily, this event
+     *  is cancelable; when cancelled, it calls the `undo` method. When a
+     *  slider value is changed by `undo`, this obviously isn't possible,
+     *  so attempts to cancel the event will be ignored.
     **/
     undo: function() {
       if (!this._oldValues) return;
-      this.values = this._oldValues.clone();
+      this._restoreValues();
     
       this.undoing = true;
-      this._oldValues.each(this.setValue, this);
+      this.values.each(this._setValue, this);
       this.undoing = false;
+      
+      this._fireChangedEvent();
     },
-  
-    _updateFinished: function() {
+    
+    // Set the current values as the values that will be restored after a
+    // call to `undo`.
+    _saveValues: function() {
+      this._oldValues = this.values.clone();
+    },
+    
+    _restoreValues: function() {
+      if (!this._oldValues) return;
+      this.values = this._oldValues.clone();
+      this._oldValues = null;
+    },
+    
+    _fireChangedEvent: function() {
       var result = this.element.fire("ui:slider:value:changed", {
         slider: this,
         values: this.values
       });
-    
+      
+      return result;
+    },
+  
+    _updateFinished: function() {      
+      var result = this._fireChangedEvent();    
       if (result.stopped) {
         this.undo();
         return;
