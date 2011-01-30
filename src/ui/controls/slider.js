@@ -1,15 +1,13 @@
-
-
 (function(UI) {
   /** section: scripty2 ui
    *  class S2.UI.Slider < S2.UI.Base
    *  
    *  A slider.
   **/
-  UI.Slider = Class.create(UI.Base, {
+  UI.Slider = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Slider",
 
-    /**
+    /**  
      *  new S2.UI.Slider(element, options)
      *  - element (Element): The element to act as the slider track.
      *  - options (Object): An object containing overrides for the default
@@ -46,7 +44,7 @@
        'ui-corner-all');
       this.handles.invoke('writeAttribute', 'tabIndex', '0');
     
-      this.activeHandle = this.handles.first();
+      this.activeHandles = [this.handles.first()];
     
       this.handles.invoke('observe', 'click', Event.stop);
       UI.addBehavior(this.handles, [UI.Behavior.Hover, UI.Behavior.Focus]);
@@ -91,6 +89,8 @@
         // This isn't the most fittingly semantic framework class for this
         // element, but worked best visually with a variety of themes.
         this.range.addClassName('ui-widget-header');
+      } else if (opt.range) {
+        throw "Must have exactly 2 handles to depict a slider range.";
       }
     
       this._computeTrackLength();
@@ -108,12 +108,14 @@
     },
   
     addObservers: function() {
-      this.element.observe('mousedown', this.observers.mousedown);
+      var o = this.observers;      
+      this.on('mousedown', o.mousedown);
       if (this.range) {
-        this.range.observe('mousedown', this.observers.rangeMouseDown);
+        this.on('mousedown', '.ui-slider-range', o.rangeMouseDown);
       }
-      this.handles.invoke('observe', 'keydown', this.observers.keydown);
-      this.handles.invoke('observe', 'keyup',   this.observers.keyup);
+      
+      this.on('keydown', '.ui-slider-handle', o.keydown);
+      this.on('keyup',   '.ui-slider-handle', o.keyup);
     },
   
     _computeTrackLength: function() {
@@ -135,7 +137,7 @@
     _computeHandleLength: function() {
       var handle = this.handles.first(), length, dim;
 
-      if (!handle) return;
+      if (!handle) return null;
 
       if (this.orientation === 'vertical') {
         dim = handle.offsetHeight;
@@ -176,9 +178,8 @@
       var interceptKeys = [Event.KEY_HOME, Event.KEY_END, Event.KEY_UP, 
        Event.KEY_DOWN, Event.KEY_LEFT, Event.KEY_RIGHT];
      
-      if (!interceptKeys.include(event.keyCode)) {
-        return;
-      }
+      if (!interceptKeys.include(event.keyCode)) return;
+      event.preventDefault();
     
       handle.addClassName('ui-state-active');
     
@@ -241,14 +242,15 @@
      *    is assumed.
     **/
     setValue: function(sliderValue, handleIndex) {
-      if (!this.activeHandle) {
-        this.activeHandle = this.handles[handleIndex || 0];
+      if (!this.activeHandles) {
+        this.activeHandles = [this.handles[handleIndex || 0]];
         this._updateStyles();
       }
+      
+      var activeHandle = this.activeHandles.first();
     
-      handleIndex = handleIndex || 
-       this.activeHandle.retrieve('ui.slider.handle') || 0;
-     
+      handleIndex = handleIndex || activeHandle.retrieve('ui.slider.handle') || 0;
+       
       if (this.initialized && this.restricted) {
         // If there's more than one handle, the active one could be fenced in
         // according to the positions of adjacent handles.
@@ -331,7 +333,11 @@
       var opt = this.options;
       if (!event.isLeftClick() || opt.disabled) return;  
       event.stop();
-    
+      
+      // Don't handle mousedown inside a range. There's a separate handler
+      // for that.
+      if (event.findElement('.ui-slider-range')) return;
+      
       // Remember the old values in case we have to undo the action.
       this._oldValues = this.values.clone();
     
@@ -350,8 +356,8 @@
       
         this.setValue(this._pxToValue(newPosition));
       
-        this.activeHandle = this.activeHandle || this.handles.first();      
-        handle = this.activeHandle;
+        this.activeHandles = this.activeHandles || [this.handles.first()];
+        handle = this.activeHandles.first();
         this._updateStyles();
         this._offsets = {x: 0, y: 0};
       } else {
@@ -359,7 +365,7 @@
         handle = event.findElement('.ui-slider-handle');
         if (!handle) return;
       
-        this.activeHandle = handle;
+        this.activeHandles = [handle];
         this._updateStyles();
         var handleOffset = handle.cumulativeOffset();
         this._offsets = {
@@ -381,7 +387,7 @@
     
       this.active = this.dragging = false;
     
-      this.activeHandle = null;
+      this.activeHandles = null;
       this._updateStyles();
     
       document.stopObserving('mousemove', this.observers.mousemove);
@@ -413,7 +419,11 @@
       this._rangePseudoValue = this._pxToValue(newPosition);
     
       document.observe('mousemove', this.observers.rangeMouseMove);
-      document.observe('mouseup',   this.observers.rangeMouseUp);    
+      document.observe('mouseup',   this.observers.rangeMouseUp);
+         
+      // Mark both handles as active.
+      this.activeHandles = this.handles.clone();
+      this._updateStyles();    
     },
   
     rangeMouseMove: function(event) {
@@ -446,7 +456,7 @@
         newValues = this._rangeInitialValues.map(
          function(v) { return v + valueDelta; });
       }
-    
+
       newValues.each(this.setValue, this);
     },
   
@@ -512,7 +522,7 @@
         return;
       }
     
-      this.activeHandle = null;
+      this.activeHandles = null;
       this._updateStyles();
       
       this.options.onChange(this.values, this);
@@ -520,8 +530,8 @@
   
     _updateStyles: function() {
       UI.removeClassNames(this.handles, 'ui-state-active');
-      if (this.activeHandle) {
-        this.activeHandle.addClassName('ui-state-active');      
+      if (this.activeHandles) {
+        UI.addClassNames(this.activeHandles, 'ui-state-active');
       }
     },
   
