@@ -116,6 +116,16 @@
       
       this.on('keydown', '.ui-slider-handle', o.keydown);
       this.on('keyup',   '.ui-slider-handle', o.keyup);
+      
+      this.handles.invoke('observe', 'focus', o.focus);
+      this.handles.invoke('observe', 'blur',  o.blur);
+    },
+    
+    removeObservers: function($super) {
+      $super();
+      var o = this.observers;
+      this.handles.invoke('stopObserving', 'focus', o.focus);
+      this.handles.invoke('stopObserving', 'blur',  o.blur);
     },
   
     _computeTrackLength: function() {
@@ -581,12 +591,9 @@
 
     focus: function(event) {
       if (this.options.disabled) return;
-    
       var handle = event.findElement();
-    
-      this.element.select('.ui-state-focus').invoke(
-       'removeClassName', 'ui-state-focus');
-    
+      UI.removeClassNames(this.element.select('.ui-state-focus'),
+       'ui-state-focus');
       handle.addClassName('ui-state-focus');
     },
   
