@@ -85,6 +85,80 @@
     </ul>
   </div> <!-- .description -->
   
+  
+  <h2>Stepped slider</h2>
+  
+  <div style="width: 400px">
+    <div id="stepped_slider"></div>
+    <p>Value set to: <span id="stepped_log"></span></p>
+  </div>
+  
+  <script type="text/javascript">
+    (function() {
+      var log = $('stepped_log');
+      
+      new S2.UI.Slider('stepped_slider', {
+        value: { step: 1 },
+        
+        onSlide: function(values, slider) {
+          log.update(values[0]);
+          log.setStyle({ textDecoration: 'none' });
+        },
+        
+        onChange: function(values, slider) {
+          log.update(values[0]);
+          log.setStyle({ textDecoration: 'underline' });
+        }
+      });
+    })();  
+  </script>
+  
+  <div class="description">
+    <p>A slider defined with a <code>value.step</code> option of <code>1</code>.</p>
+    <ul>
+      <li>It <strong>should</strong> show only integer values.</li>
+    </ul>
+  </div> <!-- .description -->
+  
+  
+  <h2>Slider with range</h2>
+  
+  <div style="width: 400px">
+    <div id="range_slider"></div>
+    <p>Values set to: <span id="range_log"></span></p>    
+  </div>
+  
+  <script type="text/javascript">
+    (function() {
+      var log = $('range_log');
+    
+      new S2.UI.Slider('range_slider', {
+        range: true,
+        value: { initial: [25, 75], step: 1 },
+        onSlide: function(values, slider) {
+          log.update(values.join(', '));
+          log.setStyle({ textDecoration: 'none' });
+        },
+      
+        onChange: function(values, slider) {
+          log.update(values.join(', '));
+          log.setStyle({ textDecoration: 'underline' });
+        }
+      });
+    })();
+  </script>
+
+  <div class="description">
+    <p>A slider with two handles and a range between them.</p>
+    <ul>
+      <li>It <strong>should</strong> have two handles with initial values of <code>25</code> and <code>75</code>.</li>
+      <li>The area between the two handles (called the &ldquo;range&rdquo;) <strong>should</strong> be distinguished from the rest of the slider track.</li>
+      <li>Clicking on the track in between the two handles <strong>should</strong> allow dragging the range around.</li>
+      <li>Dragging the range <strong>should not</strong> change its size; the difference between the two handle values <strong>should</strong> remain fixed.</li>
+
+    </ul>
+  </div> <!-- .description -->  
+  
   <h2>Vertical slider</h2>
   
   <div style="height: 400px">
