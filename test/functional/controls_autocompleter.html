@@ -142,6 +142,46 @@
       <li>The matching substring of a given choice <strong>should</strong> be bold.</li>
     </ul>
   </div> <!-- .description -->
-  
+
+
+  <h2>Autocompleter using Objects as choices and Template to style list items</h2>
+
+  <span id="autocompleter2">
+    <input type="text" name="firstname" />
+  </span> <!-- #autocompleter2 -->
+
+  <script type="text/javascript">
+    var choices = [
+      { client: { login: "madrobby", name: "Thomas Fuchs"} },
+      { client: { login: "savetheclocktower", name: "Andrew Dupont"} },
+      { client: { login: "RStankov", name: "Radoslav Stankov"} },
+      { client: { login: "smith", name: "Nathan L Smith"} },
+      { client: { login: "joe-loco", name: "Philipp Markovics"} },
+      { client: { login: "kommen", name: "Dieter Komendera"} },
+      { client: { login: "eric1234", name: "Eric Anderson"} },
+      { client: { login: "sgruhier", name: "Sébastien Gruhier"} },
+      { client: { login: "stepheneb", name: "Stephen Bannasch"} },
+      { client: { login: "ZenCocoon", name: "Sébastien Grosjean"} },
+      { client: { login: "TomK32", name: "Thomas R. Koll"} },
+      { client: { login: "charettes", name: "Simon Charette"} },
+      { client: { login: "rumble", name: "Mike Rumble"} }
+    ];
+
+    new S2.UI.Autocompleter('autocompleter2', {
+      choices: choices.collect(function(o) { return o.client }),
+      choiceValue: function(choice) { return choice.name; },
+      choiceTemplate: new Template('#{text} <em>(#{object.login})</em>')
+    });
+  </script>
+
+  <div class="description">
+    The choices are the scripty2 contributors at test's creation date. It should behave like a standard autocompleter, with a few exceptions:
+    <ul>
+      <li>It <strong>should</strong> accept an array of objects as choices</li>
+      <li>The list of completions <strong>should</strong> offer customized HTML items.</li>
+      <li>When selected, it <strong>should</strong> set the value with the right object attribute.</li>
+      <li>When <code>ui:autocompleter:selected</code> is fired, it <strong>should</strong> return the complete object as memo's value.</li>
+    </ul>
+  </div> <!-- .description -->
 </body>
 </html>
