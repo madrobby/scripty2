@@ -107,6 +107,69 @@
     
   </div> <!-- .ui-widget -->
   
+  <div class="functional-test">
+    <h2>Using setOptions after initialization</h2>
+    
+    <button id="set_options_test">Play</button>
+    
+    <button id="set_options_test2"></button>
+    
+    
+    <script type="text/javascript">
+      (function() {
+        var button = new S2.UI.Button('set_options_test', {
+          icons: {
+            primary: 'ui-icon-play'
+          }
+        });
+        
+        var button2 = new S2.UI.Button('set_options_test2', {
+          text: false,
+          icons: {
+            primary: 'ui-icon-play'
+          }
+        });
+        
+        button.on('click', function() {
+          var currentIcon = button.options.icons.primary;          
+          var newIcon = (currentIcon === 'ui-icon-play') ? 'ui-icon-pause' :
+           'ui-icon-play';           
+          var newText = (newIcon === 'ui-icon-play') ? 'Play' : 'Pause';
+          
+          button.setOptions({
+            text: newText,
+            icons: {
+              primary: newIcon
+            }
+          });
+        });
+        
+        button2.on('click', function() {
+          var currentIcon = button2.options.icons.primary;          
+          var newIcon = (currentIcon === 'ui-icon-play') ? 'ui-icon-pause' :
+           'ui-icon-play';           
+
+          button2.setOptions({
+            icons: {
+              primary: newIcon
+            }
+          });
+        })        
+        
+      })();
+    </script>
+    
+    <div class="description">
+      <p>A demonstration of how certain properties of a button can be changed by calling <code>setOptions</code> after instantiation.</p>
+      
+      <ul>
+        <li>Clicking the button <strong>should</strong> toggle the buttons icon and text between "Pause" and "Play."</li>
+        <li>Note that the <code>text</code> option wasn't defined in the options given to the constructor, but was inferred from the text that was already inside the element. Changing the <code>text</code> option <strong>should</strong> change the button's text even if a <code>text</code> option wasn't originally specified.</li>
+      </ul>
+    </div>
+    
+  </div>
+  
   
   <div class="functional-test">
     <h2>Buttons with icons</h2>

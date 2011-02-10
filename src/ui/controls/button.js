@@ -1,5 +1,7 @@
 
-(function(UI) {  
+
+(function(UI) {
+
   /** section: scripty2 ui
    *  class S2.UI.Button < S2.UI.Base
    *  includes S2.UI.Mixin.Element
@@ -8,7 +10,9 @@
   **/
   UI.Button = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Button",
-
+    
+    /// PUBLIC
+    
     /**
      *  new S2.UI.Button(element[, options])
      *  - element (Element): The element to serve as the button's base. Can
@@ -21,67 +25,47 @@
     **/
     initialize: function(element, options) {
       this.element = $(element);
-
-      var name = this.element.nodeName.toUpperCase(), type;
-      
-      // Assign a type to the button.
-      if (name === 'INPUT') {
-        type = this.element.type;
-        if (type === 'checkbox' || type === 'radio') {
-          this.type = this.element.type;
-        } else {
-          this.type = 'input';
-        }
-      } else {
-        this.type = 'button';
-      }
-      
-      var opt = this.setOptions(options);
-
-      // For checkboxes and radio buttons, the label acts as the visual
-      // representation of the control, and receives all interactions.
-      if (this._isCheckboxOrRadio()) {
-        this._handleFormWidget();  
-      } else {
-        this._makeButtonElement(this.element);
-      }
+      this.type = this._getType();      
+      this.setOptions(options);
       
       this.element.store('ui.button', this);
-      if (this._buttonElement !== this.element) {
-        this._buttonElement.store('ui.button', this);
-      }
-
-      this.enabled = true;
-
-      var disabled = (this.element.disabled === true)
-       this.element.hasClassName('ui-state-disabled');
-
-      this.setEnabled(!disabled);
+      this.toElement().store('ui.button', this);
       
       this.observers = {
-        click: this._click.bind(this),
-        keyup: this._keyup.bind(this)
+        click:   this._click.bind(this),
+        keyup:   this._keyup.bind(this)
       };
+      
       this.addObservers();
+      
+      this._initialized = true;
+    },
+    
+    setOptions: function($super, options) {
+      var opt = $super(options);
+      this._applyOptions();
+      return opt;
     },
     
     addObservers: function() {
-      this.observe('click', this.observers.click);
-      this.observe('keyup', this.observers.keyup);
+      for (var eventName in this.observers)
+        this.observe(eventName, this.observers[eventName]);
     },
     
     removeObservers: function() {
-      this.stopObserving('click', this.observers.click);      
-      this.stopObserving('keydown', this.observers.keydown);
+      for (var eventName in this.observers)
+        this.stopObserving(eventName, this.observers[eventName]);
     },
     
+    /**
+     *  S2.UI.Button#isActive() -> Boolean
+     *  
+     *  Reports whether a toggle button is active or inactive. Always returns
+     *  `false` if the button is not a toggle button.
+    **/
     isActive: function() {
       if (!this._isToggleButton()) return false;
       return this.hasClassName('ui-state-active');
-    },
-    
-    _setActive: function(bool) {      
-      this[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
     },
     
     /**
@@ -91,8 +75,7 @@
      *  
      *  Toggles the button between active and inactive. Returns the instance.
      *  
-     *  If the button isn't a "toggle" button, the instance will immediately
-     *  return itself.
+     *  Takes no action if the button is not a toggle button.
     **/
     toggle: function(bool) {
       if (!this._isToggleButton()) return this;
@@ -100,15 +83,185 @@
       var isActive = this.isActive();
       if (Object.isUndefined(bool)) bool = !isActive;
       
-      var willChange = (bool !== isActive);      
-      if (willChange) {
-        var result = this.toElement().fire('ui:button:toggle');
-        if (result.stopped) return;
+      if (bool !== isActive) {
+        // We're about to flip this toggle to the opposite state.
+        var result = this.fire('ui:button:toggle', { button: this });
+        if (result.stopped) return this;
       }
-      this._buttonElement[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
       
+      this[bool ? 'addClassName' : 'removeClassName']('ui-state-active');
       return this;
     },
+    
+    /**
+     *  S2.UI.Button#setEnabled(isEnabled) -> this
+     *  - isEnabled (Boolean): Whether the button should be enabled.
+     *  
+     *  Sets the enabled/disabled state of the button. A disabled button
+     *  won't respond to click, hover, or focus events.
+    **/
+    setEnabled: function(shouldBeEnabled) {
+      var element = this.toElement();
+      
+      if (this.enabled === shouldBeEnabled) return;
+      this.enabled = shouldBeEnabled;
+
+      if (shouldBeEnabled) element.removeClassName('ui-state-disabled');
+      else element.addClassName('ui-state-disabled');
+      
+      this.element.disabled = !shouldBeEnabled;
+    },
+    
+    toElement: function() {
+      return this._buttonElement || this.element;
+    },
+    
+    
+    /// PRIVATE
+    
+    _getType: function() {
+      var name = this.element.nodeName.toUpperCase(), type;
+      
+      if (name === 'INPUT') {
+        type = this.element.type;
+        if (type === 'checkbox' || type === 'radio') {
+          return type;
+        } else if (type === 'button') {
+          return 'input';
+        }
+      } else {
+        return 'button';
+      }
+    },
+    
+    
+    _hasText: function() {
+      var text = this.options.text;
+      return !!text && text !== '&nbsp;' && (/\S/).test(text);
+    },
+    
+    // Can we put other elements inside this button?
+    _isContainer: function() {
+      return this.type !== 'input';
+    },
+    
+    _isToggleButton: function() {
+      return this.type === 'checkbox' || this.type === 'radio' ||
+       this.options.toggle;
+    },
+    
+    _applyOptions: function() {
+      if (this.type === 'checkbox' || this.type === 'radio') {
+        // To adapt checkboxes and radio buttons into standard buttons, we
+        // hide the form control and instead repurpose the LABEL element
+        // to act like a button.
+        this._adaptFormWidget();
+      } else {
+        this._makeButtonElement(this.element);
+      }
+      
+      this.enabled = true;
+      var disabled = (this.element.disabled === true) ||
+       this.element.hasClassName('ui-state-disabled');
+       
+      this.setEnabled(!disabled);      
+    },
+    
+    _makeButtonElement: function(element) {
+      var opt = this.options, B = UI.Behavior;
+      this._buttonElement = element;
+      
+      UI.addClassNames(element, 'ui-button ui-widget ui-state-default ' +
+       'ui-corner-all');
+      UI.addBehavior(element, [B.Hover, B.Focus, B.Down]);
+      
+      if (opt.primary)
+        element.addClassName('ui-priority-primary');
+      
+      if (opt.text === null || opt.text === true)
+        opt.text = element.value || UI.getText(element);
+      
+      // ARIA.
+      element.writeAttribute('role', 'button');
+      
+      if (this._isContainer()) {
+        var buttonClassName, primaryIcon, secondaryIcon;
+        var icons = opt.icons;
+        
+        var hasIcon     = !!icons.primary || !!icons.secondary;
+        var hasTwoIcons = !!icons.primary && !!icons.secondary;
+        var hasText     = this._hasText();
+        
+        if (icons.primary)
+          primaryIcon = this._makeIconElement(icons.primary, 'primary');
+
+        if (icons.secondary)
+          secondaryIcon = this._makeIconElement(icons.secondary, 'secondary');
+          
+        if (hasIcon) {
+          if (hasText) {
+            buttonClassName = hasTwoIcons ? 'ui-button-text-icons' :
+             'ui-button-text-icon';
+          } else {
+            buttonClassName = hasTwoIcons ? 'ui-button-icons-only' :
+             'ui-button-icon-only';
+          }
+        } else {
+          buttonClassName = 'ui-button-text-only';
+        }
+        
+        element.update('');
+        element.addClassName(buttonClassName);
+        
+        if (primaryIcon)   element.insert(primaryIcon);
+        element.insert(this._makeTextElement(opt.text));
+        if (secondaryIcon) element.insert(secondaryIcon);
+      }
+      
+    },
+    
+    // Expects the name of the icon (e.g., 'ui-icon-dot') and the "type"
+    // (primary or secondary).
+    _makeIconElement: function(name, type) {
+      var classNames = 'ui-button-icon-' + type + ' ui-icon ' + name;
+      return new Element('span', { 'class': classNames });
+    },
+    
+    _makeTextElement: function(text) {
+      var span = new Element('span', { 'class': 'ui-button-text' });
+      // Even an empty text element (e.g., for icon-only buttons) needs to
+      // have at least one character of text to force proper alignment.
+      span.update(text || "&nbsp;");
+      return span;
+    },
+    
+    _adaptFormWidget: function() {
+      var opt = this.options;      
+      var id = this.element.id, label;
+      
+      // Look for a label. 
+      if (id) {
+        label = $$('label[for="' + id + '"]')[0];
+      }
+      
+      // If we can't find it by ID, it one of the form control's ancestors
+      // might be an implicit label.
+      if (!label) label = this.element.up('label');
+
+      // If we can't find a label, it's an exceptional state; we can't
+      // proceed with what the user has asked.
+      if (!label) {
+        throw "Can't find a LABEL element for this button.";
+      }
+      
+      this.label = label;
+      
+      this.element.addClassName('ui-helper-hidden-accessible');
+      this._makeButtonElement(label);
+      UI.makeFocusable(label, true);
+    },
+    
+    /// EVENT RESPONDERS
     
     _click: function(event) {
       this.toggle(!this.isActive());
@@ -120,167 +273,16 @@
       if (code !== Event.KEY_SPACE && code !== Event.KEY_RETURN)
         return;
       
-      var isActive = this.isActive();  
-      
+      var isActive = this.isActive();
       (function() {
         if (isActive !== this.isActive()) return;
         this.toggle(isActive);
-        this.element.checked = isActive;
-      }).bind(this).defer();
-    },
-    
-    _isCheckboxOrRadio: function() {
-      return this.type === 'checkbox' || this.type === 'radio';
-    },
-    
-    _isToggleButton: function() {
-      return this._isCheckboxOrRadio() || this.options.toggle;
-    },
-    
-    _makeButtonElement: function(element) {
-      this._buttonElement = element;
-
-      var opt = this.options;
-      UI.addClassNames(element,
-       'ui-button ui-widget ui-state-default ui-corner-all');
-
-      var B = UI.Behavior, behaviors = [B.Hover, B.Focus, B.Down];
-      UI.addBehavior(element, behaviors);
- 
-      if (opt.primary) {
-        element.addClassName('ui-priority-primary');
-      }
- 
-      if (opt.text === null) {
-        opt.text = element.innerHTML || element.value;
-      }
-      
-      this._interpretContent(element);
-      
-      // ARIA.
-      element.writeAttribute('role', 'button');
-    },
-    
-    _makeIconElement: function(name, type) {
-      var classNames = 'ui-button-icon-' + type + ' ui-icon ' + name;
-      return new Element('span', { 'class': classNames });
-    },
-    
-    // Handles assignment of icons, wrapping text in a SPAN, and other stuff
-    // for buttons that can have HTML contents (i.e., everything but INPUTs).
-    _interpretContent: function(element) {
-      if (!this._isContainer()) return;
-
-      var opt = this.options;
-      var buttonClassName, primaryIcon, secondaryIcon;
-      var hasIcon     = !!opt.icons.primary || !!opt.icons.secondary;
-      var hasTwoIcons = !!opt.icons.primary && !!opt.icons.secondary;
-
-      if (opt.icons.primary) {
-        primaryIcon = this._makeIconElement(opt.icons.primary, 'primary');
-      }
-      
-      if (opt.icons.secondary) {
-        secondaryIcon = this._makeIconElement(opt.icons.secondary, 'secondary');
-      }
-      
-      if (hasIcon) {
-        if (this._hasText()) {
-          buttonClassName = hasTwoIcons ? 'ui-button-text-icons' :
-           'ui-button-text-icon';
-        } else {
-          buttonClassName = hasTwoIcons ? 'ui-button-icons-only' :
-           'ui-button-icon-only';
-        }
-      } else {
-        buttonClassName = 'ui-button-text-only';
-      }
-      
-      this._wrapContentsInTextSpan(element);
-      element.addClassName(buttonClassName);
-
-      if (primaryIcon) {
-        element.insert({ top: primaryIcon });
-      }
-      
-      if (secondaryIcon) {
-        element.insert({ bottom: secondaryIcon });
-      }      
-    },
-    
-    _wrapContentsInTextSpan: function(element) {
-      var text = new Element('span', { 'class': 'ui-button-text' });      
-      for (var i = 0, node; node = element.childNodes[i]; i++) {
-        text.appendChild(node);
-      }
-      element.appendChild(text);      
-    },
-    
-    _hasText: function() {
-      return !!this.options.text;
-    },
-    
-    _isContainer: function() {
-      var element = this.toElement(), tag = element.nodeName.toUpperCase();
-      return (tag !== 'INPUT');
-    },
-    
-    _handleFormWidget: function() {
-      var opt = this.options;
-      // First, find the label.
-      var id = this.element.id, label;
-      if (id) {
-        label = $$('label[for="' + id + '"]')[0];
-      }
-      if (!label) {
-        // The form widget might be wrapped in an implicit label.
-        label = this.element.up('label');
-      }
-      
-      if (!label) {
-        opt.text = null;
-        return;
-      }
-      
-      
-      this.element.addClassName('ui-helper-hidden-accessible');      
-      this._makeButtonElement(label);
-      UI.makeFocusable(label, true);
-      this.label = label;
-    },
-    
-    /**
-     *  S2.UI.Button#setEnabled(isEnabled) -> this
-     *  - isEnabled (Boolean): Whether the button should be enabled.
-    **/
-    setEnabled: function(isEnabled) {
-      var element = this._buttonElement;
-      if (this.enabled === isEnabled) return;
-      this.enabled = isEnabled;
-      if (isEnabled) {
-        element.removeClassName('ui-state-disabled');
-      } else {
-        element.addClassName('ui-state-disabled');
-      }
-      this.element.disabled = !isEnabled;
-    },
-
-    /**
-     *  S2.UI.Button#toElement() -> Element
-     *  
-     *  Returns the DOM element for the button. This allows button instances
-     *  to be passed to certain Prototype methods that expect elements, like
-     *  `Element#insert`.
-    **/
-    toElement: function() {
-      return this._buttonElement;
-    },
-
-    inspect: function() {
-      return this.toElement().inspect();
+        this.element.checked = this.isActive();
+      }).bind(this).defer();      
     }
   });
   
+    
   Object.extend(UI.Button, {
     DEFAULT_OPTIONS: {
       primary: false,

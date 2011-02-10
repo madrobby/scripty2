@@ -2,8 +2,8 @@
   
   UI.ButtonWithMenu = Class.create(UI.Button, {
     initialize: function($super, element, options) {
-      var opt = this.setOptions(options);
       $super(element, options);
+      var opt = this.setOptions(options);
       
       this.menu = new UI.Menu();
       this.element.insert({ after: this.menu });
