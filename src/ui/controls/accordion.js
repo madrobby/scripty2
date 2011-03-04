@@ -10,7 +10,9 @@ Object.extend(Event, {
    *  Applies "accordion menu" behavior to an element and its contents.
    *  
    *  ##### Options
-   *  
+   *
+   *  * `defaultIndex` (Integer): Determines which content element should be
+   *    open by default.
    *  * `multiple` (Boolean): Whether multiple panels can be open at once.
    *    Defaults to `false`.
    *  * `headerSelector` (String): A CSS selector that identifies the
@@ -56,7 +58,7 @@ Object.extend(Event, {
       UI.addBehavior(this.headers, [UI.Behavior.Hover, UI.Behavior.Focus]);
       
       // The next sibling of each header is its corresponding content element.
-      this.content = this.headers.map( function(h) { return h.next(); });
+      this.content = this.headers.map( function(h) {return h.next();});
       
       UI.addClassNames(this.content, 'ui-accordion-content ui-helper-reset ' +
        'ui-widget-content ui-corner-bottom');
@@ -65,12 +67,17 @@ Object.extend(Event, {
       this.headers.each( function(header) {
         var icon = new Element('span');
         UI.addClassNames(icon, 'ui-icon ' + opt.icons.header);
-        header.insert({ top: icon });
+        header.insert({top: icon});
       });
 
-      // If the user specified an active header, mark it as active.
+      // If the user specified a default index, mark it as active.
       // Otherwise, the first one is active by default.
-      this._markActive(opt.active || this.headers.first(), false);
+      this.content.each(function(element, i){
+          if(opt.defaultIndex != i) {
+            element.hide();
+          }
+      });
+      this._markActive(this.headers[opt.defaultIndex] || this.headers.first(), false);
     
       // ARIA.
       this.element.writeAttribute({
@@ -80,7 +87,7 @@ Object.extend(Event, {
       this.headers.invoke('writeAttribute', 'role', 'tab');
       this.content.invoke('writeAttribute', 'role', 'tabpanel');
     
-      var links = this.headers.map( function(h) { return h.down('a'); });
+      var links = this.headers.map( function(h) {return h.down('a');});
       links.invoke('observe', 'click', function(event) {
         event.preventDefault();
       });
@@ -153,7 +160,7 @@ Object.extend(Event, {
         }
         header = this.headers[index];
       }
-      (function() { header.down('a').focus(); }).defer();
+      (function() {header.down('a').focus();}).defer();
     },
   
     _toggleActive: function(header) {
@@ -223,6 +230,7 @@ Object.extend(Event, {
 
   Object.extend(UI.Accordion, {
     DEFAULT_OPTIONS: {
+      defaultIndex: 0,
       multiple: false,  /* whether more than one pane can be open at once */    
       headerSelector: 'h3',
     
