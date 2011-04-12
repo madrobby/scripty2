@@ -55,5 +55,15 @@ S2.FX.Parallel = Class.create(S2.FX.Base, {
 
   update: function(position) {
     this.effects.invoke('update', position);
+  },
+
+  cancel: function($super, after) {
+    $super(after);
+    this.effects.invoke('cancel', after);
+  },
+
+  start: function($super) {
+    $super();
+    this.effects.invoke('start');
   }
 });
