@@ -382,22 +382,22 @@
      *  This method ignores elements, that has class ".alwaysOnTop".
     **/
     bringToFront: function() {
-      var zIndex = parseInt( this.element.getStyle('zIndex') || 1);
+      var zIndex = parseInt( this.element.getStyle('zIndex') || 2);
 
       // searches for the gighest zIndex value
       // alwaysOnTop - class reserved for further "alwaysOnTop" feature
       $$('body *:not(.alwaysOnTop)').each( function(element) {
         var position = element.getStyle('position');
-        if (element !== this && (position == 'absolute' || position == 'fixed')) {
+        if (element !== this.element && (position == 'absolute' || position == 'fixed')) {
           var value = parseInt( element.getStyle('zIndex') );
-          if ( !isNaN(value) && value > zIndex) {
-            zIndex = value;
+          if ( !isNaN(value) && value >= zIndex) {
+            zIndex = value + 1;
           }
         }
       }.bind(this) );
 
       // puts window one step higher then current most top.
-      this.element.setStyle( { zIndex: zIndex + 1 } );
+      this.element.setStyle( { zIndex: zIndex } );
 
       return this;
     }
