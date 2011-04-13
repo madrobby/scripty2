@@ -400,6 +400,36 @@
       this.element.setStyle( { zIndex: zIndex } );
 
       return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#alwaysOnTop() -> this
+     *  S2.UI.Dialog#alwaysOnTop(flat) -> this
+     *
+     *  Makes window staying always on top (or removes flag if false
+     *  is passed).
+     *
+     *  It means other windows won't calculate this window's zIndex
+     *  while doing bringToFront().
+    **/
+    alwaysOnTop: function(alwaysOnTop) {
+      if (alwaysOnTop === undefined || alwaysOnTop) ) {
+        this.element.addClassName('alwaysOnTop');
+      } else {
+        this.element.removeClassName('alwaysOnTop');
+      }
+
+      return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#isAlwaysOnTop() -> Boolean
+     *
+     *  Checks if window has alwaysOnTop flag set.
+    **/
+    isAlwaysOnTop: function()
+    {
+      return this.element.hasClassName('alwaysOnTop');
     }
   });
   
