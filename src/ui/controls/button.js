@@ -231,7 +231,8 @@
       var span = new Element('span', { 'class': 'ui-button-text' });
       // Even an empty text element (e.g., for icon-only buttons) needs to
       // have at least one character of text to force proper alignment.
-      span.update(text || "&nbsp;");
+      // Be careful - UTF-8 character here!
+      span.update(text || " ");
       return span;
     },
     
