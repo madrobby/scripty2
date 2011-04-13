@@ -160,6 +160,8 @@
         keypress: this.keypress.bind(this)
       };
 
+      // brings window on top when it's region is clicked
+      this.element.on('click', this.bringToFront.bind(this) );
     },
     
     toElement: function() {
@@ -370,6 +372,34 @@
           (function() { next.focus(); }).defer();
         }
       }
+    },
+
+    /**
+     *  S2.UI.Dialog#bringToFront() -> this
+     *
+     *  Brings dialog on top of display stack.
+     *
+     *  This method ignores elements, that has class ".alwaysOnTop".
+    **/
+    bringToFront: function() {
+      var zIndex = parseInt( this.element.getStyle('zIndex') || 1);
+
+      // searches for the gighest zIndex value
+      // alwaysOnTop - class reserved for further "alwaysOnTop" feature
+      $$('body *:not(.alwaysOnTop)').each( function(element) {
+        var position = element.getStyle('position');
+        if (element !== this && (position == 'absolute' || position == 'fixed')) {
+          var value = parseInt( element.getStyle('zIndex') );
+          if ( !isNaN(value) && value > zIndex) {
+            zIndex = value;
+          }
+        }
+      }.bind(this) );
+
+      // puts window one step higher then current most top.
+      this.element.setStyle( { zIndex: zIndex + 1 } );
+
+      return this;
     }
   });
   
