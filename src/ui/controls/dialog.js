@@ -427,9 +427,34 @@
      *
      *  Checks if window has alwaysOnTop flag set.
     **/
-    isAlwaysOnTop: function()
-    {
+    isAlwaysOnTop: function() {
       return this.element.hasClassName('alwaysOnTop');
+    },
+
+    /**
+     *  S2.UI.Dialog#moveTo(left, top) -> this
+     *
+     *  Moves window to given position.
+    **/
+    moveTo: function(left, top) {
+      this.element.morph('left:' + left + 'px;top:' + top + 'px', { duration: .7 } );
+    },
+
+    /**
+     *  S2,UI.Dialog#center() -> this
+     *
+     *  Moves window to the center of viewport.
+    **/
+    center: function() {
+      var layout = this.element.getLayout();
+      var viewport = document.viewport.getDimensions();
+
+      // calculates coordinates
+      var left = viewport.width / 2 - layout.get('width') / 2;
+      var top = viewport.height / 2 - layout.get('height') / 2;
+
+      // moves window
+      this.moveTo(left, top);
     }
   });
   
