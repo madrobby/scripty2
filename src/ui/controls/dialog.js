@@ -440,6 +440,7 @@
     **/
     moveTo: function(left, top) {
       this.element.morph('left:' + left + 'px;top:' + top + 'px', { duration: .7 } );
+      return this;
     },
 
     /**
@@ -457,6 +458,7 @@
 
       // moves window
       this.moveTo(left, top);
+      return this;
     }
   });
   
