@@ -415,6 +415,8 @@
     alwaysOnTop: function(alwaysOnTop) {
       if (alwaysOnTop === undefined || alwaysOnTop) ) {
         this.element.addClassName('alwaysOnTop');
+        // make it working from now
+        this.bringToFront();
       } else {
         this.element.removeClassName('alwaysOnTop');
       }
