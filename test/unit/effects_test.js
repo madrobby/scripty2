@@ -289,6 +289,30 @@ new Test.Unit.Runner({
       });
     });
   }},
+
+  testEffectsParallel: function() { with(this) {
+    var calledStart = false, calledCancel = false;
+
+    var effect = new S2.FX.SlideDown('sandbox');
+    var start = effect.start, cancel = effect.cancel;
+
+    // wrap methods
+    effect.start = function() {
+      calledStart = true;
+      start.call(effect);
+    };
+    effect.cancel = function(after) {
+      calledCancel = true;
+      cancel.call(effect, after);
+    };
+
+    (new S2.FX.Parallel([effect],{ duration:0.75 })).play();
+
+    wait(800, function() {
+      assertEqual(calledStart, true);
+      assertEqual(calledCancel, true);
+    });
+  }},
   
   testElementMorph: function() { with(this) {
     $('error_test_ul').morph('font-size:40px', {duration: 0.75}).setStyle({marginRight:'17px'});
