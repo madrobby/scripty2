@@ -200,7 +200,12 @@
       this.element.insert(this.buttonPane);
     },
 
-    _position: function() {
+    /**
+     *  S2,UI.Dialog#center() -> this
+     *
+     *  Moves window to the center of viewport.
+    **/
+    center: function() {
       // Find the middle of the viewport.
       var vSize = document.viewport.getDimensions();
       var dialog = this.element, layout = dialog.getLayout();
@@ -215,10 +220,8 @@
       position.left += offsets.left;
       position.top  += offsets.top;
 
-      this.element.setStyle({
-        left: position.left + 'px',
-        top:  position.top  + 'px'
-      });
+      this.moveTo(position.left, position.top);
+      return this;
     },
 
     /**
@@ -241,7 +244,7 @@
       $(document.body).insert(this);
 
       this.element.show();
-      this._position();
+      this.center();
 
       this.focusables = UI.findFocusables(this.element);
 
@@ -440,24 +443,6 @@
     **/
     moveTo: function(left, top) {
       this.element.morph('left:' + left + 'px;top:' + top + 'px', { duration: .7 } );
-      return this;
-    },
-
-    /**
-     *  S2,UI.Dialog#center() -> this
-     *
-     *  Moves window to the center of viewport.
-    **/
-    center: function() {
-      var layout = this.element.getLayout();
-      var viewport = document.viewport.getDimensions();
-
-      // calculates coordinates
-      var left = viewport.width / 2 - layout.get('width') / 2;
-      var top = viewport.height / 2 - layout.get('height') / 2;
-
-      // moves window
-      this.moveTo(left, top);
       return this;
     }
   });
