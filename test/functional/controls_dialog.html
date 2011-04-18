@@ -143,7 +143,7 @@
   
   
   <!-- DIALOG 2 -->
-  <h2>Dialog with custom content & buttons</h2>
+  <h2>Dialog with custom content &amp; buttons</h2>
   
   <div class="ui-widget ui-button-container">
 
@@ -197,6 +197,68 @@
       <li>The <code>OK</code> button <strong>should</strong> receive focus when the dialog opens. Pressing <kbd>SPACE</kbd> or <kbd>ENTER</kbd> <strong>should</strong> press whatever button is in focus.</li>
       <li>If the dialog has a visible "close" button, <em>three controls</em> <strong>should</strong> be eligible for keyboard focus: the <code>OK</code> button, the <code>Cancel</code> button, and the dialog's "close" button. Pressing <kbd>TAB</kbd> repeatedly should cycle through these three buttons (without focusing any elements underneath the modal layer). Pressing <kbd>SHIFT + TAB</kbd> should follow the same cycle in reverse.</li>
       <li>If the dialog's close button is not visibile, it <strong>should not</strong> be focusable, even though it's still in the HTML. Confirm that pressing <kbd>TAB</kbd> cycles between the two buttons and nothing else.</li>
+    </ul>
+  </div> <!-- .description -->
+  
+  
+  <!-- DIALOG 3 -->
+  <h2>Dialog display management</h2>
+  
+  <div class="ui-widget ui-button-container">
+
+    <button id="dialog_link3">Open Dialog</button>
+  
+    <script type="text/javascript">
+     new S2.UI.Button('dialog_link3', {
+       icons: { primary: 'ui-icon-newwin' }
+     });
+     
+     $('dialog_link3').observe('click', function(event) {
+        event.stop();
+        var dialog;
+
+        var switcher = (new Element("label"))
+          .insert(
+            new Element("input", {type: "checkbox"})
+              .observe("click", function() {
+                dialog.alwaysOnTop(this.checked);
+              } )
+          )
+          .insert(" always on top");
+
+        dialog = new S2.UI.Dialog({
+          modal: false,
+          buttons: [
+            {
+              label: 'Center me',
+              action: function(instance) {
+                instance.center();
+              }
+            },
+            {
+              label: 'Move me to 10x10',
+              action: function(instance) {
+                instance.moveTo(10, 10);
+              }
+            }
+          ],
+          content: (new Element('div'))
+            .insert(switcher)
+        });
+        dialog.open();
+     });
+    </script>
+    
+  </div> <!-- .ui-widget -->
+  
+  <div class="description">
+    <p>A non-modal dialog, that you can use as a simple window.</p>
+    
+    <ul>
+      <li>You can set <strong>alwaysOnTop</strong> with <code>.alwaysOnTop()</code>, so it will not be covered by other windows.</li>
+      <li>You can bring dialog on top of display stack (except <strong>alwaysOnTop</strong> fallged dialogs) by clicking in a region of a dialog (also programaticaly using <code>.bringToFront()</code> method).</li>
+      <li>You can move dialog programaticaly using <code>.moveTo(x, y)</code>.</li>
+      <li>You can center dialog on a screen programaticaly using <code>.center()</code>.</li>
     </ul>
   </div> <!-- .description -->
   

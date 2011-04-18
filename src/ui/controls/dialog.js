@@ -202,10 +202,13 @@
 
     /**
      *  S2,UI.Dialog#center() -> this
+     *  S2,UI.Dialog#center(duration) -> this
      *
      *  Moves window to the center of viewport.
+     *
+     *  Parameter is optional and describes effect speed.
     **/
-    center: function() {
+    center: function(duration) {
       // Find the middle of the viewport.
       var vSize = document.viewport.getDimensions();
       var dialog = this.element, layout = dialog.getLayout();
@@ -220,7 +223,7 @@
       position.left += offsets.left;
       position.top  += offsets.top;
 
-      this.moveTo(position.left, position.top);
+      this.moveTo(position.left, position.top, duration);
       return this;
     },
 
@@ -244,7 +247,7 @@
       $(document.body).insert(this);
 
       this.element.show();
-      this.center();
+      this.center(0);
 
       this.focusables = UI.findFocusables(this.element);
 
@@ -416,7 +419,7 @@
      *  while doing bringToFront().
     **/
     alwaysOnTop: function(alwaysOnTop) {
-      if (alwaysOnTop === undefined || alwaysOnTop) ) {
+      if (alwaysOnTop === undefined || alwaysOnTop) {
         this.element.addClassName('alwaysOnTop');
         // make it working from now
         this.bringToFront();
@@ -438,11 +441,14 @@
 
     /**
      *  S2.UI.Dialog#moveTo(left, top) -> this
+     *  S2.UI.Dialog#moveTo(left, top, duration) -> this
      *
      *  Moves window to given position.
+     *
+     *  Thirt parameter is optional and describes effect speed.
     **/
-    moveTo: function(left, top) {
-      this.element.morph('left:' + left + 'px;top:' + top + 'px', { duration: .7 } );
+    moveTo: function(left, top, duration) {
+      this.element.morph('left:' + left + 'px;top:' + top + 'px', { duration: duration === undefined ? .7 : duration } );
       return this;
     }
   });
