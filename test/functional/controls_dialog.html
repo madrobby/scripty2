@@ -143,7 +143,7 @@
   
   
   <!-- DIALOG 2 -->
-  <h2>Dialog with custom content & buttons</h2>
+  <h2>Dialog with custom content &amp; buttons</h2>
   
   <div class="ui-widget ui-button-container">
 
@@ -199,6 +199,54 @@
       <li>If the dialog's close button is not visibile, it <strong>should not</strong> be focusable, even though it's still in the HTML. Confirm that pressing <kbd>TAB</kbd> cycles between the two buttons and nothing else.</li>
     </ul>
   </div> <!-- .description -->
+
+  <!-- DIALOG 4 -->
+  <h2>Dialog runtime modifications</h2>
   
+  <div class="ui-widget ui-button-container">
+
+    <button id="dialog_link4">Open Dialog</button>
+  
+    <script type="text/javascript">
+     new S2.UI.Button('dialog_link4', {
+       icons: { primary: 'ui-icon-newwin' }
+     });
+
+     var dialog4 = new S2.UI.Dialog({
+       modal: false
+     });
+
+     $('dialog_link4').observe('click', function(event) {
+        event.stop();
+        dialog4.open();
+     });
+    </script>
+    
+  </div> <!-- .ui-widget -->
+  
+  <div class="description">
+    <p>Following buttons allows you to handle dialog properties at runtime. Before using this demo functionality, you have to open dialog with the button above.</p>
+
+    <h3><code>.getTitle()</code>/<code>.setTitle()</code></h3>
+
+    <p>
+      <button id="dialog4_title_getter">Show title</button>
+      <button id="dialog4_title_setter">Change title</button>
+    </p>
+
+    <script type="text/javascript">
+     $('dialog4_title_getter').observe('click', function(event) {
+        event.stop();
+        alert( dialog4.getTitle() );
+     });
+
+     $('dialog4_title_setter').observe('click', function(event) {
+        event.stop();
+        dialog4.setTitle( prompt('Type new title') );
+     });
+    </script>
+  </div> <!-- .description -->
+  
+
 </body>
 </html>

@@ -134,8 +134,9 @@
       // this.closeButton.insert(this.closeText);
 
   	  // Text for title bar.
+      this.title = this.options.title;
   	  this.titleText = new Element('span', { 'class': 'ui-dialog-title' });
-  	  this.titleText.update(this.options.title).identify();
+  	  this.titleText.update(this.title).identify();
   	  // This is the label for ARIA.	  
   	  this.element.writeAttribute('aria-labelledby',
   	   this.titleText.readAttribute('id'));
@@ -370,6 +371,30 @@
           (function() { next.focus(); }).defer();
         }
       }
+    },
+
+    /**
+     *  S2.UI.Dialog#getTitle() -> String
+     *
+     *  Returns current dialog title.
+    **/
+    getTitle: function()
+    {
+      return this.title;
+    },
+
+    /**
+     *  S2.UI.Dialog#setTitle(title) -> this
+     *  - title (String): New dialog title.
+     *
+     *  Changes dialog title.
+    **/
+    setTitle: function(title)
+    {
+      this.title = title;
+      this.titleText.update(this.title);
+
+      return this;
     }
   });
   
