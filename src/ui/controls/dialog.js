@@ -51,7 +51,16 @@
    *    that tells whether the dialog was closed in success. The `form`
    *    property (present if the dialog's content contained a `FORM` element)
    *    holds an `Object` serialization of the form's content.
-   *
+   *  * `ui:dialog:before:collapse`: Fired when the dialog is told to collapse,
+   *    but before the effect is fired. **Cancelable**. If cancelled,
+   *    will leave dialog as it is.
+   *  * `ui:dialog:after:collapse`: Fired just after the dialog is collapsed
+   *    (when the effect is finished). Cannot be cancelled.
+   *  * `ui:dialog:before:expand`: Fired when the dialog is told to expand,
+   *    but before the effect is fired. **Cancelable**. If cancelled,
+   *    will leave dialog as it is.
+   *  * `ui:dialog:after:expand`: Fired just after the dialog is expanded
+   *    (when the effect is finished). Cannot be cancelled.
   **/
   UI.Dialog = Class.create(UI.Base, UI.Mixin.Element, {
     NAME: "S2.UI.Dialog",
