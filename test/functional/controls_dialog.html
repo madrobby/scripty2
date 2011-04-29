@@ -245,8 +245,34 @@
         dialog4.setTitle( prompt('Type new title') );
      });
     </script>
+
+    <h3><code>.collapse()</code>/<code>.expand()</code>/<code>.toggle()</code></h3>
+
+    <p>
+      <button id="dialog4_toggle_collapse">Collapse</button>
+      <button id="dialog4_toggle_expand">Expand</button>
+      <button id="dialog4_toggle_toggle">Toggle</button>
+    </p>
+
+    <script type="text/javascript">
+     $('dialog4_toggle_collapse').observe('click', function(event) {
+        event.stop();
+        dialog4.collapse();
+     });
+
+     $('dialog4_toggle_expand').observe('click', function(event) {
+        event.stop();
+        dialog4.expand();
+     });
+
+     $('dialog4_toggle_toggle').observe('click', function(event) {
+        event.stop();
+        dialog4.toggle();
+     });
+    </script>
+
+    <p>Toggling effect is also bound to title bar double-click event.</p>
   </div> <!-- .description -->
-  
 
 </body>
 </html>

@@ -251,6 +251,7 @@
       this._saveValues();
       this._setValue(sliderValue, handleIndex);
       this._fireChangedEvent();
+      return  this;
     },
     
     _setValue: function(sliderValue, handleIndex) {
@@ -521,7 +522,7 @@
      *  so attempts to cancel the event will be ignored.
     **/
     undo: function() {
-      if (!this._oldValues) return;
+      if (!this._oldValues) return this;
       this._restoreValues();
     
       this.undoing = true;
@@ -529,6 +530,7 @@
       this.undoing = false;
       
       this._fireChangedEvent();
+      return this;
     },
     
     // Set the current values as the values that will be restored after a

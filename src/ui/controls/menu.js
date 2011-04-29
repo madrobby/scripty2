@@ -153,7 +153,7 @@
       }
       
       UI.removeClassNames(this.choices, 'ui-state-active');
-      if (index === -1) return;
+      if (index === -1) return this;
       this.choices[index].addClassName('ui-state-active');
       this._highlightedIndex = index;
       
@@ -161,6 +161,8 @@
       var active = this.element.down('#' + this.activeId);
       if (active) active.writeAttribute('id', '');
       this.choices[index].writeAttribute('id', this.activeId);
+
+      return this;
     },
     
     /**
@@ -222,6 +224,8 @@
       }
       
       this.element.fire('ui:menu:after:open', { instance: this });
+
+      return this;
     },
     
     /**

@@ -151,16 +151,47 @@
 
       // TODO: Add resizability.
 
+      this.collapseQueue = new S2.FX.Queue();
+
+      // is this a must?
+      opt.collapseEffectOptions.position = "parallel";
+      opt.expandEffectOptions.position = "parallel";
+
+      // store effects - since there can be buttons pabel these must be arrays
+      this.collapseEffects = [
+        new opt.collapseEffect(this.content, opt.collapseEffectOptions)
+      ];
+      this.expandEffects = [
+        new opt.expandEffect(this.content, opt.expandEffectOptions)
+        
+      ];
+
       var buttons = this.options.buttons;
 
       if (buttons && buttons.length) {
         this._createButtons();
+
+        // create effects for buttongs panels
+        this.collapseEffects.push( 
+          new opt.collapseEffect(this.buttonPane, opt.collapseEffectOptions)
+        );
+        this.expandEffects.push(
+          new opt.expandEffect(this.buttonPane, opt.expandEffectOptions)
+        );
       }
 
       this.observers = {
         keypress: this.keypress.bind(this)
       };
 
+      //TODO: collapse/expand icon - issue #30
+
+      // initial value - at the moment I don't see the
+      // point to create initialy collapsed windows
+      this.collapsed = false;
+
+      // double click on title bar toggles window status like in common windowing systems
+      this.titleBar.on("dblclick", this.toggle.bind(this) );
     },
     
     toElement: function() {
@@ -199,6 +230,97 @@
       this.element.insert(this.buttonPane);
     },
 
+    /**
+     *  S2.UI.Dialog#collapse() -> this
+     *
+     *  Collapses the window (leaves only title bar visible).
+    **/
+    collapse: function() {
+      // nothing to do
+      if (this.collapsed) {
+        return this;
+      }
+
+      var result = this.element.fire("ui:dialog:before:collapse",
+       { dialog: this });
+      if (result.stopped) {
+        return this;
+      }
+
+      // adds effects to the queue
+      new S2.FX.Parallel(this.collapseEffects, {
+        after: function() {
+          //TODO: change icon state
+          this.collapsed = true;
+          this.element.fire("ui:dialog:after:collapse",
+           { dialog: this });
+        }.bind(this),
+        position: "end",
+        queue: this.collapseQueue
+      } ).play();
+
+      return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#expand() -> this
+     *
+     *  Expands the window (makes fully visible).
+    **/
+    expand: function() {
+      // nothing to do
+      if (!this.collapsed) {
+        return this;
+      }
+
+      var result = this.element.fire("ui:dialog:before:expand",
+       { dialog: this });
+      if (result.stopped) {
+        return this;
+      }
+
+      // adds effects to the queue
+      new S2.FX.Parallel(this.expandEffects, {
+        after: function() {
+          //TODO: change icon state
+          this.collapsed = false;
+          this.element.fire("ui:dialog:after:expand",
+           { dialog: this });
+        }.bind(this),
+        position: "end",
+        queue: this.collapseQueue
+      } ).play();
+
+      return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#toggle() -> this
+     *
+     *  Changes window collapse state.
+    **/
+    toggle: function() {
+      // I prefer using getter rather then property
+      // method can be overriden in child class to provide custom checking
+      if ( this.isCollapsed() ) {
+        this.expand();
+      }
+      else {
+        this.collapse();
+      }
+
+      return this;
+    },
+
+    /**
+     *  S2.UI.Dialog#isCollapsed() -> Boolean
+     *
+     *  Checks if window is currently collapsed.
+    **/
+    isCollapsed: function() {
+      return this.collapsed;
+    },
+
     _position: function() {
       // Find the middle of the viewport.
       var vSize = document.viewport.getDimensions();
@@ -226,12 +348,12 @@
      *  Opens the dialog.
     **/
     open: function() {
-      if (this._isOpen) return;
+      if (this._isOpen) return this;
 
       // Fire an event to allow for suppression of the dialog.
       var result = this.element.fire("ui:dialog:before:open",
        { dialog: this });
-      if (result.stopped) return;
+      if (result.stopped) return this;
 
       var opt = this.options;
 
@@ -309,7 +431,7 @@
       success = !!success; // Coerce to a boolean.
       var result = this.element.fire("ui:dialog:before:close",
        { dialog: this });
-      if (result.stopped) return;
+      if (result.stopped) return this;
 
       if (this.overlay) {
         this.overlay.destroy();
@@ -378,8 +500,7 @@
      *
      *  Returns current dialog title.
     **/
-    getTitle: function()
-    {
+    getTitle: function() {
       return this.title;
     },
 
@@ -389,8 +510,7 @@
      *
      *  Changes dialog title.
     **/
-    setTitle: function(title)
-    {
+    setTitle: function(title) {
       this.title = title;
       this.titleText.update(this.title);
 
@@ -414,6 +534,16 @@
 
       draggable: true,
       resizable: false,
+
+      collapseEffect: S2.FX.SlideUp,
+      expandEffect: S2.FX.SlideDown,
+
+      collapseEffectOptions: {
+        duration: 0.2
+      },
+      expandEffectOptions: {
+        duration: 0.2
+      },
 
       buttons: [
         {

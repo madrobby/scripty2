@@ -103,13 +103,14 @@
     setEnabled: function(shouldBeEnabled) {
       var element = this.toElement();
       
-      if (this.enabled === shouldBeEnabled) return;
+      if (this.enabled === shouldBeEnabled) return this;
       this.enabled = shouldBeEnabled;
 
       if (shouldBeEnabled) element.removeClassName('ui-state-disabled');
       else element.addClassName('ui-state-disabled');
       
       this.element.disabled = !shouldBeEnabled;
+      return this;
     },
     
     toElement: function() {
