@@ -19,10 +19,10 @@ S2.UI.Mixin.Shim = {
     "<iframe frameborder='0' tabindex='-1' src='javascript:false;' " +
       "style='display:block;position:absolute;z-index:-1;overflow:hidden; " +
       "filter:Alpha(Opacity=\"0\");" +
-      "top:expression(((parseInt(this.parentNode.currentStyle.borderTopWidth)||0)*-1)+\'px\');" +
-       "left:expression(((parseInt(this.parentNode.currentStyle.borderLeftWidth)||0)*-1)+\'px\');" +
-       "width:expression(this.parentNode.offsetWidth+\'px\');" + 
-       "height:expression(this.parentNode.offsetHeight+\'px\');" +
+      "top:expression(((parseInt(this.parentNode.currentStyle.borderTopWidth)||0)*-1)+\"px\");" +
+       "left:expression(((parseInt(this.parentNode.currentStyle.borderLeftWidth)||0)*-1)+\"px\");" +
+       "width:expression(this.parentNode.offsetWidth+\"px\");" + 
+       "height:expression(this.parentNode.offsetHeight+\"px\");" +
     "' id='#{0}'></iframe>"
   ),
   
