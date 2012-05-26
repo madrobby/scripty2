@@ -10,7 +10,9 @@ Object.extend(Event, {
    *  Applies "accordion menu" behavior to an element and its contents.
    *  
    *  ##### Options
-   *  
+   *
+   *  * `defaultIndex` (Integer): Determines which content element should be
+   *    open by default.
    *  * `multiple` (Boolean): Whether multiple panels can be open at once.
    *    Defaults to `false`.
    *  * `headerSelector` (String): A CSS selector that identifies the
@@ -68,9 +70,13 @@ Object.extend(Event, {
         header.insert({ top: icon });
       });
 
-      // If the user specified an active header, mark it as active.
+      // If the user specified a default index, mark it as active.
       // Otherwise, the first one is active by default.
-      this._markActive(opt.active || this.headers.first(), false);
+      this.content.each(function(element, i){
+          if(opt.defaultIndex != i) {
+            element.hide();
+          }
+      });
     
       // ARIA.
       this.element.writeAttribute({
@@ -223,6 +229,7 @@ Object.extend(Event, {
 
   Object.extend(UI.Accordion, {
     DEFAULT_OPTIONS: {
+      defaultIndex: 0,
       multiple: false,  /* whether more than one pane can be open at once */    
       headerSelector: 'h3',
     
