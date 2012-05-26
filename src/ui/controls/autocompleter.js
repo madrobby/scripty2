@@ -39,6 +39,12 @@
       this.menu = new UI.Menu();
       this.element.insert(this.menu.element);
 
+      this.mouse = {};
+      this.element.observe('mousemove', function(e) {
+        this.mouse.x = Event.pointerX(e);
+        this.mouse.y = Event.pointerY(e);
+      }.bind(this));
+
       // Position the menu to appear directly below the input.
       (function() {
         var iLayout = this.input.getLayout();      
@@ -237,8 +243,10 @@
     },
 
     _blur: function(event) {
-      this._unschedule();
-      this.menu.close();
+      if (!Position.within(this.menu.element, this.mouse.x, this.mouse.y)) {
+        this._unschedule();
+        this.menu.close();
+      }
     }
   });
 
