@@ -35,6 +35,6 @@
     this.__observers.push(result);
   };
   
-  window.S2.UI.Mixin.Element = E;  
+  S2.UI.Mixin.Element = E;  
 })();
 
