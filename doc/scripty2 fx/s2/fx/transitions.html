@@ -1,0 +1,1672 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scripty2 API documentation | S2.FX.Transitions namespace</title>
+    <link type="text/css" charset="utf-8" rel="stylesheet" media="screen, projection" href="../../../stylesheets/apidocs.css" />
+  </head>
+  <body>
+    <div id="page">
+
+      <div id="masthead">
+        <div id="masthead_content">
+          <a href="../../../">
+            <h1 id="logo"><span class="replaced">scripty2</span></h1>
+          </a>
+          <div id="menu" class="clearfix">
+            <div class="search-box">
+              <form action="" method="get">
+                <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
+              </form>
+              <ul id="search_results" class="search-results menu-items" style="display:none"><li></li></ul>
+            </div>
+            <div class="api-box">
+              <h2><a href="#" id="api_menu_button">Quick Links &darr;</a></h2>
+              <ul id="api_menu" class="menu-items" style="display: none">
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 core section (section)" href="../../../scripty2_core_section.html">scripty2 core section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="Function (class)" href="../../../scripty2 core/function.html">Function</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Number (class)" href="../../../scripty2 core/number.html">Number</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Object (class)" href="../../../scripty2 core/object.html">Object</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2 (namespace)" href="../../../scripty2 core/s2.html">S2</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="S2.CSS (namespace)" href="../../../scripty2 fx/s2/css.html">S2.CSS</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.Extensions (namespace)" href="../../../scripty2 core/s2/extensions.html">S2.Extensions</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2.FX (namespace)" href="../../../scripty2 fx/s2/fx.html">S2.FX</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI (namespace)" href="../../../scripty2 ui/s2/ui.html">S2.UI</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li></ul></li>
+                  <li class="current-parent">              <div class='menu-item'>
+                <a class="section" title="scripty2 fx section (section)" href="../../../scripty2_fx_section.html">scripty2 fx section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="Element (namespace)" href="../../../scripty2 fx/element.html">Element</a>
+              </div>
+</li></ul></li>
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 ui section (section)" href="../../../scripty2_ui_section.html">scripty2 ui section</a>
+              </div>
+</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main" class="page-content">
+        <ul class="breadcrumbs clearfix">
+  <li><a href="../../../index.html">Home</a> &rarr;</li>
+  <li><a href="../../../scripty2_fx_section.html">scripty2 fx</a> &rarr;</li>
+</ul>
+
+<h2 class="page-title namespace">
+  <span class="type">namespace </span>S2.FX.Transitions
+</h2>
+
+<div class="section section-description">
+  <div class="section-title">
+    <h3>Description</h3>
+  </div>
+  <div class="section-content">
+    <p>Transitions can fine-tune how an effect evolves over time. All effects,
+without the use of transitions, normally evolve linearily.</p>
+
+<p>All transitions take a <code>position</code> argument, which is between
+0 (start of effect) and 1 (end of effect). Transitions return a number,
+which is a "translation" of <code>position</code> argument. The return value can,
+depending on transition type, be above 1 or below 0.</p>
+
+<p>By using Transitions, it is easily possible to add movement easing,
+pulsation, bouncing, reversal and other forms of special effects.</p>
+
+<h4>Default transition</h4
+
+If no transition option is given to an effect, <code><a title="S2.FX.Transitions.sinusoidal (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#sinusoidal-class_method">S2.FX.Transitions.sinusoidal</a></code> is used.
+This setting can be changed by redefining S2.FX.DefaultOptions.transition.
+
+<h4>Implementing your own transitions</h4>
+
+Transitions can easily be added, by using this template:
+
+    Object.extend(S2.FX.Transitions, {
+      myTransition: function(pos) {
+        return pos; // do your calculations here!
+      }
+    });
+
+Transitions defined this way automatically become available to be used with
+the shorthand syntax for the `options.transition` argument:
+
+    $('some_element').morph('left:300px', { transition: 'myTransition' });
+
+<h4>Notice</h4>
+
+The equations defined in penner.js are open source under the BSD License.
+Easing Equations
+<a href="http://www.robertpenner.com/easing_terms_of_use.html">© 2003 Robert Penner</a>,
+all rights reserved.
+
+  </div>
+</div>
+
+
+
+
+<div class="section section-method-list">
+  <div class="section-title">
+    <h3>Methods</h3>
+  </div>
+  <div class="section-content">
+    <ul class="method-list">
+        <li><code><a class="class-method" title="S2.FX.Transitions.blink (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#blink-class_method">blink</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.bounce (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#bounce-class_method">bounce</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.bouncePast (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#bouncepast-class_method">bouncePast</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeFrom (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easefrom-class_method">easeFrom</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeFromTo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easefromto-class_method">easeFromTo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInBack (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinback-class_method">easeInBack</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInCirc (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeincirc-class_method">easeInCirc</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInCubic (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeincubic-class_method">easeInCubic</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInExpo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinexpo-class_method">easeInExpo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutBack (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutback-class_method">easeInOutBack</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutCirc (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutcirc-class_method">easeInOutCirc</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutCubic (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutcubic-class_method">easeInOutCubic</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutExpo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutexpo-class_method">easeInOutExpo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutQuad (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquad-class_method">easeInOutQuad</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutQuart (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquart-class_method">easeInOutQuart</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutQuint (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquint-class_method">easeInOutQuint</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInOutSine (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutsine-class_method">easeInOutSine</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInQuad (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinquad-class_method">easeInQuad</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInQuart (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinquart-class_method">easeInQuart</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInQuint (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinquint-class_method">easeInQuint</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeInSine (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeinsine-class_method">easeInSine</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutBack (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutback-class_method">easeOutBack</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutBounce (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutbounce-class_method">easeOutBounce</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutCirc (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutcirc-class_method">easeOutCirc</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutCubic (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutcubic-class_method">easeOutCubic</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutExpo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutexpo-class_method">easeOutExpo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutQuad (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquad-class_method">easeOutQuad</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutQuart (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquart-class_method">easeOutQuart</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutQuint (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquint-class_method">easeOutQuint</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeOutSine (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeoutsine-class_method">easeOutSine</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.easeTo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#easeto-class_method">easeTo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.elastic (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#elastic-class_method">elastic</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.flicker (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#flicker-class_method">flicker</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.full (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#full-class_method">full</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.linear (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#linear-class_method">linear</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.mirror (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#mirror-class_method">mirror</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.none (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#none-class_method">none</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.pulse (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#pulse-class_method">pulse</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.reverse (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#reverse-class_method">reverse</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.sinusoidal (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#sinusoidal-class_method">sinusoidal</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.spring (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#spring-class_method">spring</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.swingFrom (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#swingfrom-class_method">swingFrom</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.swingFromTo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#swingfromto-class_method">swingFromTo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.swingTo (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#swingto-class_method">swingTo</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.webkitCubic (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#webkitcubic-class_method">webkitCubic</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.webkitEaseInOut (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#webkiteaseinout-class_method">webkitEaseInOut</a></code></li>
+        <li><code><a class="class-method" title="S2.FX.Transitions.wobble (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#wobble-class_method">wobble</a></code></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="section section-klass_methods">
+      <div class="section-title">
+        <h3>Class methods</h3>
+      </div>
+      <div class="section-content">
+        <ul class="method-details-list">
+          <li class="method-description">
+  <h4 id="blink-class_method">blink
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#blink-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.blink(pos[, blinks]) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+          <li>
+            <code>pulses</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; Number of blinks, defaults to 5
+          </li>
+      </ul>
+  
+  <p>Effect blinks on and off.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="bounce-class_method">bounce
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#bounce-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.bounce(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="bouncepast-class_method">bouncePast
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#bouncepast-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.bouncePast(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easefrom-class_method">easeFrom
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easefrom-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeFrom(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easefromto-class_method">easeFromTo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easefromto-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeFromTo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinback-class_method">easeInBack
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinback-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInBack(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeincirc-class_method">easeInCirc
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeincirc-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInCirc(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeincubic-class_method">easeInCubic
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeincubic-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInCubic(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinexpo-class_method">easeInExpo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinexpo-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInExpo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutback-class_method">easeInOutBack
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutback-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutBack(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutcirc-class_method">easeInOutCirc
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutcirc-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutCirc(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutcubic-class_method">easeInOutCubic
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutcubic-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutCubic(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutexpo-class_method">easeInOutExpo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutexpo-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutExpo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutquad-class_method">easeInOutQuad
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquad-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutQuad(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutquart-class_method">easeInOutQuart
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquart-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutQuart(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutquint-class_method">easeInOutQuint
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutquint-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutQuint(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinoutsine-class_method">easeInOutSine
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinoutsine-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInOutSine(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinquad-class_method">easeInQuad
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinquad-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInQuad(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinquart-class_method">easeInQuart
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinquart-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInQuart(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinquint-class_method">easeInQuint
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinquint-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInQuint(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeinsine-class_method">easeInSine
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeinsine-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeInSine(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutback-class_method">easeOutBack
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutback-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutBack(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutbounce-class_method">easeOutBounce
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutbounce-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutBounce(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutcirc-class_method">easeOutCirc
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutcirc-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutCirc(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutcubic-class_method">easeOutCubic
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutcubic-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutCubic(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutexpo-class_method">easeOutExpo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutexpo-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutExpo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutquad-class_method">easeOutQuad
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquad-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutQuad(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutquart-class_method">easeOutQuart
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquart-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutQuart(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutquint-class_method">easeOutQuint
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutquint-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutQuint(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeoutsine-class_method">easeOutSine
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeoutsine-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeOutSine(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="easeto-class_method">easeTo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#easeto-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.easeTo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="elastic-class_method">elastic
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#elastic-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.elastic(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="flicker-class_method">flicker
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#flicker-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.flicker(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Effect flickers along a sine wave.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="full-class_method">full
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#full-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.full() -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+  
+  <p>No transition, the effect is always in final state (returns 1 regardless of input values).</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="linear-class_method">linear
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#linear-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.linear(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Basic linear transition, no easing or other alteration of the effect.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="mirror-class_method">mirror
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#mirror-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.mirror(pos[, transition]) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+          <li>
+            <code>transition</code>
+              (<code><a title="Function (class)" href="../../../scripty2 core/function.html">Function</a></code>)
+             &ndash; a S2.FX.Transitions transition function
+          </li>
+      </ul>
+  
+  <p>The given transition is mirrored. Defaults to <code><a title="S2.FX.Transitions.sinusoidal (class method)" href="../../../scripty2 fx/s2/fx/transitions.html#sinusoidal-class_method">S2.FX.Transitions.sinusoidal</a></code>.</p>
+
+<div class="transition"></div>
+
+
+<p>You can use other transitions as per the following code sample:</p>
+
+<pre><code>$('element_id').morph('font-size:200px', {
+  transition: function(pos){
+    return S2.FX.Transitions.mirror(pos, S2.FX.Transitions.bounce);
+  }
+});
+</code></pre>
+
+<p>If you plan to reuse such a mirrored transition often, define your own transition
+function:</p>
+
+<pre><code>S2.FX.Transitions.mirroredBounce = function(pos){
+  return S2.FX.Transitions.mirror(pos, S2.FX.Transitions.bounce);
+});
+
+$('element_id').morph('font-size:200px', { transition: 'mirroredBounce' });
+</code></pre>
+
+</li>
+
+<li class="method-description">
+  <h4 id="none-class_method">none
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#none-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.none() -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+  
+  <p>No transition, the effect stays in intial state (returns 0 regardless of input values).</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="pulse-class_method">pulse
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#pulse-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.pulse(pos[, pulses]) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+          <li>
+            <code>pulses</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; Number of pulses, defaults to 5
+          </li>
+      </ul>
+  
+  <p>Effect pulses along a sinusoidal transition.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="reverse-class_method">reverse
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#reverse-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.reverse(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Effect is executed in a reverse linear fashion.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="sinusoidal-class_method">sinusoidal
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#sinusoidal-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.sinusoidal(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Alters the effect timing to be aligned to a sine wave.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="spring-class_method">spring
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#spring-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.spring(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Alters the effect timing to a "spring".</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="swingfrom-class_method">swingFrom
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#swingfrom-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.swingFrom(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="swingfromto-class_method">swingFromTo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#swingfromto-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.swingFromTo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="swingto-class_method">swingTo
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#swingto-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.swingTo(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="webkitcubic-class_method">webkitCubic
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#webkitcubic-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.webkitCubic(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>The default WebKit CSS transition easing function.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="webkiteaseinout-class_method">webkitEaseInOut
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#webkiteaseinout-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.webkitEaseInOut(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>The WebKit CSS transition "ease-in-out" easing function.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+<li class="method-description">
+  <h4 id="wobble-class_method">wobble
+    <span class="method-permalink"><a href="../../../scripty2 fx/s2/fx/transitions.html#wobble-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.FX.Transitions.wobble(pos) -&gt; <a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>pos</code>
+              (<code><a title="Number (class)" href="../../../scripty2 core/number.html">Number</a></code>)
+             &ndash; position between 0 (start of effect) and 1 (end of effect)
+          </li>
+      </ul>
+  
+  <p>Effect wobbles increasingly fast between start and end positions.</p>
+
+<div class="transition"></div>
+
+
+</li>
+
+        </ul>
+      </div>
+    </div>
+
+      </div>
+
+      <div id="footer">
+        <div class="about clearfix">
+          <div class="copyright clearfix">
+            <div class="copyright-about">
+              This work is licensed under a<br/>
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.<br/>
+            </div>
+          </div>
+          <div class="credits">
+            <p>
+              Generated by <a href="http://pdoc.org">PDoc</a>.
+              Icons by <a href="http://froodee.at/">Samo</a>.
+            </p>
+            <p>
+              Copyright © 2005-2010 <a href="http://mir.aculo.us/">Thomas Fuchs</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../../javascripts/prototype.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../javascripts/s2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../javascripts/application.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../javascripts/item_index.js" charset="utf-8"></script>
+    <script type="text/javascript">PDoc.pathPrefix = '../../../';</script>
+  </body>
+</html>

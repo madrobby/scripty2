@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 | Starlight Touchspector</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../prototype.min.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      html {
+        height: 100%;
+      }
+      body { 
+        font: 12px/15px Consolas, Verdana;
+        margin: 10px;
+        background:#000;
+        color:#fff;
+        height: 100%;
+        overflow: hidden;
+      }
+      .touch, .indicator, .mouse {
+        position: absolute;
+        background: transparent;
+        -webkit-border-radius: 15px;
+        border: 2px solid #0f0;
+        height: 22px;
+        width: 30px;
+        margin:-15px 0 0 -15px;
+        text-align: center;
+        padding-top:8px;
+        color: #0f0;
+        z-index: 0;
+      }
+      .indicator {
+        border: 0;
+        height: 21px;
+        width: 29px;
+        background: url(arrow.png);
+      }
+      .mouse {
+        border: 1px solid #2CC9DB;
+        -webkit-border-radius: 2px;
+        height: 5px;
+        width: 5px;
+        margin: -3px 0 0 3px;
+        padding: 0;
+      }
+      .touch span, .indicator span, .mouse span {
+        display: block;
+        position: relative;
+        margin-left: -90px;
+        width: 70px;
+        text-align: right;
+        font-size: 20px;
+      }
+      .indicator span {
+        margin-left: 40px;
+        text-align: left;
+        color: #fff;
+        font-size: 12px;
+      }
+      .mouse span {
+        font-size: 12px;
+        color: #175A68;
+        margin-top:-5px;
+        margin-left:-80px;
+      }
+      .trackpoint {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: #fff;
+      }
+      
+      #footer {
+        position: absolute;
+        bottom: 10px;
+        
+      }
+      #events {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+      }
+      #events div {
+        width:150px;
+        float:left;
+        color: #fff;
+      }
+      #events div span {
+        width: 79px;
+        display: inline-block;
+        color: #888;
+      }
+      .inactive {
+        opacity: 0.4;
+      }
+      #mouse {
+        color: #2CC9DB !important;
+      }
+      #mouse span {
+        color: #175A68 !important;
+      }
+      #panspeed {
+        position: absolute;
+        height: 1px;
+        width: 1px;
+      }
+      #panspeed div {
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        background: #aaa;
+      }
+    </style>
+  </head>   
+  <body id="body">
+    <div id="debug"></div>
+    <div id="footer"><b style="background:#fff;color:#000">Touchspector</b> Starlight Touch/Manipulate API</div>
+    <div id="panspeed"><div></div></div>
+    <div id="events">
+      <div id="mouse"></div>
+      <div id="manipulate"></div>
+      <div id="touch0"></div>
+      <div id="touch1"></div>
+      <div id="touch2"></div>
+      <div id="touch3"></div>
+      <div id="touch4"></div>
+    </div>
+    <div id="indicator" class="indicator"><span>manipulate</span></div>
+    
+    <div id="screen" style="position:absolute;top:0;left:0;width:2048px;height:2048px;background:rgba(255,255,255,0);z-index:1000"></div>
+    
+    <script type="text/javascript">
+      (function(){
+        var id, touches = {}, b = document.body, indicator = $('indicator'), mouse,
+          colors = $w('#0f0 #f00 #00f #f0f #ff0 #0ff #8f8 #f88 #88f #f8f #0f0 #f00 #00f #f0f #ff0 #0ff #8f8 #f88 #88f #f8f'),
+          touchcounter = 0, manipulatecounter = 0, mousecounter = 0,
+          panspeed = $('panspeed'), panspeedDiv = panspeed.down('div');
+        
+        $w('touch0 touch1 touch2 touch3 touch4 manipulate').each(Element.hide);
+        
+        function setPos(element, event){
+          element.setStyle('left:'+event.clientX+'px;top:'+event.clientY+'px;'+
+            (event.rectWidth ? 
+            ('width:'+event.rectWidth+'px;height:'+event.rectHeight+'px;'+
+            'margin:-'+(event.rectHeight/2).round()+'px 0 0 -'+(event.rectWidth/2).round()+'px') 
+            : ''));
+            
+          if('panSpeedX' in event){
+            var length = Math.sqrt(event.panSpeedX*event.panSpeedX+event.panSpeedX*event.panSpeedY).round(),
+                   dir = Math.atan2(event.panSpeedY,event.panSpeedX);
+            panspeed.setStyle('left:'+event.clientX+'px;top:'+event.clientY+'px;'+
+              '-webkit-transform:rotate('+dir+'rad)');
+            panspeedDiv.setStyle('width:'+length+'px');
+          }
+        }
+        
+        function track(event){
+          var el = new Element('div', { className: 'trackpoint' });
+          el.setStyle('background-color:'+colors[event.id]+';'+
+            'left:'+event.clientX+'px;top:'+event.clientY+'px;');
+          b.insert(el);
+          setTimeout(function(){ el.remove(); }, 1000);
+        }
+        
+        function infoForTouchEvent(event, phase){
+          return '<span><b>touch id</b></span>'+event.id+'<br/>'+
+            '<span>touch#</span>'+(touchcounter++)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>clientX/Y</span>'+event.clientX+'/'+event.clientY+'<br/>'+
+            '<span>pressure</span>'+event.pressure.toFixed(3)+
+            '<span>rectWidth</span>'+event.rectWidth+'<br/>'+
+            '<span>rectHeight</span>'+event.rectHeight+'<br/>';
+        }
+        function start(event){
+          if(touches[event.id]) touches[event.id].remove();
+          var el = new Element('div', { className: 'touch' });
+          el.innerHTML = '<span style="color:'+colors[event.id]+'">'+event.id+'<span>';
+          el.style.cssText += ';border: 2px solid '+colors[event.id];
+          b.insert(el);
+          setPos(el, event);
+          touches[event.id] = el;
+          if(event.id<5){
+            $('touch'+event.id).show().removeClassName('inactive').setStyle('color:'+colors[event.id]);
+            $('touch'+event.id).innerHTML = infoForTouchEvent(event, 'touchdown');
+          }
+          event.stop();
+        }
+        function move(event){
+          setPos(touches[event.id], event);
+          track(event);
+          if(event.id<5) $('touch'+event.id).innerHTML = infoForTouchEvent(event, 'touchmove');            
+          event.stop();
+        }
+        function end(event){
+          if(event.id<5){
+            $('touch'+event.id).addClassName('inactive');
+            $('touch'+event.id).innerHTML = infoForTouchEvent(event, 'touchup');
+          }
+          var elementCache = touches[event.id];
+          (function(){ 
+            elementCache.remove(); touches[event.id] = null;
+          }).defer();
+        }
+        
+        function infoForManipulateEvent(event, phase){
+          return '<span><b>manipulate</b></span><br/>'+
+            '<span>manipulate#</span>'+(manipulatecounter++)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>clientX/Y</span>'+event.clientX+'/'+event.clientY+'<br/>'+
+            '<span>scale</span>'+event.scale.toFixed(2)+'<br/>'+
+            '<span>scaleSpeed</span>'+event.scaleSpeed.toFixed(2)+'<br/>'+
+            '<span>rotation</span>'+event.rotation.toFixed(2)+'<br/>'+
+            '<span>rotSpeed</span>'+event.rotationSpeed.toFixed(2)+'<br/>'+
+            '<span>panX/Y</span>'+event.panX+'/'+event.panY+'<br/>'+
+            '<span>panSpeedX/Y</span>'+event.panSpeedX+'/'+event.panSpeedY+'<br/>'
+        }
+        function manipulateStart(event){
+          setPos(indicator, event);
+          indicator.show();
+          panspeed.show();
+          $('manipulate').removeClassName('inactive').show().innerHTML = infoForManipulateEvent(event, 'start');
+          event.stop();      
+        }
+        function manipulateMove(event){
+          setPos(indicator, event);
+          indicator.style.webkitTransform = 
+            'rotate('+event.rotation+'rad) scale('+event.scale+')';
+          $('manipulate').show().innerHTML = infoForManipulateEvent(event, 'move');
+        }
+        function manipulateEnd(event){
+          $('manipulate').show().innerHTML = infoForManipulateEvent(event, 'end');
+          $('manipulate').addClassName('inactive');
+          setPos(indicator, event);
+          indicator.hide();
+          panspeed.hide();
+        }
+        
+        function infoForMouseEvent(event, phase){
+          return '<span><b>mouse</b></span><br/>'+
+            '<span>mouse#</span>'+(mousecounter++)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>phase</span>mousemove<br/>'+
+            '<span>clientX/Y</span>'+event.clientX+'/'+event.clientY+'<br/>';
+        }     
+        function mouseDown(event){
+          setPos(mouse, event);
+          $('mouse').show().removeClassName('inactive').innerHTML = infoForMouseEvent(event, 'down');
+        }
+        function mouseMove(event){
+          setPos(mouse, event);
+          $('mouse').show().innerHTML = infoForMouseEvent(event, 'move');
+        }
+        function mouseUp(event){
+          setPos(mouse, event);
+          $('mouse').show().addClassName('inactive').innerHTML = infoForMouseEvent(event, 'up');
+        }       
+        function ignore(event){ event.stop(); }
+        
+        $('screen').observe('touchdown', start);
+        $('screen').observe('touchmove', move);
+        $('screen').observe('touchup', end);
+        $('screen').observe('manipulatestart', manipulateStart);
+        $('screen').observe('manipulatemove', manipulateMove);
+        $('screen').observe('manipulateend', manipulateEnd);
+
+        $('screen').observe('mousedown', mouseDown);
+        $('screen').observe('mouseup', mouseUp);
+        $('screen').observe('mousemove', mouseMove);
+        
+        indicator.hide();
+        panspeed.hide();
+        
+        mouse = new Element('div', { className: 'mouse' });
+        $('mouse').addClassName('inactive');
+        mouse.innerHTML = '<span>mouse</span>';
+        b.insert(mouse);
+      })();
+    </script>
+    
+  </body>
+</html>

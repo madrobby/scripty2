@@ -1,0 +1,242 @@
+body { 
+  font:14px/18px "Helvetica Neue", Arial, sans-serif;
+  margin: 40px 20px 20px 20px;
+  background: top left repeat-x url(images/background.png) #6c8f3f;
+  height:100%;
+}
+* { outline: 0 }
+v\:* { antialias: true; margin: auto }
+a {
+  color: #5d2a10;
+}
+div.ahhh {
+  width:490px;
+  height:490px;
+  background:url(images/rays-main.png);
+}
+body.main {
+  overflow: hidden;
+}
+body.main h1 {
+  position: absolute;
+  left: 50%;
+  margin-left:-350px;
+  top: 40%;
+  z-index:1;
+  background:url(images/logo.png);
+  width:827px;
+  height:257px;
+  text-indent: -10000px;
+  z-index: -1;
+}
+body.section h1 {
+  z-index:1;
+  background:top right no-repeat url(images/logo-small.png);
+  height:40px;
+  color:#fff;
+  font-weight:bold;
+  letter-spacing:-1px;
+  text-transform:lowercase;
+  padding:0;
+  margin:0;
+  font-size: 30px;
+}
+
+ul#navigation {
+  margin: 0 auto 0 auto;
+  padding: 0;
+  width: 780px;
+  height: 230px;
+  position: relative;
+}
+
+ul#navigation li {
+  position: absolute;
+  list-style-type: none;
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  margin: 0;
+  background: #fff;
+  border: 6px solid #afe16d;
+  border-radius: 20px;
+  width: 160px;
+  height: 160px;
+  top: -300px;
+  font-size: 13px;
+  -webkit-box-shadow: 0px 2px 4px #6e8f45;
+  -moz-box-shadow: 0px 2px 4px #6e8f45;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+}
+ul#navigation li.demos {
+  background: url(images/demos.png) center 80% no-repeat #fff;
+}
+ul#navigation li.manual {
+  background: url(images/manual.png) center 80% no-repeat #fff;
+}
+ul#navigation li.download {
+  background: url(images/download.png) center 80% no-repeat #fff;
+}
+ul#navigation li a {
+  position: absolute;
+  display: block;
+  width: 160px;
+  height: 160px;
+  left: 50%;
+  margin-left: -80px;
+  text-decoration: none;
+}
+ul#navigation li.huh {
+  border: 7px solid #fff;
+  background: #e3ffbe;
+}
+ul#navigation li h2 {
+  color:#6e9639;
+  font-weight:bold;
+  padding:0;
+  margin:10px 0 10px 0;
+  font-size: 2em;
+  clear: both;
+  text-align: center;
+}
+ul#navigation li.huh h2 {
+  color:#ff9c00;
+}
+ul#navigation li p {
+  margin: 0;
+  font-size:1em;
+  font-weight:bold;
+  line-height:1.2em;
+  clear: both;
+  color: #6e9639;
+  text-align: center;
+}
+ul#navigation li p em {
+  color: #ff9c00;
+  font-style: normal;
+}
+ul#navigation li.huh p {
+  color: #65450d;
+  font-size: 1em;
+  line-height: 1.1em;
+  line-height: 16px;
+}
+
+a#hw {
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  width: 480px;
+  padding: 10px;
+  margin-left: -250px;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(0,0,0,0.3);
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 0px 1px rgba(0,0,0,0.4);
+  cursor: pointer;
+  -moz-border-radius: 9px;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+}
+
+a#hw:hover {
+  background: rgba(0,0,0,0.5);
+}
+
+p#copyright {
+  text-align: center;
+  font-size: 9px;
+  color: #5b5753;
+  z-index: 1;
+  margin-top:64px;
+}
+
+p#copyright a {
+  color: #5b5753;
+}
+
+body.main p.copyright {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left:-350px;
+}
+
+#footer {
+  position:absolute;
+  height:81px;
+  background:url(images/shelf.png);
+  bottom:-150px;
+  left:0;
+  width:100%;
+}
+
+#breadcrumb {
+  list-style:none;
+  padding:0;
+  margin:0;
+  height:50px;
+  width:900px;
+  left:50%;
+  position:absolute;
+  margin-left:-360px;
+}
+
+#breadcrumb li {
+  position:relative;
+  float:left;
+  margin-top:0;
+  margin-left:50px;
+}
+
+#breadcrumb li a {
+  display:block;
+  text-indent:-9999px;
+  float:left;
+}
+
+#jsrocks, #jsrocks a { height:97px; width:127px; }
+#jsninja, #jsninja a { height:97px; width:86px; }
+#github, #github a { width:90px; height:79px; }
+#rss, #rss a { width:66px; height:68px; }
+#donate, #donate a { width:106px; height:90px; }
+
+#jsrocks { top:-57px; }
+#jsninja { top:-57px; }
+#github { top:-50px; }
+#rss { top:-35px; }
+#donate { top:-50px; }
+
+#jsrocks a { background:url(images/js-rocks.png) left top no-repeat; }
+#jsninja a { background:url(images/js-ninja.png) left top no-repeat; }
+#github a { background:url(images/github.png) left top no-repeat; }
+#rss a { background:url(images/rss.png) left top no-repeat; }
+#donate a { background:url(images/donate.png) left top no-repeat; }
+
+.bubble {
+  padding-bottom:15px;
+  background:url(images/arrow.png) center bottom no-repeat;
+  position:absolute;
+  text-align: center;
+}
+
+.bubble p {
+  padding:10px;
+  width:200px;
+  background:rgba(0,0,0,.67);
+  color:#fff;
+  font-size:11px;
+  line-height:1.2;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  margin:0;
+}
+
+#jsrocks .bubble { top:-80px; left:-40px; }
+#jsninja .bubble { top:-80px; left:-65px; }
+#github .bubble { top:-80px; left:-65px; }
+#rss .bubble { top:-80px; left:-75px; }
+#donate .bubble { top:-60px; left:-60px; }

@@ -1,0 +1,90 @@
+body {
+  font-family:Helvetica, Arial, sans-serif;
+  margin:0;
+  background: url(../images/bg.jpg) fixed bottom right;
+}
+
+#wrapper {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:500px;
+  height:500px;
+  margin:-250px 0 0 -250px;
+  background:rgba(255, 255, 255, .2);
+  -webkit-border-radius:10px;
+}
+
+#demo {
+  position:relative;
+  left:52px;
+  top:52px;
+}
+
+.marked { border:3px solid #0f0; }
+
+#youwin {
+  position:absolute;
+  background:rgba(0,0,0,.7);
+  z-index:11000;
+}
+
+div#results {
+  color:#ddd;
+  text-align:center;
+  font-size:16px;
+  margin:100px 0 0 0;
+}
+
+#count, #count_in {
+  color:#fff;
+  font-size:40px;
+  text-align:center;
+  font-weight:bold;
+  display:block;
+  margin:20px 0;
+}
+
+#count_in {
+  top:50px;
+  position:relative;
+  font-size:100px;
+}
+
+#retry {
+  background:url(../images/retry.png);
+  width:80px;
+  height:80px;
+  margin:20px auto 0 auto;
+  cursor:pointer;
+  opacity:1;
+}
+
+#controls ul {
+  padding:5px 0 5px 8px;
+  overflow:hidden;
+  height:auto;
+}
+
+#controls ul li { 
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border:none;
+  margin:0;
+  background:none;
+}
+
+#controls img:hover {
+  opacity:1;
+}
+
+#controls img.active {
+  border:3px solid #6c8f3f;
+  opacity:1;
+}
+
+#controls img {
+  border:3px solid #fff;
+  cursor:pointer;
+  opacity:.7;
+}

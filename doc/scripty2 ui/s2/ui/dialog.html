@@ -1,0 +1,725 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scripty2 API documentation | S2.UI.Dialog class</title>
+    <link type="text/css" charset="utf-8" rel="stylesheet" media="screen, projection" href="../../../stylesheets/apidocs.css" />
+  </head>
+  <body>
+    <div id="page">
+
+      <div id="masthead">
+        <div id="masthead_content">
+          <a href="../../../">
+            <h1 id="logo"><span class="replaced">scripty2</span></h1>
+          </a>
+          <div id="menu" class="clearfix">
+            <div class="search-box">
+              <form action="" method="get">
+                <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
+              </form>
+              <ul id="search_results" class="search-results menu-items" style="display:none"><li></li></ul>
+            </div>
+            <div class="api-box">
+              <h2><a href="#" id="api_menu_button">Quick Links &darr;</a></h2>
+              <ul id="api_menu" class="menu-items" style="display: none">
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 core section (section)" href="../../../scripty2_core_section.html">scripty2 core section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="Function (class)" href="../../../scripty2 core/function.html">Function</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Number (class)" href="../../../scripty2 core/number.html">Number</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Object (class)" href="../../../scripty2 core/object.html">Object</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2 (namespace)" href="../../../scripty2 core/s2.html">S2</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="S2.CSS (namespace)" href="../../../scripty2 fx/s2/css.html">S2.CSS</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.Extensions (namespace)" href="../../../scripty2 core/s2/extensions.html">S2.Extensions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX (namespace)" href="../../../scripty2 fx/s2/fx.html">S2.FX</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2.UI (namespace)" href="../../../scripty2 ui/s2/ui.html">S2.UI</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li></ul></li>
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 fx section (section)" href="../../../scripty2_fx_section.html">scripty2 fx section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="Element (namespace)" href="../../../scripty2 fx/element.html">Element</a>
+              </div>
+</li></ul></li>
+                  <li class="current-parent">              <div class='menu-item'>
+                <a class="section" title="scripty2 ui section (section)" href="../../../scripty2_ui_section.html">scripty2 ui section</a>
+              </div>
+</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main" class="page-content">
+        <ul class="breadcrumbs clearfix">
+  <li><a href="../../../index.html">Home</a> &rarr;</li>
+  <li><a href="../../../scripty2_ui_section.html">scripty2 ui</a> &rarr;</li>
+</ul>
+
+<h2 class="page-title class">
+  <span class="type">class </span>S2.UI.Dialog
+</h2>
+
+<div class="section section-description">
+  <div class="section-title">
+    <h3>Description</h3>
+  </div>
+  <div class="section-content">
+    <p>A class for showing dialogs on screen.</p>
+
+<h4>Options</h4>
+
+
+<ul>
+<li><code>zIndex</code> (<code>Number</code>): The CSS <code>z-index</code> for the dialog. Default is
+<code>1000</code>.</li>
+<li><code>title</code> (<code>String</code>): The text to display in the dialog's title bar.
+Default is <code>"Dialog"</code>.</li>
+<li><code>content</code> (<code>String</code> | <code>Element</code>): The content to display as the body
+of the dialog. Strings can be plaintext or HTML; they'll be
+inserted as-is into the dialog. If <code>content</code> refers to an element
+on the page, that element will be detached from its initial
+location <em>when the dialog is instantiated</em>.</li>
+<li><code>submitForms</code> (<code>Boolean</code>): By default, a dialog will suppress the
+<code>onsubmit</code> event of any forms included in the dialog's content (in
+order to prevent navigation to a new page). Set this to <code>true</code> to
+override this behavior.</li>
+<li><code>closeOnEscape</code> (<code>Boolean</code>): Whether the dialog closes (with a
+"cancel" outcome) when the ESC key is pressed. Default is <code>true</code>.</li>
+<li><code>draggable</code> (<code>Boolean</code>): Whether the dialog should be draggable (with
+the dialog's title bar as the handle). Default is <code>true</code>.</li>
+<li><code>resizable</code> (<code>Boolean</code>): Whether the dialog should be resizable.
+Default is <code>false</code>.</li>
+<li><code>buttons</code> (<code>Array</code> | <code>Boolean</code>): A set of <code>Object</code>s that describe the
+buttons that should appear at the bottom of the dialog. Set to <code>false</code>
+to omit buttons.</li>
+</ul>
+
+
+<h4>Events</h4>
+
+
+<p>All events have a <code>dialog</code> property (e.g., <code>event.memo.dialog</code>) that
+holds the relevant instance of <code>S2.UI.Dialog</code>. Some events have further
+properties, as explained below.</p>
+
+<ul>
+<li><code>ui:dialog:before:open</code>: Fired when the dialog is told to open,
+but before it is displayed on screen. <strong>Cancelable</strong>. If cancelled,
+will suppress the display of the dialog.</li>
+<li><code>ui:dialog:after:open</code>: Fired just after the dialog is displayed on
+screen. Cannot be cancelled.</li>
+<li><code>ui:dialog:before:close</code>: Fired when the dialog is told to close
+(whether successfully or unsuccessfully), but before it has been
+hidden. <strong>Cancelable</strong>. If cancelled, will suppress the hiding of the
+dialog.</li>
+<li><code>ui:dialog:after:close</code>: Fired just after the dialog disappears from
+the screen. Cannot be cancelled. The <code>success</code> property is a boolean
+that tells whether the dialog was closed in success. The <code>form</code>
+property (present if the dialog's content contained a <code>FORM</code> element)
+holds an <code>Object</code> serialization of the form's content.</li>
+</ul>
+
+  </div>
+</div>
+
+  <div class="section section-superclass">
+    <div class="section-title">
+      <h3>Superclass</h3>
+    </div>
+    <div class="section-content">
+      <p><code><a title="S2.UI.Base (class)" href="../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a></code></p>
+    </div>
+  </div>
+
+
+  <div class="section section-mixins">
+    <div class="section-title">
+      <h3>Includes</h3>
+    </div>
+    <div class="section-content">
+      <p><code><a title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a></code></p>
+    </div>
+  </div>
+
+
+<div class="section section-method-list">
+  <div class="section-title">
+    <h3>Methods</h3>
+  </div>
+  <div class="section-content">
+    <ul class="method-list">
+        <li><code><a class="instance-method" title="S2.UI.Dialog#close (instance method)" href="../../../scripty2 ui/s2/ui/dialog.html#close-instance_method">close</a></code></li>
+        <li><code><a class="constructor" title="new S2.UI.Dialog (constructor)" href="../../../scripty2 ui/s2/ui/dialog.html#new-constructor">new</a></code></li>
+        <li><code><a class="instance-method" title="S2.UI.Dialog#open (instance method)" href="../../../scripty2 ui/s2/ui/dialog.html#open-instance_method">open</a></code></li>
+    </ul>
+      <h4 class="inherited">Inherited from <a title="S2.UI.Mixin.Element (mixin)" href="../../../scripty2 ui/s2/ui/mixin/element.html">Element</a></h4>
+      <ul class="method-list">
+      </ul>
+  </div>
+</div>
+
+<div class="section section-constructor">
+  <div class="section-title">
+    <h3>Constructor</h3>
+  </div>
+  <div class="section-content">
+    <pre id="new-constructor" class="syntax"><code>new S2.UI.Dialog(element, options)
+ new S2.UI.Dialog(options)</code></pre>
+    <p><p>If <code>element</code> is given, that element will become the container for
+the dialog. Otherwise, an element will be created to serve as the
+container.</p>
+
+<p>Note that <strong>the dialog is not displayed on screen when it is
+created</strong>. You must explicitly call <code><a title="S2.UI.Dialog#open (instance method)" href="../../../scripty2 ui/s2/ui/dialog.html#open-instance_method">S2.UI.Dialog#open</a></code> first.</p></p>
+  </div>
+</div>
+
+
+    <div class="section section-instance_methods">
+      <div class="section-title">
+        <h3>Instance methods</h3>
+      </div>
+      <div class="section-content">
+        <ul class="method-details-list">
+          <li class="method-description">
+  <h4 id="close-instance_method">close
+    <span class="method-permalink"><a href="../../../scripty2 ui/s2/ui/dialog.html#close-instance_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.UI.Dialog#close(success) -&gt; this</code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>success</code>
+              (<code>Boolean</code>)
+             &ndash; Whether the dialog should be closed "successfully" (i.e., <em>OK</em>) or "unsuccessfully" (i.e., <em>Cancel</em>).
+          </li>
+      </ul>
+  
+  <p>Closes the dialog.</p>
+
+</li>
+
+<li class="method-description">
+  <h4 id="open-instance_method">open
+    <span class="method-permalink"><a href="../../../scripty2 ui/s2/ui/dialog.html#open-instance_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.UI.Dialog#open() -&gt; this</code></pre>
+
+  
+  
+  <p>Opens the dialog.</p>
+
+</li>
+
+        </ul>
+      </div>
+    </div>
+
+      </div>
+
+      <div id="footer">
+        <div class="about clearfix">
+          <div class="copyright clearfix">
+            <div class="copyright-about">
+              This work is licensed under a<br/>
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.<br/>
+            </div>
+          </div>
+          <div class="credits">
+            <p>
+              Generated by <a href="http://pdoc.org">PDoc</a>.
+              Icons by <a href="http://froodee.at/">Samo</a>.
+            </p>
+            <p>
+              Copyright © 2005-2010 <a href="http://mir.aculo.us/">Thomas Fuchs</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../../javascripts/prototype.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../javascripts/s2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../javascripts/application.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../javascripts/item_index.js" charset="utf-8"></script>
+    <script type="text/javascript">PDoc.pathPrefix = '../../../';</script>
+  </body>
+</html>

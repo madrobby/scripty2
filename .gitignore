@@ -1,0 +1,5 @@
+.DS_Store
+pkg
+test/unit/tmp/*
+tmp
+dist/*

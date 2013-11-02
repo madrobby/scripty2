@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>scripty2 | Multitouch demos &amp; tests</title>
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css" media="screen">
+    body {
+      margin: 20px;
+      font:14px/16px "Helvetica Neue", Arial, sans-serif;
+      background: url(images/bg.png) left top repeat-x #2e480d;
+      color: #fff;
+    }
+    a {
+      color: #afe16d;
+    }
+    .demo, .test {
+      width: 500px;
+      border: 3px solid #afe16d;
+      border-radius: 10px;
+      background: #fff;
+      padding: 13px 0;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      z-index:1;
+      margin: 20px;
+      -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+    .demo:hover, .test:hover {
+      background: #6c8f3f;
+      border: 3px solid #6c8f3f;
+      color: #fff;
+    }
+    .demo:hover h2, .test:hover h2 {
+      color: #fff;
+    }
+    .demo:hover p, .test:hover p {
+      color: #fff;
+    }
+    .demo h2, .test h2 {
+      padding: 4px 0;
+      margin: 0px 15px 5px 15px;
+      font-size: 25px;
+      color: #6c8f3f;
+      font-weight: bold;
+    }
+    .demo h2 a, .test h2 a {
+      color: #6c8f3f;
+      text-decoration: none;
+    } 
+    .test h2 a {
+      color: #888; 
+    }
+    .demo:hover h2 a, .test:hover h2 a {
+      color: #fff;
+    }
+    .demo img, .test img {
+      float: right;
+      border: 0;
+      margin: 5px 15px;
+      -webkit-border-radius: 4px;
+      -webkit-box-shadow:0px 1px 7px rgba(0,0,0,0.3);
+      -moz-border-radius: 4px;
+      -moz-box-shadow:0px 1px 7px rgba(0,0,0,0.3);
+      border: 2px solid #fff;
+    }
+    .demo p, .test p {
+      margin: 5px 15px;
+      font-size: 13px;
+      line-height: 16px;
+      color: #8a8a8a;
+      width: auto;
+    }
+    
+    .test {
+       border: 3px solid #aaa;
+    }
+    .test h2 {
+      color: #888;
+      font-size: 18px;
+    }
+    .test:hover {
+      background: #888;
+      border: 3px solid #888;
+    }
+    
+    h1 {
+      margin: 30px 20px;
+      color: #c9e4a6;
+      text-shadow:0px 2px 3px rgba(0,0,0,0.3);
+    }
+    
+    p {
+      margin: 0 20px;
+      font-size: 12px;
+    }
+    
+    #demos {
+      position: absolute;
+      right: 30px;
+      top: 30px;
+      padding: 0;
+      margin: 0;
+      width: 130px;
+      background: #fff;
+      border: 3px solid #afe16d;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      z-index:1;
+      -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.5);
+    }
+
+    #demos li {
+      list-style-type: none;
+      height: 108px;
+      padding-top: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #afe16d;
+      text-align: center;
+    }
+
+    #demos li a {
+      text-decoration: none;
+      color: #6c8f3f;
+      display: block;
+    }
+
+    #demos li a img {
+      display: block;
+      margin: 0 auto 3px;
+      border: 0;
+    }
+
+    #demos li.title {
+      height: auto;
+    }
+
+    #demos li.title h1 {
+      padding: 4px 0;
+      margin: 0;
+      font-size: 18px;
+      color: #6c8f3f;
+      font-weight: normal;
+      text-shadow:none;
+    }
+
+    #demos li.back {
+      background: url(../scripty2.png) 5px center no-repeat;
+      width: 117px;
+      height: 55px;
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+    #demos li.back a {
+      width: 117px;
+      height: 50px;
+      padding-top: 45px;
+      font-weight: normal;
+    }
+
+    #demos li.active {
+      background: #afe16d;
+    }
+    
+    p.intro {
+      width: 500px;
+      margin: 10px 20px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    
+    p {
+      width: 500px;
+      margin-bottom: 10px;
+    }
+    
+    #copyright {
+      margin-top: 20px;
+      font-size: 11px;
+      color: #89ab5e;
+    }
+    
+    #links {
+      position: absolute;
+      right: 32px;
+      top: 540px;
+      border: 1px solid #517128;
+      color: #afe16d;
+      padding: 10px;
+      width: 110px;
+      font-size: 11px;
+      line-height: 13px;
+      cursor:pointer;
+      background: url(images/jsrocks.png) no-repeat left bottom;
+    }
+  </style>
+</head>
+<body>
+  <h1>scripty2 multitouch demos &amp; tests</h1>
+  <p class="intro">
+    This alpha version of <a href="http://scripty2.com/"><b>scripty2</b></a> supports 
+    multitouch events that normalize the multitouch APIs of various vendors.
+  </p>
+  <p class="intro">
+    Currently, there are compatibility modes for 
+    <a href="http://starlight-webkit.org/Devguide/"><b>Nokia's Starlight Touch API</b></a>,
+    <a href="http://developer.apple.com/safari/library/documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW1"><b>Apple's iPhone touch API</b></a> 
+    and a fallback mode for <b>desktop browsers</b> 
+    (panning with mouse dragging, scaling/rotation with held down shift key).
+  </p>
+  <p>
+    For the implementation details, please see the
+    <a href="http://scripty2.com/doc/scripty2%20ui/s2/ui/multitouch.html">API documentation</a>,
+    and the <a href="simple">basic demo of manpulate:update</a> (3 lines of code!).
+  </p>
+  <p>
+    These demos are optimized for the Starlight browser, iPhone Safari 3+,
+    Desktop Safari 4+ and Firefox 3.5+. Support for IE is incomplete at this time.
+  </p>
+  <p>
+    The scripty2 multitouch support is not final, it's a alpha-stage implementation.
+    This means there's several restrictions and known bugs that prevents it from being
+    used in a production environment. Patches are welcome!
+    <a href="http://github.com/madrobby/scripty2">Please fork and submit patches on Github</a>.
+  </p>
+  
+  <div class="demo" onclick="location.href='photofun'">
+    <img src="images/photofun.png" />
+    <h2><a href="photofun">Photo fun</a></h2>
+    <p>
+      Pinch, expand and pan around photos on a desk, and use rotation with two fingers
+      to change the background color (about 50 lines of JavaScript code).
+    </p>
+    <p>
+      This demo works best on mobile devices and desktop computers.
+    </p>
+  </div>
+  
+  <div class="demo" onclick="location.href='touchshow'">
+    <img src="images/touchshow.png" />
+    <h2><a href="touchshow">Flickr Touchshow</a></h2>
+    <p>
+      Search for photos on Flickr, and move, scale and rotate them 
+      (about 60 lines of JavaScript code).
+    </p>
+    <p>
+      This demo works best on high-resolution mobile devices and desktop computers.
+    </p>    
+  </div>
+  
+  <div class="demo" onclick="location.href='pinchariffic'">
+    <img src="images/pinchariffic.png" />
+    <h2><a href="pinchariffic">Pinchariffic</a></h2>
+    <p>
+      Pinch the falling color boxes to advance to the next level
+      (150 lines of JavaScript code).
+    </p>
+    <p>
+      This demo works best on mobile devices and desktop computers.
+    </p>    
+  </div>
+  
+  <div class="demo" onclick="location.href='flickariffic'">
+    <img src="images/flickariffic.png" />
+    <h2><a href="flickariffic">Flickariffic</a></h2>
+    <p>
+      Flick away the falling color boxes to advance to the next level
+      (200 lines of JavaScript code, including a custom effect).
+    </p>
+    <p>
+      This demo works best on desktop computers.
+    </p>    
+  </div>
+  
+  <p class="intro">
+    Use the following tests to check out the low-level 
+    <a href="http://www.starlight-webkit.org/Devguide">Starlight APIs</a>
+    on the <a href="http://www.starlight-webkit.org/download">Starlight browser</a>.
+  </p>
+  
+  <p>
+    The Starlight browser currently requires Windows 7 and a 
+    single- or multitouch screen (<a href="http://www.opensource.nokia.com/Starlight">detailed requirements</a>).
+  </p>
+  
+  <div class="test" onclick="location.href='touchspector'">
+    <img src="images/touchspector.png" />
+    <h2><a href="touchspector">Touchspector</a></h2>
+    <p>
+      Examine all data available in the low-level events of the 
+      <a href="http://starlight-webkit.org/Devguide/">Starlight Touch 
+      and Manipulate APIs</a>, like pan speed and directions, touch bounding boxes,
+      scaling and rotation, and tracking individual fingers.
+    </p>
+    <p>
+      This demo works only on the Starlight browser.
+    </p>    
+  </div>
+  
+  <div class="test" onclick="location.href='testbed'">
+    <img src="images/testbed.png" />
+    <h2><a href="testbed">Testbed</a></h2>
+    <p>
+      A series of manually executable tasks to test your touchscreen and drivers
+      with the Starlight browser. Examine the source for various useful techniques.
+    </p>
+    <p>
+      This demo works only on the Starlight browser.
+    </p>    
+  </div>
+    
+  <p class="intro">
+    Multitouch, test pages and demos have been developed<br/>
+    in cooperation with <a href="http://www.nokia.com/">Nokia</a>.
+  </p>
+  
+  <p id="copyright">
+    Copyright &copy; 2005-2009 Thomas Fuchs.
+    script.aculo.us &amp; scripty2 was created by <a href="http://mir.aculo.us/">Thomas Fuchs</a>, 
+    and is extended and improved by open-source contributors. 
+    Released under the MIT license.
+  </p>
+</body>
+</html>

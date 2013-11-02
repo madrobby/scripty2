@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>scripty2: demos</title>
+  <meta http-equiv="imagetoolbar" content="no" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="../demos.css" media="screen" rel="Stylesheet" type="text/css" />
+  <style type="text/css" media="screen">
+    body {
+      background:url(images/body.jpg);
+    }
+    #cards {
+      padding: 0;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top:  -357px;
+      margin-left: -419px;
+      z-index:0;
+    }
+    #cards li {
+      display: block;
+      position: absolute;
+      top:0px;
+      left:0px;
+      width: 96px;
+      height: 171px;
+      z-index:0;
+      margin:0;
+    }
+  </style>
+</head>
+<body>
+  <ul id="demos">
+    <li class="title"><h1>Demos</h1></li>
+    <li class="active"><a href="../cards/"><img src="cards.png" alt="Cards"/>Cards</a></li>
+    <li><a href="../puzzle/"><img src="../puzzle/puzzle.png" alt="Puzzle"/>Puzzle</a></li>
+    <li><a href="../touch/"><img src="../touch/touch.png" alt="Multitouch"/>Multitouch</a></li>
+    <li class="back"><a href="/">← back to front page</a></li>
+  </ul>
+  
+  <div id="controls">
+    <h1><a href="../cards/">Cards Demo</a></h1>
+    <p>
+      by <a href="http://script.aculo.us/thomas">Thomas Fuchs</a>
+    </p>
+    <ul>
+      <li id="stack">stack</li>
+      <li id="shuffle">shuffle</li>
+      <li id="layup">lay up</li>
+      <li id="snake">snake</li>
+    </ul>
+    <p>
+      This demo is about 70 lines of JavaScript code,
+      including HTML generation, event handling, and
+      all effects.
+    </p>
+    <p>
+      <br/>Big thanks to our friends from
+      <a href="http://sauspiel.de/">Schafkopf Site Sauspiel</a>
+      for the card graphics.
+    </p>
+  </div>
+  
+  <ul id="cards"></ul>
+  
+  <script src="../../js/prototype.s2.min.js" type="text/javascript"></script>
+  
+  <script>
+    (function(){
+      var names = $w('E7 E8 E9 EA EK EO EU EX G7 G8 G9 GA GK GO '+
+        'GU GX H7 H8 H9 HA HK HO HU HX S7 S8 S9 SA SK SO SU SX'), 
+        cards = names.map(function(name){
+          var card = new Element('li',{ id: name, style: 'margin-top:272px;left:371px' });
+          card.insert(new Element('img', { src: 'images/'+name+'.png' }));
+          $('cards').insert(card);
+          return card;
+        });
+        
+      function zIndexTransition(pos){ return pos>0.8?1:0; }
+      function calculateTop(index){ 
+        return 200+(1-S2.FX.Transitions.mirror((index/(names.length-1))*.7+.15,S2.FX.Transitions.easeOutCirc))*300; 
+      }
+      
+      document.observe('cards:shuffle', function(){
+        names.sortBy(Math.random).each(function(card, index){
+          $(card).morph('top:-200px;margin-top:'+calculateTop(index)+'px;left:'+(51+(index*20))+'px;z-index:'+index, { 
+            propertyTransitions: { top: 'mirror', left: 'swingFromTo', zIndex: zIndexTransition },
+            delay:Math.random()*2, duration:1
+          });
+        });
+      });
+      
+      document.observe('cards:stack', function(){
+        names.sortBy(Math.random).each(function(card, index){
+          $(card).morph('top:-200px;margin-top:'+calculateTop(index)+'px;left:'+(51+(names.length/2)*20)+'px;z-index:'+index, { 
+            propertyTransitions: { top: 'mirror', left: 'bouncePast', zIndex: zIndexTransition },
+            delay:Math.random()*2, duration:1
+          });
+        });
+      });
+      
+      document.observe('cards:layup', function(){
+        names.sortBy(Math.random).each(function(card, index){
+          $(card).morph('margin-top:'+((index/8).floor()*182)+'px;left:'+(index%8)*106+'px', { 
+            propertyTransitions: { marginTop: 'easeOutCirc', left: 'linear' },
+            duration:1, delay:index/15
+          });
+        });
+      });
+      
+      document.observe('cards:snake', function(){
+        var d = 20;
+        names.sortBy(Math.random).each(function(card, index){
+          $(card).morph(
+            'margin-left:'+[-300,300,-150,150][index%4]+'px;margin-top:'+
+            (272+(index-names.length/2)*d)+'px;left:371px;z-index:'+index, {
+            propertyTransitions: { 
+              marginLeft: 'mirror', marginTop: 'bouncePast', 
+              left: 'swingFromTo', zIndex: zIndexTransition 
+            },
+            duration:2 
+          }).morph('margin-top:272px;left:'+(371+(index-names.length/2)*d)+'px', { 
+            propertyTransitions: { marginTop: 'easeInCirc', left: 'linear' },
+            duration:1, delay:index/15
+          }).morph('margin-top:'+(272-(index-names.length/2)*d)+'px;left:371px', { 
+            propertyTransitions: { marginTop: 'easeOutCirc', left: 'linear' },
+            duration:1
+          });
+        });
+      });
+      
+      $('shuffle').observe('click', document.fire.curry('cards:shuffle'));
+      $('stack').observe('click', document.fire.curry('cards:stack'));
+      $('layup').observe('click', document.fire.curry('cards:layup'));
+      $('snake').observe('click', document.fire.curry('cards:snake'));
+      
+      (function(){
+        document.fire('cards:snake');
+      }).delay(2);
+    })();
+  </script>
+  
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}</script>
+</body>
+</html>

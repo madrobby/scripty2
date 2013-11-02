@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 demo | Flickariffic</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../prototype.s2.min.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      body { 
+        font: 12px/15px "Palatino Linotype", "Book Antiqua", "Palatino", serif; 
+        margin: 0; 
+        background:#000;
+      }
+      .square {
+        position: absolute;
+        background: transparent;
+        border: 5px solid #fff;
+        margin: 0;
+      }
+      #content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background:#234;
+        overflow:hidden;
+      }
+      #level {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        font-size: 50px;
+        line-height: 70px;
+        top: 35%;
+        color: #fff;
+        text-transform: lowercase;
+      }
+      #score {
+        position: absolute;
+        text-align: right;
+        font-size: 50px;
+        top: 20px;
+        right: 20px;
+        color: #fff;
+        text-transform: lowercase;
+      }
+    </style>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+  </head>   
+  <body>
+      <div id="content">
+        <div id="debug"></div>
+        <div id="score">
+        </div>
+
+        <div id="level">
+          <span onclick="startLevel()" ontouchstart="startLevel()">flickariffic<br/>tap here to start!</span>
+        </div>
+      </div>
+      
+      <script type="text/javascript" charset="utf-8">
+        S2.enableMultitouchSupport = true;
+      
+        function tagify(element) {
+          var tagifyStyle = 'position:relative';
+          if (Prototype.Browser.IE) tagifyStyle += ';zoom:1';
+          element = $(element);
+          $A(element.childNodes).each( function(child) {
+            if (child.nodeType==3) {
+              child.nodeValue.toArray().each( function(character) {
+                element.insertBefore(
+                  new Element('span', {style: tagifyStyle}).update(
+                    character == ' ' ? String.fromCharCode(160) : character),
+                    child);
+              });
+              Element.remove(child);
+            }
+          });
+        }
+      
+        S2.FX.Operators.Wave = Class.create(S2.FX.Operators.Base, {
+          initialize: function($super, effect, object, options) {
+            $super(effect, object, options);
+            tagify(object);
+            this.spans = object.select('span');
+          },
+
+          valueAt: function(position) {
+            return position;
+          },
+
+          applyValue: function(value){
+            this.spans.each(function(span,i){
+              var d = (i/this.spans.length)*0.7+0.2;
+              if(d>(value-0.1) && d<(value+0.1)){
+                var v = (d-value+0.1)*5;
+                span.setStyle('color:'+S2.CSS.interpolateColor('#888','#fff',
+                  (Math.sin(Math.PI*(v*2)-Math.PI/2)+1)/2
+                ));
+              }
+              else
+                span.setStyle('color:#888');
+            }, this);
+          }
+        });
+
+        S2.FX.Wave = Class.create(S2.FX.Element, {
+          setup: function() {
+            this.animate('wave', this.element, {});
+          }
+        });
+        
+        (function(){
+          var d = true,
+            squares = [], timestamp1, timestamp2, i, s,
+            element, delta, b = $('content'),
+            level = 0, dims = {width:b.offsetWidth,height:b.offsetHeight}, 
+            active = false,
+            score = 0,
+            startLevelTimeout = null,
+            r = Math.random,
+            colors = $w('#86ac2a #13a480 #55c9ef #ef63a2 #ef5555 #f1f353 #ef9655 '+
+              '#bce162 #70e2c6 #8fe8f8 #d6c0fb #f6bed7 #ff9898 #feff96 #efc255 '+
+              '#5b7a11 #0f6953 #3195a7 #7d4ad1 #b92c6c #bd4242 #d3d52b #ea6300');
+            
+          new S2.FX.Wave($('level').down('span'),{duration:2}).play();
+          
+          function flick(square){
+            if (!square.active) return;
+            square.active = false;
+            score++;
+            updateScore(true);
+            $(square.element).morph(
+              'width:0;height:0;margin-left:'+square.size/2+'px;margin-top:'+square.size/2+'px;',{
+              duration: 0.4,
+              after: function(){ 
+                $(square.element).remove(); 
+                checkForNextLevel(); 
+              }
+            });
+          }
+          
+          function updateScore(anim){
+            $('score').innerHTML = score + ' pts';
+            if(anim) $('score').setStyle('font-size:80px').morph('font-size:50px');
+          }
+          
+          function addSquare(){
+            element = new Element('div',{ className: 'square' });
+            b.insert(element);
+            var id = element.identify(), sq = {
+              active: true,
+              element: id,
+              speed: 50+r()*(level/2)*(dims.height*dims.width)*0.000025,
+              size: 50+r()*(level/2)*25,
+              bloat: 30+r()*(level/2)*50,
+              position: [dims.width/2,0],
+              direction: Math.PI/10 + (r()*Math.PI)*0.8
+            };
+            element.style.cssText += ';background-color:'+colors[(r()*colors.length).floor()];
+            squares.push(sq);
+            element.observe('manipulate:flick', function(event){ flick(sq) });
+            //element.observe('click', function(event){ 
+            //  checkForPinch(sq, 0.5);
+            //});
+            element = null;
+          }
+          
+          function checkForGameOver(){
+            var j = squares.length, gameover = false;
+            while(j--){
+              s = squares[j];
+              gameover = !(!gameover && !(s.active && 
+                (s.position[0]+s.size<0 || s.position[0]>dims.width ||
+                 s.position[1]+s.size<0 || s.position[1]>dims.height)));
+            }
+            if(gameover){
+              squares.each(function(square){
+                if(square.active){
+                  $(square.element).morph('opacity:0',{ duration:1, after:function(){ $(square.element).remove() } });
+                }
+              });
+              active = false;
+              $('score').hide();
+              $('level').show().innerHTML = "<span onclick='startAgain()'>your score: "+score+"!<br/>"+
+                "tap here to start again!</span>";
+              new S2.FX.Wave('level',{duration:2}).play();
+            }
+          }
+          
+          function checkForNextLevel(){
+            var j = squares.length, nextlevel = true;
+            while(j--) nextlevel = nextlevel && !squares[j].active;
+            if(nextlevel){
+              active = false;
+              startLevel();
+            }
+          }
+          
+          function render(){
+            if(!active) return;
+            timestamp2 = (new Date).getTime();
+            delta = (timestamp2 - timestamp1) / 1000;
+            i = squares.length;
+            while(i--) {
+              s = squares[i];
+              if(s.active){
+                s.position = [
+                  s.position[0] + s.speed*Math.cos(s.direction)*delta,
+                  s.position[1] + s.speed*Math.sin(s.direction)*delta
+                ];
+                s.size = s.size + s.bloat*delta;
+                $(s.element).style.cssText += 
+                  ';width:'+s.size+'px;height:'+s.size+'px;'+
+                  ';left:'+s.position[0]+'px;top:'+s.position[1]+'px';
+              }
+            }
+            timestamp1 = timestamp2;
+            checkForGameOver();
+          }
+          
+          function start(){
+            active = true;
+            $('level').morph('top:-100%',{
+              transition: 'swingFrom', duration: 1,
+              after: function(){ $('level').hide().setStyle('top:30%'); }
+            });
+            timestamp1 = (new Date).getTime();
+            squares.length = 0;
+            i = level; while(i--) addSquare();
+            startLevelTimeout = null;
+          }
+          
+          function startLevel(){
+            if(startLevelTimeout) return;
+            level++;
+            $('level').show().innerHTML = 'Level '+level+' ready!';
+            new S2.FX.Wave('level',{duration:1.1}).play();
+            updateScore(false);
+            startLevelTimeout = setTimeout(start, 1250);
+          }
+          window['startLevel'] = startLevel;
+          
+          function startAgain(){
+            level = 0;
+            score = 0;
+            startLevel();
+          }
+          window['startAgain'] = startAgain;
+          
+          //startLevel();
+          setInterval(render, 20);
+        })();
+      </script>
+      
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}</script>
+  </body>
+</html>

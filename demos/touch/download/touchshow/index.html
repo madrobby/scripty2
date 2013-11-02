@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 demo | Flickr Touchshow</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../prototype.s2.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      body { 
+        font: 12px/15px "Palatino Linotype", "Book Antiqua", "Palatino", serif; 
+        margin: 0; 
+        background:#000; 
+        overflow:hidden;
+      }
+      #content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -432px;
+        margin-top: -240px;
+        width: 864px;
+        height: 480px;
+        background:#234;
+        overflow: hidden;
+      }
+      input {
+        font-size: 20px;
+        padding: 5px;
+        width: 180px;
+      }
+      #photos img {
+        position: absolute;
+        left: 864px;
+        top: 0px;
+        z-index: 0;
+      }
+      form {
+        position: absolute;
+        z-index:1000;
+      }
+      #clear {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin: 3px;
+        padding: 10px;
+        font-size: 20px;
+        background: #800;
+        color: #fff;
+        cursor: pointer;
+      }
+      #fetch {
+        position: absolute;
+        left: 200px;
+        top: 0;
+        width: 170px;
+        margin: 3px;
+        padding: 10px;
+        font-size: 20px;
+        background: rgba(0,80,0,0.5);
+        color: #fff;
+        cursor: pointer;
+      }
+      #header {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -432px;
+        margin-top: -240px;
+        width: 864px;
+        background: rgba(0,0,0,0.5);
+        height: 42px;
+        z-index: 99999999;
+      }
+      #header.loading {
+        background-image: url(loading.gif);
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+      #info {
+        position: absolute;
+        top: 450px;
+        width: 854px;
+        padding: 5px;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        font-size: 18px;
+        height: 42px;
+      }
+      #info a {
+        color: #fff;
+        text-decoration: none;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+  </head>   
+  <body>
+    <div id="debug"></div>
+    <div id="content">
+      <div id="photos"></div>
+    </div>
+    <div id="header">
+      <form onsubmit="processForm();return false">
+        <input type="text" name="q" id="q" value="Summer" /> <div id="fetch" onclick="processForm()">Grab from flickr!</div>
+      </form>
+      <div id="clear">clear</div>
+      <div id="info">Touch an image to select and manipulate.</div>
+    </div>
+    <script type="text/javascript">
+      S2.enableMultitouchSupport = true;
+    
+      (function(exp){
+        var r = Math.random;
+        
+        function processForm(){
+          var url = 'http://api.flickr.com/services/feeds/'+
+            'photos_public.gne?format=json&tags='+
+            encodeURIComponent($('q').getValue())+
+            '&tags_mode=ANY';
+          $(document.body).insert(new Element('script',{ src: url, type: 'text/javascript' }));
+          $('header').addClassName('loading');
+        }
+        
+        var FRICTION = 5, z = 0, lastPhoto;
+        function addEvents(img, pos){
+          img.observe('manipulate:update', function(event){
+            img.style.cssText += 
+              ';z-index:'+(z++)+';left:'+(pos[0]+event.memo.panX)+'px;top:'+(pos[1]+event.memo.panY)+'px;';
+            img.transform({ rotation: pos[2]+event.memo.rotation, scale: event.memo.scale });
+            img._x = pos[0]+event.memo.panX;
+            img._y = pos[1]+event.memo.panY;
+            event.stop();
+            
+            if(!lastPhoto || !(lastPhoto==img)){
+              lastPhoto = img;
+              $('info').innerHTML =
+                '<a href="'+pos[3].link+'">'+
+                '<b>“'+pos[3].title.escapeHTML()+'”</b> by '+
+                '<b>'+pos[3].author.gsub(/^(.*)\(/,'').gsub(/\)$/,'').escapeHTML()+'</b></a>';
+            }
+          });
+        }
+        function processData(data){
+          data.items.sortBy(r).each(function(photo,idx){
+            if(idx>5) return;
+            var image = new Element('img', { src: photo.media.m }),
+              pos = [r()*750, r()*150, r()*1-0.5, photo];
+            $('photos').insert(image);
+            image.style.cssText += ';top:'+((r()*700)-300)+'px;z-index:'+(z++);
+            image.transform({ rotation: pos[2] });
+            image.morph(
+              'left:'+pos[0]+'px;'+
+              'top:'+pos[1]+'px',{
+                duration:0.2+r()*1.5,delay:idx*0.2
+            });
+            addEvents(image, pos);
+          });
+          $('header').removeClassName('loading');
+        }
+        $('clear').observe('click', function(){
+          $$('#photos img').each(function(photo){
+            photo.morph('left:-500px;top:'+(r()*600)+'px',{ duration: .3,
+              after: function(){ Element.remove(photo) } });
+          });
+        });
+        exp['processForm'] = processForm;
+        exp['jsonFlickrFeed'] = processData;
+        $('q').focus();
+      })(window);
+    </script>
+  </body>
+</html>

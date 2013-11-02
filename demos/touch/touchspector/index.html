@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 | Touchspector</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="../prototype.min.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <style type="text/css" media="screen">
+      html {
+        height: 100%;
+      }
+      body { 
+        font: 12px/15px Consolas, Verdana;
+        margin: 10px;
+        background:#000;
+        color:#fff;
+        height: 100%;
+        overflow: hidden;
+      }
+      .touch, .indicator, .mouse {
+        position: absolute;
+        background: transparent;
+        border: 2px solid #0f0;
+        height: 22px;
+        width: 30px;
+        margin:-15px 0 0 -15px;
+        text-align: center;
+        padding-top:8px;
+        color: #0f0;
+        z-index: 0;
+      }
+      .indicator {
+        border: 0;
+        height: 21px;
+        width: 29px;
+        background: url(arrow.png);
+      }
+      .mouse {
+        border: 1px solid #2CC9DB;
+        height: 5px;
+        width: 5px;
+        margin: -3px 0 0 3px;
+        padding: 0;
+      }
+      .touch span, .indicator span, .mouse span {
+        display: block;
+        position: relative;
+        margin-left: -90px;
+        width: 70px;
+        text-align: right;
+        font-size: 20px;
+      }
+      .indicator span {
+        margin-left: 40px;
+        text-align: left;
+        color: #fff;
+        font-size: 12px;
+      }
+      .mouse span {
+        font-size: 12px;
+        color: #175A68;
+        margin-top:-5px;
+        margin-left:-80px;
+      }
+      .trackpoint {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        background: #fff;
+      }
+      
+      #footer {
+        position: absolute;
+        bottom: 10px;
+        
+      }
+      #events {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+      }
+      #events div {
+        width:150px;
+        float:left;
+        color: #fff;
+      }
+      #events div span {
+        width: 79px;
+        display: inline-block;
+        color: #888;
+      }
+      .inactive {
+        opacity: 0.4;
+      }
+      #mouse {
+        color: #2CC9DB !important;
+      }
+      #mouse span {
+        color: #175A68 !important;
+      }
+      #panspeed {
+        display: none;
+        position: absolute;
+        height: 1px;
+        width: 1px;
+      }
+      #panspeed div {
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        background: #aaa;
+      }
+      #debug {
+        position: absolute;
+        top:0; left:0;
+        font-size: 50px;
+        color: #8f8;
+      }
+      .off {
+        display: none;
+      }
+    </style>
+  </head>   
+  <body id="body">
+    <div id="footer"><b style="background:#fff;color:#000">Touchspector</b> touch/transformaction APIs</div>
+    <div id="panspeed"><div></div></div>
+    <div id="events">
+      <div id="mouse"></div>
+      <div id="touch"></div>
+      <div id="transformaction"></div>
+      <div id="touches"></div>
+    </div>
+    <div id="indicator" class="indicator"><span>transformaction</span></div>
+    
+    <div id="screen" style="cursor:none;position:absolute;top:0;left:0;width:2048px;height:20480px;background:rgba(255,255,255,0);z-index:1000"></div>    
+    <div id="debug"></div>
+    
+    <div id="f0" class="touch"></div>
+    <div id="f1" class="touch"></div>
+    <div id="f2" class="touch"></div>
+    <div id="f3" class="touch"></div>
+    <div id="f4" class="touch"></div>
+    
+    <script type="text/javascript">
+      (function(){
+        var b = document.body, indicator = $('indicator'), mouse,
+          colors = $w('#0f0 #f00 #00f #f0f #ff0 #0ff #8f8 #f88 #88f #f8f #0f0 #f00 #00f #f0f #ff0 #0ff #8f8 #f88 #88f #f8f'),
+          touchcounter = 0, transformactioncounter = 0, mousecounter = 0,
+          panspeed = $('panspeed'), panspeedDiv = panspeed.down('div'), inc = 0;
+          
+        //setInterval(function(){
+        //  $('debug').innerHTML = ['|','/','-','\\'][inc%4];
+        //},10);
+        
+        
+        function setPos(element, event){
+          if(!element) return;
+          element.setStyle('left:'+event.clientX+'px;top:'+event.clientY+'px;'+
+            (event.rectWidth ? 
+            ('width:'+event.rectWidth+'px;height:'+event.rectHeight+'px;'+
+            'margin:-'+(event.rectHeight/2).round()+'px 0 0 -'+(event.rectWidth/2).round()+'px') 
+            : ''));
+            
+          //if('panSpeedX' in event){
+          //  var length = Math.sqrt(event.panSpeedX*event.panSpeedX+event.panSpeedX*event.panSpeedY).round(),
+          //         dir = Math.atan2(event.panSpeedY,event.panSpeedX);
+          //  panspeed.setStyle('left:'+event.clientX+'px;top:'+event.clientY+'px;'+
+          //    '-webkit-transform:rotate('+dir+'rad)');
+          //  panspeedDiv.setStyle('width:'+length+'px');
+          //}
+        }
+        
+        function track(event){
+          //var el = new Element('div', { className: 'trackpoint' });
+          //el.setStyle('background-color:'+colors[event.id]+';'+
+          //  'left:'+event.clientX+'px;top:'+event.clientY+'px;');
+          //b.insert(el);
+          //setTimeout(function(){ el.remove(); }, 1000);
+        }
+        
+        var touchfingers = $$('div.touch');
+        
+        function infoForTouchEvent(event, phase){
+          return '<span>touchevent#</span>'+(touchcounter)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>touches</span>'+(event.touches.length)+'<br/>';
+        }
+        
+        function infoForTouch(touch){
+          return '<span>touch'+(touch.identifier)+'</span>'+
+            (touch.clientX)+'/'+(touch.clientY)+'<br/>';
+        }
+        
+        function renderInfoForTouches(touches){
+          var info = '';
+          
+          touchfingers[0].addClassName('off');
+          touchfingers[1].addClassName('off');
+          touchfingers[2].addClassName('off');
+          touchfingers[3].addClassName('off');
+          touchfingers[4].addClassName('off');
+          
+          $A(touches).each(function(touch,index){
+            info += infoForTouch(touch,index);
+            setPos(touchfingers[touch.identifier].removeClassName('off'), touch);            
+          });
+          
+          $('touches').innerHTML = info;
+        }
+        
+        function start(event){
+          touchcounter++;
+          $('touch').removeClassName('inactive').show().innerHTML = infoForTouchEvent(event, 'start');
+          event.preventDefault();
+        }
+        function move(event){
+          touchcounter++;
+          $('touch').show().innerHTML = infoForTouchEvent(event, 'move');
+          renderInfoForTouches(event.touches);
+        }
+        function end(event){
+          touchcounter++;
+          $('touch').show().innerHTML = infoForTouchEvent(event, 'end');
+          if(event.touches.length==0) $('touch').addClassName('inactive');
+          renderInfoForTouches(event.touches);
+        }
+        
+        function infoForTransformactionEvent(event, phase){
+          return '<span><b>transformaction</b></span><br/>'+
+            '<span>transf#</span>'+(transformactioncounter++)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>clientX/Y</span>'+event.clientX+'/'+event.clientY+'<br/>'+
+            '<span>scale</span>'+event.scale.toFixed(2)+'<br/>'+
+            '<span>scaleSpeed</span>'+event.scaleSpeed.toFixed(2)+'<br/>'+
+            '<span>rotate</span>'+event.rotate.toFixed(2)+'<br/>'+
+            '<span>rotSpeed</span>'+event.rotateSpeed.toFixed(2)+'<br/>'+
+            '<span>panX/Y</span>'+event.panX+'/'+event.panY+'<br/>'+
+            '<span>panSpeedX/Y</span>'+event.panSpeedX+'/'+event.panSpeedY+'<br/>'
+        }
+        function transformactionStart(event){
+          setPos(indicator, event);
+          indicator.show();
+          panspeed.show();
+          $('transformaction').removeClassName('inactive').show().innerHTML = infoForTransformactionEvent(event, 'start');
+          event.stop();      
+        }
+        function transformactionUpdate(event){
+          setPos(indicator, event);
+          indicator.style.webkitTransform = 
+            'rotate('+event.rotate+'rad) scale('+event.scale+')';
+          $('transformaction').show().innerHTML = infoForTransformactionEvent(event, 'update');
+        }
+        function transformactionEnd(event){
+          $('transformaction').show().innerHTML = infoForTransformactionEvent(event, 'end');
+          $('transformaction').addClassName('inactive');
+          setPos(indicator, event);
+          indicator.hide();
+          panspeed.hide();
+        }
+        
+        function infoForMouseEvent(event, phase){
+          return '<span><b>mouse</b></span><br/>'+
+            '<span>mouse#</span>'+(mousecounter++)+'<br/>'+
+            '<span>phase</span>'+phase+'<br/>'+
+            '<span>phase</span>mousemove<br/>'+
+            '<span>clientX/Y</span>'+event.clientX+'/'+event.clientY+'<br/>';
+        }     
+        function mouseDown(event){
+          setPos(mouse, event);
+          $('mouse').show().removeClassName('inactive').innerHTML = infoForMouseEvent(event, 'down');
+        }
+        function mouseMove(event){
+          setPos(mouse, event);
+          $('mouse').show().innerHTML = infoForMouseEvent(event, 'move');
+        }
+        function mouseUp(event){
+          setPos(mouse, event);
+          $('mouse').show().addClassName('inactive').innerHTML = infoForMouseEvent(event, 'up');
+        }       
+        function ignore(event){ event.stop(); }
+        
+        $('screen').observe('touchstart', start);
+        $('screen').observe('touchmove', move);
+        $('screen').observe('touchend', end);
+        
+        $('screen').observe('transformactionstart', transformactionStart);
+        $('screen').observe('transformactionupdate', transformactionUpdate);
+        $('screen').observe('transformactionend', transformactionEnd);
+        
+        $('screen').observe('mousedown', mouseDown);
+        $('screen').observe('mouseup', mouseUp);
+        $('screen').observe('mousemove', mouseMove);
+        
+        indicator.hide();
+        panspeed.hide();
+        
+        mouse = new Element('div', { className: 'mouse' });
+        $('mouse').addClassName('inactive');
+        mouse.innerHTML = '<span>mouse</span>';
+        b.insert(mouse);
+      })();
+    </script>
+  </body>
+</html>

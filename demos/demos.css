@@ -1,0 +1,138 @@
+* { outline:none; }
+
+body {
+  font:14px/18px "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden;
+}
+
+#controls {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  width: 210px;
+  border: 3px solid #afe16d;
+  border-radius: 10px;
+  background: #fff;
+  padding: 13px 0;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  z-index:1;
+  -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.5);
+}
+
+#controls h1 {
+  padding: 4px 0;
+  margin: 0px 15px 5px 15px;
+  font-size: 25px;
+  color: #6c8f3f;
+  font-weight: bold;
+}
+#controls h1 a {
+  color: #6c8f3f;
+  text-decoration: none;
+} 
+
+#controls p {
+  clear: both;
+  margin: 0 15px;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8a8a8a;
+}
+
+#controls p a {
+  color: #6c8f3f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#controls ul {
+  margin: 15px 0;
+  height: 15px;
+  padding: 5px 15px 5px 10px;
+  background: #afe16d;
+}
+
+#controls ul li {
+  float: left;
+  list-style-type: none;
+  padding: 2px 4px 1px 4px;
+  margin: 0 3px;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  cursor: pointer;
+  color: #6c8f3f;
+  background-color: #fff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+
+#demos {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  padding: 0;
+  margin: 0;
+  width: 130px;
+  background: #fff;
+  border: 3px solid #afe16d;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  z-index:1;
+  -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.5);
+}
+
+#demos li {
+  list-style-type: none;
+  height: 108px;
+  padding-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #afe16d;
+  text-align: center;
+}
+
+#demos li a {
+  text-decoration: none;
+  color: #6c8f3f;
+  display: block;
+}
+
+#demos li a img {
+  display: block;
+  margin: 0 auto 3px;
+  border: 0;
+}
+
+#demos li.title {
+  height: auto;
+}
+
+#demos li.title h1 {
+  padding: 4px 0;
+  margin: 0;
+  font-size: 18px;
+  color: #6c8f3f;
+  font-weight: normal;
+}
+
+#demos li.back {
+  background: url(scripty2.png) 5px center no-repeat;
+  width: 117px;
+  height: 55px;
+  padding: 10px 5px;
+  text-align: center;
+}
+
+#demos li.back a {
+  width: 117px;
+  height: 50px;
+  padding-top: 45px;
+  font-weight: normal;
+}
+
+#demos li.active {
+  background: #afe16d;
+}

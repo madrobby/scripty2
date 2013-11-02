@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 demo | Pinchariffic</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../prototype.s2.min.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      body { 
+        font: 12px/15px Calibri, Verdana; 
+        margin: 0;
+        background:#333;
+      }
+      .square {
+        position: absolute;
+        background: transparent;
+        border: 5px solid #fff;
+        margin: 0;
+      }
+      #level {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        font-size: 30px;
+        line-height: 40px;
+        top: 30%;
+        color: #fff;
+        letter-spacing: -2px;
+        text-transform: lowercase;
+      }
+      #score {
+        position: absolute;
+        text-align: right;
+        font-size: 30px;
+        top: 20px;
+        right: 20px;
+        color: #fff;
+        width: 100px;
+        letter-spacing: -2px;
+        text-transform: lowercase;
+      }
+      #container {
+        width: 400px;
+        height: 200px;
+        overflow: hidden;
+        position: absolute;
+      }
+    </style>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+  </head>   
+  <body>
+      <div id="score">
+      </div>
+      
+      <div id="container">
+      </div>
+      
+      <div id="level">
+        <span onclick="startLevel()" ontouchstart="startLevel()">pinchariffic<br/>tap here to start!</span>
+      </div>
+      
+      <script type="text/javascript" charset="utf-8">
+        S2.enableMultitouchSupport = true;
+      
+        (function(){
+          var d = true,
+            squares = [], timestamp1, timestamp2, i, s,
+            element, delta, b = $('container'),
+            level = 0, dims, 
+            active = false,
+            score = 0,
+            r = Math.random,
+            startLevelTimeout = null,
+            dims = document.viewport.getDimensions(),
+            colors = $w('aa0 0aa a0a a00 00a 0a0 44a 4aa 4a4 a4a 4aa aa4');
+            
+          $('container').setStyle('width:'+dims.width+'px;height:'+dims.height+'px');
+          
+          // prevent default starlight manipulation events (zooming)
+          S2.stopDefaultManipulationEvents = true;
+          
+          function checkForPinch(square, scale){
+            if (scale>0.99) return;
+            if (!square.active) return;
+            square.active = false;
+            score++;
+            updateScore(true);
+            $(square.element).morph(
+              'width:0;height:0;margin-left:'+square.size/2+'px;margin-top:'+square.size/2+'px;',{
+              duration: 0.4,
+              after: function(){ 
+                $(square.element).remove(); 
+                checkForNextLevel(); 
+              }
+            });
+          }
+          
+          function updateScore(anim){
+            $('score').innerHTML = score + ' pts';
+            if(anim) $('score').setStyle('font-size:40px').morph('font-size:30px');
+          }
+          
+          function addSquare(){
+            element = new Element('div',{ className: 'square' });
+            b.insert(element);
+            var id = element.identify(), sq = {
+              active: true,
+              element: id,
+              speed: 100+r()*(level/2)*(dims.height*dims.width)*0.00005,
+              size: 100+r()*(level/2)*50,
+              bloat: 30+r()*(level/2)*50,
+              position: [dims.width/2,0],
+              direction: Math.PI/10 + (r()*Math.PI)*0.8
+            };
+            element.style.cssText += ';background-color:#'+colors[(r()*colors.length).floor()];
+            squares.push(sq);
+            element.observe('manipulate:update', function(event){
+              checkForPinch(sq, event.memo.scale);
+            });
+            element = null;
+          }
+          
+          function checkForGameOver(){
+            var j = squares.length, gameover = false;
+            while(j--){
+              s = squares[j];
+              gameover = !(!gameover && !(s.active && 
+                (s.position[0]+s.size<0 || s.position[0]>dims.width ||
+                 s.position[1]+s.size<0 || s.position[1]>dims.height)));
+            }
+            if(gameover){
+              squares.each(function(square){
+                if(square.active){
+                  $(square.element).morph('opacity:0',{ duration:1, after:function(){ $(square.element).remove() } });
+                }
+              });
+              active = false;
+              $('score').hide();
+              $('level').show().innerHTML = "<span onclick='startAgain()'>your score: "+score+"!<br/>"+
+                "tap here to start again!</span>"
+            }
+          }
+          
+          function checkForNextLevel(){
+            var j = squares.length, nextlevel = true;
+            while(j--) nextlevel = nextlevel && !squares[j].active;
+            if(nextlevel){
+              active = false;
+              startLevel();
+            }
+          }
+          
+          function render(){
+            if(!active) return;
+            timestamp2 = (new Date).getTime();
+            delta = (timestamp2 - timestamp1) / 1000;
+            i = squares.length;
+            while(i--) {
+              s = squares[i];
+              if(s.active){
+                s.position = [
+                  s.position[0] + s.speed*Math.cos(s.direction)*delta,
+                  s.position[1] + s.speed*Math.sin(s.direction)*delta
+                ];
+                s.size = s.size + s.bloat*delta;
+                $(s.element).style.cssText += 
+                  ';width:'+s.size+'px;height:'+s.size+'px;'+
+                  ';left:'+s.position[0]+'px;top:'+s.position[1]+'px';
+              }
+            }
+            timestamp1 = timestamp2;
+            checkForGameOver();
+          }
+          
+          function start(){
+            active = true;
+            $('level').hide();
+            timestamp1 = (new Date).getTime();
+            squares.length = 0;
+            i = level; while(i--) addSquare();
+            startLevelTimeout = null;
+          }
+          
+          function startLevel(){
+            if(startLevelTimeout) return;
+            level++;
+            $('level').show().innerHTML = 'Level '+level+' ready!';
+            updateScore(false);
+            startLevelTimeout = setTimeout(start, 1000);
+          }
+          window['startLevel'] = startLevel;
+          
+          function startAgain(){
+            level = 0;
+            score = 0;
+            startLevel();
+          }
+          window['startAgain'] = startAgain;
+
+          document.body.observe('mousemove', function(event){
+            event.stop();
+          });
+          setInterval(render, 20);
+        })();
+      </script>
+      
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}</script>
+  </body>
+</html>

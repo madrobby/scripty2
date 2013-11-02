@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+  <head>
+    <title>scripty2 | Starlight Testbed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../prototype.s2.min.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      body { 
+        font: 12px/15px Calibri, Verdana;
+        margin: 0;
+        background:#333;
+      }
+      div {
+        border:2px solid white;
+        background:#888;
+        color: #fff;
+        width:140px;
+        height:80px;
+        float:left;
+        margin:5px;
+        padding:5px;
+        text-align:center;
+        font-size: 16px;
+        line-height:20px;
+      }
+      .pass {
+        background-color: #080;
+        color: #fff;
+      }
+      h2 {
+        clear: both;
+        text-indent: 10px;
+        color: #fff;
+        margin: 20px 0 0 0;
+        font-size: 14px;
+        font-weight: normal;
+      }
+      p {
+        position: fixed;
+        width: 100%;
+        bottom: -10px;
+        color: #ddd;
+        background: #000;
+        padding: 5px;
+        font-size: 11px;
+        line-height: 15px;
+      }
+      p span.timestamp {
+        color: #888;
+      }
+      #debug.open {
+        overflow: auto;
+        height: 100%;
+        bottom: auto;
+        top: 0;
+      }
+    </style>
+    
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+  </head>   
+  <body>
+    <h2>Mouse API</h2>
+    <div id="mouse_down">
+      Press mouse button to pass.
+    </div>
+    <div id="mouse_move">
+      Move mouse to pass.
+    </div>    
+    <div id="mouse_up">
+      Release mouse button to pass.
+    </div>
+    
+    <h2>Touch API</h2>
+    <div id="touch_start">
+      Touch to pass.
+    </div>
+    <div id="touch_start_multiple">
+      Touch two fingers to pass.
+    </div>    
+    <div id="touch_move">
+      Touch and move to pass.
+    </div>
+    <div id="touch_end">
+      Touch and release to pass.
+    </div>
+    
+    <h2>Starlight TransformAction API</h2>
+    <div id="transformaction_start">
+      Touch to pass.
+    </div>
+    <div id="transformaction_update">
+      Touch and move to pass.
+    </div>    
+    <div id="transformaction_end">
+      Touch and release to pass.
+    </div>
+    <div id="transformaction_pan_one">
+      Drag one finger left to right to pass.
+    </div>
+    <div id="transformaction_pan_two">
+      Drag two fingers left to right to pass.
+    </div>
+    <div id="transformaction_rotate">
+      Rotate two fingers 90 deg clockwise to pass.
+    </div>
+    <div id="transformaction_pinch">
+      Pinch two fingers to pass.
+    </div>
+    <div id="transformaction_reverse_pinch">
+      Reverse-pinch two fingers to pass.
+    </div>
+    <div id="transformaction_speed_x">
+      Move finger left to right faster than 50px/s.
+    </div>
+    <div id="transformaction_speed_y">
+      Move finger top to bottom faster than 50px/s.
+    </div>
+    <div id="transformaction_speed_scale">
+      Pinch faster then 50%/s.
+    </div>
+    <div id="transformaction_speed_rotation">
+      Rotate clockwise faster then 45 degrees/s.
+    </div>
+    
+    <h2>scripty2 events</h2>
+    <div id="s2_transformaction_one">
+      Drag one finger to pass.
+    </div>
+    <div id="s2_transformaction_two">
+      Drag two fingers to pass.
+    </div>
+    <div id="s2_transformaction_rotate">
+      Rotate two fingers 90 deg clockwise to pass.
+    </div>
+    <div id="s2_transformaction_pinch">
+      Pinch two fingers to pass.
+    </div>
+    <div id="s2_transformaction_reverse_pinch">
+      Reverse-pinch two fingers to pass.
+    </div>
+    <div id="s2_transformaction_flick">
+      Flick one finger to pass.
+    </div>
+    <p id="debug">Touch to view event log.</p>
+    <script type="text/javascript">
+      S2.enableMultitouchSupport = true;
+    
+      (function(){
+        var log = [];
+        
+        function updateLog(string, o){
+          log.push('<span class="timestamp">'+
+            '['+(new Date).getTime()+']'+
+            '</span> '+string);
+          if(console && console.log){
+            console.log(string);
+            if(o) console.log(o);
+          }
+        }
+        
+        $w('mousedown').each(function(eventName){
+          $('debug').observe(eventName,function(event){
+            if($('debug').hasClassName('open')){
+              $('debug').innerHTML = 'Touch to view event log.';
+              $('debug').removeClassName('open');
+            } else {
+              $('debug').innerHTML = log.reverse().join('<br/>');
+              $('debug').addClassName('open');
+            }
+            event.stop();
+          });
+        });
+        
+        // enable transformaction events
+        document.body.on('touchstart', function(event){ event.preventDefault(); });
+        
+        function dS2Event(event){
+          updateLog('s2 event: ' + 
+            Object.toJSON(Object.extend({ element: event.element().identify() }, event.memo)));
+        }
+        
+        function dMouseEvent(event){
+          var o = {
+            element: event.element().identify(),
+            screenX: event.screenX,
+            screenY: event.screenY,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            ctrlKey: event.ctrlKey,
+            shiftKey: event.shiftKey,
+            altKey: event.altKey,
+            metaKey: event.metaKey,
+            relatedTarget: event.relatedTarget,
+          };
+          updateLog('Mouse event: ' + Object.toJSON(o), event);
+        }
+        
+        function dTouchEvent(event, passed){
+          var o = {
+            element: event.element().identify(),
+            screenX: event.screenX,
+            screenY: event.screenY,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            id: event.id,
+            ctrlKey: event.ctrlKey,
+            shiftKey: event.shiftKey,
+            altKey: event.altKey,
+            metaKey: event.metaKey,
+            relatedTarget: event.relatedTarget,
+            pressure: event.pressure,
+            bbMinX: event.bbMinX,
+            bbMinY: event.bbMinY,
+            bbMaxX: event.bbMaxX,
+            bbMaxY: event.bbMaxY
+          }, str = Object.toJSON(o).escapeHTML();
+          updateLog('Touch event: ' +  str + 
+            (passed? '<br/><span style="padding-left:100px;color:green">'+passed+'</span>':''), event);
+        }
+        
+        function dTransformActionEvent(event){
+          var o = {
+            element: event.element().identify(),
+            screenX: event.screenX,
+            screenY: event.screenY,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            ctrlKey: event.ctrlKey,
+            shiftKey: event.shiftKey,
+            altKey: event.altKey,
+            metaKey: event.metaKey,
+            relatedTarget: event.relatedTarget,
+            translateX: event.translateX,
+            translateY: event.translateY,
+            translateSpeedX: event.translateSpeedX,
+            translateSpeedY: event.translateSpeedY,
+            scale: event.scale,
+            scaleSpeed: event.scaleSpeed,
+            rotate: event.rotate,
+            rotateSpeed: event.rotateSpeed
+          };
+          updateLog('TransformAction event: ' + Object.toJSON(o), event);
+        }
+              
+        $w('mouse_up mouse_move mouse_down').each(function(eventName){
+          $(eventName).observe(eventName.gsub(/_/,''), function(event){
+            dMouseEvent(event);
+            $(eventName).addClassName('pass');
+          });
+        });
+        
+        $w('touch_start touch_move touch_end').each(function(eventName){
+          $(eventName).observe(eventName.gsub(/_/,''), function(event){
+            dTouchEvent(event, 'PASSED: '+eventName.gsub(/_/,''));
+            $(eventName).addClassName('pass');
+          });
+        });
+        
+        var multipleId;
+        $('touch_start_multiple').observe('touchstart', function(event){
+          dTouchEvent(event);
+          if(event.touches.length>1) $('touch_start_multiple').addClassName('pass');
+        });
+        
+        $w('transformaction_start transformaction_update transformaction_end').each(function(eventName){
+          $(eventName).observe(eventName.gsub(/_/,''), function(event){
+            dTransformActionEvent(event);
+            $(eventName).addClassName('pass');
+          });
+        });
+        
+        $('transformaction_pan_one').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.translateX > 50 && event.scale==1)
+            $('transformaction_pan_one').addClassName('pass');
+        });
+        
+        $('transformaction_pan_two').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.translateX > 50 && !(event.scale==1))
+            $('transformaction_pan_two').addClassName('pass');
+        });
+        
+        $('transformaction_rotate').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(Math.abs(event.rotate) > Math.PI/4)
+            $('transformaction_rotate').addClassName('pass');
+        });
+        
+        $('transformaction_pinch').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.scale < 0.8)
+            $('transformaction_pinch').addClassName('pass');
+        });
+        
+        $('transformaction_reverse_pinch').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.scale > 1.5)
+            $('transformaction_reverse_pinch').addClassName('pass');
+        });
+        
+        $('transformaction_speed_x').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.translateSpeedX > 50)
+            $('transformaction_speed_x').addClassName('pass');
+        });
+        
+        $('transformaction_speed_y').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.translateSpeedY > 50)
+            $('transformaction_speed_y').addClassName('pass');
+        });
+        
+        $('transformaction_speed_scale').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.scaleSpeed < 0.5)
+            $('transformaction_speed_scale').addClassName('pass');
+        });
+        
+        $('transformaction_speed_rotation').observe('transformactionupdate', function(event){
+          dTransformActionEvent(event);
+          if(event.rotateSpeed > Math.PI/4)
+            $('transformaction_speed_rotation').addClassName('pass');
+        });
+        
+        $('s2_transformaction_one').observe('manipulate:update', function(event){
+          dS2Event(event);
+          if(((Math.abs(event.memo.panX)+Math.abs(event.memo.panY)) > 50) && (event.memo.scale==1))
+            $('s2_transformaction_one').addClassName('pass');
+        });
+        
+        $('s2_transformaction_two').observe('manipulate:update', function(event){
+          dS2Event(event);
+          // when two fingers are used, chances are >99.99% that scale changes
+          if(((Math.abs(event.memo.panX)+Math.abs(event.memo.panY))>50) && !(event.memo.scale==1))
+            $('s2_transformaction_two').addClassName('pass');
+        });
+        
+        $('s2_transformaction_rotate').observe('manipulate:update', function(event){
+          dS2Event(event);
+          if(Math.abs(event.memo.rotation) > Math.PI/4)
+            $('s2_transformaction_rotate').addClassName('pass');
+        });
+        
+        $('s2_transformaction_pinch').observe('manipulate:update', function(event){
+          dS2Event(event);
+          if(event.memo.scale < 0.8)
+            $('s2_transformaction_pinch').addClassName('pass');
+        });
+        
+        $('s2_transformaction_reverse_pinch').observe('manipulate:update', function(event){
+          dS2Event(event);
+          if(event.memo.scale > 1.5)
+            $('s2_transformaction_reverse_pinch').addClassName('pass');
+        });
+        
+        $('s2_transformaction_flick').observe('manipulate:flick', function(event){
+          dS2Event(event);
+          $('s2_transformaction_flick').addClassName('pass');
+        });
+      })();
+    </script>
+    
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}</script>
+  </body>
+</html>

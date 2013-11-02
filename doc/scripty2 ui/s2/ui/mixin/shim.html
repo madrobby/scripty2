@@ -1,0 +1,683 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>scripty2 API documentation | S2.UI.Mixin.Shim mixin</title>
+    <link type="text/css" charset="utf-8" rel="stylesheet" media="screen, projection" href="../../../../stylesheets/apidocs.css" />
+  </head>
+  <body>
+    <div id="page">
+
+      <div id="masthead">
+        <div id="masthead_content">
+          <a href="../../../../">
+            <h1 id="logo"><span class="replaced">scripty2</span></h1>
+          </a>
+          <div id="menu" class="clearfix">
+            <div class="search-box">
+              <form action="" method="get">
+                <label><span class="hidden">Search </span><input type="text" id="search" size="20" /></label>
+              </form>
+              <ul id="search_results" class="search-results menu-items" style="display:none"><li></li></ul>
+            </div>
+            <div class="api-box">
+              <h2><a href="#" id="api_menu_button">Quick Links &darr;</a></h2>
+              <ul id="api_menu" class="menu-items" style="display: none">
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 core section (section)" href="../../../../scripty2_core_section.html">scripty2 core section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="Function (class)" href="../../../../scripty2 core/function.html">Function</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Number (class)" href="../../../../scripty2 core/number.html">Number</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="Object (class)" href="../../../../scripty2 core/object.html">Object</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2 (namespace)" href="../../../../scripty2 core/s2.html">S2</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="S2.CSS (namespace)" href="../../../../scripty2 fx/s2/css.html">S2.CSS</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.Extensions (namespace)" href="../../../../scripty2 core/s2/extensions.html">S2.Extensions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX (namespace)" href="../../../../scripty2 fx/s2/fx.html">S2.FX</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2.UI (namespace)" href="../../../../scripty2 ui/s2/ui.html">S2.UI</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Attribute (class)" href="../../../../scripty2 fx/s2/fx/attribute.html">S2.FX.Attribute</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Base (class)" href="../../../../scripty2 fx/s2/fx/base.html">S2.FX.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Element (class)" href="../../../../scripty2 fx/s2/fx/element.html">S2.FX.Element</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Heartbeat (class)" href="../../../../scripty2 fx/s2/fx/heartbeat.html">S2.FX.Heartbeat</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Morph (class)" href="../../../../scripty2 fx/s2/fx/morph.html">S2.FX.Morph</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Operators (namespace)" href="../../../../scripty2 fx/s2/fx/operators.html">S2.FX.Operators</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Parallel (class)" href="../../../../scripty2 fx/s2/fx/parallel.html">S2.FX.Parallel</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Queue (class)" href="../../../../scripty2 fx/s2/fx/queue.html">S2.FX.Queue</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Scroll (class)" href="../../../../scripty2 fx/s2/fx/scroll.html">S2.FX.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.SlideDown (class)" href="../../../../scripty2 fx/s2/fx/slidedown.html">S2.FX.SlideDown</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Style (class)" href="../../../../scripty2 fx/s2/fx/style.html">S2.FX.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.FX.Transitions (namespace)" href="../../../../scripty2 fx/s2/fx/transitions.html">S2.FX.Transitions</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Accordion (class)" href="../../../../scripty2 ui/s2/ui/accordion.html">S2.UI.Accordion</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Autocompleter (class)" href="../../../../scripty2 ui/s2/ui/autocompleter.html">S2.UI.Autocompleter</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Base (class)" href="../../../../scripty2 ui/s2/ui/base.html">S2.UI.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior (class)" href="../../../../scripty2 ui/s2/ui/behavior.html">S2.UI.Behavior</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Button (class)" href="../../../../scripty2 ui/s2/ui/button.html">S2.UI.Button</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Dialog (class)" href="../../../../scripty2 ui/s2/ui/dialog.html">S2.UI.Dialog</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Menu (class)" href="../../../../scripty2 ui/s2/ui/menu.html">S2.UI.Menu</a>
+              </div>
+</li>
+<li class="current-parent">              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Mixin (namespace)" href="../../../../scripty2 ui/s2/ui/mixin.html">S2.UI.Mixin</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li>
+<li>              <div class='menu-item'>
+                <a class="namespace" title="S2.UI.Multitouch (namespace)" href="../../../../scripty2 ui/s2/ui/multitouch.html">S2.UI.Multitouch</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Overlay (class)" href="../../../../scripty2 ui/s2/ui/overlay.html">S2.UI.Overlay</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.ProgressBar (class)" href="../../../../scripty2 ui/s2/ui/progressbar.html">S2.UI.ProgressBar</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Slider (class)" href="../../../../scripty2 ui/s2/ui/slider.html">S2.UI.Slider</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Tabs (class)" href="../../../../scripty2 ui/s2/ui/tabs.html">S2.UI.Tabs</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Base (class)" href="../../../../scripty2 fx/s2/fx/operators/base.html">S2.FX.Operators.Base</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.CssTransition (class)" href="../../../../scripty2 fx/s2/fx/operators/csstransition.html">S2.FX.Operators.CssTransition</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Scroll (class)" href="../../../../scripty2 fx/s2/fx/operators/scroll.html">S2.FX.Operators.Scroll</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.FX.Operators.Style (class)" href="../../../../scripty2 fx/s2/fx/operators/style.html">S2.FX.Operators.Style</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Down (class)" href="../../../../scripty2 ui/s2/ui/behavior/down.html">S2.UI.Behavior.Down</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Drag (class)" href="../../../../scripty2 ui/s2/ui/behavior/drag.html">S2.UI.Behavior.Drag</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Focus (class)" href="../../../../scripty2 ui/s2/ui/behavior/focus.html">S2.UI.Behavior.Focus</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Hover (class)" href="../../../../scripty2 ui/s2/ui/behavior/hover.html">S2.UI.Behavior.Hover</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="class" title="S2.UI.Behavior.Resize (class)" href="../../../../scripty2 ui/s2/ui/behavior/resize.html">S2.UI.Behavior.Resize</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Configurable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/configurable.html">S2.UI.Mixin.Configurable</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Element (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/element.html">S2.UI.Mixin.Element</a>
+              </div>
+</li>
+<li class="current">              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a>
+              </div>
+</li>
+<li>              <div class='menu-item'>
+                <a class="mixin" title="S2.UI.Mixin.Trackable (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/trackable.html">S2.UI.Mixin.Trackable</a>
+              </div>
+</li></ul></li></ul></li>
+                  <li>              <div class='menu-item'>
+                <a class="section" title="scripty2 fx section (section)" href="../../../../scripty2_fx_section.html">scripty2 fx section</a>
+              </div>
+<ul><li>              <div class='menu-item'>
+                <a class="namespace" title="Element (namespace)" href="../../../../scripty2 fx/element.html">Element</a>
+              </div>
+</li></ul></li>
+                  <li class="current-parent">              <div class='menu-item'>
+                <a class="section" title="scripty2 ui section (section)" href="../../../../scripty2_ui_section.html">scripty2 ui section</a>
+              </div>
+</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="main" class="page-content">
+        <ul class="breadcrumbs clearfix">
+  <li><a href="../../../../index.html">Home</a> &rarr;</li>
+  <li><a href="../../../../scripty2_ui_section.html">scripty2 ui</a> &rarr;</li>
+</ul>
+
+<h2 class="page-title mixin">
+  <span class="type">mixin </span>S2.UI.Mixin.Shim
+</h2>
+
+<div class="section section-description">
+  <div class="section-title">
+    <h3>Description</h3>
+  </div>
+  <div class="section-content">
+    <p>Provides an implementation of a "shim" for Internet Explorer 6. On that browser,
+some elements (like SELECT boxes) do not adhere to vertical CSS order
+rules or setting z-index, because they are rendered as an OS "window",
+which is always above all other elements.</p>
+
+<p>The solution used to solve this problem is drawing an empty IFRAME element
+in the background of the element that should be displayed above all other
+elements, acting as a "shim".</p>
+
+<p>The shim will automatically adjust itself to any changes in the parent element's
+size or position. A positioning and/or size change can also be forced manually
+by calling <code>adjustShim</code>.</p>
+  </div>
+</div>
+
+
+
+
+<div class="section section-method-list">
+  <div class="section-title">
+    <h3>Methods</h3>
+  </div>
+  <div class="section-content">
+    <ul class="method-list">
+        <li><code><a class="class-method" title="S2.UI.Mixin.Shim.adjustShim (class method)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html#adjustshim-class_method">adjustShim</a></code></li>
+        <li><code><a class="instance-method" title="S2.UI.Mixin.Shim#createShim (instance method)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html#createshim-instance_method">createShim</a></code></li>
+        <li><code><a class="instance-method" title="S2.UI.Mixin.Shim#destroyShim (instance method)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html#destroyshim-instance_method">destroyShim</a></code></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="section section-instance_methods">
+      <div class="section-title">
+        <h3>Instance methods</h3>
+      </div>
+      <div class="section-content">
+        <ul class="method-details-list">
+          <li class="method-description">
+  <h4 id="createshim-instance_method">createShim
+    <span class="method-permalink"><a href="../../../../scripty2 ui/s2/ui/mixin/shim.html#createshim-instance_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.UI.Mixin.Shim#createShim([element]) -&gt; undefined</code></pre>
+
+  
+      <ul class="argument-list">
+          <li>
+            <code>element</code>
+              (<code><a title="Element (namespace)" href="../../../../scripty2 fx/element.html">Element</a></code>)
+             &ndash; Optional element to shim. If omitted, will assume <code>this.element</code>.
+          </li>
+      </ul>
+  
+  <p>Create an IFRAME "shim" underneath the positioned element.</p>
+
+<p>Needed for IE6, which otherwise shows some UI controls (like SELECT
+boxes) <em>above</em> an element, regardless of its CSS z-index.</p>
+
+<p>Does nothing in other browsers.</p>
+
+</li>
+
+<li class="method-description">
+  <h4 id="destroyshim-instance_method">destroyShim
+    <span class="method-permalink"><a href="../../../../scripty2 ui/s2/ui/mixin/shim.html#destroyshim-instance_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.UI.Mixin.Shim#destroyShim() -&gt; undefined</code></pre>
+
+  
+  
+  <p>Removes the shim.</p>
+
+</li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="section section-klass_methods">
+      <div class="section-title">
+        <h3>Class methods</h3>
+      </div>
+      <div class="section-content">
+        <ul class="method-details-list">
+          <li class="method-description">
+  <h4 id="adjustshim-class_method">adjustShim
+    <span class="method-permalink"><a href="../../../../scripty2 ui/s2/ui/mixin/shim.html#adjustshim-class_method">#</a></span></h4>
+
+                  <pre class="syntax"><code class="ebnf">S2.UI.Mixin.Shim.adjustShim() -&gt; undefined</code></pre>
+
+  
+  
+  <p>Reposition the shim, copying the dimensions and offsets of the target
+element.</p>
+
+<p>Note that the <code><a title="S2.UI.Mixin.Shim (mixin)" href="../../../../scripty2 ui/s2/ui/mixin/shim.html">S2.UI.Mixin.Shim</a></code> mixin <em>attempts</em> to do this
+automatically by using IE6's proprietary CSS expressions. But because
+such expressions can sometimes fail to update promptly, calling this
+method yourself may be necessary.</p>
+
+<p>Once you've called <code>adjustShim</code>, the shim loses the ability to
+dynamically update its position on its own. Subsequently, you'll have
+to call <code>adjustShim</code> again each time you update the element's layout.</p>
+
+</li>
+
+        </ul>
+      </div>
+    </div>
+
+      </div>
+
+      <div id="footer">
+        <div class="about clearfix">
+          <div class="copyright clearfix">
+            <div class="copyright-about">
+              This work is licensed under a<br/>
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0 Unported License</a>.<br/>
+            </div>
+          </div>
+          <div class="credits">
+            <p>
+              Generated by <a href="http://pdoc.org">PDoc</a>.
+              Icons by <a href="http://froodee.at/">Samo</a>.
+            </p>
+            <p>
+              Copyright © 2005-2010 <a href="http://mir.aculo.us/">Thomas Fuchs</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="../../../../javascripts/prototype.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../../javascripts/s2.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../javascripts/application.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../javascripts/item_index.js" charset="utf-8"></script>
+    <script type="text/javascript">PDoc.pathPrefix = '../../../../';</script>
+  </body>
+</html>

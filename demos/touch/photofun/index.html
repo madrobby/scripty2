@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>scripty2 demo | Photo fun</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <script src="../prototype.s2.min.js" type="text/javascript"></script>
+    
+    <style type="text/css" media="screen">
+      html {
+        height: 100%;
+      }
+      body { 
+        font: 12px/15px Calibri, Verdana;
+        background:#844;
+        height: 100%;
+        overflow:hidden
+      }
+      #colorpicker {
+        z-index:999999;
+        text-align:center;
+        position:absolute;
+        width:200px;
+        height:200px;
+        right:50px;
+        bottom:50px;
+        background:url(colorpicker.png);
+      }
+      img.manipulate {
+        border: 20px solid #fff;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width; initial-scale=0.4; maximum-scale=0.4; user-scalable=0;"/>
+  </head>   
+  <body id="body">
+    <div id="debug"></div>
+    <div id="colorpicker"></div>    
+    
+    <img class="manipulate" src="DSC_5315.jpg" />
+    <img class="manipulate" src="DSC_5374.jpg" />
+    <img class="manipulate" src="DSC_5440.jpg" />
+    <img class="manipulate" src="DSC_5459.jpg" />
+    <img class="manipulate" src="DSC_5672.jpg" />    
+ 
+    <script type="text/javascript" charset="utf-8">
+      S2.enableMultitouchSupport = true;
+    
+      (function(){
+        // helper for color wheel
+        function hsvToRgb(hue, saturation, value){
+          var red=0, green=0, blue=0;
+          if (value!=0) {
+            var i = Math.floor(hue * 6), f = (hue * 6) - i,
+              p = value * (1 - saturation),
+              q = value * (1 - (saturation * f)),
+              t = value * (1 - (saturation * (1 - f)));
+            switch(i){
+              case 1: red = q; green = value; blue = p; break;
+              case 2: red = p; green = value; blue = t; break;
+              case 3: red = p; green = q; blue = value; break;
+              case 4: red = t; green = p; blue = value; break;
+              case 5: red = value; green = p; blue = q; break;
+              case 6:
+              case 0: red = value; green = t; blue = p; break;
+            } 
+          }   
+          return {r: red, g: green, b: blue};
+        }
+        
+        // initial position & rotation
+        var p = [
+          [300, 200, 350, 1],
+          [200, 220, 350, 2],
+          [350, 180, 350, 0],
+          [350, 180, 350, 3],
+          [450, 480, 350, 4],
+          [250, 420, 350, 5],
+        ], z = 1, FRICTION = 2.5;
+
+        $$('.manipulate').each(function(img,i){
+          img.style.cssText += ';position:absolute;'+
+            'left:'+(p[i][0]+500)+'px;top:'+(p[i][1]-1000)+'px;'+
+            'width:'+p[i][2]+'px;';
+          img.transform({ rotation: p[i][3] });
+          img.morph('left:'+p[i][0]+'px;top:'+p[i][1]+'px',{duration:2,delay:i/2});
+           
+           // image rotating and scaling
+           img.observe('manipulate:update', function(event){
+             if(img.full) return;
+             
+             // limit scaling to 0.35 to 10
+             var scale = event.memo.scale < 0.35 ? 0.35 : 
+               event.memo.scale > 10 ? 10 : event.memo.scale;
+               
+             img.style.cssText += 
+               ';z-index:'+(z++)+';left:'+(p[i][0]+event.memo.panX)+
+               'px;top:'+(p[i][1]+event.memo.panY)+'px;'+
+               ';';
+              
+             img.transform({ rotation: p[i][3]+event.memo.rotation, scale: scale });
+             img._x = p[i][0]+event.memo.panX;
+             img._y = p[i][1]+event.memo.panY;
+             
+             event.stop();
+           });
+           
+           // image flicking
+           // img.observe('manipulate:flick', function(event){
+           //   var duration = event.memo.speed/(FRICTION*1000),
+           //     x = img._x+Math.cos(event.memo.direction)*event.memo.speed/FRICTION;
+           //     y = img._y+Math.sin(event.memo.direction)*event.memo.speed/FRICTION;
+           //     
+           //   img._x = x;
+           //   img._y = y;
+           //   img._panX = x-p[i][0];
+           //   img._panY = y-p[i][1];
+           //   
+           //   img.morph('top:'+y+'px;left:'+x+'px;',{
+           //     duration: duration,
+           //     transition: function(pos){ 
+           //       return Math.sin(pos * (Math.PI/2)); 
+           //     }
+           //   });
+           //   event.stop();
+           // });
+           
+           //  tap long to active zoom
+           img.observe('contextmenu', function(event){
+             if(!img.full){
+               img._css = img.style.cssText;
+               img.transform({ rotation: 0, scale: 3 });
+               
+               var dims = document.viewport.getDimensions();
+               var dx = img._x+(img.width+40)/2, dy = img._y+(img.height+40)/2;
+               
+               var cx = -10000-(dx-10000) + dims.width/2, cy = -10000-(dy-10000) + dims.height/2;
+               img.full = true;
+             } else {
+               img.style.cssText = img._css;
+               img.full = false;
+             }
+             event.stop(event);
+           });
+        });
+        
+        //  color wheel - rotate to change the background color hue
+        $('colorpicker').observe('manipulate:update', function(event){
+          var c = hsvToRgb(event.memo.rotation/(2*Math.PI),0.5,0.5);
+          c = (c.r*255).round().toColorPart() + 
+            (c.g*255).round().toColorPart() + (c.b*255).round().toColorPart();
+          $('colorpicker').transform({ rotation: event.memo.rotation });
+          document.body.style.cssText += ';background-color:#'+c; 
+        });
+      })();
+    </script>
+    
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-2732152-10");pageTracker._trackPageview();}catch(err){}</script>
+  </body>
+</html>
